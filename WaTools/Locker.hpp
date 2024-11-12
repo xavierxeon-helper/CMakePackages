@@ -1,31 +1,27 @@
-#ifndef LockerH
-#define LockerH
+#ifndef LockerHPP
+#define LockerHPP
 
-#include <algorithm>
-
-template <size_t N>
-struct CompileTimeString
-{
-   constexpr CompileTimeString(const char (&str)[N]);
-   char value[N];
-};
+#include "Locker.h"
 
 template <CompileTimeString tag>
-class Locker
+bool Locker<tag>::lock = false;
+
+template <CompileTimeString tag>
+Locker<tag>::Locker()
 {
-public:
-   Locker();
-   ~Locker();
+   lock = true;
+}
 
-public:
-   static bool engaged();
+template <CompileTimeString tag>
+Locker<tag>::~Locker()
+{
+   lock = false;
+}
 
-private:
-   static bool lock;
-};
+template <CompileTimeString tag>
+bool Locker<tag>::engaged()
+{
+   return lock;
+}
 
-#ifndef LockerHPP
-#include "Locker.hpp"
 #endif // NOT LockerHPP
-
-#endif // NOT LockerH
