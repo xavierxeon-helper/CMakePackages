@@ -3,35 +3,35 @@
 
 #include "LogFile.h"
 
-inline LogFile* LogFile::me = nullptr;
+template <CompileTimeString tag>
+inline LogFile<tag>* LogFile<tag>::me = nullptr;
 
-inline LogFile::LogFile(const QString& fileName)
-   : IOChannel::Target()
-   , channel(nullptr)
+template <CompileTimeString tag>
+inline LogFile<tag>::LogFile(const QString& fileName)
+   : file(nullptr)
 {
    me = this;
-   channel = new IOChannel(this, 0);
+
+   file = new QFile(fileName);
+   file->open(QIODevice::WriteOnly);
 }
 
-inline LogFile::~LogFile()
+template <CompileTimeString tag>
+inline LogFile<tag>::~LogFile()
 {
-   delete channel;
-   channel = nullptr;
+   file->close();
+   delete file;
 
    me = nullptr;
 }
 
-inline QTextStream LogFile::stream()
+template <CompileTimeString tag>
+inline QTextStream LogFile<tag>::stream()
 {
    if (!me)
       return QTextStream();
 
-   return QTextStream(me->channel);
-}
-
-inline void LogFile::print(const QString& text, int channelId)
-{
-   qDebug() << text;
+   return QTextStream(me->file);
 }
 
 #endif // NOT LogFileHPP

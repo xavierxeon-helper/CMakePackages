@@ -1,9 +1,12 @@
 #ifndef LogFileH
 #define LogFileH
 
-#include "IOChannel.h"
+#include "../WaTools/CompileTimeString.h"
 
-class LogFile : public IOChannel::Target
+#include <QFile>
+
+template <CompileTimeString tag>
+class LogFile
 {
 public:
    LogFile(const QString& fileName);
@@ -12,12 +15,9 @@ public:
 public:
    static QTextStream stream();
 
-public:
-   void print(const QString& text, int channelId) override;
-
 private:
    static LogFile* me;
-   IOChannel* channel;
+   QFile* file;
 };
 
 #ifndef LogFileHPP
