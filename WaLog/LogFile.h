@@ -17,7 +17,11 @@ public:
    QString getFileName() const;
 
 private:
+   void openFileIfNecessary();
+
+private:
    static LogFile* me;
+   QString logFileName;
    QFile* file;
 };
 

@@ -13,24 +13,27 @@ inline LogFile<tag>* LogFile<tag>::me = nullptr;
 template <CompileTimeString tag>
 inline LogFile<tag>::LogFile(const QString& fileName, bool appendTimeStamp)
    : file(nullptr)
+   , logFileName()
 {
    me = this;
 
    const QFileInfo info(fileName);
-   QString logFileName = info.path() + "/" +  info.baseName();
+
+   logFileName = info.path() + "/" +  info.baseName();
    if(appendTimeStamp)
       logFileName +=  QDateTime::currentDateTime().toString("_yyyyMMdd_hhmmss");
    logFileName += "." + info.completeSuffix();
 
-   file = new QFile(logFileName);
-   file->open(QIODevice::WriteOnly);
 }
 
 template <CompileTimeString tag>
 inline LogFile<tag>::~LogFile()
 {
-   file->close();
-   delete file;
+   if(file)
+   {
+      file->close();
+      delete file;
+   }
 
    me = nullptr;
 }
@@ -41,13 +44,25 @@ inline QTextStream LogFile<tag>::stream()
    if (!me)
       return QTextStream();
 
+   me->openFileIfNecessary();
+
    return QTextStream(me->file);
 }
 
 template <CompileTimeString tag>
 QString LogFile<tag>::getFileName() const
 {
-   return file->fileName();
+   return logFileName;
+}
+
+template <CompileTimeString tag>
+void LogFile<tag>::openFileIfNecessary()
+{
+   if(file)
+      return;
+
+   file = new QFile(logFileName);
+   file->open(QIODevice::WriteOnly);
 }
 
 #endif // NOT LogFileHPP
