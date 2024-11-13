@@ -59,7 +59,7 @@ inline bool Math::Vector3::operator<(const Vector3& other) const
       return (z < other.z);
 }
 
-Math::Vector3 Math::Vector3::operator+(const Vector3& other) const
+inline Math::Vector3 Math::Vector3::operator+(const Vector3& other) const
 {
    const double nx = x + other.x;
    const double ny = y + other.y;
@@ -68,7 +68,7 @@ Math::Vector3 Math::Vector3::operator+(const Vector3& other) const
    return Vector3(nx, ny, nz);
 }
 
-Math::Vector3& Math::Vector3::operator+=(const Vector3& other)
+inline Math::Vector3& Math::Vector3::operator+=(const Vector3& other)
 {
    x += other.x;
    y += other.y;
