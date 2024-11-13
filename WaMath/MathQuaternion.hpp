@@ -3,7 +3,7 @@
 
 #include "MathQuaternion.h"
 
-Math::Quaternion::Quaternion()
+inline Math::Quaternion::Quaternion()
 {
 }
 

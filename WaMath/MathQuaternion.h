@@ -6,7 +6,7 @@ namespace Math
    class Quaternion
    {
    public:
-      inline Quaternion();
+      Quaternion();
    };
 } // namespace Math
 
