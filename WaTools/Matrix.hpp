@@ -4,24 +4,18 @@
 #include "Matrix.h"
 
 template <typename DataType>
-inline Matrix<DataType>::Matrix(const quint16& width, const quint16& height, const DataType& initialValue)
+inline Matrix<DataType>::Matrix(const Size& size, const DataType& initialValue)
    : QList<QList<DataType>>()
-   , width(width)
-   , height(height)
+   , size(size)
 {
-   this->resize(width, QList<DataType>(height, initialValue));
+   this->resize(size.width, QList<DataType>(size.height, initialValue));
 }
 
 template <typename DataType>
-const quint16& Matrix<DataType>::getWidth() const
+const Size& Matrix<DataType>::getSize() const
 {
-   return width;
+   return size;
 }
 
-template <typename DataType>
-const quint16& Matrix<DataType>::getHeight() const
-{
-   return height;
-}
 
 #endif // NOT MatrixHPP

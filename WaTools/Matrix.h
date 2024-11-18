@@ -1,19 +1,19 @@
 #ifndef MatrixH
 #define MatrixH
 
+#include "Size.h"
+
 template <typename DataType>
 class Matrix : public QList<QList<DataType>>
 {
 public:
-   Matrix(const quint16& width, const quint16& height, const DataType& initialValue);
+   Matrix(const Size& size, const DataType& initialValue);
 
 public:
-   const quint16& getWidth() const;
-   const quint16& getHeight() const;
+   const Size& getSize() const;
 
 private:
-   quint16 width;
-   quint16 height;
+   Size size;
 };
 
 #ifndef MatrixHPP
