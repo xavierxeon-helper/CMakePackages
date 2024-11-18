@@ -19,9 +19,10 @@ namespace Math
       Wave(const Size& size, const int& threadCount = 4);
 
    public:
-      void step(const double& time);
-      const Matrix<double>& getHeightField() const;
+      void step(const double& time, bool clamp = false);
+      void clampBoundaries();
 
+      const Matrix<double>& getHeightField() const;
       const Size& getSize() const;
 
       const double& getFrequency() const;
@@ -40,8 +41,6 @@ namespace Math
 
    protected:
       Size size;
-
-
 
       double frequency;
       double speed;

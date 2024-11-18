@@ -31,7 +31,7 @@ inline Math::Wave::Wave(const Size& size, const int& threadCount)
       lineLists.push_back(list);
 }
 
-inline void Math::Wave::step(const double& time)
+inline void Math::Wave::step(const double& time, bool clamp)
 {
    heightField.swap();
 
@@ -40,6 +40,28 @@ inline void Math::Wave::step(const double& time)
 
    for (uint16_t index = 0; index < threadCount; index++)
       threads[index].join();
+
+   if (clamp)
+      clampBoundaries();
+}
+
+inline void Math::Wave::clampBoundaries()
+{
+   Matrix<double>& current = heightField.current();
+   for (uint16_t x = 0; x < size.width; x++)
+   {
+      for (uint16_t y = 0; y < size.height; y++)
+      {
+         if (x == 0 || x + 1 == size.width)
+         {
+            current[x][y] = 0.0;
+         }
+         else if (y == 0 || y + 1 == size.height)
+         {
+            current[x][y] = 0.0;
+         }
+      }
+   }
 }
 
 inline const Matrix<double>& Math::Wave::getHeightField() const
