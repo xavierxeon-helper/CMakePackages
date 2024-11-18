@@ -73,6 +73,55 @@ inline void Math::Wave::setSpeed(const double& value)
    speed = value;
 }
 
+inline Matrix<Math::Vector3> Math::Wave::compileNormals() const
+{
+   Matrix<Math::Vector3> normals(size, Math::Vector3(0.0, 0.0, 1.0));
+
+   const Matrix<double>& current = heightField.current();
+   for (uint16_t x = 0; x < size.width; x++)
+   {
+      for (uint16_t y = 0; y < size.height; y++)
+      {
+         const double center = current[x][y];
+         {
+            Math::Vector3 normal(0.0, 0.0, 0.0);
+            if (x > 0)
+            {
+               const double value = current[x - 1][y];
+               const double slope = center - value;
+               const Math::Vector3 addNormal(slope, 0.0, 1.0);
+               normal += addNormal.norm();
+            }
+            if (x < size.width - 1)
+            {
+               const double value = current[x + 1][y];
+               const double slope = value - center;
+               const Math::Vector3 addNormal(slope, 0.0, 1.0);
+               normal += addNormal.norm();
+            }
+            if (y > 0)
+            {
+               const double value = current[x][y - 1];
+               const double slope = center - value;
+               const Math::Vector3 addNormal(0.0, slope, 1.0);
+               normal += addNormal.norm();
+            }
+            if (y < size.height - 1)
+            {
+               const double value = current[x][y + 1];
+               const double slope = value - center;
+               const Math::Vector3 addNormal(0.0, slope, 1.0);
+               normal += addNormal.norm();
+            }
+
+            normals[x][y] = normal.norm();
+         }
+      }
+   }
+
+   return normals;
+}
+
 inline void Math::Wave::advanceLines(const quint16 lineIndex)
 {
    const double damping = 1.0;

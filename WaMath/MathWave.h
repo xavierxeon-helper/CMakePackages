@@ -30,6 +30,8 @@ namespace Math
       const double& getSpeed() const;
       void setSpeed(const double& value);
 
+      Matrix<Math::Vector3> compileNormals() const;
+
    private:
       using LineList = std::list<uint16_t>;
 
