@@ -5,10 +5,10 @@
 
 template <typename DataType>
 inline Matrix<DataType>::Matrix(const Size& size, const DataType& initialValue)
-   : QList<QList<DataType>>()
+   : std::vector<std::vector<DataType>>()
    , size(size)
 {
-   this->resize(size.width, QList<DataType>(size.height, initialValue));
+   this->resize(size.width, std::vector<DataType>(size.height, initialValue));
 }
 
 template <typename DataType>

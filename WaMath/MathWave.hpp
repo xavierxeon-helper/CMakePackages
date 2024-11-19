@@ -154,18 +154,19 @@ inline void Math::Wave::advanceLines(const quint16 lineIndex)
    const LineList& lineList = lineLists[lineIndex];
    for (const uint16_t x : lineList)
    {
-      for (uint16_t y = 0; y < size.height; y++)
+      for (uint16_t y = 0; y < size.height; ++y)
       {
          double height = 0.0;
          const double center = current[x][y];
 
-         if (x > 0)
+
+         if (x > 0) [[unlikely]]
             height += previous[x - 1][y];
-         if (x + 1 < size.width)
+         if (x + 1 < size.width) [[unlikely]]
             height += previous[x + 1][y];
-         if (y > 0)
+         if (y > 0) [[unlikely]]
             height += previous[x][y - 1];
-         if (y + 1 < size.height)
+         if (y + 1 < size.height) [[unlikely]]
             height += previous[x][y + 1];
 
          current[x][y] = (0.5 * height) - center;
