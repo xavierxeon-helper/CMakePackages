@@ -1,5 +1,5 @@
-#ifndef MathStreamingH
-#define MathStreamingH
+#ifndef MathQtStreamingH
+#define MathQtStreamingH
 
 #include <QDebug>
 #include <QTextStream>
@@ -12,8 +12,8 @@ QDebug operator<<(QDebug stream, const Math::Spherical& data);
 QTextStream& operator<<(QTextStream& stream, const Math::Vector3& data);
 QTextStream& operator>>(QTextStream& stream, Math::Vector3& data);
 
-#ifndef MathStreamingHPP
-#include "MathStreaming.hpp"
-#endif // NOT MathStreamingHPP
+#ifndef MatQthStreamingHPP
+#include "MathQtStreaming.hpp"
+#endif // NOT MathQtStreamingHPP
 
-#endif // NOT MathStreamingH
+#endif // NOT MathQtStreamingH

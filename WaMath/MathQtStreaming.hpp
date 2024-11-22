@@ -1,7 +1,7 @@
-#ifndef MathStreamingHPP
-#define MathStreamingHPP
+#ifndef MathQtStreamingHPP
+#define MathQtStreamingHPP
 
-#include "MathStreaming.h"
+#include "MathQtStreaming.h"
 
 inline QDebug operator<<(QDebug stream, const Math::Vector3& data)
 {
@@ -28,4 +28,4 @@ inline QTextStream& operator>>(QTextStream& stream, Math::Vector3& data)
    return stream;
 }
 
-#endif // NOT MathStreamingHPP
+#endif // NOT MathQtStreamingHPP
