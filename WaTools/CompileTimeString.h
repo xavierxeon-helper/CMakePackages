@@ -1,13 +1,16 @@
 #ifndef CompileTimeStringH
 #define CompileTimeStringH
 
-#include <algorithm>
+#include <string>
 
 template <size_t N>
 struct CompileTimeString
 {
    constexpr CompileTimeString(const char (&str)[N]);
    char value[N];
+
+
+   std::string text() const;
 };
 
 #ifndef CompileTimeStringHPP
