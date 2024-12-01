@@ -7,11 +7,9 @@ template <CompileTimeString AppName>
 struct Shared
 {
    static QString appName();
-   static QString compileSharedFileName();
+   static QString compileSharedFileName(const QString& suffix);
 
-   static QString compileSocketName();
    static bool isServerActive();
-
    static void startApplication();
 };
 

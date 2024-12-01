@@ -18,27 +18,19 @@ QString Shared<AppName>::appName()
 }
 
 template <CompileTimeString AppName>
-QString Shared<AppName>::compileSharedFileName()
+QString Shared<AppName>::compileSharedFileName(const QString& suffix)
 {
    const QString socketPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 
-   const QString socketName = socketPath + "/." + Shared<AppName>::appName().toLower() + ".shared";
+   const QString socketName = socketPath + "/." + Shared<AppName>::appName().toLower() + "." + suffix;
    return socketName;
 }
 
-template <CompileTimeString AppName>
-QString Shared<AppName>::compileSocketName()
-{
-   const QString socketPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-
-   const QString socketName = socketPath + "/." + Shared<AppName>::appName().toLower() + ".socket";
-   return socketName;
-}
 
 template <CompileTimeString AppName>
 bool Shared<AppName>::isServerActive()
 {
-   const QString socketName = Shared<AppName>::compileSocketName();
+   const QString socketName = Shared<AppName>::compileSharedFileName("socket");
    if (!QFile::exists(socketName))
       return false;
 
