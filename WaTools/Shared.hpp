@@ -7,7 +7,6 @@
 #include <QFile>
 #include <QLocalSocket>
 #include <QProcess>
-#include <QStandardPaths>
 #include <QThread>
 
 template <CompileTimeString AppName>
@@ -18,9 +17,9 @@ QString Shared<AppName>::appName()
 }
 
 template <CompileTimeString AppName>
-QString Shared<AppName>::compileSharedFileName(const QString& suffix)
+QString Shared<AppName>::compileSharedFileName(const QString& suffix, const QStandardPaths::StandardLocation& location)
 {
-   const QString socketPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+   const QString socketPath = QStandardPaths::writableLocation(location);
 
    const QString socketName = socketPath + "/." + Shared<AppName>::appName().toLower() + "." + suffix;
    return socketName;
