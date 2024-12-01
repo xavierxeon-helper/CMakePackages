@@ -6,6 +6,8 @@
 template <CompileTimeString Tag>
 struct LocalServer
 {
+   static QString tagName();
+   static QString compileSharedFileName();
    static QString compileSocketName();
    static bool isServerActive();
    static void startApplication();
