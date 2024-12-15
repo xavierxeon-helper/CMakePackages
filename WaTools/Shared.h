@@ -11,7 +11,7 @@ struct Shared
 {
    static QString appName();
    static QString compileSharedFileName(const QString& suffix, const QStandardPaths::StandardLocation& location = QStandardPaths::HomeLocation);
-
+   static QString socketName();
    static bool isServerActive();
    static void startApplication();
 };

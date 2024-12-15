@@ -25,11 +25,22 @@ QString Shared<AppName>::compileSharedFileName(const QString& suffix, const QSta
    return socketName;
 }
 
+template <CompileTimeString AppName>
+QString Shared<AppName>::socketName()
+{
+#ifdef Q_OS_WIN
+   const QString socketPath = "\\\\.\\pipe\\";
+#else
+   const QString socketPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+#endif
+   const QString name = socketPath + "/." + Shared<AppName>::appName().toLower() + ".socket" ;
+   return name;
+}
 
 template <CompileTimeString AppName>
 bool Shared<AppName>::isServerActive()
 {
-   const QString socketName = Shared<AppName>::compileSharedFileName("socket");
+   const QString socketName = Shared<AppName>::socketName();
    if (!QFile::exists(socketName))
       return false;
 
