@@ -33,7 +33,7 @@ QString Shared<AppName>::socketName()
 #else
    const QString socketPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
-   const QString name = socketPath + "/." + Shared<AppName>::appName().toLower() + ".socket" ;
+   const QString name = socketPath + "/." + Shared<AppName>::appName().toLower() + ".socket";
    return name;
 }
 
@@ -61,7 +61,10 @@ bool Shared<AppName>::isServerActive()
 template <CompileTimeString AppName>
 void Shared<AppName>::startApplication()
 {
+#if defined(__APPLE__)
    QProcess::startDetached("open", {"-a", Shared<AppName>::appName()});
+#else
+#endif
    QThread::sleep(1);
 }
 
