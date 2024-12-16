@@ -28,7 +28,7 @@ QString Shared<AppName>::compileSharedFileName(const QString& suffix, const QSta
 template <CompileTimeString AppName>
 QString Shared<AppName>::socketName()
 {
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN)
    const QString socketPath = "\\\\.\\pipe\\";
 #else
    const QString socketPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
@@ -63,8 +63,22 @@ void Shared<AppName>::startApplication()
 {
 #if defined(__APPLE__)
    QProcess::startDetached("open", {"-a", Shared<AppName>::appName()});
+#elif defined(Q_OS_WIN)
+   const QString tmpPath = QStandardPaths::writableLocation(QStandardPaths::TempLocation);
+   const QString fileName = tmpPath + "/dummy." + Shared<AppName>::appName().toLower();
+   if (!QFile::exists(fileName))
+   {
+      QFile file(fileName);
+      if (!file.open(QIODevice::WriteOnly))
+         return;
+      file.write("hello");
+      file.close();
+   }
+   QProcess::startDetached("start", {fileName});
 #else
+   // ???
 #endif
+
    QThread::sleep(1);
 }
 
