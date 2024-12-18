@@ -64,17 +64,11 @@ void Shared<AppName>::startApplication()
 #if defined(__APPLE__)
    QProcess::startDetached("open", {"-a", Shared<AppName>::appName()});
 #elif defined(Q_OS_WIN)
-   const QString tmpPath = QStandardPaths::writableLocation(QStandardPaths::TempLocation);
-   const QString fileName = tmpPath + "/dummy." + Shared<AppName>::appName().toLower();
-   if (!QFile::exists(fileName))
-   {
-      QFile file(fileName);
-      if (!file.open(QIODevice::WriteOnly))
-         return;
-      file.write("hello");
-      file.close();
-   }
-   QProcess::startDetached("start", {fileName});
+
+   const QString pwd = qgetenv("LOCALAPPDATA") + "/" + Shared<AppName>::appName();
+   const QString application = pwd + "/" + Shared<AppName>::appName() + ".exe";
+
+   QProcess::startDetached(application, {}, pwd);
 #else
    // ???
 #endif
