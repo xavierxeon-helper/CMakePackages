@@ -6,24 +6,24 @@
 
 class IOChannel : public QIODevice
 {
-   // do not use Q_OBJECT !
+   // do not use Q_OBJECT
+   // this file will not be moc'ed
 
 public:
-   struct Target
-   {
-      virtual void print(const QString& text, int chanelId) = 0;
-   };
+   using PrintFunction = std::function<void(const QString& message)>;
 
 public:
-   IOChannel(Target* target, int channelId);
+   IOChannel(QObject* parent, PrintFunction printFunction);
+
+public:
+   QTextStream stream();
 
 private:
    qint64 readData(char* data, qint64 maxSize) override;
    qint64 writeData(const char* data, qint64 maxSize) override;
 
 private:
-   Target* target;
-   int channelId;
+   PrintFunction printFunction;
 };
 
 #ifndef IOChannelHPP

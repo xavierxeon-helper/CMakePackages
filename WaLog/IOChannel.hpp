@@ -3,12 +3,18 @@
 
 #include "IOChannel.h"
 
-inline IOChannel::IOChannel(Target* target, int channelId)
-   : QIODevice(nullptr)
-   , target(target)
-   , channelId(channelId)
+#include <QTextStream>
+
+inline IOChannel::IOChannel(QObject* parent, PrintFunction printFunction)
+   : QIODevice(parent)
+   , printFunction(printFunction)
 {
    open(QIODevice::WriteOnly);
+}
+
+inline QTextStream IOChannel::stream()
+{
+   return QTextStream(this);
 }
 
 inline qint64 IOChannel::readData(char* data, qint64 maxSize)
@@ -21,7 +27,9 @@ inline qint64 IOChannel::readData(char* data, qint64 maxSize)
 
 inline qint64 IOChannel::writeData(const char* data, qint64 maxSize)
 {
-   target->print(data, channelId);
+   if (printFunction)
+      printFunction(QString::fromUtf8(data));
+
    return maxSize;
 }
 

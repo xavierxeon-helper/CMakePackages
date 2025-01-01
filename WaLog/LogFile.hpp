@@ -4,7 +4,6 @@
 #include <QDateTime>
 #include <QFileInfo>
 
-
 #include "LogFile.h"
 
 template <CompileTimeString tag>
