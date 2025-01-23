@@ -44,7 +44,7 @@ inline void ShallowCrypt::encrypt(QByteArray& data) const
    if (key.isEmpty())
       return;
 
-   const quint32 length = data.count();
+   const quint32 length = data.size();
    quint8 lastChar = 0;
 
    for (quint32 pos = 0; pos < length; pos++)
@@ -62,7 +62,7 @@ inline void ShallowCrypt::decrypt(QByteArray& data) const
    if (key.isEmpty())
       return;
 
-   const quint32 length = data.count();
+   const quint32 length = data.size();
    quint8 lastChar = 0;
 
    for (quint32 pos = 0; pos < length; pos++)
