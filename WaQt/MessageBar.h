@@ -9,8 +9,8 @@
 
 class MessageBar : public QStatusBar
 {
-   // do not use Q_OBJECT
-   // this file will not be moc'ed
+   Q_OBJECT
+   // see https://doc.qt.io/qt-6/qt-wrap-cpp.html
 
 public:
    MessageBar(QWidget* parent);

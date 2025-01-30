@@ -7,19 +7,20 @@
 
 namespace CSV
 {
-   class Writer : public IOChannel::Target
+   class Writer
    {
    public:
-      Writer(const QString& fileName);
+      Writer();
 
    public:
-      void setHeader(const QStringList& header);
+      void open(const QString& fileName);
+      void writeHeader(const QStringList& header);
       QTextStream entry();
       void endLine();
       void close();
 
    private:
-      void print(const QString& text, int chanelId) override;
+      void print(const QString& text) override;
 
    private:
       IOChannel channel;

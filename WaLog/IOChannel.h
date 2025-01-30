@@ -7,16 +7,18 @@
 class IOChannel : public QIODevice
 {
    // do not use Q_OBJECT
-   // this file will not be moc'ed
+   // this file will not be moc'ed automatically
 
 public:
    using PrintFunction = std::function<void(const QString& message)>;
 
 public:
+   IOChannel(QObject* parent);
    IOChannel(QObject* parent, PrintFunction printFunction);
 
 public:
    QTextStream stream();
+   void setup(PrintFunction printFunction);
 
 private:
    qint64 readData(char* data, qint64 maxSize) override;
