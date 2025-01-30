@@ -11,9 +11,12 @@
 #include <QSettings>
 #include <QToolBar>
 
+inline PopulatedMainWindow* PopulatedMainWindow::me = nullptr;
+
 inline PopulatedMainWindow::PopulatedMainWindow()
    : QMainWindow(nullptr)
 {
+   me = this;
    QSettings settings;
    restoreGeometry(settings.value("MainWidget/Geometry").toByteArray());
    restoreState(settings.value("MainWidget/State").toByteArray());
@@ -21,7 +24,14 @@ inline PopulatedMainWindow::PopulatedMainWindow()
 
 inline PopulatedMainWindow::~PopulatedMainWindow()
 {
+   me = nullptr;
 }
+
+inline PopulatedMainWindow* PopulatedMainWindow::the()
+{
+   return me;
+}
+
 
 inline void PopulatedMainWindow::printSettingsLocation()
 {

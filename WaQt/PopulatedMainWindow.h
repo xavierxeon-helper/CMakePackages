@@ -15,7 +15,11 @@ public:
    PopulatedMainWindow();
    virtual ~PopulatedMainWindow();
 
+signals:
+   void signalSettingsChanged();
+
 public:
+   static PopulatedMainWindow* the();
    static void printSettingsLocation();
 
 protected:
@@ -25,6 +29,9 @@ protected:
 private:
    void createToolBar(QDomElement thingElement);
    void createMenu(QDomElement thingElement, QMenu* parentMenu);
+
+private:
+   static PopulatedMainWindow* me;
 };
 
 #ifndef PopulatedMainWindowHPP
