@@ -5,16 +5,28 @@
 
 #include <QTextStream>
 
-inline IOChannel::IOChannel(QObject* parent, PrintFunction printFunction)
+inline IOChannel::IOChannel(QObject* parent)
    : QIODevice(parent)
-   , printFunction(printFunction)
+   , printFunction()
 {
    open(QIODevice::WriteOnly);
+}
+
+inline IOChannel::IOChannel(QObject* parent, PrintFunction printFunction)
+   : IOChannel(parent)
+
+{
+   setup(printFunction);
 }
 
 inline QTextStream IOChannel::stream()
 {
    return QTextStream(this);
+}
+
+inline void IOChannel::setup(PrintFunction printFunction)
+{
+   this->printFunction = printFunction;
 }
 
 inline qint64 IOChannel::readData(char* data, qint64 maxSize)
