@@ -40,6 +40,7 @@ function(use_precompiled_headers)
 endfunction()
 
 function(set_standrard_release_output_path)
+   set_target_properties(${PROJECT_NAME} PROPERTIES MACOSX_BUNDLE TRUE)
    set_target_properties(${PROJECT_NAME} PROPERTIES WIN32_EXECUTABLE TRUE)
 
    if(NOT CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -48,7 +49,6 @@ function(set_standrard_release_output_path)
 
    if(APPLE)
       set(CMAKE_RUNTIME_OUTPUT_DIRECTORY $ENV{HOME}/Applications)
-      set_target_properties(${PROJECT_NAME} PROPERTIES MACOSX_BUNDLE TRUE)
    elseif(WIN32)
       set(CMAKE_RUNTIME_OUTPUT_DIRECTORY $ENV{LOCALAPPDATA}/${PROJECT_NAME})
    endif()
@@ -56,10 +56,12 @@ endfunction()
 
 function(set_application_icon PATH_TO_ICON)
    if(APPLE)
+      set(APP_ICON ${PATH_TO_ICON}.icns)
+      message(STATUS "APP_ICON: ${APP_ICON}")
+
       set(MACOSX_BUNDLE_ICON_FILE ${PROJECT_NAME}.icns)
       set_source_files_properties(${APP_ICON} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
-      set(APP_ICON ${PATH_TO_ICON}.icns)
       target_sources(${PROJECT_NAME} PRIVATE ${APP_ICON})
    elseif(WIN32)
       set(ICON_RC_FILE ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.rc)
