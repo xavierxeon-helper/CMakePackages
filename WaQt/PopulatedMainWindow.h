@@ -8,7 +8,8 @@
 class PopulatedMainWindow : public QMainWindow
 {
    Q_OBJECT
-   // see https://doc.qt.io/qt-6/qt-wrap-cpp.html
+   // in cmake use:
+   // list(APPEND SOURCE_FILES ${WAQT_INCLUDE_DIRS}/PopulatedMainWindow.h)
 
 public:
    PopulatedMainWindow();

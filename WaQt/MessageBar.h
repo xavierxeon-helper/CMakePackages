@@ -10,7 +10,8 @@
 class MessageBar : public QStatusBar
 {
    Q_OBJECT
-   // see https://doc.qt.io/qt-6/qt-wrap-cpp.html
+   // in cmake use:
+   // list(APPEND SOURCE_FILES ${WAQT_INCLUDE_DIRS}/MessageBar.h)
 
 public:
    MessageBar(QWidget* parent);
