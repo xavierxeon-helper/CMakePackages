@@ -14,6 +14,9 @@ public:
    PopulatedMainWindow();
    virtual ~PopulatedMainWindow();
 
+public:
+   static void printSettingsLocation();
+
 protected:
    void populateMenuAndToolBar(const QString& xmlResource);
    virtual void closeEvent(QCloseEvent* ce) override;

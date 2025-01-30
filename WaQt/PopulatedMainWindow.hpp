@@ -15,13 +15,19 @@ inline PopulatedMainWindow::PopulatedMainWindow()
    : QMainWindow(nullptr)
 {
    QSettings settings;
-   qInfo() << "SETTINGS @" << settings.fileName();
    restoreGeometry(settings.value("MainWidget/Geometry").toByteArray());
    restoreState(settings.value("MainWidget/State").toByteArray());
 }
 
 inline PopulatedMainWindow::~PopulatedMainWindow()
 {
+}
+
+inline void PopulatedMainWindow::printSettingsLocation()
+{
+   QSettings settings;
+   qInfo() << "SETTINGS @" << settings.fileName();
+
 }
 
 inline void PopulatedMainWindow::populateMenuAndToolBar(const QString& xmlResource)
