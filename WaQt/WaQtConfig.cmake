@@ -10,3 +10,4 @@ get_filename_component(WAQT_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
 set(WAQT_INCLUDE_DIRS ${WAQT_CMAKE_DIR})
 
 include_directories(${WAQT_INCLUDE_DIRS})
+include(${WAQT_CMAKE_DIR}/functions.cmake)
