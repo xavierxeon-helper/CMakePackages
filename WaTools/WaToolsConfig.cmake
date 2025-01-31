@@ -71,12 +71,12 @@ function(run_qt_deploy)
    set(QT_QML_DIR ${QT_BIN_DIR}/../qml)
 
    if(APPLE)
-      find_program(MAXDEPLOYQT_EXECUTABLE windeployqt HINTS "${QT_BIN_DIR}")
-      message(STATUS "MACDEPLOY ${MAXDEPLOYQT_EXECUTABLE}, QT_QML_DIR ${QT_QML_DIR}")
+      find_program(MACDEPLOYQT_EXECUTABLE macdeployqt HINTS "${QT_BIN_DIR}")
+      message(STATUS "MACDEPLOY ${MACDEPLOYQT_EXECUTABLE}, QT_QML_DIR ${QT_QML_DIR}")
 
       add_custom_command(TARGET ${PROJECT_NAME}
          POST_BUILD
-         COMMAND "${MAXDEPLOYQT_EXECUTABLE}" --no-translations --no-system-d3d-compiler --compiler-runtime --qmldir ${QT_QML_DIR} \"$<TARGET_FILE:${PROJECT_NAME}>\"
+         COMMAND "${MACDEPLOYQT_EXECUTABLE}" --qmldir ${QT_QML_DIR} \"$<TARGET_FILE:${PROJECT_NAME}>\"
       )
    elseif(WIN32)
       find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${QT_BIN_DIR}")
