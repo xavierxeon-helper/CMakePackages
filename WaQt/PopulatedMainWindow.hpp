@@ -32,12 +32,19 @@ inline PopulatedMainWindow* PopulatedMainWindow::the()
    return me;
 }
 
-
 inline void PopulatedMainWindow::printSettingsLocation()
 {
    QSettings settings;
    qInfo() << "SETTINGS @" << settings.fileName();
+}
 
+inline QAction* PopulatedMainWindow::addAction(QIcon icon, QString text, QString objectName, QObject* instance, auto slotFunction)
+{
+   QAction* action = new QAction(icon, text, instance);
+   action->setObjectName(objectName);
+   connect(action, &QAction::triggered, instance, slotFunction);
+
+   return action;
 }
 
 inline void PopulatedMainWindow::populateMenuAndToolBar(const QString& xmlResource)
@@ -75,6 +82,11 @@ inline void PopulatedMainWindow::closeEvent(QCloseEvent* ce)
    settings.setValue("MainWidget/State", saveState());
 
    ce->accept();
+}
+
+inline QMenu* PopulatedMainWindow::createPopupMenu()
+{
+   return nullptr;
 }
 
 inline void PopulatedMainWindow::createToolBar(QDomElement thingElement)

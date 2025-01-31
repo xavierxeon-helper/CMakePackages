@@ -21,10 +21,12 @@ signals:
 public:
    static PopulatedMainWindow* the();
    static void printSettingsLocation();
+   static QAction* addAction(QIcon icon, QString text, QString objectName, QObject* instance, auto slotFunction);
 
 protected:
    void populateMenuAndToolBar(const QString& xmlResource);
    virtual void closeEvent(QCloseEvent* ce) override;
+   virtual QMenu* createPopupMenu() override;
 
 private:
    void createToolBar(QDomElement thingElement);
