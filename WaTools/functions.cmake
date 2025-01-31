@@ -1,12 +1,32 @@
 # include subdirs
-function(add_include_subdirs SUB_DIR_PATH)
+function(add_subdirs_files SUB_DIR_PATH)
    include_directories("${SUB_DIR_PATH}")
    file(GLOB SUB_DIRECTORIES LIST_DIRECTORIES true "${SUB_DIR_PATH}/*")
 
-   foreach(item ${SUB_DIRECTORIES})
-      if(IS_DIRECTORY ${item})
-         include_directories("${item}")
+   foreach(SUB_DIR ${SUB_DIRECTORIES})
+      if(NOT IS_DIRECTORY ${SUB_DIR})
+         continue()
       endif()
+
+      if(${SUB_DIR} STREQUAL ${PROJECT_SOURCE_DIR}/build)
+         continue()
+      endif()
+
+      if(EXISTS ${SUB_DIR}/CMakeLists.txt)
+         message(STATUS "Skipping directory files: ${SUB_DIR}")
+         continue()
+      endif()
+
+      message(STATUS "Include directory files: ${SUB_DIR}")
+      include_directories(${SUB_DIR})
+      file(GLOB SUBDIR_FILES
+         ${SUB_DIR}/*.h
+         ${SUB_DIR}/*.hpp
+         ${SUB_DIR}/*.cpp
+         ${SUB_DIR}/*.ui
+         ${SUB_DIR}/*.qrc
+      )
+      target_sources(${PROJECT_NAME} PRIVATE ${SUBDIR_FILES})
    endforeach()
 endfunction()
 
