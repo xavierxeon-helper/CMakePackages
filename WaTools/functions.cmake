@@ -1,4 +1,28 @@
 # include subdirs
+function(add_subdirs_include SUB_DIR_PATH)
+   include_directories("${SUB_DIR_PATH}")
+   file(GLOB SUB_DIRECTORIES LIST_DIRECTORIES true "${SUB_DIR_PATH}/*")
+
+   foreach(SUB_DIR ${SUB_DIRECTORIES})
+      if(NOT IS_DIRECTORY ${SUB_DIR})
+         continue()
+      endif()
+
+      if(${SUB_DIR} STREQUAL ${PROJECT_SOURCE_DIR}/build)
+         continue()
+      endif()
+
+      if(EXISTS ${SUB_DIR}/CMakeLists.txt)
+         message(STATUS "Skipping directory files: ${SUB_DIR}")
+         continue()
+      endif()
+
+      message(STATUS "Include directory: ${SUB_DIR}")
+      include_directories(${SUB_DIR})
+   endforeach()
+endfunction()
+
+# include suibdir files
 function(add_subdirs_files SUB_DIR_PATH)
    include_directories("${SUB_DIR_PATH}")
    file(GLOB SUB_DIRECTORIES LIST_DIRECTORIES true "${SUB_DIR_PATH}/*")
