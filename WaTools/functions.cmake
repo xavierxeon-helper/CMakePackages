@@ -79,12 +79,11 @@ function(set_standrard_release_output_path)
    endif()
 
    if(APPLE)
-      set(CMAKE_RUNTIME_OUTPUT_DIRECTORY $ENV{HOME}/Applications)
+      set(CMAKE_RUNTIME_OUTPUT_DIRECTORY $ENV{HOME}/Applications PARENT_SCOPE)
    elseif(WIN32)
-      set(CMAKE_RUNTIME_OUTPUT_DIRECTORY $ENV{LOCALAPPDATA}/${PROJECT_NAME})
-
+      set(CMAKE_RUNTIME_OUTPUT_DIRECTORY $ENV{LOCALAPPDATA}/${PROJECT_NAME} PARENT_SCOPE)
    elseif(UNIX)
-      set(CMAKE_RUNTIME_OUTPUT_DIRECTORY $ENV{HOME}/bin)
+      set(CMAKE_RUNTIME_OUTPUT_DIRECTORY $ENV{HOME}/bin PARENT_SCOPE)
    endif()
 endfunction()
 
@@ -94,7 +93,7 @@ function(set_application_icon PATH_TO_ICON)
       set(APP_ICON ${PATH_TO_ICON}.icns)
       message(STATUS "APP_ICON: ${APP_ICON}")
 
-      set(MACOSX_BUNDLE_ICON_FILE ${PROJECT_NAME}.icns)
+      set(MACOSX_BUNDLE_ICON_FILE ${PROJECT_NAME}.icns PARENT_SCOPE)
       set_source_files_properties(${APP_ICON} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
       target_sources(${PROJECT_NAME} PRIVATE ${APP_ICON})

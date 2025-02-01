@@ -12,7 +12,6 @@ struct Size
    Size& operator=(const Size& other);
 
    bool isZero() const;
-
 };
 
 #ifndef SizeHPP

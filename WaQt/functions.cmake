@@ -1,4 +1,4 @@
-# qt deploy
+# qt deploy , see https://www.qt.io/blog/cmake-deployment-api
 function(run_qt_deploy)
    if(NOT CMAKE_BUILD_TYPE STREQUAL "Release")
       return()
@@ -13,11 +13,11 @@ function(run_qt_deploy)
 
    if(APPLE)
       find_program(MACDEPLOYQT_EXECUTABLE macdeployqt HINTS "${QT_BIN_DIR}")
-      message(STATUS "MACDEPLOY ${MACDEPLOYQT_EXECUTABLE}, QT_QML_DIR ${QT_QML_DIR}")
+      message(STATUS "MACDEPLOY ${MACDEPLOYQT_EXECUTABLE}, QT_QML_DIR =  ${QT_QML_DIR}")
 
       add_custom_command(TARGET ${PROJECT_NAME}
          POST_BUILD
-         COMMAND "${MACDEPLOYQT_EXECUTABLE}" --qmldir ${QT_QML_DIR} \"$<TARGET_FILE:${PROJECT_NAME}>\"
+         COMMAND "${MACDEPLOYQT_EXECUTABLE}" \"$<TARGET_BUNDLE_DIR:${PROJECT_NAME}>\" -qmldir="${QT_QML_DIR}"
       )
    elseif(WIN32)
       find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${QT_BIN_DIR}")

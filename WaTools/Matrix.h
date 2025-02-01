@@ -13,6 +13,8 @@ public:
 
 public:
    const Size& getSize() const;
+   void appendRow(const DataType& initialValue = DataType());
+   void removeRow(const uint16_t row);
 
 private:
    Size size;
