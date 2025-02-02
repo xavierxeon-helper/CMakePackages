@@ -55,7 +55,7 @@ function(add_subdirs_files SUB_DIR_PATH)
 endfunction()
 
 # precompiled headers
-function(use_precompiled_headers HEADER_FILE)
+function(use_named_precompiled_headers HEADER_FILE)
    target_precompile_headers(${PROJECT_NAME} PUBLIC ${HEADER_FILE})
    target_sources(${PROJECT_NAME} PRIVATE ${HEADER_FILE})
 endfunction()
@@ -75,6 +75,13 @@ endfunction()
 # standard release output path
 function(set_standrard_release_output_path)
    if(NOT CMAKE_BUILD_TYPE STREQUAL "Release")
+      return()
+   endif()
+
+   get_property(TARGET_TEST DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY BUILDSYSTEM_TARGETS)
+
+   if(TARGET_TEST)
+      message(FATAL_ERROR "The function 'set_standrard_release_output_path' must be called before any target is created")
       return()
    endif()
 
