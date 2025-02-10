@@ -11,3 +11,8 @@ set(WAQT_INCLUDE_DIRS ${WAQT_CMAKE_DIR})
 
 include_directories(${WAQT_INCLUDE_DIRS})
 include(${WAQT_CMAKE_DIR}/functions.cmake)
+
+find_package(Qt6 REQUIRED COMPONENTS Widgets Xml)
+
+
+link_libraries(Qt6::Widgets Qt6::Xml)
