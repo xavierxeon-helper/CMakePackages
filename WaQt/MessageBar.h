@@ -1,13 +1,10 @@
 #ifndef MessageBarH
 #define MessageBarH
 
+#include "Logger.h"
 #include <QStatusBar>
 
-#include <QLabel>
-
-#include <LogInterface.h>
-
-class MessageBar : public QStatusBar, public LogInterface
+class MessageBar : public QStatusBar, public Logger
 {
    Q_OBJECT
    // in cmake use:

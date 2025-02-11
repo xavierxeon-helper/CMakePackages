@@ -1,15 +1,15 @@
-#ifndef LogInterfaceH
-#define LogInterfaceH
+#ifndef LoggerH
+#define LoggerH
 
 #include <QTextStream>
 
 #include "IOChannel.h"
 
-class LogInterface
+class Logger
 {
 public:
-   LogInterface();
-   ~LogInterface();
+   Logger();
+   ~Logger();
 
 public:
    static QTextStream message();
@@ -19,13 +19,13 @@ protected:
    virtual void print(const QString& text, bool isWarning);
 
 private:
-   static LogInterface* me;
+   static Logger* me;
    IOChannel* messageChannel;
    IOChannel* warningChannel;
 };
 
-#ifndef LogInterfaceHPP
-#include "LogInterface.hpp"
-#endif // NOT LogInterfaceHPP
+#ifndef LoggerHPP
+#include "Logger.hpp"
+#endif // NOT LoggerHPP
 
-#endif // NOT LogInterfaceH
+#endif // NOT LoggerH

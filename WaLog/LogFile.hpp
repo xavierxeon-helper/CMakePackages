@@ -6,34 +6,63 @@
 
 #include "LogFile.h"
 
+inline LogFileBase::LogFileBase(const QString& fileName, bool appendTimeStamp)
+   : file(nullptr)
+   , logFileName()
+{
+   const QFileInfo info(fileName);
+
+   logFileName = info.path() + "/" + info.baseName();
+   if (appendTimeStamp)
+      logFileName += QDateTime::currentDateTime().toString("_yyyyMMdd_hhmmss");
+   logFileName += "." + info.completeSuffix();
+}
+
+inline LogFileBase::~LogFileBase()
+{
+   if (file)
+   {
+      file->close();
+      delete file;
+   }
+}
+
+inline QString LogFileBase::getFileName() const
+{
+   return logFileName;
+}
+
+inline QTextStream LogFileBase::stream()
+{
+   if (!file)
+   {
+      file = new QFile(logFileName);
+      file->open(QIODevice::WriteOnly);
+   }
+
+   return QTextStream(file);
+}
+
+inline void LogFileBase::writeToStream(const QString& message)
+{
+   stream() << message;
+}
+
+//
+
 template <CompileTimeString tag>
 inline LogFile<tag>* LogFile<tag>::me = nullptr;
 
 template <CompileTimeString tag>
 inline LogFile<tag>::LogFile(const QString& fileName, bool appendTimeStamp)
-   : file(nullptr)
-   , logFileName()
+   : LogFileBase(fileName, appendTimeStamp)
 {
    me = this;
-
-   const QFileInfo info(fileName);
-
-   logFileName = info.path() + "/" +  info.baseName();
-   if(appendTimeStamp)
-      logFileName +=  QDateTime::currentDateTime().toString("_yyyyMMdd_hhmmss");
-   logFileName += "." + info.completeSuffix();
-
 }
 
 template <CompileTimeString tag>
 inline LogFile<tag>::~LogFile()
 {
-   if(file)
-   {
-      file->close();
-      delete file;
-   }
-
    me = nullptr;
 }
 
@@ -43,25 +72,7 @@ inline QTextStream LogFile<tag>::stream()
    if (!me)
       return QTextStream();
 
-   me->openFileIfNecessary();
-
-   return QTextStream(me->file);
-}
-
-template <CompileTimeString tag>
-QString LogFile<tag>::getFileName() const
-{
-   return logFileName;
-}
-
-template <CompileTimeString tag>
-void LogFile<tag>::openFileIfNecessary()
-{
-   if(file)
-      return;
-
-   file = new QFile(logFileName);
-   file->open(QIODevice::WriteOnly);
+   me->stream();
 }
 
 #endif // NOT LogFileHPP

@@ -1,34 +1,33 @@
-#ifndef LogInterfaceHPP
-#define LogInterfaceHPP
+#ifndef LoggerHPP
+#define LoggerHPP
 
-#include "LogInterface.h"
+#include "Logger.h"
 
-inline LogInterface* LogInterface::me = nullptr;
+inline Logger* Logger::me = nullptr;
 
-inline LogInterface::LogInterface()
+inline Logger::Logger()
    : messageChannel(nullptr)
    , warningChannel(nullptr)
-
 {
    me = this;
 
    auto printFunction = [&](bool isWarning)
    {
-      return std::bind(&LogInterface::print, this, std::placeholders::_1, isWarning);
+      return std::bind(&Logger::print, this, std::placeholders::_1, isWarning);
    };
 
    messageChannel = new IOChannel(nullptr, printFunction(false));
    warningChannel = new IOChannel(nullptr, printFunction(true));
 }
 
-inline LogInterface::~LogInterface()
+inline Logger::~Logger()
 {
    me = nullptr;
    messageChannel->deleteLater();
    warningChannel->deleteLater();
 }
 
-inline QTextStream LogInterface::message()
+inline QTextStream Logger::message()
 {
    if (!me)
       return QTextStream();
@@ -36,7 +35,7 @@ inline QTextStream LogInterface::message()
    return me->messageChannel->stream();
 }
 
-inline QTextStream LogInterface::warning()
+inline QTextStream Logger::warning()
 {
    if (!me)
       return QTextStream();
@@ -44,7 +43,7 @@ inline QTextStream LogInterface::warning()
    return me->warningChannel->stream();
 }
 
-inline void LogInterface::print(const QString& text, bool isWarning)
+inline void Logger::print(const QString& text, bool isWarning)
 {
    if (isWarning)
       qWarning() << qPrintable(text);
@@ -52,4 +51,4 @@ inline void LogInterface::print(const QString& text, bool isWarning)
       qDebug() << qPrintable(text);
 }
 
-#endif // NOT LogInterfaceHPP
+#endif // NOT LoggerHPP

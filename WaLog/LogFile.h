@@ -5,8 +5,26 @@
 
 #include <QFile>
 
+class LogFileBase
+{
+public:
+   QString getFileName() const;
+   QTextStream stream();
+   void writeToStream(const QString& message);
+
+protected:
+   LogFileBase(const QString& fileName, bool appendTimeStamp);
+   virtual ~LogFileBase() = 0;
+
+private:
+   QFile* file;
+   QString logFileName;
+};
+
+// tag is used to create a unique instance of LogFile
+
 template <CompileTimeString tag>
-class LogFile
+class LogFile : public LogFileBase
 {
 public:
    LogFile(const QString& fileName, bool appendTimeStamp = false);
@@ -14,15 +32,9 @@ public:
 
 public:
    static QTextStream stream();
-   QString getFileName() const;
-
-private:
-   void openFileIfNecessary();
 
 private:
    static LogFile* me;
-   QString logFileName;
-   QFile* file;
 };
 
 #ifndef LogFileHPP

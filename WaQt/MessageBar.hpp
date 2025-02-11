@@ -3,14 +3,14 @@
 
 #include "MessageBar.h"
 
-#include <QApplication>
-#include <QTimer>
 
 inline MessageBar::MessageBar(QWidget* parent)
    : QStatusBar(parent)
-   , LogInterface()
+   , Logger()
 {
    setSizeGripEnabled(false);
+
+
 }
 
 

@@ -7,7 +7,7 @@
 
 inline IOChannel::IOChannel(QObject* parent)
    : QIODevice(parent)
-   , printFunction()
+   , printFunctions()
 {
    open(QIODevice::WriteOnly);
 }
@@ -16,7 +16,7 @@ inline IOChannel::IOChannel(QObject* parent, PrintFunction printFunction)
    : IOChannel(parent)
 
 {
-   setup(printFunction);
+   addPrinter(printFunction);
 }
 
 inline QTextStream IOChannel::stream()
@@ -24,9 +24,9 @@ inline QTextStream IOChannel::stream()
    return QTextStream(this);
 }
 
-inline void IOChannel::setup(PrintFunction printFunction)
+inline void IOChannel::addPrinter(PrintFunction printFunction)
 {
-   this->printFunction = printFunction;
+   printFunctions.append(printFunction);
 }
 
 inline qint64 IOChannel::readData(char* data, qint64 maxSize)
@@ -39,8 +39,9 @@ inline qint64 IOChannel::readData(char* data, qint64 maxSize)
 
 inline qint64 IOChannel::writeData(const char* data, qint64 maxSize)
 {
-   if (printFunction)
-      printFunction(QString::fromUtf8(data));
+   const QString message = QString::fromUtf8(data);
+   for (const PrintFunction& printFunction : printFunctions)
+      printFunction(message);
 
    return maxSize;
 }
