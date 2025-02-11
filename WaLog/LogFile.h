@@ -5,12 +5,14 @@
 
 #include <QFile>
 
+#include "IOChannel.h"
+
 class LogFileBase
 {
 public:
    QString getFileName() const;
    QTextStream stream();
-   void writeToStream(const QString& message);
+   IOChannel::PrintFunction printFunction();
 
 protected:
    LogFileBase(const QString& fileName, bool appendTimeStamp);

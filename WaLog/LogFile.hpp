@@ -43,9 +43,14 @@ inline QTextStream LogFileBase::stream()
    return QTextStream(file);
 }
 
-inline void LogFileBase::writeToStream(const QString& message)
+inline IOChannel::PrintFunction LogFileBase::printFunction()
 {
-   stream() << message;
+   IOChannel::PrintFunction printToStream = [this](const QString& message)
+   {
+      stream() << message;
+   };
+
+   return printToStream;
 }
 
 //

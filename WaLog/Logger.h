@@ -14,6 +14,7 @@ public:
 public:
    static QTextStream message();
    static QTextStream warning();
+   void addAdditionalPrinter(IOChannel::PrintFunction printFunction, bool isWarning);
 
 protected:
    virtual void print(const QString& text, bool isWarning);
