@@ -5,9 +5,9 @@
 
 #include <QLabel>
 
-#include <IOChannel.h>
+#include <LogInterface.h>
 
-class MessageBar : public QStatusBar
+class MessageBar : public QStatusBar, public LogInterface
 {
    Q_OBJECT
    // in cmake use:
@@ -15,19 +15,9 @@ class MessageBar : public QStatusBar
 
 public:
    MessageBar(QWidget* parent);
-   ~MessageBar();
-
-public:
-   static QTextStream message();
-   static QTextStream warning();
 
 private:
-   void print(const QString& text, bool isWarning = false);
-
-private:
-   static MessageBar* me;
-   IOChannel* messageChannel;
-   IOChannel* warningChannel;
+   void print(const QString& text, bool isWarning) override;
 };
 
 #ifndef MessageBarHPP
