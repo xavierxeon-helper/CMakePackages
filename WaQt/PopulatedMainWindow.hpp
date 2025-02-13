@@ -91,11 +91,23 @@ inline QMenu* PopulatedMainWindow::createPopupMenu()
 
 inline void PopulatedMainWindow::createToolBar(QDomElement thingElement)
 {
+   auto findOrCreateToolBar = [&](const QString& name)
+   {
+      QToolBar* toolBar = findChild<QToolBar*>(name, Qt::FindChildrenRecursively);
+      if(toolBar)
+         return toolBar;
+
+      toolBar = addToolBar(name);
+      toolBar->setObjectName(name);
+      toolBar->setMovable(false);
+      toolBar->setIconSize(QSize(24, 24));
+
+      return toolBar;
+   };
+
    const QString name = thingElement.attribute("Name");
-   QToolBar* toolBar = addToolBar(name);
-   toolBar->setObjectName(name);
-   toolBar->setMovable(false);
-   toolBar->setIconSize(QSize(24, 24));
+   QToolBar* toolBar  = findOrCreateToolBar(name);
+
 
    for (QDomElement contentElement = thingElement.firstChildElement(); !contentElement.isNull(); contentElement = contentElement.nextSiblingElement())
    {
