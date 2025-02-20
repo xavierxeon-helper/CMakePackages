@@ -15,8 +15,11 @@ public:
 
 protected:
    void setFlow(QOAuth2AuthorizationCodeFlow* oauthFlow);
+   QOAuth2AuthorizationCodeFlow*  flow() const;
    virtual void saveRefreshToken(const QString& refreshToken) const;
    virtual QString loadRefreshToken();
+   virtual void setAuthorization(QNetworkRequest& request, const QByteArray& bearerToken) override;
+
 
 private:
    QByteArray updateBearerToken() override;

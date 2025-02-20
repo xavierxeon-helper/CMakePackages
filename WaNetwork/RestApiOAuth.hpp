@@ -25,6 +25,11 @@ inline void RestApiOAuth::setFlow(QOAuth2AuthorizationCodeFlow* _oauthFlow)
    oauthFlow->setRefreshToken(token);
 }
 
+inline QOAuth2AuthorizationCodeFlow*  RestApiOAuth::flow() const
+{
+   return oauthFlow;
+}
+
 inline void RestApiOAuth::saveRefreshToken(const QString& refreshToken) const
 {
    Q_UNUSED(refreshToken);
@@ -33,6 +38,11 @@ inline void RestApiOAuth::saveRefreshToken(const QString& refreshToken) const
 inline QString RestApiOAuth::loadRefreshToken()
 {
    return QString();
+}
+
+inline void RestApiOAuth::setAuthorization(QNetworkRequest& request, const QByteArray& bearerToken)
+{
+   request.setRawHeader("Authorization", "Bearer " + bearerToken);
 }
 
 inline QByteArray RestApiOAuth::updateBearerToken()
@@ -48,7 +58,7 @@ inline QByteArray RestApiOAuth::updateBearerToken()
 
    QEventLoop loop;
    QObject::connect(oauthFlow, &QAbstractOAuth::granted, &loop, &QEventLoop::quit);
-
+   QObject::connect(oauthFlow, &QAbstractOAuth::requestFailed,  &loop, &QEventLoop::quit);
    oauthFlow->refreshAccessToken();
    loop.exec();
 
