@@ -3,10 +3,13 @@
 
 #include "MessageHandler.h"
 
+#include <QThread>
+
 inline MessageHandler* MessageHandler::me = nullptr;
 
 inline MessageHandler::MessageHandler()
-   : systemHandler()
+   : QObject(nullptr)
+   , systemHandler()
    , targetMap()
 {
    me = this;
@@ -44,15 +47,26 @@ void MessageHandler::disable(HandlerClass* instance)
    me->targetMap.remove(target);
 }
 
+inline void MessageHandler::outputInternal(QtMsgType type, const QMessageLogContext& context, const QString& msg)
+{
+   for (Function function : targetMap.values())
+      function(type, context, msg);
+
+   systemHandler(type, context, msg);
+}
+
 inline void MessageHandler::output(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
    if (!me)
       return;
 
-   for (Function function : me->targetMap.values())
-      function(type, context, msg);
+   if(QThread::isMainThread())
+       me->outputInternal(type, context, msg);
+   else
+   {
+      //QMetaObject::invokeMethod(me, &MessageHandler::outputInternal, Qt::QueuedConnection, type, context, msg);
+   }
 
-   me->systemHandler(type, context, msg);
 }
 
 #endif // NOT MessageHandlerHPP

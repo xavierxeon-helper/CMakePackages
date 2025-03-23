@@ -1,12 +1,18 @@
 #ifndef MessageHandlerH
 #define MessageHandlerH
 
+#include <QObject>
+
 #include <functional>
 
 #include <QMap>
 
-struct MessageHandler
+struct MessageHandler : public QObject
 {
+   Q_OBJECT
+   // in cmake use:
+   // list(APPEND SOURCE_FILES ${WALOG_INCLUDE_DIRS}/MessageHandler.h)
+
 public:
    template <typename HandlerClass>
    static bool enable(HandlerClass* instance, void (HandlerClass::*hanlderFunction)(QtMsgType, const QMessageLogContext&, const QString&));
@@ -23,6 +29,7 @@ private:
    using TargetMap = QMap<void*, Function>;
 
 private:
+   Q_INVOKABLE void outputInternal(QtMsgType type, const QMessageLogContext& context, const QString& msg);
    static void output(QtMsgType type, const QMessageLogContext& context, const QString& msg);
 
 private:
