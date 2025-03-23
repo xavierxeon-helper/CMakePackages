@@ -43,12 +43,25 @@ inline QTextStream Logger::warning()
    return me->warningChannel->stream();
 }
 
+inline void Logger::showLogger()
+{
+   if(!me)
+      return;
+
+   me->reveal();
+}
+
 inline void Logger::addAdditionalPrinter(IOChannel::PrintFunction printFunction, bool isWarning)
 {
    if (isWarning)
       warningChannel->addPrinter(printFunction);
    else
       messageChannel->addPrinter(printFunction);
+}
+
+inline void Logger::reveal()
+{
+   // do nothing
 }
 
 inline void Logger::print(const QString& text, bool isWarning)

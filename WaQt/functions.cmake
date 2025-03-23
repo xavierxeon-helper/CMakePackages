@@ -17,6 +17,7 @@ function(run_qt_deploy)
 
       add_custom_command(TARGET ${PROJECT_NAME}
          POST_BUILD
+         COMMENT "Running macdeployqt..."
          COMMAND "${MACDEPLOYQT_EXECUTABLE}" \"$<TARGET_BUNDLE_DIR:${PROJECT_NAME}>\" -qmldir="${QT_QML_DIR}"
       )
    elseif(WIN32)
@@ -25,6 +26,7 @@ function(run_qt_deploy)
 
       add_custom_command(TARGET ${PROJECT_NAME}
          POST_BUILD
+         COMMENT "Running windeployqt..."
          COMMAND "${WINDEPLOYQT_EXECUTABLE}" --no-translations --no-system-d3d-compiler --compiler-runtime --qmldir ${QT_QML_DIR} \"$<TARGET_FILE:${PROJECT_NAME}>\"
       )
    endif()
