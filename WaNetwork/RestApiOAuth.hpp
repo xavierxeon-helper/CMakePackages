@@ -68,7 +68,7 @@ inline QByteArray RestApiOAuth::updateBearerToken()
    QEventLoop loop;
    QObject::connect(oauthFlow, &QAbstractOAuth::granted, &loop, &QEventLoop::quit);
    QObject::connect(oauthFlow, &QAbstractOAuth::requestFailed, &loop, &QEventLoop::quit);
-   oauthFlow->refreshToken();
+   oauthFlow->refreshTokens();
    loop.exec();
 
    const QByteArray bearerToken = oauthFlow->token().toUtf8();
