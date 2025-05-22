@@ -14,15 +14,24 @@ inline RestApiOAuth::RestApiOAuth(QObject* parent, const QString& baseUrl)
 {
 }
 
-inline void RestApiOAuth::setFlow(QOAuth2AuthorizationCodeFlow* _oauthFlow)
+inline QOAuth2AuthorizationCodeFlow* RestApiOAuth::setStandardFlow(const QString& baseAuthUrl, const QString& clientId, const QString& clientSecret)
+{
+   oauthFlow = new QOAuth2AuthorizationCodeFlow(this);
+
+   oauthFlow->setAuthorizationUrl(QUrl(baseAuthUrl + "/authorize"));
+   oauthFlow->setTokenUrl(QUrl(baseAuthUrl + "/token"));
+   oauthFlow->setClientIdentifier(clientId);
+   oauthFlow->setClientIdentifierSharedKey(clientSecret);   
+
+   initFlow();
+
+   return oauthFlow;
+}
+
+inline void RestApiOAuth::setCustomFlow(QOAuth2AuthorizationCodeFlow* _oauthFlow)
 {
    oauthFlow = _oauthFlow;
-
-   disconnect(grantConnection);
-   grantConnection = connect(oauthFlow, &QAbstractOAuth::authorizeWithBrowser, this, &QDesktopServices::openUrl);
-
-   const QString token = loadRefreshToken();
-   oauthFlow->setRefreshToken(token);
+   initFlow();
 }
 
 inline QOAuth2AuthorizationCodeFlow*  RestApiOAuth::flow() const
@@ -59,7 +68,8 @@ inline QByteArray RestApiOAuth::updateBearerToken()
    QEventLoop loop;
    QObject::connect(oauthFlow, &QAbstractOAuth::granted, &loop, &QEventLoop::quit);
    QObject::connect(oauthFlow, &QAbstractOAuth::requestFailed,  &loop, &QEventLoop::quit);
-   oauthFlow->refreshAccessToken();
+   //oauthFlow->refreshAccessToken();
+   oauthFlow->refreshTokens();
    loop.exec();
 
    const QByteArray bearerToken = oauthFlow->token().toUtf8();
@@ -90,6 +100,15 @@ inline QByteArray RestApiOAuth::authorizeUser()
    redirectHandler.close();
 
    return bearerToken;
+}
+
+inline void RestApiOAuth::initFlow()
+{
+   disconnect(grantConnection);
+   grantConnection = connect(oauthFlow, &QAbstractOAuth::authorizeWithBrowser, this, &QDesktopServices::openUrl);
+
+   const QString token = loadRefreshToken();
+   oauthFlow->setRefreshToken(token);
 }
 
 #endif // NOT RestApiOAuthHPP
