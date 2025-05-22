@@ -21,7 +21,7 @@ inline QOAuth2AuthorizationCodeFlow* RestApiOAuth::setStandardFlow(const QString
    oauthFlow->setAuthorizationUrl(QUrl(baseAuthUrl + "/authorize"));
    oauthFlow->setTokenUrl(QUrl(baseAuthUrl + "/token"));
    oauthFlow->setClientIdentifier(clientId);
-   oauthFlow->setClientIdentifierSharedKey(clientSecret);   
+   oauthFlow->setClientIdentifierSharedKey(clientSecret);
 
    initFlow();
 
@@ -34,7 +34,7 @@ inline void RestApiOAuth::setCustomFlow(QOAuth2AuthorizationCodeFlow* _oauthFlow
    initFlow();
 }
 
-inline QOAuth2AuthorizationCodeFlow*  RestApiOAuth::flow() const
+inline QOAuth2AuthorizationCodeFlow* RestApiOAuth::flow() const
 {
    return oauthFlow;
 }
@@ -67,9 +67,8 @@ inline QByteArray RestApiOAuth::updateBearerToken()
 
    QEventLoop loop;
    QObject::connect(oauthFlow, &QAbstractOAuth::granted, &loop, &QEventLoop::quit);
-   QObject::connect(oauthFlow, &QAbstractOAuth::requestFailed,  &loop, &QEventLoop::quit);
-   //oauthFlow->refreshAccessToken();
-   oauthFlow->refreshTokens();
+   QObject::connect(oauthFlow, &QAbstractOAuth::requestFailed, &loop, &QEventLoop::quit);
+   oauthFlow->refreshToken();
    loop.exec();
 
    const QByteArray bearerToken = oauthFlow->token().toUtf8();
