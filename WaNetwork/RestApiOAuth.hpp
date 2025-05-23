@@ -14,7 +14,7 @@ inline RestApiOAuth::RestApiOAuth(QObject* parent, const QString& baseUrl)
 {
 }
 
-inline QOAuth2AuthorizationCodeFlow* RestApiOAuth::setStandardFlow(const QString& baseAuthUrl, const QString& clientId, const QString& clientSecret)
+inline void RestApiOAuth::setStandardFlow(const QString& baseAuthUrl, const QString& clientId, const QString& clientSecret)
 {
    oauthFlow = new QOAuth2AuthorizationCodeFlow(this);
 
@@ -25,7 +25,6 @@ inline QOAuth2AuthorizationCodeFlow* RestApiOAuth::setStandardFlow(const QString
 
    initFlow();
 
-   return oauthFlow;
 }
 
 inline void RestApiOAuth::setCustomFlow(QOAuth2AuthorizationCodeFlow* _oauthFlow)
@@ -34,7 +33,7 @@ inline void RestApiOAuth::setCustomFlow(QOAuth2AuthorizationCodeFlow* _oauthFlow
    initFlow();
 }
 
-inline QOAuth2AuthorizationCodeFlow* RestApiOAuth::flow() const
+inline QOAuth2AuthorizationCodeFlow* RestApiOAuth::getFlow() const
 {
    return oauthFlow;
 }
