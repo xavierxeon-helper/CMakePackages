@@ -5,6 +5,8 @@
 
 #include "IOChannel.h"
 
+/// provide streams for logging messages and warnings
+/// can add additional printer to the message and warning streams
 class Logger
 {
 public:
@@ -14,7 +16,7 @@ public:
 public:
    static QTextStream message();
    static QTextStream warning();
-   static void showLogger();
+   static void showLogger(); // when subclassed add astatic ability to show logger
    void addAdditionalPrinter(IOChannel::PrintFunction printFunction, bool isWarning);
 
 protected:

@@ -6,25 +6,15 @@
 
 #include "LogFile.h"
 
-inline LogFileBase::LogFileBase(const QString& fileName, bool appendTimeStamp)
+inline LogFileBase::LogFileBase(const QString& fileName)
    : file(nullptr)
-   , logFileName()
+   , logFileName(fileName)
 {
-   const QFileInfo info(fileName);
-
-   logFileName = info.path() + "/" + info.baseName();
-   if (appendTimeStamp)
-      logFileName += QDateTime::currentDateTime().toString("_yyyyMMdd_hhmmss");
-   logFileName += "." + info.completeSuffix();
 }
 
 inline LogFileBase::~LogFileBase()
 {
-   if (file)
-   {
-      file->close();
-      delete file;
-   }
+   cleanup();
 }
 
 inline QString LogFileBase::getFileName() const
@@ -53,14 +43,41 @@ inline IOChannel::PrintFunction LogFileBase::printFunction()
    return printToStream;
 }
 
+inline void LogFileBase::setFileName(const QString& fileName)
+{
+   logFileName = fileName;
+   cleanup();
+}
+
+inline QString LogFileBase::appendTimeStampToFileName(const QString& fileName)
+{
+   const QFileInfo info(fileName);
+
+   QString logFileName = info.path() + "/" + info.baseName();
+   logFileName += QDateTime::currentDateTime().toString("_yyyyMMdd_hhmmss");
+   logFileName += "." + info.completeSuffix();
+
+   return logFileName;
+}
+
+inline void LogFileBase::cleanup()
+{
+   if (file)
+   {
+      file->close();
+      delete file;
+   }
+   file = nullptr;
+}
+
 //
 
 template <CompileTimeString tag>
 inline LogFile<tag>* LogFile<tag>::me = nullptr;
 
 template <CompileTimeString tag>
-inline LogFile<tag>::LogFile(const QString& fileName, bool appendTimeStamp)
-   : LogFileBase(fileName, appendTimeStamp)
+inline LogFile<tag>::LogFile(const QString& fileName)
+   : LogFileBase(fileName)
 {
    me = this;
 }

@@ -7,6 +7,8 @@
 
 #include "IOChannel.h"
 
+/// a file that acts as a target for a stream
+/// this class is pure virtual
 class LogFileBase
 {
 public:
@@ -14,22 +16,27 @@ public:
    QTextStream stream();
    IOChannel::PrintFunction printFunction();
 
+   void setFileName(const QString& fileName); /// closes file and opens it with a new filename
+   static QString appendTimeStampToFileName(const QString& fileName);
+
 protected:
-   LogFileBase(const QString& fileName, bool appendTimeStamp);
+   LogFileBase(const QString& fileName);
    virtual ~LogFileBase() = 0;
+
+private:
+   void cleanup();
 
 private:
    QFile* file;
    QString logFileName;
 };
 
-// tag is used to create a unique instance of LogFile
-
+/// tag is used to create a unique instance of LogFile and provides a static text stream
 template <CompileTimeString tag>
 class LogFile : public LogFileBase
 {
 public:
-   LogFile(const QString& fileName, bool appendTimeStamp = false);
+   LogFile(const QString& fileName);
    ~LogFile();
 
 public:

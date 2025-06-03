@@ -7,6 +7,7 @@
 
 #include <QMap>
 
+/// override the default Qt message handler
 struct MessageHandler : public QObject
 {
    Q_OBJECT
