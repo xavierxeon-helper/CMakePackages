@@ -119,7 +119,8 @@ inline QJsonObject RestApi::handleReply(QNetworkRequest request, ReplyGeneratorF
    }
    else if (401 != statusCode)
    {
-      qDebug() << "unhandled status code" << statusCode;
+      qWarning() << "unhandled status code" << statusCode;
+      qWarning() << content;
       return content;
    }
 
