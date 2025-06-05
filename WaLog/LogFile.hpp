@@ -49,12 +49,12 @@ inline void LogFileBase::setFileName(const QString& fileName)
    cleanup();
 }
 
-inline QString LogFileBase::appendTimeStampToFileName(const QString& fileName)
+inline QString LogFileBase::appendTimeStampToFileName(const QString& fileName, const QDateTime& timestamp)
 {
    const QFileInfo info(fileName);
 
    QString logFileName = info.path() + "/" + info.baseName();
-   logFileName += QDateTime::currentDateTime().toString("_yyyyMMdd_hhmmss");
+   logFileName += timestamp.toString("_yyyyMMdd_hhmmss");
    logFileName += "." + info.completeSuffix();
 
    return logFileName;

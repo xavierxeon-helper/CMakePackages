@@ -17,7 +17,7 @@ public:
    IOChannel::PrintFunction printFunction();
 
    void setFileName(const QString& fileName); /// closes file and opens it with a new filename
-   static QString appendTimeStampToFileName(const QString& fileName);
+   static QString appendTimeStampToFileName(const QString& fileName, const QDateTime& timestamp = QDateTime::currentDateTime());
 
 protected:
    LogFileBase(const QString& fileName);
