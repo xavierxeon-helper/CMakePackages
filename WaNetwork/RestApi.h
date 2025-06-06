@@ -31,6 +31,7 @@ protected:
    virtual void setAuthorization(QNetworkRequest& request, const QByteArray& bearerToken);
 
    QJsonObject parseBytes(const QByteArray& data);
+   void setVerbose(bool enabled);
 
 private:
    using ReplyGeneratorFunction = std::function<QNetworkReply*(QNetworkRequest request)>;
@@ -44,6 +45,8 @@ private:
    QNetworkAccessManager* manager;
    QByteArray bearerToken;
    QString baseUrl;
+
+   bool verbose;
 };
 
 #ifndef RestApiHPP

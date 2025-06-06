@@ -11,6 +11,7 @@ inline RestApi::RestApi(QObject* parent, const QString& baseUrl)
    , manager(nullptr)
    , bearerToken()
    , baseUrl(baseUrl)
+   , verbose(false)
 {
    manager = new QNetworkAccessManager(this);
 }
@@ -76,6 +77,11 @@ inline QJsonObject RestApi::parseBytes(const QByteArray& data)
    return doc.object();
 }
 
+inline void RestApi::setVerbose(bool enabled)
+{
+   verbose = enabled;
+}
+
 inline QNetworkRequest RestApi::createRequest(const QString& endpoint, const QUrlQuery& params)
 {
    QUrl url(baseUrl + endpoint);
@@ -115,11 +121,14 @@ inline QJsonObject RestApi::handleReply(QNetworkRequest request, ReplyGeneratorF
 
    if (200 == statusCode)
    {
+      if (verbose)
+         qDebug() << "good reply for" << request.url().toString();
+
       return content;
    }
    else if (401 != statusCode)
    {
-      qWarning() << "unhandled status code" << statusCode;
+      qWarning() << "unhandled status code" << statusCode << "for" << request.url().toString();
       qWarning() << content;
       return content;
    }
@@ -139,7 +148,7 @@ inline void RestApi::handleReplyAsync(CallbackFunction callback, QNetworkRequest
    QNetworkReply* reply = replyGenerator(request);
    reply->ignoreSslErrors();
 
-   auto onFinshed = [this, reply, callback]()
+   auto onFinshed = [this, reply, request, callback]()
    {
       const int statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
       const QByteArray replyContent = reply->readAll();
@@ -153,7 +162,7 @@ inline void RestApi::handleReplyAsync(CallbackFunction callback, QNetworkRequest
       }
       else if (401 != statusCode)
       {
-         qDebug() << "unhandled status code" << statusCode;
+         qWarning() << "unhandled status code" << statusCode << "for" << request.url().toString();
          return callback(content);
       }
 
