@@ -72,7 +72,7 @@ $HOME/Library/Preferences/Nextcloud/nextcloud.cfg
 
    QString nextCloudPath = settings.value("Accounts/0/Folders/1/localPath").toString();
    nextCloudPath = QDir::fromNativeSeparators(nextCloudPath);
-   QString path = nextCloudPath + QString("/Apps/") + appName;
+   QString path = nextCloudPath + QString("Apps/") + appName;
 
    return path;
 }
