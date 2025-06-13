@@ -10,3 +10,6 @@ get_filename_component(WACRYPT_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
 set(WACRYPT_INCLUDE_DIRS ${WACRYPT_CMAKE_DIR})
 
 include_directories(${WACRYPT_INCLUDE_DIRS})
+
+find_package(Qt6 REQUIRED COMPONENTS Core)
+link_libraries(Qt6::Core)
