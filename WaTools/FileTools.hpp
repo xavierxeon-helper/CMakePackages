@@ -59,14 +59,18 @@ $HOME/Library/Preferences/Nextcloud/nextcloud.cfg
 */
 
 #if defined(Q_OS_WIN32)
-   QString homePath = QDir::homePath();
-   homePath = QDir::fromNativeSeparators(homePath);
-   QString nextCloudConfPath = homePath + "/.config/Nextcloud/nextcloud.cfg";
+   QString appPath = QStandardPaths ::writableLocation(QStandardPaths::AppDataLocation);
+   appPath = QDir::fromNativeSeparators(appPath);
+   appPath.replace(QCoreApplication::organizationName() + "/" + QCoreApplication::applicationName(), "");
+   const QString nextCloudConfPath = appPath + "/Nextcloud/nextcloud.cfg";
 #elif defined(Q_OS_OSX)
-   QString nextCloudConfPath = QDir::homePath() + "/Library/Preferences/Nextcloud/nextcloud.cfg";
+   const QString nextCloudConfPath = QDir::homePath() + "/Library/Preferences/Nextcloud/nextcloud.cfg";
 #else // linux
-   QString nextCloudConfPath = QDir::homePath() + "/.config/Nextcloud/nextcloud.cfg";
+   const QString nextCloudConfPath = QDir::homePath() + "/.config/Nextcloud/nextcloud.cfg";
 #endif
+
+   if (!QFile::exists(nextCloudConfPath))
+      return QString();
 
    QSettings settings(nextCloudConfPath, QSettings::IniFormat);
 
