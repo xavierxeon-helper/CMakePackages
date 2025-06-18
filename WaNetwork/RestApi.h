@@ -27,7 +27,7 @@ public:
 
 protected:
    void setBearerToken(const QByteArray& token);
-   virtual QByteArray updateBearerToken() = 0;
+   virtual QByteArray updateBearerToken();
    virtual void setAuthorization(QNetworkRequest& request, const QByteArray& bearerToken);
 
    QJsonObject parseBytes(const QByteArray& data) const;

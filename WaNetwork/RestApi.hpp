@@ -59,6 +59,12 @@ inline void RestApi::setBearerToken(const QByteArray& token)
    bearerToken = token;
 }
 
+inline QByteArray RestApi::updateBearerToken()
+{
+   // do nothing
+   return bearerToken;
+}
+
 inline void RestApi::setAuthorization(QNetworkRequest& request, const QByteArray& bearerToken)
 {
    request.setRawHeader("Authorization", bearerToken);
