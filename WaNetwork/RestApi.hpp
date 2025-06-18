@@ -64,7 +64,7 @@ inline void RestApi::setAuthorization(QNetworkRequest& request, const QByteArray
    request.setRawHeader("Authorization", bearerToken);
 }
 
-inline QJsonObject RestApi::parseBytes(const QByteArray& data)
+inline QJsonObject RestApi::parseBytes(const QByteArray& data) const
 {
    QJsonParseError error;
    QJsonDocument doc = QJsonDocument::fromJson(data, &error);
