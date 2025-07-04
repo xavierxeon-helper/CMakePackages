@@ -2,14 +2,18 @@
 function(init_all_git_submodules)
    find_package(Git QUIET)
 
-   execute_process(COMMAND ${GIT_EXECUTABLE} submodule status
-      COMMAND grep -v -c heads
-      WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
-      OUTPUT_VARIABLE GIT_TEST_RESULT)
+   if(WIN32)
+      message(WARNING "GIT SUBMODULE: no test")
+   else()
+      execute_process(COMMAND ${GIT_EXECUTABLE} submodule status
+         COMMAND grep -v -c heads
+         WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+         OUTPUT_VARIABLE GIT_TEST_RESULT)
 
-   if(GIT_TEST_RESULT EQUAL "0")
-      message(STATUS "GIT SUBMODULE: no uninitialized")
-      return()
+      if(GIT_TEST_RESULT EQUAL "0")
+         message(STATUS "GIT SUBMODULE: no uninitialized")
+         return()
+      endif()
    endif()
 
    message(STATUS "GIT SUBMODULE: init recursive")
