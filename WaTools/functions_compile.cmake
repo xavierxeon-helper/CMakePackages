@@ -64,8 +64,6 @@ function(add_all_subdirs_files SUB_DIR_PATH)  # args = list of skip directories
    add_sub_dirs_files(${SUB_DIRECTORIES})
 endfunction()
 
-
-
 # precompiled headers
 function(use_named_precompiled_headers HEADER_FILE)
    target_precompile_headers(${PROJECT_NAME} PUBLIC ${HEADER_FILE})
@@ -82,4 +80,19 @@ function(use_precompiled_headers)
 
    target_precompile_headers(${PROJECT_NAME} PUBLIC ${HEADER_FILE})
    target_sources(${PROJECT_NAME} PRIVATE ${HEADER_FILE})
+endfunction()
+
+# init all git submodules
+function(init_all_git_submodules)
+   message(STATUS "GIT SUBMODULE INIT")
+
+   find_package(Git QUIET)
+
+   execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive
+      WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+      RESULT_VARIABLE GIT_SUBMOD_RESULT)
+
+   if(NOT GIT_SUBMOD_RESULT EQUAL "0")
+      message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
+   endif()
 endfunction()
