@@ -1,5 +1,5 @@
 # crawl through subdirs and include dirs
-function(add_all_subdirs_include SUB_DIR_PATH)  # args = list of skip directories
+function(add_all_subdirs_include SUB_DIR_PATH) # args = list of skip directories
    include_directories("${SUB_DIR_PATH}")
    file(GLOB SUB_DIRECTORIES LIST_DIRECTORIES true "${SUB_DIR_PATH}/*")
    list(REMOVE_ITEM SUB_DIRECTORIES ${ARGN})
@@ -25,7 +25,6 @@ endfunction()
 
 # add a specific subdir
 function(add_sub_dirs_files) # args = list of directories
-
    foreach(SUB_DIR ${ARGN})
       if(NOT IS_DIRECTORY ${SUB_DIR})
          continue()
@@ -55,8 +54,7 @@ function(add_sub_dirs_files) # args = list of directories
 endfunction()
 
 # crawl through subdirs and add files
-function(add_all_subdirs_files SUB_DIR_PATH)  # args = list of skip directories
-
+function(add_all_subdirs_files SUB_DIR_PATH) # args = list of skip directories
    include_directories("${SUB_DIR_PATH}")
    file(GLOB SUB_DIRECTORIES LIST_DIRECTORIES true "${SUB_DIR_PATH}/*")
 
@@ -80,19 +78,4 @@ function(use_precompiled_headers)
 
    target_precompile_headers(${PROJECT_NAME} PUBLIC ${HEADER_FILE})
    target_sources(${PROJECT_NAME} PRIVATE ${HEADER_FILE})
-endfunction()
-
-# init all git submodules
-function(init_all_git_submodules)
-   message(STATUS "GIT SUBMODULE INIT")
-
-   find_package(Git QUIET)
-
-   execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive
-      WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
-      RESULT_VARIABLE GIT_SUBMOD_RESULT)
-
-   if(NOT GIT_SUBMOD_RESULT EQUAL "0")
-      message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
-   endif()
 endfunction()
