@@ -81,4 +81,26 @@ $HOME/Library/Preferences/Nextcloud/nextcloud.cfg
    return path;
 }
 
+inline QJsonObject FileTools::readApiKeys(const QString& appName)
+{
+   static const QStringList homePaths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+   const QString keyFileName = homePaths.first() + "/.ApiKeys/" + appName + ".json";
+
+   QFile file(keyFileName);
+   if (!file.open(QIODevice::ReadOnly))
+      return QJsonObject();
+
+   const QByteArray fileContent = file.readAll();
+   file.close();
+
+   QJsonParseError error;
+   QJsonDocument doc = QJsonDocument::fromJson(fileContent, &error);
+
+   if (QJsonParseError::NoError != error.error)
+      return QJsonObject();
+
+   const QJsonObject keysObject = doc.object();
+   return keysObject;
+}
+
 #endif // NOT FileToolsHPP

@@ -54,6 +54,11 @@ inline void RestApi::postAsync(CallbackFunction callback, const QString& endpoin
    handleReplyAsync(callback, request, replyGenerator);
 }
 
+inline void RestApi::setBaseUrl(const QString& url)
+{
+   baseUrl = url;
+}
+
 inline void RestApi::setBearerToken(const QByteArray& token)
 {
    bearerToken = token;

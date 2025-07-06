@@ -26,6 +26,7 @@ public:
    virtual void postAsync(CallbackFunction callback, const QString& endpoint, const QJsonObject& payload = QJsonObject(), const QUrlQuery& params = QUrlQuery());
 
 protected:
+   void setBaseUrl(const QString& url);
    void setBearerToken(const QByteArray& token);
    virtual QByteArray updateBearerToken();
    virtual void setAuthorization(QNetworkRequest& request, const QByteArray& bearerToken);

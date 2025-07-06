@@ -8,6 +8,7 @@ class FileTools
 public:
    static QString compileDropboxPath(const QString& appName = QCoreApplication::applicationName());
    static QString compileNextCloudPath(const QString& appName = QCoreApplication::applicationName());
+   static QJsonObject readApiKeys(const QString& appName);
 };
 
 #ifndef FileToolsHPP
