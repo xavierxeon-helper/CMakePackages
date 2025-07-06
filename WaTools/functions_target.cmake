@@ -22,7 +22,9 @@ endfunction()
 
 # application icon
 function(set_application_icon PATH_TO_ICON)
+
    if(APPLE)
+      set_target_properties(${PROJECT_NAME} PROPERTIES MACOSX_BUNDLE TRUE)
       set(APP_ICON ${PATH_TO_ICON}.icns)
       message(STATUS "APP_ICON: ${APP_ICON}")
 
@@ -31,6 +33,7 @@ function(set_application_icon PATH_TO_ICON)
 
       target_sources(${PROJECT_NAME} PRIVATE ${APP_ICON})
    elseif(WIN32)
+      set_target_properties(${PROJECT_NAME} PROPERTIES WIN32_EXECUTABLE TRUE)
       set(ICON_RC_FILE ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.rc)
 
       if(NOT EXISTS ${ICON_RC_FILE})
