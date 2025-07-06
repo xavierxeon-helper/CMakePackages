@@ -15,7 +15,7 @@ inline QString FileTools::compileDropboxPath(const QString& appName)
    QString homePath = QDir::homePath();
    homePath = QDir::fromNativeSeparators(homePath);
    QString dropboxInfoPath = homePath + "/AppData/Local/Dropbox/info.json";
-#elif defined(Q_OS_OSX)
+#elif defined(Q_OS_MACOS)
    QString dropboxInfoPath = QDir::homePath() + "/.dropbox/info.json";
 #else // linux
    QString dropboxInfoPath = QDir::homePath() + "/.dropbox/info.json";
@@ -63,7 +63,7 @@ $HOME/Library/Preferences/Nextcloud/nextcloud.cfg
    appPath = QDir::fromNativeSeparators(appPath);
    appPath.replace(QCoreApplication::organizationName() + "/" + QCoreApplication::applicationName(), "");
    const QString nextCloudConfPath = appPath + "/Nextcloud/nextcloud.cfg";
-#elif defined(Q_OS_OSX)
+#elif defined(Q_OS_MACOS)
    const QString nextCloudConfPath = QDir::homePath() + "/Library/Preferences/Nextcloud/nextcloud.cfg";
 #else // linux
    const QString nextCloudConfPath = QDir::homePath() + "/.config/Nextcloud/nextcloud.cfg";
