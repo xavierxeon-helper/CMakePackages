@@ -22,6 +22,7 @@ public:
    static PopulatedMainWindow* the();
    static void printSettingsLocation();
    static QAction* addAction(QIcon icon, QString text, QString objectName, QObject* instance, auto slotFunction);
+   static QString writeExampleResource(const QString& xmlResource);
 
 protected:
    void populateMenuAndToolBar(const QString& xmlResource);

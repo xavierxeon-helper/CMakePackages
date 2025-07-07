@@ -10,6 +10,7 @@
 #include <QMenuBar>
 #include <QSettings>
 #include <QToolBar>
+#include <QFileInfo>
 
 inline PopulatedMainWindow* PopulatedMainWindow::me = nullptr;
 
@@ -17,6 +18,7 @@ inline PopulatedMainWindow::PopulatedMainWindow()
    : QMainWindow(nullptr)
 {
    me = this;
+
    QSettings settings;
    restoreGeometry(settings.value("MainWidget/Geometry").toByteArray());
    restoreState(settings.value("MainWidget/State").toByteArray());
@@ -36,6 +38,68 @@ inline void PopulatedMainWindow::printSettingsLocation()
 {
    QSettings settings;
    qInfo() << "SETTINGS @" << settings.fileName();
+}
+
+inline QString PopulatedMainWindow::writeExampleResource(const QString& xmlResource)
+{
+   QDomDocument doc;
+   QDomElement rootElement = doc.createElement("MenuAndTooBar");
+   doc.appendChild(rootElement);
+
+   // toolbar
+   QDomElement toolBarElement = doc.createElement("ToolBar");
+   toolBarElement.setAttribute("Name", "Main");
+   rootElement.appendChild(toolBarElement);
+
+   QDomElement labelElement = doc.createElement("Label");
+   labelElement.setAttribute("Text", "Example Label");
+   toolBarElement.appendChild(labelElement);
+
+   QDomElement actionElement = doc.createElement("Action");
+   actionElement.setAttribute("Name", "Action.Name");
+   toolBarElement.appendChild(actionElement);
+
+   QDomElement spacerElement = doc.createElement("Spacer");
+   toolBarElement.appendChild(spacerElement);
+
+   QDomElement seperatorElement = doc.createElement("Sperator");
+   toolBarElement.appendChild(seperatorElement);
+
+   // menu
+   QDomElement menuElement = doc.createElement("Menu");
+   menuElement.setAttribute("Name", "Main");
+   rootElement.appendChild(menuElement);
+
+   QDomElement actionElement2 = doc.createElement("Action");
+   actionElement2.setAttribute("Name", "Action.Name");
+   menuElement.appendChild(actionElement2);
+
+   QDomElement subMenuElement = doc.createElement("SubMenu");
+   subMenuElement.setAttribute("Name", "SubMenu");
+   menuElement.appendChild(subMenuElement);
+
+   QDomElement actionElement3 = doc.createElement("Action");
+   actionElement3.setAttribute("Name", "Action.Name");
+   subMenuElement.appendChild(actionElement3);
+
+   QDomElement seperatorElement2 = doc.createElement("Sperator");
+   menuElement.appendChild(seperatorElement2);
+
+   QDomElement subMenuElement2 = doc.createElement("Menu");
+   subMenuElement2.setAttribute("Name", "DynamicMenu.Name");
+   menuElement.appendChild(subMenuElement2);
+
+
+   QFile file(xmlResource);
+   if (!file.open(QIODevice::WriteOnly))
+      return QString();
+
+
+   file.write(doc.toByteArray(3));
+   file.close();
+
+   QFileInfo info(file.fileName());
+   return info.absoluteFilePath();
 }
 
 inline QAction* PopulatedMainWindow::addAction(QIcon icon, QString text, QString objectName, QObject* instance, auto slotFunction)
