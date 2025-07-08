@@ -3,6 +3,8 @@
 
 #include "Logger.h"
 
+#include <QDebug>
+
 inline Logger* Logger::me = nullptr;
 
 inline Logger::Logger()
