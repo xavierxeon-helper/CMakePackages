@@ -27,7 +27,8 @@ inline QTextStream LogFileBase::stream()
    if (!file)
    {
       file = new QFile(logFileName);
-      file->open(QIODevice::WriteOnly);
+      int result = file->open(QIODevice::WriteOnly);
+      Q_UNUSED(result)
    }
 
    return QTextStream(file);
