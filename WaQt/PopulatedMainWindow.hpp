@@ -146,6 +146,10 @@ inline void PopulatedMainWindow::addDockWidget(QWidget* widget, const Qt::DockWi
 
    dockWidget->setWidget(widget);
    QMainWindow::addDockWidget(area, dockWidget);
+
+   static int dockWidgetCounter = 0;
+   dockWidgetCounter++;
+   dockWidget->setObjectName(QString("DockWidget_%1").arg(dockWidgetCounter));
 }
 
 inline void PopulatedMainWindow::closeEvent(QCloseEvent* ce)

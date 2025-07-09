@@ -54,6 +54,28 @@ inline void RestApi::postAsync(CallbackFunction callback, const QString& endpoin
    handleReplyAsync(callback, request, replyGenerator);
 }
 
+inline QJsonObject RestApi::put(const QString& endpoint, const QJsonObject& payload, const QUrlQuery& params)
+{
+   QNetworkRequest request = createRequest(endpoint, params);
+   request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+   const QByteArray data = QJsonDocument(payload).toJson(QJsonDocument::Compact);
+
+   ReplyGeneratorFunction replyGenerator = std::bind(qOverload<const QNetworkRequest&, const QByteArray&>(&QNetworkAccessManager::put), manager, std::placeholders::_1, data);
+   return handleReply(request, replyGenerator);
+}
+
+inline void RestApi::putAsync(CallbackFunction callback, const QString& endpoint, const QJsonObject& payload, const QUrlQuery& params)
+{
+   QNetworkRequest request = createRequest(endpoint, params);
+   request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+   const QByteArray data = QJsonDocument(payload).toJson(QJsonDocument::Compact);
+
+   ReplyGeneratorFunction replyGenerator = std::bind(qOverload<const QNetworkRequest&, const QByteArray&>(&QNetworkAccessManager::put), manager, std::placeholders::_1, data);
+   handleReplyAsync(callback, request, replyGenerator);
+}
+
 inline void RestApi::setBaseUrl(const QString& url)
 {
    baseUrl = url;
