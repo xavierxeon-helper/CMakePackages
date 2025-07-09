@@ -20,7 +20,7 @@ private slots:
 
 private:
    void print(const QString& text, bool isWarning) override;
-   bool eventFilter(QObject* obj, QEvent* event) override;
+   void mouseDoubleClickEvent(QMouseEvent* event) override;
 
 private:
    const int stackSize;

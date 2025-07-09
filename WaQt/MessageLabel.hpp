@@ -25,10 +25,8 @@ inline MessageLabel::MessageLabel(QWidget* parent, int stackSize)
 
    QTimer* messageTimer = new QTimer(this);
    connect(messageTimer, &QTimer::timeout, this, &MessageLabel::slotUpdateTimeout);
-
    messageTimer->setInterval(1000);
    messageTimer->start();
-
 }
 
 inline void MessageLabel::slotUpdateTimeout()
@@ -47,7 +45,12 @@ inline void MessageLabel::print(const QString& text, bool isWarning)
 {
    auto addMessage = [&](const QString& message, const QString& symbol, int length = -1)
    {
-      setText(message + " " + symbol);
+      setText(" " + symbol + " " + message);
+
+      if(-1 == length)
+         messageExpiration = QDateTime();
+      else
+         messageExpiration = QDateTime::currentDateTime().addMSecs(length);
 
       if(0 == stackSize)
          return;
@@ -55,11 +58,6 @@ inline void MessageLabel::print(const QString& text, bool isWarning)
       messageStack.append(symbol + " " + message);
       while(messageStack.size() > stackSize)
          messageStack.removeFirst();
-
-      if(-1 == length)
-         messageExpiration = QDateTime();
-      else
-         messageExpiration = QDateTime::currentDateTime().addMSecs(length);
 
       setToolTip(messageStack.join("\n"));
    };
@@ -77,14 +75,9 @@ inline void MessageLabel::print(const QString& text, bool isWarning)
    }
 }
 
-inline bool MessageLabel::eventFilter(QObject* obj, QEvent* event)
+inline void MessageLabel::mouseDoubleClickEvent(QMouseEvent* event)
 {
-   if(obj == this)
-   {
-      if(QEvent::MouseButtonDblClick == event->type())
-         setText("");
-   }
-   return true;
+   setText("");
 }
 
 #endif // NOT MessageLabelHPP
