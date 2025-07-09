@@ -26,6 +26,8 @@ public:
 
 protected:
    void populateMenuAndToolBar(const QString& xmlResource);
+   void addDockWidget(QWidget* widget, const Qt::DockWidgetArea& area);
+
    virtual void closeEvent(QCloseEvent* ce) override;
    virtual QMenu* createPopupMenu() override;
 

@@ -4,13 +4,14 @@
 #include "PopulatedMainWindow.h"
 
 #include <QCloseEvent>
+#include <QDockWidget>
 #include <QFile>
+#include <QFileInfo>
 #include <QLabel>
 #include <QMenu>
 #include <QMenuBar>
 #include <QSettings>
 #include <QToolBar>
-#include <QFileInfo>
 
 inline PopulatedMainWindow* PopulatedMainWindow::me = nullptr;
 
@@ -89,11 +90,9 @@ inline QString PopulatedMainWindow::writeExampleResource(const QString& xmlResou
    subMenuElement2.setAttribute("Name", "DynamicMenu.Name");
    menuElement.appendChild(subMenuElement2);
 
-
    QFile file(xmlResource);
    if (!file.open(QIODevice::WriteOnly))
       return QString();
-
 
    file.write(doc.toByteArray(3));
    file.close();
@@ -139,6 +138,16 @@ inline void PopulatedMainWindow::populateMenuAndToolBar(const QString& xmlResour
    }
 }
 
+inline void PopulatedMainWindow::addDockWidget(QWidget* widget, const Qt::DockWidgetArea& area)
+{
+   QDockWidget* dockWidget = new QDockWidget(this);
+   dockWidget->setFeatures(QDockWidget::NoDockWidgetFeatures);
+   dockWidget->setTitleBarWidget(new QWidget());
+
+   dockWidget->setWidget(widget);
+   QMainWindow::addDockWidget(area, dockWidget);
+}
+
 inline void PopulatedMainWindow::closeEvent(QCloseEvent* ce)
 {
    QSettings settings;
@@ -158,7 +167,7 @@ inline void PopulatedMainWindow::createToolBar(QDomElement thingElement)
    auto findOrCreateToolBar = [&](const QString& name)
    {
       QToolBar* toolBar = findChild<QToolBar*>(name, Qt::FindChildrenRecursively);
-      if(toolBar)
+      if (toolBar)
          return toolBar;
 
       toolBar = addToolBar(name);
@@ -170,8 +179,7 @@ inline void PopulatedMainWindow::createToolBar(QDomElement thingElement)
    };
 
    const QString name = thingElement.attribute("Name");
-   QToolBar* toolBar  = findOrCreateToolBar(name);
-
+   QToolBar* toolBar = findOrCreateToolBar(name);
 
    for (QDomElement contentElement = thingElement.firstChildElement(); !contentElement.isNull(); contentElement = contentElement.nextSiblingElement())
    {
