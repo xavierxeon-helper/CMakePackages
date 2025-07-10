@@ -79,3 +79,50 @@ function(use_precompiled_headers)
    target_precompile_headers(${PROJECT_NAME} PUBLIC ${HEADER_FILE})
    target_sources(${PROJECT_NAME} PRIVATE ${HEADER_FILE})
 endfunction()
+
+# os specific files
+function(add_os_files SOURCE_SUB_DIR)
+   if(APPLE)
+      set(MAC_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/${SOURCE_SUB_DIR}/mac)
+
+      if(NOT EXISTS ${MAC_SOURCE_DIR})
+         message(STATUS "Creating macOS source directory: ${MAC_SOURCE_DIR}")
+         file(MAKE_DIRECTORY ${MAC_SOURCE_DIR})
+      endif()
+
+      file(GLOB OS_FILES
+         ${MAC_SOURCE_DIR}/*.h
+         ${MAC_SOURCE_DIR}/*.hpp
+         ${MAC_SOURCE_DIR}/*.cpp
+         ${MAC_SOURCE_DIR}/*.mm
+      )
+   elseif(WIN32)
+      set(WIN_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/${SOURCE_SUB_DIR}/win)
+
+      if(NOT EXISTS ${WIN_SOURCE_DIR})
+         message(STATUS "Creating Windows source directory: ${WIN_SOURCE_DIR}")
+         file(MAKE_DIRECTORY ${WIN_SOURCE_DIR})
+      endif()
+
+      file(GLOB OS_FILES
+         ${WIN_SOURCE_DIR}/*.h
+         ${WIN_SOURCE_DIR}/*.hpp
+         ${WIN_SOURCE_DIR}/*.cpp
+      )
+   else()
+      set(LINUX_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/${SOURCE_SUB_DIR}/linux)
+
+      if(NOT EXISTS ${LINUX_SOURCE_DIR})
+         message(STATUS "Creating Linux source directory: ${LINUX_SOURCE_DIR}")
+         file(MAKE_DIRECTORY ${LINUX_SOURCE_DIR})
+      endif()
+
+      file(GLOB OS_FILES
+         ${LINUX_SOURCE_DIR}/*.h
+         ${LINUX_SOURCE_DIR}/*.hpp
+         ${LINUX_SOURCE_DIR}/*.cpp
+      )
+   endif()
+
+   set(SOURCE_FILES ${SOURCE_FILES} ${OS_FILES} PARENT_SCOPE)
+endfunction()
