@@ -39,8 +39,4 @@ private:
    static PopulatedMainWindow* me;
 };
 
-#ifndef PopulatedMainWindowHPP
-#include "PopulatedMainWindow.hpp"
-#endif // NOT PopulatedMainWindowHPP
-
 #endif // NOT PopulatedMainWindowH

@@ -1,5 +1,3 @@
-#ifndef ManagedTreeViewHPP
-#define ManagedTreeViewHPP
 
 #include <ManagedTreeView.h>
 
@@ -7,7 +5,7 @@
 #include <QMouseEvent>
 #include <QStandardItemModel>
 
-inline Managed::TreeView::TreeView(QWidget* parent)
+Managed::TreeView::TreeView(QWidget* parent)
    : QTreeView(parent)
    , doubleClickFunction()
    , contextMenuFunction()
@@ -16,19 +14,7 @@ inline Managed::TreeView::TreeView(QWidget* parent)
    connect(this, &QTreeView::customContextMenuRequested, this, &TreeView::customContextMenuRequested);
 }
 
-template <typename TargetClass>
-void Managed::TreeView::onDoubleClicked(TargetClass* instance, void (TargetClass::*memberFunction)(QStandardItem*))
-{
-   doubleClickFunction = std::bind(memberFunction, instance, std::placeholders::_1);
-}
-
-template <typename TargetClass>
-void Managed::TreeView::onConexteMenu(TargetClass* instance, QMenu* (TargetClass::*memberFunction)(QStandardItem*))
-{
-   contextMenuFunction = std::bind(memberFunction, instance, std::placeholders::_1);
-}
-
-inline void Managed::TreeView::mouseDoubleClickEvent(QMouseEvent* event)
+void Managed::TreeView::mouseDoubleClickEvent(QMouseEvent* event)
 {
    if (!doubleClickFunction)
       return;
@@ -37,7 +23,7 @@ inline void Managed::TreeView::mouseDoubleClickEvent(QMouseEvent* event)
    doubleClickFunction(item);
 }
 
-inline void Managed::TreeView::customContextMenuRequested(const QPoint& point)
+void Managed::TreeView::customContextMenuRequested(const QPoint& point)
 {
    if (!contextMenuFunction)
       return;
@@ -50,7 +36,7 @@ inline void Managed::TreeView::customContextMenuRequested(const QPoint& point)
    menu->exec(mapToGlobal(point));
 }
 
-inline QStandardItem* Managed::TreeView::getItemAtPoint(const QPoint& point) const
+QStandardItem* Managed::TreeView::getItemAtPoint(const QPoint& point) const
 {
    QModelIndex index = indexAt(point);
    if (!index.isValid())
@@ -63,5 +49,3 @@ inline QStandardItem* Managed::TreeView::getItemAtPoint(const QPoint& point) con
    QStandardItem* item = static_cast<QStandardItem*>(itemModel->itemFromIndex(index));
    return item;
 }
-
-#endif // NOT ManagedTreeViewHPP

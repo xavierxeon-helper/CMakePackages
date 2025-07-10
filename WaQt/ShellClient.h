@@ -13,8 +13,4 @@ private:
    static QByteArray execute(const QString& program, const QStringList& args, QByteArray* error);
 };
 
-#ifndef ShellClientHPP
-#include "ShellClient.hpp"
-#endif // NOT ShellClientHPP
-
 #endif // NOT ShellClientH

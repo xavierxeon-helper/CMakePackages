@@ -1,5 +1,4 @@
-#ifndef ShellClientHPP
-#define ShellClientHPP
+
 
 #include "ShellClient.h"
 
@@ -27,5 +26,3 @@ QByteArray ShellClient::execute(const QString& program, const QStringList& args,
    const QByteArray output = process.readAllStandardOutput();
    return output;
 }
-
-#endif // NOT ShellClientHPP

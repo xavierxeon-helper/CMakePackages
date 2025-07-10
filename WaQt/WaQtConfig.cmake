@@ -14,3 +14,7 @@ include(${WAQT_CMAKE_DIR}/functions.cmake)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets Xml)
 link_libraries(Qt6::Widgets Qt6::Xml)
+
+if(APPLE)
+   link_libraries("-framework Foundation" "-framework StoreKit")
+endif()

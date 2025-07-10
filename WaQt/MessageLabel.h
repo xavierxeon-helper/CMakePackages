@@ -28,8 +28,4 @@ private:
    QDateTime messageExpiration;
 };
 
-#ifndef MessageLabelHPP
-#include "MessageLabel.hpp"
-#endif // NOT MessageLabelHPP
-
 #endif // NOT MessageLabelH

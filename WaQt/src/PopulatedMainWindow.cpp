@@ -1,5 +1,4 @@
-#ifndef PopulatedMainWindowHPP
-#define PopulatedMainWindowHPP
+
 
 #include "PopulatedMainWindow.h"
 
@@ -13,9 +12,9 @@
 #include <QSettings>
 #include <QToolBar>
 
-inline PopulatedMainWindow* PopulatedMainWindow::me = nullptr;
+PopulatedMainWindow* PopulatedMainWindow::me = nullptr;
 
-inline PopulatedMainWindow::PopulatedMainWindow()
+PopulatedMainWindow::PopulatedMainWindow()
    : QMainWindow(nullptr)
 {
    me = this;
@@ -25,23 +24,23 @@ inline PopulatedMainWindow::PopulatedMainWindow()
    restoreState(settings.value("MainWidget/State").toByteArray());
 }
 
-inline PopulatedMainWindow::~PopulatedMainWindow()
+PopulatedMainWindow::~PopulatedMainWindow()
 {
    me = nullptr;
 }
 
-inline PopulatedMainWindow* PopulatedMainWindow::the()
+PopulatedMainWindow* PopulatedMainWindow::the()
 {
    return me;
 }
 
-inline void PopulatedMainWindow::printSettingsLocation()
+void PopulatedMainWindow::printSettingsLocation()
 {
    QSettings settings;
    qInfo() << "SETTINGS @" << settings.fileName();
 }
 
-inline QString PopulatedMainWindow::writeExampleResource(const QString& xmlResource)
+QString PopulatedMainWindow::writeExampleResource(const QString& xmlResource)
 {
    QDomDocument doc;
    QDomElement rootElement = doc.createElement("MenuAndTooBar");
@@ -101,7 +100,7 @@ inline QString PopulatedMainWindow::writeExampleResource(const QString& xmlResou
    return info.absoluteFilePath();
 }
 
-inline QAction* PopulatedMainWindow::addAction(QIcon icon, QString text, QString objectName, QObject* instance, auto slotFunction)
+QAction* PopulatedMainWindow::addAction(QIcon icon, QString text, QString objectName, QObject* instance, auto slotFunction)
 {
    QAction* action = new QAction(icon, text, instance);
    action->setObjectName(objectName);
@@ -110,7 +109,7 @@ inline QAction* PopulatedMainWindow::addAction(QIcon icon, QString text, QString
    return action;
 }
 
-inline void PopulatedMainWindow::populateMenuAndToolBar(const QString& xmlResource)
+void PopulatedMainWindow::populateMenuAndToolBar(const QString& xmlResource)
 {
    QFile file(xmlResource);
    if (!file.open(QIODevice::ReadOnly))
@@ -138,7 +137,7 @@ inline void PopulatedMainWindow::populateMenuAndToolBar(const QString& xmlResour
    }
 }
 
-inline void PopulatedMainWindow::addDockWidget(QWidget* widget, const Qt::DockWidgetArea& area)
+void PopulatedMainWindow::addDockWidget(QWidget* widget, const Qt::DockWidgetArea& area)
 {
    QDockWidget* dockWidget = new QDockWidget(this);
    dockWidget->setFeatures(QDockWidget::NoDockWidgetFeatures);
@@ -152,7 +151,7 @@ inline void PopulatedMainWindow::addDockWidget(QWidget* widget, const Qt::DockWi
    dockWidget->setObjectName(QString("DockWidget_%1").arg(dockWidgetCounter));
 }
 
-inline void PopulatedMainWindow::closeEvent(QCloseEvent* ce)
+void PopulatedMainWindow::closeEvent(QCloseEvent* ce)
 {
    QSettings settings;
    settings.setValue("MainWidget/Geometry", saveGeometry());
@@ -161,12 +160,12 @@ inline void PopulatedMainWindow::closeEvent(QCloseEvent* ce)
    ce->accept();
 }
 
-inline QMenu* PopulatedMainWindow::createPopupMenu()
+QMenu* PopulatedMainWindow::createPopupMenu()
 {
    return nullptr;
 }
 
-inline void PopulatedMainWindow::createToolBar(QDomElement thingElement)
+void PopulatedMainWindow::createToolBar(QDomElement thingElement)
 {
    auto findOrCreateToolBar = [&](const QString& name)
    {
@@ -216,7 +215,7 @@ inline void PopulatedMainWindow::createToolBar(QDomElement thingElement)
    }
 }
 
-inline void PopulatedMainWindow::createMenu(QDomElement thingElement, QMenu* parentMenu)
+void PopulatedMainWindow::createMenu(QDomElement thingElement, QMenu* parentMenu)
 {
    const QString name = thingElement.attribute("Name");
    QMenu* menu = parentMenu ? parentMenu->addMenu(name) : menuBar()->addMenu(name);
@@ -248,5 +247,3 @@ inline void PopulatedMainWindow::createMenu(QDomElement thingElement, QMenu* par
       }
    }
 }
-
-#endif // NOT PopulatedMainWindowHPP
