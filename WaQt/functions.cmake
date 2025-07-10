@@ -18,7 +18,7 @@ function(run_qt_deploy)
       add_custom_command(TARGET ${PROJECT_NAME}
          POST_BUILD
          COMMENT "Running macdeployqt..."
-         COMMAND "${MACDEPLOYQT_EXECUTABLE}" \"$<TARGET_BUNDLE_DIR:${PROJECT_NAME}>\" -qmldir="${QT_QML_DIR}"
+         COMMAND "${MACDEPLOYQT_EXECUTABLE}" \"$<TARGET_BUNDLE_DIR:${PROJECT_NAME}>\" -qmldir \"${QT_QML_DIR}\""
       )
    elseif(WIN32)
       find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${QT_BIN_DIR}")
@@ -27,7 +27,7 @@ function(run_qt_deploy)
       add_custom_command(TARGET ${PROJECT_NAME}
          POST_BUILD
          COMMENT "Running windeployqt..."
-         COMMAND "${WINDEPLOYQT_EXECUTABLE}" --no-translations --no-system-d3d-compiler --compiler-runtime --qmldir ${QT_QML_DIR} \"$<TARGET_FILE:${PROJECT_NAME}>\"
+         COMMAND "${WINDEPLOYQT_EXECUTABLE}" --no-translations --no-system-d3d-compiler --compiler-runtime --qmldir \"${QT_QML_DIR}\" \"$<TARGET_FILE:${PROJECT_NAME}>\""
       )
    endif()
 endfunction()
@@ -37,8 +37,9 @@ function(use_dock_tools)
       link_libraries("-framework Foundation" "-framework StoreKit")
       target_sources(${PROJECT_NAME} PRIVATE ${WAQT_INCLUDE_DIRS}/DockTools_mac.mm)
    elseif(WIN32)
-      target_sources(${PROJECT_NAME} PRIVATE ${WAQT_INCLUDE_DIRS}/DockTools_win.mm)
+      target_sources(${PROJECT_NAME} PRIVATE ${WAQT_INCLUDE_DIRS}/DockTools_win.cpp)
    elseif(UNIX AND NOT APPLE)
-      message(STATUS "DockTools is not yet supported on this platform.")
+      target_sources(${PROJECT_NAME} PRIVATE ${WAQT_INCLUDE_DIRS}/DockTools_linux.cpp)
+      
    endif()
 endfunction()
