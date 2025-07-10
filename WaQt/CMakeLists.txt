@@ -23,13 +23,34 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 file(GLOB SOURCE_FILES
    ${CMAKE_CURRENT_SOURCE_DIR}/*.h
    ${CMAKE_CURRENT_SOURCE_DIR}/*.hpp
-   ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp   
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
 )
 
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib)
+if(APPLE)
+   file(GLOB MAC_FILES
+      ${CMAKE_CURRENT_SOURCE_DIR}/src/mac/*.h
+      ${CMAKE_CURRENT_SOURCE_DIR}/src/mac/*.hpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/src/mac/*.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/src/mac/*.mm
+   )
+   list(APPEND SOURCE_FILES ${MAC_FILES})
+elseif(WIN32)
+   file(GLOB WIN_FILES
+      ${CMAKE_CURRENT_SOURCE_DIR}/src/win/*.h
+      ${CMAKE_CURRENT_SOURCE_DIR}/src/win/*.hpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/src/win/*.cpp
+   )
+   list(APPEND SOURCE_FILES ${WIN_FILES})
+else()
+   file(GLOB LINUX_FILES
+      ${CMAKE_CURRENT_SOURCE_DIR}/src/linux/*.h
+      ${CMAKE_CURRENT_SOURCE_DIR}/src/linux/*.hpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/src/linux/*.cpp
+   )
+   list(APPEND SOURCE_FILES ${LINUX_FILES})
+endif()
+
+# set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 qt_add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets Qt6::Xml)
-
-
-

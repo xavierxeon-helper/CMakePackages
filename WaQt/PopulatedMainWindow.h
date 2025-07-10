@@ -8,8 +8,6 @@
 class PopulatedMainWindow : public QMainWindow
 {
    Q_OBJECT
-   // in cmake use:
-   // list(APPEND SOURCE_FILES ${WAQT_INCLUDE_DIRS}/PopulatedMainWindow.h)
 
 public:
    PopulatedMainWindow();
@@ -38,5 +36,9 @@ private:
 private:
    static PopulatedMainWindow* me;
 };
+
+#ifndef PopulatedMainWindowHPP
+#include "PopulatedMainWindow.hpp"
+#endif // NOT PopulatedMainWindowHPP
 
 #endif // NOT PopulatedMainWindowH

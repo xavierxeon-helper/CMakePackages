@@ -9,8 +9,6 @@
 class MessageLabel : public QLabel, public Logger
 {
    Q_OBJECT
-   // in cmake use:
-   // list(APPEND SOURCE_FILES ${WAQT_INCLUDE_DIRS}/MessageLabel.h)
 
 public:
    MessageLabel(QWidget* parent, int stackSize = 0);

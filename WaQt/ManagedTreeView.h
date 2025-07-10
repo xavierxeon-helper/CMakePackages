@@ -10,8 +10,6 @@ namespace Managed
    class TreeView : public QTreeView
    {
       Q_OBJECT
-      // in cmake use:
-      // list(APPEND SOURCE_FILES ${WAQT_INCLUDE_DIRS}/ManagedTreeView.h)
 
    public:
       TreeView(QWidget* parent);

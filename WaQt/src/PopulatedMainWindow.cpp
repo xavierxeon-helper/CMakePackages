@@ -100,15 +100,6 @@ QString PopulatedMainWindow::writeExampleResource(const QString& xmlResource)
    return info.absoluteFilePath();
 }
 
-QAction* PopulatedMainWindow::addAction(QIcon icon, QString text, QString objectName, QObject* instance, auto slotFunction)
-{
-   QAction* action = new QAction(icon, text, instance);
-   action->setObjectName(objectName);
-   connect(action, &QAction::triggered, instance, slotFunction);
-
-   return action;
-}
-
 void PopulatedMainWindow::populateMenuAndToolBar(const QString& xmlResource)
 {
    QFile file(xmlResource);
