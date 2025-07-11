@@ -19,6 +19,7 @@ signals:
 public:
    static PopulatedMainWindow* the();
    static void printSettingsLocation();
+   static QAction* addAction(QIcon icon, QString text, QString objectName, auto function);
    static QAction* addAction(QIcon icon, QString text, QString objectName, QObject* instance, auto slotFunction);
    static QString writeExampleResource(const QString& xmlResource);
 
