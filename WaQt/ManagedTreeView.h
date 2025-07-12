@@ -19,7 +19,7 @@ namespace Managed
       void onDoubleClicked(TargetClass* instance, void (TargetClass::*memberFunction)(QStandardItem*));
 
       template <typename TargetClass>
-      void onConexteMenu(TargetClass* instance, QMenu* (TargetClass::*memberFunction)(QStandardItem*));
+      void onContextMenu(TargetClass* instance, QMenu* (TargetClass::*memberFunction)(QStandardItem*));
 
    private:
       using ItemFunction = std::function<void(QStandardItem*)>;

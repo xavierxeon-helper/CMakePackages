@@ -1,5 +1,4 @@
-
-#include <ManagedTreeView.h>
+#include "ManagedTreeView.h"
 
 #include <QMenu>
 #include <QMouseEvent>

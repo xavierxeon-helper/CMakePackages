@@ -9,6 +9,42 @@
 #include <QSettings>
 #include <QStandardPaths>
 
+inline QJsonObject FileTools::readJson(const QString& filePath)
+{
+   QFile file(filePath);
+   if (!file.open(QIODevice::ReadOnly))
+      return QJsonObject();
+
+   const QByteArray fileContent = file.readAll();
+   file.close();
+
+   QJsonParseError parseError;
+   QJsonDocument doc = QJsonDocument::fromJson(fileContent, &parseError);
+
+   if (QJsonParseError::NoError != parseError.error)
+   {
+      qWarning() << "Failed to parse JSON file:" << parseError.errorString();
+      return QJsonObject();
+   }
+
+   const QJsonObject object = doc.object();
+   return object;
+}
+
+inline void FileTools::writeJson(const QJsonObject& data, const QString& filePath)
+{
+   if (data.isEmpty())
+      return;
+
+   QFile file(filePath);
+   if (!file.open(QIODevice::WriteOnly))
+      return;
+
+   QJsonDocument doc(data);
+   file.write(doc.toJson(QJsonDocument::Indented));
+   file.close();
+}
+
 inline QString FileTools::compileDropboxPath(const QString& appName)
 {
 #if defined(Q_OS_WIN32)
@@ -21,18 +57,11 @@ inline QString FileTools::compileDropboxPath(const QString& appName)
    QString dropboxInfoPath = QDir::homePath() + "/.dropbox/info.json";
 #endif
 
-   QFile dropboxInfo(dropboxInfoPath);
-   if (!dropboxInfo.open(QIODevice::ReadOnly))
+   const QJsonObject dropoxObject = readJson(dropboxInfoPath);
+   if (dropoxObject.isEmpty())
       return QString();
 
-   QByteArray data = dropboxInfo.readAll();
-   dropboxInfo.close();
-
-   QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
-   if (!jsonDoc.isObject())
-      return QString();
-
-   QJsonValue jsonPersonal = jsonDoc.object().value("personal");
+   QJsonValue jsonPersonal = dropoxObject.value("personal");
    if (jsonPersonal.isUndefined())
       return QString();
 
@@ -86,21 +115,7 @@ inline QJsonObject FileTools::readApiKeys(const QString& appName)
    static const QStringList homePaths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
    const QString keyFileName = homePaths.first() + "/.ApiKeys/" + appName + ".json";
 
-   QFile file(keyFileName);
-   if (!file.open(QIODevice::ReadOnly))
-      return QJsonObject();
-
-   const QByteArray fileContent = file.readAll();
-   file.close();
-
-   QJsonParseError error;
-   QJsonDocument doc = QJsonDocument::fromJson(fileContent, &error);
-
-   if (QJsonParseError::NoError != error.error)
-      return QJsonObject();
-
-   const QJsonObject keysObject = doc.object();
-   return keysObject;
+   return readJson(keyFileName);
 }
 
 #endif // NOT FileToolsHPP
