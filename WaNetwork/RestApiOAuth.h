@@ -16,11 +16,11 @@ public:
 protected:
    void setStandardFlow(const QString& baseAuthUrl, const QString& clientId, const QString& clientSecret);
    void setCustomFlow(QOAuth2AuthorizationCodeFlow* oauthFlow);
-   QOAuth2AuthorizationCodeFlow*  getFlow() const;
+   void setFinalRedirect(const QString& url);
+   QOAuth2AuthorizationCodeFlow* getFlow() const;
    virtual void saveRefreshToken(const QString& refreshToken) const;
    virtual QString loadRefreshToken();
    virtual void setAuthorization(QNetworkRequest& request, const QByteArray& bearerToken) override;
-
 
 private:
    QByteArray updateBearerToken() override;
@@ -30,6 +30,7 @@ private:
 private:
    QOAuth2AuthorizationCodeFlow* oauthFlow;
    QMetaObject::Connection grantConnection;
+   QString finalRedirectUrl;
 };
 
 #ifndef RestApiOAuthHPP
