@@ -44,7 +44,7 @@ void PopulatedMainWindow::populateMenuAndToolBar(const QString& xmlResource)
    actionPopulation->populateMenuAndToolBar(xmlResource);
 }
 
-void PopulatedMainWindow::addDockWidget(QWidget* widget, const Qt::DockWidgetArea& area)
+QDockWidget* PopulatedMainWindow::addDockWidget(QWidget* widget, const Qt::DockWidgetArea& area)
 {
    QDockWidget* dockWidget = new QDockWidget(this);
    dockWidget->setFeatures(QDockWidget::NoDockWidgetFeatures);
@@ -56,6 +56,8 @@ void PopulatedMainWindow::addDockWidget(QWidget* widget, const Qt::DockWidgetAre
    static int dockWidgetCounter = 0;
    dockWidgetCounter++;
    dockWidget->setObjectName(QString("DockWidget_%1").arg(dockWidgetCounter));
+
+   return dockWidget;
 }
 
 void PopulatedMainWindow::closeEvent(QCloseEvent* ce)
