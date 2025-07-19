@@ -11,6 +11,11 @@ function(set_standrard_release_output_path)
       return()
    endif()
 
+   if(CMAKE_RUNTIME_OUTPUT_DIRECTORY)
+      message(STATUS "CMAKE_RUNTIME_OUTPUT_DIRECTORY is already set to: ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
+      return()
+   endif()
+
    if(APPLE)
       set(CMAKE_RUNTIME_OUTPUT_DIRECTORY $ENV{HOME}/Applications PARENT_SCOPE)
    elseif(WIN32)

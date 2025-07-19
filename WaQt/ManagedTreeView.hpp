@@ -10,7 +10,7 @@ void Managed::TreeView::onDoubleClicked(TargetClass* instance, void (TargetClass
 }
 
 template <typename TargetClass>
-void Managed::TreeView::onConexteMenu(TargetClass* instance, QMenu* (TargetClass::*memberFunction)(QStandardItem*))
+void Managed::TreeView::onContextMenu(TargetClass* instance, QMenu* (TargetClass::*memberFunction)(QStandardItem*))
 {
    contextMenuFunction = std::bind(memberFunction, instance, std::placeholders::_1);
 }

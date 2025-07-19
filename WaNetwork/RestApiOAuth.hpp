@@ -11,6 +11,7 @@ inline RestApiOAuth::RestApiOAuth(QObject* parent, const QString& baseUrl)
    : RestApi(parent, baseUrl)
    , oauthFlow(nullptr)
    , grantConnection()
+   , finalRedirectUrl()
 {
 }
 
@@ -24,13 +25,17 @@ inline void RestApiOAuth::setStandardFlow(const QString& baseAuthUrl, const QStr
    oauthFlow->setClientIdentifierSharedKey(clientSecret);
 
    initFlow();
-
 }
 
 inline void RestApiOAuth::setCustomFlow(QOAuth2AuthorizationCodeFlow* _oauthFlow)
 {
    oauthFlow = _oauthFlow;
    initFlow();
+}
+
+inline void RestApiOAuth::setFinalRedirect(const QString& url)
+{
+   finalRedirectUrl = url;
 }
 
 inline QOAuth2AuthorizationCodeFlow* RestApiOAuth::getFlow() const
@@ -81,6 +86,12 @@ inline QByteArray RestApiOAuth::updateBearerToken()
 inline QByteArray RestApiOAuth::authorizeUser()
 {
    QOAuthHttpServerReplyHandler redirectHandler(1234, this);
+
+   if (!finalRedirectUrl.isEmpty())
+   {
+      const QString html = "<html><head><meta http-equiv=\"refresh\" content=\"0; url=" + finalRedirectUrl + "\"></head></html>";
+      redirectHandler.setCallbackText(html);
+   }
 
    QEventLoop loop;
    QObject::connect(oauthFlow, &QAbstractOAuth::granted, &loop, &QEventLoop::quit);

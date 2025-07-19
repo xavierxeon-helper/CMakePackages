@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 
-#include <QDomElement>
+#include "ActionPopulation.h"
 
 class PopulatedMainWindow : public QMainWindow
 {
@@ -19,22 +19,23 @@ signals:
 public:
    static PopulatedMainWindow* the();
    static void printSettingsLocation();
+   static QAction* addAction(QIcon icon, QString text, QString objectName, auto function);
    static QAction* addAction(QIcon icon, QString text, QString objectName, QObject* instance, auto slotFunction);
-   static QString writeExampleResource(const QString& xmlResource);
 
 protected:
    void populateMenuAndToolBar(const QString& xmlResource);
-   void addDockWidget(QWidget* widget, const Qt::DockWidgetArea& area);
+   QDockWidget* addDockWidget(QWidget* widget, const Qt::DockWidgetArea& area);
 
    virtual void closeEvent(QCloseEvent* ce) override;
    virtual QMenu* createPopupMenu() override;
 
 private:
-   void createToolBar(QDomElement thingElement);
-   void createMenu(QDomElement thingElement, QMenu* parentMenu);
+   QToolBar* findOrCreateToolBar(const QString& objectName);
+   QMenu* findOrCreateMenu(const QString& objectName, const QString& text, QMenu* parentMenu);
 
 private:
    static PopulatedMainWindow* me;
+   ActionPopulation* actionPopulation;
 };
 
 #ifndef PopulatedMainWindowHPP
