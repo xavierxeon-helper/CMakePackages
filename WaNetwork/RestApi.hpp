@@ -6,11 +6,19 @@
 #include <QEventLoop>
 #include <QJsonDocument>
 
+inline RestApi::StatusException::StatusException(int statusCode, const QJsonObject& content)
+   : QException()
+   , statusCode(statusCode)
+   , content(content)
+{
+}
+
 inline RestApi::RestApi(QObject* parent, const QString& baseUrl)
    : QObject(parent)
    , manager(nullptr)
    , bearerToken()
    , baseUrl(baseUrl)
+   , useExceptions(false)
    , verbose(false)
 {
    manager = new QNetworkAccessManager(this);
@@ -161,9 +169,21 @@ inline QJsonObject RestApi::handleReply(QNetworkRequest request, ReplyGeneratorF
    }
    else if (401 != statusCode)
    {
-      qWarning() << "unhandled status code" << statusCode << "for" << request.url().toString();
-      qWarning() << content;
-      return content;
+      if (useExceptions)
+      {
+         throw new StatusException(statusCode, content);
+      }
+      else
+      {
+         qWarning() << "unhandled status code" << statusCode << "for" << request.url().toString();
+         qWarning() << content;
+         return content;
+      }
+   }
+   else if (verbose)
+   {
+      qDebug() << "STATUS UNAUTHORIZED" << request.url().toString();
+      qDebug() << content;
    }
 
    bearerToken = updateBearerToken();
@@ -195,8 +215,15 @@ inline void RestApi::handleReplyAsync(CallbackFunction callback, QNetworkRequest
       }
       else if (401 != statusCode)
       {
-         qWarning() << "unhandled status code" << statusCode << "for" << request.url().toString();
-         return callback(content);
+         if (useExceptions)
+         {
+            throw new StatusException(statusCode, content);
+         }
+         else
+         {
+            qWarning() << "unhandled status code" << statusCode << "for" << request.url().toString();
+            return callback(content);
+         }
       }
 
       bearerToken = updateBearerToken();

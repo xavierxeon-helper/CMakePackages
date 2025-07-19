@@ -16,6 +16,16 @@ class RestApi : public QObject
 public:
    using CallbackFunction = std::function<void(QJsonObject result)>;
 
+   class StatusException : public QException
+   {
+   public:
+      StatusException(int statusCode, const QJsonObject& content);
+
+   private:
+      int statusCode;
+      QJsonObject content;
+   };
+
 public:
    RestApi(QObject* parent, const QString& baseUrl);
 
@@ -34,7 +44,9 @@ protected:
    virtual void setAuthorization(QNetworkRequest& request, const QByteArray& bearerToken);
 
    QJsonObject parseBytes(const QByteArray& data) const;
+   void setUseExceptions(bool enabled);
    void setVerbose(bool enabled);
+   bool isVerbose() const;
 
 private:
    using ReplyGeneratorFunction = std::function<QNetworkReply*(QNetworkRequest request)>;
@@ -49,6 +61,7 @@ private:
    QByteArray bearerToken;
    QString baseUrl;
 
+   bool useExceptions;
    bool verbose;
 };
 
