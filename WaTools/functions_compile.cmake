@@ -64,7 +64,7 @@ endfunction()
 
 # precompiled headers
 function(use_named_precompiled_headers HEADER_FILE)
-   target_precompile_headers(${PROJECT_NAME} PUBLIC ${HEADER_FILE})
+   target_precompile_headers(${PROJECT_NAME} PRIVATE ${HEADER_FILE})
    target_sources(${PROJECT_NAME} PRIVATE ${HEADER_FILE})
 endfunction()
 
