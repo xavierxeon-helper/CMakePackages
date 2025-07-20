@@ -19,7 +19,6 @@ if(TARGET WaQt)
 else()
    # add this package to YOUR project
    add_subdirectory(${WAQT_CMAKE_DIR} WaQt)
-
    link_libraries(WaQt)
 endif()
 
