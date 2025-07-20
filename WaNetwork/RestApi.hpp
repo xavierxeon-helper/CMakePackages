@@ -18,10 +18,13 @@ inline RestApi::RestApi(QObject* parent, const QString& baseUrl)
    , manager(nullptr)
    , bearerToken()
    , baseUrl(baseUrl)
+   , unauthorizedStatusCodes({401})
    , useExceptions(false)
    , verbose(false)
 {
    manager = new QNetworkAccessManager(this);
+
+   unauthorizedStatusCodes.append(401);
 }
 
 inline QJsonObject RestApi::get(const QString& endpoint, const QUrlQuery& params)
@@ -92,6 +95,19 @@ inline void RestApi::setBaseUrl(const QString& url)
 inline void RestApi::setBearerToken(const QByteArray& token)
 {
    bearerToken = token;
+}
+
+inline const QByteArray& RestApi::getBearerToken() const
+{
+   return bearerToken;
+}
+
+inline void RestApi::addUnauthorizedStatusCode(int code)
+{
+   if(unauthorizedStatusCodes.contains(code))
+      return;
+
+   unauthorizedStatusCodes.append(code);
 }
 
 inline QByteArray RestApi::updateBearerToken()
@@ -167,7 +183,7 @@ inline QJsonObject RestApi::handleReply(QNetworkRequest request, ReplyGeneratorF
 
       return content;
    }
-   else if (401 != statusCode)
+   else if (!unauthorizedStatusCodes.contains(statusCode))
    {
       if (useExceptions)
       {
@@ -213,7 +229,7 @@ inline void RestApi::handleReplyAsync(CallbackFunction callback, QNetworkRequest
       {
          return callback(content);
       }
-      else if (401 != statusCode)
+      else if (!unauthorizedStatusCodes.contains(statusCode))
       {
          if (useExceptions)
          {

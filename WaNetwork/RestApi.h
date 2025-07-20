@@ -41,6 +41,8 @@ public:
 protected:
    void setBaseUrl(const QString& url);
    void setBearerToken(const QByteArray& token);
+   const QByteArray& getBearerToken() const;
+   void addUnauthorizedStatusCode(int code);
    virtual QByteArray updateBearerToken();
    virtual void setAuthorization(QNetworkRequest& request, const QByteArray& bearerToken);
 
@@ -61,6 +63,7 @@ private:
    QNetworkAccessManager* manager;
    QByteArray bearerToken;
    QString baseUrl;
+   QList<int> unauthorizedStatusCodes;
 
    bool useExceptions;
    bool verbose;

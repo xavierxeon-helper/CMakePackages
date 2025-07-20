@@ -12,6 +12,8 @@ inline RestApiOAuth::RestApiOAuth(QObject* parent, const QString& baseUrl)
    , oauthFlow(nullptr)
    , grantConnection()
    , finalRedirectUrl()
+   , callbackHost()
+   , callbackPort(0)
 {
 }
 
@@ -32,6 +34,13 @@ inline void RestApiOAuth::setCustomFlow(QOAuth2AuthorizationCodeFlow* _oauthFlow
    oauthFlow = _oauthFlow;
    initFlow();
 }
+
+inline void RestApiOAuth::setCallbackHost(const QString& host, int port )
+{
+   callbackHost = host;
+   callbackPort = port;
+}
+
 
 inline void RestApiOAuth::setFinalRedirect(const QString& url)
 {
@@ -58,6 +67,51 @@ inline void RestApiOAuth::setAuthorization(QNetworkRequest& request, const QByte
    request.setRawHeader("Authorization", "Bearer " + bearerToken);
 }
 
+
+inline QByteArray RestApiOAuth::authorizeUser()
+{
+   QOAuthHttpServerReplyHandler redirectHandler((callbackPort > 0) ? callbackPort : 1234, this);
+   if(!callbackHost.isEmpty())
+      redirectHandler.setCallbackHost(callbackHost);
+
+   if (!finalRedirectUrl.isEmpty())
+   {
+      const QString html = "<html><head><meta http-equiv=\"refresh\" content=\"0; url=" + finalRedirectUrl + "\"></head></html>";
+      redirectHandler.setCallbackText(html);
+   }
+
+   QEventLoop loop;
+   connect(oauthFlow, &QAbstractOAuth::granted, &loop, &QEventLoop::quit);
+
+   auto onError = [&](const QAbstractOAuth::Error error)
+   {
+     qDebug() << "OAUTH ERROR @ authorizeUser" << (int)error;
+     loop.quit();
+   };
+   connect(oauthFlow, &QAbstractOAuth::requestFailed, onError);
+
+   auto replyDataReceived = [&](const QByteArray &data)
+   {
+     qDebug() << "DATA RECEIVED @ authorizeUser" << data;
+   };
+   connect(oauthFlow, &QAbstractOAuth::replyDataReceived, replyDataReceived);
+
+
+   oauthFlow->setReplyHandler(&redirectHandler);
+   if (!redirectHandler.isListening())
+      return QByteArray();
+
+   oauthFlow->grant();
+   loop.exec();
+
+   const QByteArray bearerToken = oauthFlow->token().toUtf8();
+   saveRefreshToken(oauthFlow->refreshToken().toUtf8());
+
+   redirectHandler.close();
+
+   return bearerToken;
+}
+
 inline QByteArray RestApiOAuth::updateBearerToken()
 {
    if (!oauthFlow)
@@ -70,8 +124,21 @@ inline QByteArray RestApiOAuth::updateBearerToken()
       return authorizeUser();
 
    QEventLoop loop;
-   QObject::connect(oauthFlow, &QAbstractOAuth::granted, &loop, &QEventLoop::quit);
-   QObject::connect(oauthFlow, &QAbstractOAuth::requestFailed, &loop, &QEventLoop::quit);
+   connect(oauthFlow, &QAbstractOAuth::granted, &loop, &QEventLoop::quit);
+
+   auto onError = [&](const QAbstractOAuth::Error error)
+   {
+     qDebug() << "OAUTH ERROR @ updateBearerToken" << (int)error;
+     loop.quit();
+   };
+   connect(oauthFlow, &QAbstractOAuth::requestFailed, onError);
+
+   auto replyDataReceived = [&](const QByteArray &data)
+   {
+     qDebug() << "DATA RECEIVED @ updateBearerToken" << data;
+   };
+   connect(oauthFlow, &QAbstractOAuth::replyDataReceived, replyDataReceived);
+
    oauthFlow->refreshTokens();
    loop.exec();
 
@@ -83,33 +150,6 @@ inline QByteArray RestApiOAuth::updateBearerToken()
    return bearerToken;
 }
 
-inline QByteArray RestApiOAuth::authorizeUser()
-{
-   QOAuthHttpServerReplyHandler redirectHandler(1234, this);
-
-   if (!finalRedirectUrl.isEmpty())
-   {
-      const QString html = "<html><head><meta http-equiv=\"refresh\" content=\"0; url=" + finalRedirectUrl + "\"></head></html>";
-      redirectHandler.setCallbackText(html);
-   }
-
-   QEventLoop loop;
-   QObject::connect(oauthFlow, &QAbstractOAuth::granted, &loop, &QEventLoop::quit);
-
-   oauthFlow->setReplyHandler(&redirectHandler);
-   if (!redirectHandler.isListening())
-      return QByteArray();
-
-   oauthFlow->grant();
-   loop.exec();
-
-   const QByteArray bearerToken = oauthFlow->token().toUtf8();
-   saveRefreshToken(oauthFlow->refreshToken());
-
-   redirectHandler.close();
-
-   return bearerToken;
-}
 
 inline void RestApiOAuth::initFlow()
 {
