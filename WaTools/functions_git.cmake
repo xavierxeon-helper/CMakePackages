@@ -11,7 +11,7 @@ function(init_all_git_submodules)
          OUTPUT_VARIABLE GIT_TEST_RESULT)
 
       if(GIT_TEST_RESULT EQUAL "0")
-         message(STATUS "GIT SUBMODULE: no uninitialized")
+         message(STATUS "GIT SUBMODULE: no uninitialized repositories")
          return()
       endif()
    endif()

@@ -13,9 +13,6 @@ public:
    PopulatedMainWindow();
    virtual ~PopulatedMainWindow();
 
-signals:
-   void signalSettingsChanged();
-
 public:
    static PopulatedMainWindow* the();
    static void printSettingsLocation();
