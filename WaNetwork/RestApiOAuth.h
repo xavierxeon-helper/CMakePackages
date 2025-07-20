@@ -16,7 +16,6 @@ public:
 protected:
    void setStandardFlow(const QString& baseAuthUrl, const QString& clientId, const QString& clientSecret);
    void setCustomFlow(QOAuth2AuthorizationCodeFlow* oauthFlow);
-   void setCallbackHost(const QString& host, int port = 0);
    void setFinalRedirect(const QString& url);
    QOAuth2AuthorizationCodeFlow* getFlow() const;
    virtual void saveRefreshToken(const QString& refreshToken) const;
@@ -32,8 +31,6 @@ private:
    QOAuth2AuthorizationCodeFlow* oauthFlow;
    QMetaObject::Connection grantConnection;
    QString finalRedirectUrl;
-   QString callbackHost;
-   int callbackPort;
 };
 
 #ifndef RestApiOAuthHPP

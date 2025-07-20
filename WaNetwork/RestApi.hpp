@@ -139,6 +139,11 @@ inline void RestApi::setVerbose(bool enabled)
    verbose = enabled;
 }
 
+inline bool RestApi::isVerbose() const
+{
+   return verbose;
+}
+
 inline QNetworkRequest RestApi::createRequest(const QString& endpoint, const QUrlQuery& params)
 {
    QUrl url(baseUrl + endpoint);
@@ -146,6 +151,7 @@ inline QNetworkRequest RestApi::createRequest(const QString& endpoint, const QUr
 
    QNetworkRequest request;
    request.setUrl(url);
+   request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
    request.setRawHeader("Accept", "application/json");
 
    setAuthorization(request, bearerToken);
@@ -159,7 +165,7 @@ inline QJsonObject RestApi::handleReply(QNetworkRequest request, ReplyGeneratorF
    int statusCode = 0;
    QJsonObject content;
 
-   auto handleReplyInternal = [&]()
+   auto handleReplyInternal = [&]() -> bool
    {
       QNetworkReply* reply = replyGenerator(request);
       reply->ignoreSslErrors();
@@ -172,41 +178,54 @@ inline QJsonObject RestApi::handleReply(QNetworkRequest request, ReplyGeneratorF
       reply->deleteLater();
 
       content = parseBytes(replyContent);
+
+      if (200 == statusCode)
+      {
+         if (verbose)
+            qDebug() << "good reply for" << request.url().toString();
+
+         return true;
+      }
+      else if (!unauthorizedStatusCodes.contains(statusCode))
+      {
+         if (useExceptions)
+         {
+            throw new StatusException(statusCode, content);
+         }
+         else
+         {
+            qWarning() << "unhandled status code" << statusCode << "for" << request.url().toString();
+            qWarning() << content;
+            return true;
+         }
+      }
+      else if (verbose)
+      {
+         qDebug() << "STATUS UNAUTHORIZED" << request.url().toString();
+         qDebug() << content;
+      }
+
+      return false;
    };
 
-   handleReplyInternal();
-
-   if (200 == statusCode)
+   auto updateToken = [&]() -> bool
    {
-      if (verbose)
-         qDebug() << "good reply for" << request.url().toString();
+      bearerToken = updateBearerToken();
+      if (bearerToken.isEmpty())
+         return false;
 
+      setAuthorization(request, bearerToken);
+      return true;
+   };
+
+   if(bearerToken.isEmpty() && !updateToken())
       return content;
-   }
-   else if (!unauthorizedStatusCodes.contains(statusCode))
-   {
-      if (useExceptions)
-      {
-         throw new StatusException(statusCode, content);
-      }
-      else
-      {
-         qWarning() << "unhandled status code" << statusCode << "for" << request.url().toString();
-         qWarning() << content;
-         return content;
-      }
-   }
-   else if (verbose)
-   {
-      qDebug() << "STATUS UNAUTHORIZED" << request.url().toString();
-      qDebug() << content;
-   }
 
-   bearerToken = updateBearerToken();
-   if (bearerToken.isEmpty())
-      return QJsonObject();
+   if(handleReplyInternal())
+      return content;
 
-   setAuthorization(request, bearerToken);
+   if(!updateToken())
+      return content;
 
    handleReplyInternal();
    return content;

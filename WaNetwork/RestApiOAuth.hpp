@@ -12,8 +12,6 @@ inline RestApiOAuth::RestApiOAuth(QObject* parent, const QString& baseUrl)
    , oauthFlow(nullptr)
    , grantConnection()
    , finalRedirectUrl()
-   , callbackHost()
-   , callbackPort(0)
 {
 }
 
@@ -34,13 +32,6 @@ inline void RestApiOAuth::setCustomFlow(QOAuth2AuthorizationCodeFlow* _oauthFlow
    oauthFlow = _oauthFlow;
    initFlow();
 }
-
-inline void RestApiOAuth::setCallbackHost(const QString& host, int port )
-{
-   callbackHost = host;
-   callbackPort = port;
-}
-
 
 inline void RestApiOAuth::setFinalRedirect(const QString& url)
 {
@@ -70,10 +61,10 @@ inline void RestApiOAuth::setAuthorization(QNetworkRequest& request, const QByte
 
 inline QByteArray RestApiOAuth::authorizeUser()
 {
-   QOAuthHttpServerReplyHandler redirectHandler((callbackPort > 0) ? callbackPort : 1234, this);
-   if(!callbackHost.isEmpty())
-      redirectHandler.setCallbackHost(callbackHost);
+   if(isVerbose())
+      qDebug() << __FUNCTION__;
 
+   QOAuthHttpServerReplyHandler redirectHandler(1234, this);
    if (!finalRedirectUrl.isEmpty())
    {
       const QString html = "<html><head><meta http-equiv=\"refresh\" content=\"0; url=" + finalRedirectUrl + "\"></head></html>";
@@ -85,17 +76,18 @@ inline QByteArray RestApiOAuth::authorizeUser()
 
    auto onError = [&](const QAbstractOAuth::Error error)
    {
-     qDebug() << "OAUTH ERROR @ authorizeUser" << (int)error;
-     loop.quit();
+      if(isVerbose())
+         qDebug() << "OAUTH ERROR @ authorizeUser" << (int)error;
+      loop.quit();
    };
    connect(oauthFlow, &QAbstractOAuth::requestFailed, onError);
 
    auto replyDataReceived = [&](const QByteArray &data)
    {
-     qDebug() << "DATA RECEIVED @ authorizeUser" << data;
+      if(isVerbose())
+         qDebug() << "DATA RECEIVED @ authorizeUser" << data;
    };
    connect(oauthFlow, &QAbstractOAuth::replyDataReceived, replyDataReceived);
-
 
    oauthFlow->setReplyHandler(&redirectHandler);
    if (!redirectHandler.isListening())
@@ -114,6 +106,9 @@ inline QByteArray RestApiOAuth::authorizeUser()
 
 inline QByteArray RestApiOAuth::updateBearerToken()
 {
+   if(isVerbose())
+      qDebug() << __FUNCTION__;
+
    if (!oauthFlow)
    {
       qWarning() << "No OAuth flow set";
@@ -128,14 +123,16 @@ inline QByteArray RestApiOAuth::updateBearerToken()
 
    auto onError = [&](const QAbstractOAuth::Error error)
    {
-     qDebug() << "OAUTH ERROR @ updateBearerToken" << (int)error;
-     loop.quit();
+      if(isVerbose())
+         qDebug() << "OAUTH ERROR @ updateBearerToken" << (int)error;
+      loop.quit();
    };
    connect(oauthFlow, &QAbstractOAuth::requestFailed, onError);
 
    auto replyDataReceived = [&](const QByteArray &data)
    {
-     qDebug() << "DATA RECEIVED @ updateBearerToken" << data;
+      if(isVerbose())
+         qDebug() << "DATA RECEIVED @ updateBearerToken" << data;
    };
    connect(oauthFlow, &QAbstractOAuth::replyDataReceived, replyDataReceived);
 
