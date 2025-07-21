@@ -16,6 +16,7 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets Xml)
 
 if(TARGET WaQt)
    message(STATUS "Re-using Target WaQt")
+   link_libraries(WaQt)
 else()
    # add this package to YOUR project
    add_subdirectory(${WAQT_CMAKE_DIR} WaQt)

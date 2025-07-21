@@ -18,8 +18,15 @@ inline QJsonObject FileTools::readJson(const QString& filePath)
    const QByteArray fileContent = file.readAll();
    file.close();
 
+   return parseBytes(fileContent);
+
+}
+
+inline QJsonObject FileTools::parseBytes(const QByteArray& data)
+{
+
    QJsonParseError parseError;
-   QJsonDocument doc = QJsonDocument::fromJson(fileContent, &parseError);
+   QJsonDocument doc = QJsonDocument::fromJson(data, &parseError);
 
    if (QJsonParseError::NoError != parseError.error)
    {
