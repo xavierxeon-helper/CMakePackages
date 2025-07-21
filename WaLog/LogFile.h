@@ -2,35 +2,13 @@
 #define LogFileH
 
 #include <CompileTimeString.h>
-
-#include <QDateTime>
 #include <QFile>
 
-/// a file that acts as a target for a stream
-/// this class is pure virtual
-class LogFileBase
-{
-public:
-   QString getFileName() const;
-
-   void setFileName(const QString& fileName); /// closes file and opens it with a new filename
-   static QString appendTimeStampToFileName(const QString& fileName, const QDateTime& timestamp = QDateTime::currentDateTime());
-
-protected:
-   LogFileBase(const QString& fileName);
-   virtual ~LogFileBase() = 0;
-
-private:
-   void cleanup();
-
-private:
-   QFile* file;
-   QString logFileName;
-};
+#include <QDateTime>
 
 /// tag is used to create a unique instance of LogFile and provides a static text stream
 template <CompileTimeString tag>
-class LogFile : public LogFileBase
+class LogFile : public QFile
 {
 public:
    LogFile(const QString& fileName);
@@ -38,6 +16,9 @@ public:
 
 public:
    static QTextStream stream();
+
+   void changeFileName(const QString& fileName); /// closes file and opens it with a new filename
+   static QString appendTimeStampToFileName(const QString& fileName, const QDateTime& timestamp = QDateTime::currentDateTime());
 
 private:
    static LogFile* me;
