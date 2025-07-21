@@ -1,36 +1,47 @@
 #ifndef LoggerH
 #define LoggerH
 
+#include <QColor>
+#include <QDateTime>
 #include <QTextStream>
 
-#include "IOChannel.h"
-
 /// provide streams for logging messages and warnings
-/// can add additional printer to the message and warning streams
-class Logger
+namespace Logger
 {
-public:
-   Logger();
-   ~Logger();
+   QTextStream stream(const Qt::GlobalColor& color = Qt::black);
 
-public:
-   static QTextStream message();
-   static QTextStream warning();
-   static void showLogger(); // when subclassed add astatic ability to show logger
-   void addAdditionalPrinter(IOChannel::PrintFunction printFunction, bool isWarning);
+   class Target
+   {
+   public:
+      class StreamProxy;
 
-protected:
-   virtual void reveal();
-   virtual void print(const QString& text, bool isWarning);
+   public:
+      Target(int stackSize);
+      ~Target();
 
-private:
-   static Logger* me;
-   IOChannel* messageChannel;
-   IOChannel* warningChannel;
-};
+   protected:
+      struct Entry
+      {
+         QDateTime timeStamp;
+         QString text;
+         QColor color;
 
-#ifndef LoggerHPP
-#include "Logger.hpp"
-#endif // NOT LoggerHPP
+         using Buffer = QList<Entry>;
+      };
+
+   protected:
+      virtual void update(const Entry::Buffer& buffer) = 0;
+      void clear();
+
+   private:
+      void print(const QString& text, const QColor& color);
+
+   private:
+      static Target* master;
+      QList<Target*> others;
+      int stackSize;
+      Entry::Buffer buffer;
+   };
+} // namespace Logger
 
 #endif // NOT LoggerH

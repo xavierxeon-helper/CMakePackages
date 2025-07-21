@@ -1,13 +1,11 @@
-#ifndef MessageHandlerHPP
-#define MessageHandlerHPP
 
 #include "MessageHandler.h"
 
 #include <QThread>
 
-inline MessageHandler* MessageHandler::me = nullptr;
+MessageHandler* MessageHandler::me = nullptr;
 
-inline MessageHandler::MessageHandler()
+MessageHandler::MessageHandler()
    : QObject(nullptr)
    , systemHandler()
    , targetMap()
@@ -16,7 +14,7 @@ inline MessageHandler::MessageHandler()
    systemHandler = qInstallMessageHandler(&MessageHandler::output);
 }
 
-inline MessageHandler::~MessageHandler()
+MessageHandler::~MessageHandler()
 {
    qInstallMessageHandler(systemHandler);
    me = nullptr;
@@ -47,7 +45,7 @@ void MessageHandler::disable(HandlerClass* instance)
    me->targetMap.remove(target);
 }
 
-inline void MessageHandler::outputInternal(QtMsgType type, const QMessageLogContext& context, const QString& msg)
+void MessageHandler::outputInternal(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
    for (Function function : targetMap.values())
       function(type, context, msg);
@@ -55,18 +53,15 @@ inline void MessageHandler::outputInternal(QtMsgType type, const QMessageLogCont
    systemHandler(type, context, msg);
 }
 
-inline void MessageHandler::output(QtMsgType type, const QMessageLogContext& context, const QString& msg)
+void MessageHandler::output(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
    if (!me)
       return;
 
-   if(QThread::isMainThread())
-       me->outputInternal(type, context, msg);
+   if (QThread::isMainThread())
+      me->outputInternal(type, context, msg);
    else
    {
       //QMetaObject::invokeMethod(me, &MessageHandler::outputInternal, Qt::QueuedConnection, type, context, msg);
    }
-
 }
-
-#endif // NOT MessageHandlerHPP

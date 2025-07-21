@@ -1,11 +1,10 @@
 #ifndef LogFileH
 #define LogFileH
 
-#include "../WaTools/CompileTimeString.h"
+#include <CompileTimeString.h>
 
+#include <QDateTime>
 #include <QFile>
-
-#include "IOChannel.h"
 
 /// a file that acts as a target for a stream
 /// this class is pure virtual
@@ -13,8 +12,6 @@ class LogFileBase
 {
 public:
    QString getFileName() const;
-   QTextStream stream();
-   IOChannel::PrintFunction printFunction();
 
    void setFileName(const QString& fileName); /// closes file and opens it with a new filename
    static QString appendTimeStampToFileName(const QString& fileName, const QDateTime& timestamp = QDateTime::currentDateTime());

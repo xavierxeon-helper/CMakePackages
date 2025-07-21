@@ -11,8 +11,4 @@ struct LogSymbol
    static const QString Info;
 };
 
-#ifndef LogSymbolHPP
-#include "LogSymbol.hpp"
-#endif // NOT LogSymbolHPP
-
 #endif // NOT LogSymbolH

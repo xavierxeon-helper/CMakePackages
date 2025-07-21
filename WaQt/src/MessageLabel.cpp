@@ -10,12 +10,8 @@
 
 MessageLabel::MessageLabel(QWidget* parent, int stackSize)
    : QLabel(parent)
-   , Logger()
-   , stackSize(stackSize)
+   , Logger::Target(stackSize)
    , showToolTip(true)
-   , addTimeStamp(true)
-   , messageStack()
-   , historyDocument()
    , messageExpiration()
 {
    setMinimumSize(QSize(50, 20));
@@ -28,31 +24,9 @@ MessageLabel::MessageLabel(QWidget* parent, int stackSize)
    messageTimer->start();
 }
 
-QTextDocument* MessageLabel::getHistoryDocument()
-{
-   return &historyDocument;
-}
-
-void MessageLabel::setStackSize(const int& newStackSize)
-{
-   stackSize = newStackSize;
-   updateStack();
-}
-
-void MessageLabel::clearStack()
-{
-   messageStack.clear();
-   updateStack();
-}
-
 void MessageLabel::setShowToolTip(bool newShowToolTip)
 {
    showToolTip = newShowToolTip;
-}
-
-void MessageLabel::setAddTimeStamp(bool newAddTimeStamp)
-{
-   addTimeStamp = newAddTimeStamp;
 }
 
 void MessageLabel::slotUpdateTimeout()
@@ -67,59 +41,26 @@ void MessageLabel::slotUpdateTimeout()
    setText("");
 }
 
-void MessageLabel::updateStack()
+void MessageLabel::update(const Entry::Buffer& buffer)
 {
-   while (messageStack.size() > stackSize)
-      messageStack.removeFirst();
-
-   static const QString timeFormat("yyyy-MM-dd hh:mm:ss");
+   static const QColor neutral(Qt::black);
 
    QString toolTip;
-   QString history;
-   for (const Message& message : std::as_const(messageStack))
+
+   for (int index = 0; index < buffer.size(); index++)
    {
-      toolTip += message.symbol + " " + message.text + "\n";
+      const Entry& entry = buffer.at(index);
+      const QString symbol = (entry.color == neutral) ? LogSymbol::Info : LogSymbol::Warning;
 
-      if (addTimeStamp)
-         history += message.symbol + " " + message.timeStamp.toString(timeFormat) + ": " + message.text + "\n";
-      else
-         history += message.symbol + " " + message.text + "\n";
+      const QString message = symbol + " " + entry.text;
+      toolTip += message + "\n";
+
+      if (index + 1 == buffer.size())
+         setText(message);
    }
-
-   historyDocument.setPlainText(history);
 
    if (showToolTip)
       setToolTip(toolTip);
-}
-
-void MessageLabel::print(const QString& text, bool isWarning)
-{
-   auto addMessage = [&](const QString& message, const QString& symbol, int length = -1)
-   {
-      setText(" " + symbol + " " + message);
-
-      if (-1 == length)
-         messageExpiration = QDateTime();
-      else
-         messageExpiration = QDateTime::currentDateTime().addMSecs(length);
-
-      if (0 == stackSize)
-         return;
-
-      messageStack.append({QDateTime::currentDateTime(), symbol, message});
-      updateStack();
-   };
-
-   if (isWarning)
-   {
-      setStyleSheet("QLabel{color: red; margin-right: 10px;}");
-      addMessage(text, LogSymbol::Attention);
-   }
-   else
-   {
-      setStyleSheet("QLabel{margin-right: 10px;}");
-      addMessage(text, LogSymbol::Info, 2000);
-   }
 }
 
 void MessageLabel::mouseDoubleClickEvent(QMouseEvent* event)

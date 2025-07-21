@@ -11,8 +11,6 @@
 struct MessageHandler : public QObject
 {
    Q_OBJECT
-   // in cmake use:
-   // list(APPEND SOURCE_FILES ${WALOG_INCLUDE_DIRS}/MessageHandler.h)
 
 public:
    template <typename HandlerClass>
@@ -38,9 +36,5 @@ private:
    QtMessageHandler systemHandler;
    TargetMap targetMap;
 };
-
-#ifndef MessageHandlerHPP
-#include "MessageHandler.hpp"
-#endif // NOT MessageHandlerHPP
 
 #endif // NOT MessageHandlerH

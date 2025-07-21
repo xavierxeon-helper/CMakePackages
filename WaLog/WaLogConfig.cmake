@@ -11,5 +11,15 @@ set(WALOG_INCLUDE_DIRS ${WALOG_CMAKE_DIR})
 
 include_directories(${WALOG_INCLUDE_DIRS})
 
-find_package(Qt6 REQUIRED COMPONENTS Core)
-link_libraries(Qt6::Core)
+find_package(Qt6 REQUIRED COMPONENTS Gui)
+
+if(TARGET WaLog)
+   message(STATUS "Re-using Target WaLog")
+   link_libraries(WaLog)
+else()
+   # add this package to YOUR project
+   add_subdirectory(${WALOG_CMAKE_DIR} WaLog)
+   link_libraries(WaLog)
+endif()
+
+link_libraries(Qt6::Gui)
