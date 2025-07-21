@@ -5,6 +5,17 @@
 
 #include <QFileInfo>
 
+QString LogFileBase::appendTimeStampToFileName(const QString& fileName, const QDateTime& timestamp)
+{
+   const QFileInfo info(fileName);
+
+   QString logFileName = info.path() + "/" + info.baseName();
+   logFileName += timestamp.toString("_yyyyMMdd_hhmmss");
+   logFileName += "." + info.completeSuffix();
+
+   return logFileName;
+}
+
 template <CompileTimeString tag>
 inline LogFile<tag>* LogFile<tag>::me = nullptr;
 
@@ -38,18 +49,6 @@ void LogFile<tag>::changeFileName(const QString& fileName)
    close();
    setFileName(fileName);
    open(QIODevice::WriteOnly);
-}
-
-template <CompileTimeString tag>
-QString LogFile<tag>::appendTimeStampToFileName(const QString& fileName, const QDateTime& timestamp)
-{
-   const QFileInfo info(fileName);
-
-   QString logFileName = info.path() + "/" + info.baseName();
-   logFileName += timestamp.toString("_yyyyMMdd_hhmmss");
-   logFileName += "." + info.completeSuffix();
-
-   return logFileName;
 }
 
 #endif // NOT LogFileHPP

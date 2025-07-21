@@ -6,6 +6,11 @@
 
 #include <QDateTime>
 
+struct LogFileBase
+{
+   static QString appendTimeStampToFileName(const QString& fileName, const QDateTime& timestamp = QDateTime::currentDateTime());
+};
+
 /// tag is used to create a unique instance of LogFile and provides a static text stream
 template <CompileTimeString tag>
 class LogFile : public QFile
@@ -16,9 +21,7 @@ public:
 
 public:
    static QTextStream stream();
-
    void changeFileName(const QString& fileName); /// closes file and opens it with a new filename
-   static QString appendTimeStampToFileName(const QString& fileName, const QDateTime& timestamp = QDateTime::currentDateTime());
 
 private:
    static LogFile* me;
