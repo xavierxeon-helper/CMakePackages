@@ -16,21 +16,30 @@ namespace Managed
 
    public:
       template <typename TargetClass>
+      void onSelected(TargetClass* instance, void (TargetClass::*memberFunction)(QStandardItem*));
+
+      template <typename TargetClass>
       void onDoubleClicked(TargetClass* instance, void (TargetClass::*memberFunction)(QStandardItem*));
 
       template <typename TargetClass>
       void onContextMenu(TargetClass* instance, QMenu* (TargetClass::*memberFunction)(QStandardItem*));
+
+      void setModel(QAbstractItemModel* model) override;
 
    private:
       using ItemFunction = std::function<void(QStandardItem*)>;
       using MenuFunction = std::function<QMenu*(QStandardItem*)>;
 
    private:
+      void selected(const QModelIndex& index);
       void mouseDoubleClickEvent(QMouseEvent* event) override;
-      void customContextMenuRequested(const QPoint& point);
+      void contextMenuRequested(const QPoint& point);
+      QStandardItem* getItemFromIndex(const QModelIndex& index) const;
       QStandardItem* getItemAtPoint(const QPoint& point) const;
 
    private:
+      QMetaObject::Connection selectConnetion;
+      ItemFunction selectedFunction;
       ItemFunction doubleClickFunction;
       MenuFunction contextMenuFunction;
    };

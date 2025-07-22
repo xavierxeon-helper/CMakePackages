@@ -6,11 +6,33 @@
 
 Managed::TreeView::TreeView(QWidget* parent)
    : QTreeView(parent)
+   , selectConnetion()
+   , selectedFunction()
    , doubleClickFunction()
    , contextMenuFunction()
 {
    setContextMenuPolicy(Qt::CustomContextMenu);
-   connect(this, &QTreeView::customContextMenuRequested, this, &TreeView::customContextMenuRequested);
+   connect(this, &QTreeView::customContextMenuRequested, this, &TreeView::contextMenuRequested);
+}
+
+void Managed::TreeView::setModel(QAbstractItemModel* model)
+{
+   QTreeView::setModel(model);
+
+   if (selectConnetion)
+      disconnect(selectConnetion);
+
+   selectConnetion = connect(selectionModel(), &QItemSelectionModel::currentChanged, this, &TreeView::selected);
+}
+
+void Managed::TreeView::selected(const QModelIndex& index)
+{
+   if (!index.isValid())
+      return;
+
+   QStandardItem* item = getItemFromIndex(index);
+   if (selectedFunction)
+      selectedFunction(item);
 }
 
 void Managed::TreeView::mouseDoubleClickEvent(QMouseEvent* event)
@@ -22,7 +44,7 @@ void Managed::TreeView::mouseDoubleClickEvent(QMouseEvent* event)
    doubleClickFunction(item);
 }
 
-void Managed::TreeView::customContextMenuRequested(const QPoint& point)
+void Managed::TreeView::contextMenuRequested(const QPoint& point)
 {
    if (!contextMenuFunction)
       return;
@@ -35,9 +57,8 @@ void Managed::TreeView::customContextMenuRequested(const QPoint& point)
    menu->exec(mapToGlobal(point));
 }
 
-QStandardItem* Managed::TreeView::getItemAtPoint(const QPoint& point) const
+QStandardItem* Managed::TreeView::getItemFromIndex(const QModelIndex& index) const
 {
-   QModelIndex index = indexAt(point);
    if (!index.isValid())
       return nullptr;
 
@@ -47,4 +68,10 @@ QStandardItem* Managed::TreeView::getItemAtPoint(const QPoint& point) const
 
    QStandardItem* item = static_cast<QStandardItem*>(itemModel->itemFromIndex(index));
    return item;
+}
+
+QStandardItem* Managed::TreeView::getItemAtPoint(const QPoint& point) const
+{
+   QModelIndex index = indexAt(point);
+   return getItemFromIndex(index);
 }
