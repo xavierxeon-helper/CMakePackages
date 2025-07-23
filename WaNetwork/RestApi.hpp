@@ -27,7 +27,7 @@ inline RestApi::RestApi(QObject* parent, const QString& baseUrl)
    unauthorizedStatusCodes.append(401);
 }
 
-inline QJsonObject RestApi::get(const QString& endpoint, const QUrlQuery& params)
+inline QJsonObject RestApi::get(const QString& endpoint, const QUrlQuery& params) const
 {
    QNetworkRequest request = createRequest(endpoint, params);
 
@@ -43,7 +43,7 @@ inline void RestApi::getAsync(CallbackFunction callback, const QString& endpoint
    handleReplyAsync(callback, request, replyGenerator);
 }
 
-inline QJsonObject RestApi::post(const QString& endpoint, const QJsonObject& payload, const QUrlQuery& params)
+inline QJsonObject RestApi::post(const QString& endpoint, const QJsonObject& payload, const QUrlQuery& params) const
 {
    QNetworkRequest request = createRequest(endpoint, params);
    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -65,7 +65,7 @@ inline void RestApi::postAsync(CallbackFunction callback, const QString& endpoin
    handleReplyAsync(callback, request, replyGenerator);
 }
 
-inline QJsonObject RestApi::put(const QString& endpoint, const QJsonObject& payload, const QUrlQuery& params)
+inline QJsonObject RestApi::put(const QString& endpoint, const QJsonObject& payload, const QUrlQuery& params) const
 {
    QNetworkRequest request = createRequest(endpoint, params);
    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -87,6 +87,21 @@ inline void RestApi::putAsync(CallbackFunction callback, const QString& endpoint
    handleReplyAsync(callback, request, replyGenerator);
 }
 
+inline void RestApi::setUseExceptions(bool enabled)
+{
+   useExceptions = enabled;
+}
+
+inline void RestApi::setVerbose(bool enabled)
+{
+   verbose = enabled;
+}
+
+inline bool RestApi::isVerbose() const
+{
+   return verbose;
+}
+
 inline void RestApi::setBaseUrl(const QString& url)
 {
    baseUrl = url;
@@ -102,23 +117,23 @@ inline const QByteArray& RestApi::getBearerToken() const
    return bearerToken;
 }
 
+inline QByteArray RestApi::updateBearerToken() const
+{
+   // do nothing
+   return bearerToken;
+}
+
+inline void RestApi::setAuthorization(QNetworkRequest& request, const QByteArray& bearerToken) const
+{
+   request.setRawHeader("Authorization", bearerToken);
+}
+
 inline void RestApi::addUnauthorizedStatusCode(int code)
 {
    if(unauthorizedStatusCodes.contains(code))
       return;
 
    unauthorizedStatusCodes.append(code);
-}
-
-inline QByteArray RestApi::updateBearerToken()
-{
-   // do nothing
-   return bearerToken;
-}
-
-inline void RestApi::setAuthorization(QNetworkRequest& request, const QByteArray& bearerToken)
-{
-   request.setRawHeader("Authorization", bearerToken);
 }
 
 inline QJsonObject RestApi::parseBytes(const QByteArray& data) const
@@ -134,24 +149,14 @@ inline QJsonObject RestApi::parseBytes(const QByteArray& data) const
    return doc.object();
 }
 
-inline void RestApi::setVerbose(bool enabled)
-{
-   verbose = enabled;
-}
 
-inline bool RestApi::isVerbose() const
-{
-   return verbose;
-}
-
-inline QNetworkRequest RestApi::createRequest(const QString& endpoint, const QUrlQuery& params)
+inline QNetworkRequest RestApi::createRequest(const QString& endpoint, const QUrlQuery& params) const
 {
    QUrl url(baseUrl + endpoint);
    url.setQuery(params);
 
    QNetworkRequest request;
    request.setUrl(url);
-   request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
    request.setRawHeader("Accept", "application/json");
 
    setAuthorization(request, bearerToken);
@@ -159,7 +164,7 @@ inline QNetworkRequest RestApi::createRequest(const QString& endpoint, const QUr
    return request;
 }
 
-inline QJsonObject RestApi::handleReply(QNetworkRequest request, ReplyGeneratorFunction replyGenerator)
+inline QJsonObject RestApi::handleReply(QNetworkRequest request, ReplyGeneratorFunction replyGenerator) const
 {
    QEventLoop loop;
    int statusCode = 0;
@@ -188,13 +193,13 @@ inline QJsonObject RestApi::handleReply(QNetworkRequest request, ReplyGeneratorF
       }
       else if (!unauthorizedStatusCodes.contains(statusCode))
       {
+         qWarning() << "unhandled status code" << statusCode << "for" << request.url().toString();
          if (useExceptions)
          {
             throw new StatusException(statusCode, content);
          }
          else
          {
-            qWarning() << "unhandled status code" << statusCode << "for" << request.url().toString();
             qWarning() << content;
             return true;
          }
@@ -204,17 +209,16 @@ inline QJsonObject RestApi::handleReply(QNetworkRequest request, ReplyGeneratorF
          qDebug() << "STATUS UNAUTHORIZED" << request.url().toString();
          qDebug() << content;
       }
-
       return false;
    };
 
    auto updateToken = [&]() -> bool
    {
-      bearerToken = updateBearerToken();
-      if (bearerToken.isEmpty())
+   bearerToken = updateBearerToken();
+   if (bearerToken.isEmpty())
          return false;
 
-      setAuthorization(request, bearerToken);
+   setAuthorization(request, bearerToken);
       return true;
    };
 

@@ -13,6 +13,9 @@ class RestApiOAuth : public RestApi
 public:
    RestApiOAuth(QObject* parent, const QString& baseUrl);
 
+public:
+   QJsonObject getTokenInfo(QByteArray token = QByteArray()) const;
+
 protected:
    void setStandardFlow(const QString& baseAuthUrl, const QString& clientId, const QString& clientSecret);
    void setCustomFlow(QOAuth2AuthorizationCodeFlow* oauthFlow);
@@ -20,9 +23,10 @@ protected:
    QOAuth2AuthorizationCodeFlow* getFlow() const;
    virtual void saveRefreshToken(const QString& refreshToken) const;
    virtual QString loadRefreshToken();
-   virtual void setAuthorization(QNetworkRequest& request, const QByteArray& bearerToken) override;
-   virtual QByteArray authorizeUser();
-   virtual QByteArray updateBearerToken() override;
+   virtual void setAuthorization(QNetworkRequest& request, const QByteArray& bearerToken) const override;
+   virtual QByteArray authorizeUser() const;
+   virtual QByteArray updateBearerToken() const override;
+   void setTokenInfoUrl(const QString url);
 
 private:
    void initFlow();
@@ -31,6 +35,7 @@ private:
    QOAuth2AuthorizationCodeFlow* oauthFlow;
    QMetaObject::Connection grantConnection;
    QString finalRedirectUrl;
+   QString tokenInfoUrl;
 };
 
 #ifndef RestApiOAuthHPP

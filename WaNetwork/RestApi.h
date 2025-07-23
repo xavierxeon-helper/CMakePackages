@@ -31,37 +31,39 @@ public:
    RestApi(QObject* parent, const QString& baseUrl);
 
 public:
-   virtual QJsonObject get(const QString& endpoint, const QUrlQuery& params = QUrlQuery());
+   virtual QJsonObject get(const QString& endpoint, const QUrlQuery& params = QUrlQuery()) const;
    virtual void getAsync(CallbackFunction callback, const QString& endpoint, const QUrlQuery& params = QUrlQuery());
-   virtual QJsonObject post(const QString& endpoint, const QJsonObject& payload = QJsonObject(), const QUrlQuery& params = QUrlQuery());
+   virtual QJsonObject post(const QString& endpoint, const QJsonObject& payload = QJsonObject(), const QUrlQuery& params = QUrlQuery()) const;
    virtual void postAsync(CallbackFunction callback, const QString& endpoint, const QJsonObject& payload = QJsonObject(), const QUrlQuery& params = QUrlQuery());
-   virtual QJsonObject put(const QString& endpoint, const QJsonObject& payload = QJsonObject(), const QUrlQuery& params = QUrlQuery());
+   virtual QJsonObject put(const QString& endpoint, const QJsonObject& payload = QJsonObject(), const QUrlQuery& params = QUrlQuery()) const;
    virtual void putAsync(CallbackFunction callback, const QString& endpoint, const QJsonObject& payload = QJsonObject(), const QUrlQuery& params = QUrlQuery());
 
 protected:
-   void setBaseUrl(const QString& url);
-   void setBearerToken(const QByteArray& token);
-   const QByteArray& getBearerToken() const;
-   void addUnauthorizedStatusCode(int code);
-   virtual QByteArray updateBearerToken();
-   virtual void setAuthorization(QNetworkRequest& request, const QByteArray& bearerToken);
+   using ReplyGeneratorFunction = std::function<QNetworkReply*(QNetworkRequest request)>;
 
-   QJsonObject parseBytes(const QByteArray& data) const;
+protected:
    void setUseExceptions(bool enabled);
    void setVerbose(bool enabled);
    bool isVerbose() const;
 
-private:
-   using ReplyGeneratorFunction = std::function<QNetworkReply*(QNetworkRequest request)>;
+   void setBaseUrl(const QString& url);
+   void setBearerToken(const QByteArray& token);
+   const QByteArray& getBearerToken() const;
+   virtual QByteArray updateBearerToken() const;
+   virtual void setAuthorization(QNetworkRequest& request, const QByteArray& bearerToken) const;
+   void addUnauthorizedStatusCode(int code);
+   QJsonObject parseBytes(const QByteArray& data) const;
+   QJsonObject handleReply(QNetworkRequest request, ReplyGeneratorFunction replyGenerator) const;
+
+protected:
+   QNetworkAccessManager* manager;
 
 private:
-   QNetworkRequest createRequest(const QString& endpoint, const QUrlQuery& params);
-   QJsonObject handleReply(QNetworkRequest request, ReplyGeneratorFunction replyGenerator);
+   QNetworkRequest createRequest(const QString& endpoint, const QUrlQuery& params) const;
    void handleReplyAsync(CallbackFunction callback, QNetworkRequest request, ReplyGeneratorFunction replyGenerator);
 
 private:
-   QNetworkAccessManager* manager;
-   QByteArray bearerToken;
+   mutable QByteArray bearerToken;
    QString baseUrl;
    QList<int> unauthorizedStatusCodes;
 

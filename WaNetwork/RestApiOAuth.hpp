@@ -12,7 +12,30 @@ inline RestApiOAuth::RestApiOAuth(QObject* parent, const QString& baseUrl)
    , oauthFlow(nullptr)
    , grantConnection()
    , finalRedirectUrl()
+   , tokenInfoUrl()
 {
+}
+
+inline QJsonObject RestApiOAuth::getTokenInfo(QByteArray token) const
+{
+   if(token.isEmpty())
+      token = getBearerToken();
+
+   if(tokenInfoUrl.isEmpty())
+      return QJsonObject();
+
+   QUrlQuery params;
+   params.addQueryItem("id_token", token);
+
+   QUrl url(tokenInfoUrl);
+   url.setQuery(params);
+
+   QNetworkRequest request;
+   request.setUrl(url);
+   request.setRawHeader("Accept", "application/json");
+
+   ReplyGeneratorFunction replyGenerator = std::bind(qOverload<const QNetworkRequest&>(&QNetworkAccessManager::get), manager, std::placeholders::_1);
+   return handleReply(request, replyGenerator);
 }
 
 inline void RestApiOAuth::setStandardFlow(const QString& baseAuthUrl, const QString& clientId, const QString& clientSecret)
@@ -23,6 +46,8 @@ inline void RestApiOAuth::setStandardFlow(const QString& baseAuthUrl, const QStr
    oauthFlow->setTokenUrl(QUrl(baseAuthUrl + "/token"));
    oauthFlow->setClientIdentifier(clientId);
    oauthFlow->setClientIdentifierSharedKey(clientSecret);
+
+   setTokenInfoUrl(baseAuthUrl + "/tokeninfo");
 
    initFlow();
 }
@@ -53,18 +78,16 @@ inline QString RestApiOAuth::loadRefreshToken()
    return QString();
 }
 
-inline void RestApiOAuth::setAuthorization(QNetworkRequest& request, const QByteArray& bearerToken)
+inline void RestApiOAuth::setAuthorization(QNetworkRequest& request, const QByteArray& bearerToken) const
 {
    request.setRawHeader("Authorization", "Bearer " + bearerToken);
 }
 
 
-inline QByteArray RestApiOAuth::authorizeUser()
+inline QByteArray RestApiOAuth::authorizeUser() const
 {
-   if(isVerbose())
-      qDebug() << __FUNCTION__;
+   QOAuthHttpServerReplyHandler redirectHandler(1234, nullptr);
 
-   QOAuthHttpServerReplyHandler redirectHandler(1234, this);
    if (!finalRedirectUrl.isEmpty())
    {
       const QString html = "<html><head><meta http-equiv=\"refresh\" content=\"0; url=" + finalRedirectUrl + "\"></head></html>";
@@ -72,22 +95,7 @@ inline QByteArray RestApiOAuth::authorizeUser()
    }
 
    QEventLoop loop;
-   connect(oauthFlow, &QAbstractOAuth::granted, &loop, &QEventLoop::quit);
-
-   auto onError = [&](const QAbstractOAuth::Error error)
-   {
-      if(isVerbose())
-         qDebug() << "OAUTH ERROR @ authorizeUser" << (int)error;
-      loop.quit();
-   };
-   connect(oauthFlow, &QAbstractOAuth::requestFailed, onError);
-
-   auto replyDataReceived = [&](const QByteArray &data)
-   {
-      if(isVerbose())
-         qDebug() << "DATA RECEIVED @ authorizeUser" << data;
-   };
-   connect(oauthFlow, &QAbstractOAuth::replyDataReceived, replyDataReceived);
+   QObject::connect(oauthFlow, &QAbstractOAuth::granted, &loop, &QEventLoop::quit);
 
    oauthFlow->setReplyHandler(&redirectHandler);
    if (!redirectHandler.isListening())
@@ -97,18 +105,15 @@ inline QByteArray RestApiOAuth::authorizeUser()
    loop.exec();
 
    const QByteArray bearerToken = oauthFlow->token().toUtf8();
-   saveRefreshToken(oauthFlow->refreshToken().toUtf8());
+   saveRefreshToken(oauthFlow->refreshToken());
 
    redirectHandler.close();
 
    return bearerToken;
 }
 
-inline QByteArray RestApiOAuth::updateBearerToken()
+inline QByteArray RestApiOAuth::updateBearerToken() const
 {
-   if(isVerbose())
-      qDebug() << __FUNCTION__;
-
    if (!oauthFlow)
    {
       qWarning() << "No OAuth flow set";
@@ -119,23 +124,8 @@ inline QByteArray RestApiOAuth::updateBearerToken()
       return authorizeUser();
 
    QEventLoop loop;
-   connect(oauthFlow, &QAbstractOAuth::granted, &loop, &QEventLoop::quit);
-
-   auto onError = [&](const QAbstractOAuth::Error error)
-   {
-      if(isVerbose())
-         qDebug() << "OAUTH ERROR @ updateBearerToken" << (int)error;
-      loop.quit();
-   };
-   connect(oauthFlow, &QAbstractOAuth::requestFailed, onError);
-
-   auto replyDataReceived = [&](const QByteArray &data)
-   {
-      if(isVerbose())
-         qDebug() << "DATA RECEIVED @ updateBearerToken" << data;
-   };
-   connect(oauthFlow, &QAbstractOAuth::replyDataReceived, replyDataReceived);
-
+   QObject::connect(oauthFlow, &QAbstractOAuth::granted, &loop, &QEventLoop::quit);
+   QObject::connect(oauthFlow, &QAbstractOAuth::requestFailed, &loop, &QEventLoop::quit);
    oauthFlow->refreshTokens();
    loop.exec();
 
@@ -147,6 +137,10 @@ inline QByteArray RestApiOAuth::updateBearerToken()
    return bearerToken;
 }
 
+inline void RestApiOAuth::setTokenInfoUrl(const QString url)
+{
+   tokenInfoUrl = url;
+}
 
 inline void RestApiOAuth::initFlow()
 {
