@@ -1,5 +1,3 @@
-
-
 #include "ShellClient.h"
 
 #include <QProcess>

@@ -27,7 +27,6 @@ endfunction()
 
 # application icon
 function(set_application_icon PATH_TO_ICON)
-
    if(APPLE)
       set_target_properties(${PROJECT_NAME} PROPERTIES MACOSX_BUNDLE TRUE)
       set(APP_ICON ${PATH_TO_ICON}.icns)
@@ -49,5 +48,14 @@ function(set_application_icon PATH_TO_ICON)
       message(STATUS "APP_ICON: ${APP_ICON}")
 
       target_sources(${PROJECT_NAME} PRIVATE ${APP_ICON})
+   endif()
+endfunction()
+
+# application without icon
+function(set_application_no_icon)
+   if(APPLE)
+      set_target_properties(${PROJECT_NAME} PROPERTIES MACOSX_BUNDLE TRUE)
+   elseif(WIN32)
+      set_target_properties(${PROJECT_NAME} PROPERTIES WIN32_EXECUTABLE TRUE)
    endif()
 endfunction()

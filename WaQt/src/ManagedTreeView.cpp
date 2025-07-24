@@ -2,6 +2,7 @@
 
 #include <QMenu>
 #include <QMouseEvent>
+#include <QSortFilterProxyModel>
 #include <QStandardItemModel>
 
 Managed::TreeView::TreeView(QWidget* parent)
@@ -25,20 +26,35 @@ void Managed::TreeView::setModel(QAbstractItemModel* model)
    selectConnetion = connect(selectionModel(), &QItemSelectionModel::currentChanged, this, &TreeView::selected);
 }
 
+QModelIndex Managed::TreeView::currentSourceIndex() const
+{
+   if (model()->inherits("QSortFilterProxyModel"))
+   {
+      const QModelIndex filteredIndex = currentIndex();
+      QSortFilterProxyModel* filterModel = qobject_cast<QSortFilterProxyModel*>(model());
+      const QModelIndex sourceIndex = filterModel->mapToSource(filteredIndex);
+      return sourceIndex;
+   }
+
+   return currentIndex();
+}
+
 void Managed::TreeView::selected(const QModelIndex& index)
 {
+   if (!selectedFunction)
+      return;
+
    if (!index.isValid())
       return;
 
    QStandardItem* item = getItemFromIndex(index);
-   if (selectedFunction)
-      selectedFunction(item);
+   selectedFunction(item);
 }
 
 void Managed::TreeView::mouseDoubleClickEvent(QMouseEvent* event)
 {
    if (!doubleClickFunction)
-      return;
+      return QTreeView::mouseDoubleClickEvent(event);
 
    QStandardItem* item = getItemAtPoint(event->pos());
    doubleClickFunction(item);

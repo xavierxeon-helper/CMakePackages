@@ -130,7 +130,7 @@ inline void RestApi::setAuthorization(QNetworkRequest& request, const QByteArray
 
 inline void RestApi::addUnauthorizedStatusCode(int code)
 {
-   if(unauthorizedStatusCodes.contains(code))
+   if (unauthorizedStatusCodes.contains(code))
       return;
 
    unauthorizedStatusCodes.append(code);
@@ -148,7 +148,6 @@ inline QJsonObject RestApi::parseBytes(const QByteArray& data) const
 
    return doc.object();
 }
-
 
 inline QNetworkRequest RestApi::createRequest(const QString& endpoint, const QUrlQuery& params) const
 {
@@ -214,21 +213,21 @@ inline QJsonObject RestApi::handleReply(QNetworkRequest request, ReplyGeneratorF
 
    auto updateToken = [&]() -> bool
    {
-   bearerToken = updateBearerToken();
-   if (bearerToken.isEmpty())
+      bearerToken = updateBearerToken();
+      if (bearerToken.isEmpty())
          return false;
 
-   setAuthorization(request, bearerToken);
+      setAuthorization(request, bearerToken);
       return true;
    };
 
-   if(bearerToken.isEmpty() && !updateToken())
+   if (bearerToken.isEmpty() && !updateToken())
       return content;
 
-   if(handleReplyInternal())
+   if (handleReplyInternal())
       return content;
 
-   if(!updateToken())
+   if (!updateToken())
       return content;
 
    handleReplyInternal();

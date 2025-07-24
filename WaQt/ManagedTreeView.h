@@ -25,6 +25,7 @@ namespace Managed
       void onContextMenu(TargetClass* instance, QMenu* (TargetClass::*memberFunction)(QStandardItem*));
 
       void setModel(QAbstractItemModel* model) override;
+      QModelIndex currentSourceIndex() const;
 
    private:
       using ItemFunction = std::function<void(QStandardItem*)>;
