@@ -29,4 +29,9 @@ inline bool BearerTokenProvider::update()
    return true;
 }
 
+inline void BearerTokenProvider::setAuthorization(QNetworkRequest& request) const
+{
+   request.setRawHeader("Authorization", "Bearer " + bearerToken);
+}
+
 #endif // NOT BearerTokenProviderHPP

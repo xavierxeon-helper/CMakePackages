@@ -44,8 +44,6 @@ protected:
    using ReplyGeneratorFunction = std::function<QNetworkReply*(QNetworkRequest request)>;
 
 protected:
-   virtual void setAuthorization(QNetworkRequest& request, const QByteArray& bearerToken) const;
-
    void setBearerTokenProvider(BearerTokenProvider* newProvider);
    void setUseExceptions(bool enabled);
    void setVerbose(bool enabled);

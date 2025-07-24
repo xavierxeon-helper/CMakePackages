@@ -96,11 +96,6 @@ inline void RestApi::putAsync(CallbackFunction callback, const QString& endpoint
    handleReplyAsync(callback, request, replyGenerator);
 }
 
-inline void RestApi::setAuthorization(QNetworkRequest& request, const QByteArray& bearerToken) const
-{
-   request.setRawHeader("Authorization", "Bearer " + bearerToken);
-}
-
 inline void RestApi::setBearerTokenProvider(BearerTokenProvider* newProvider)
 {
    if (provider)
@@ -190,7 +185,7 @@ inline QJsonObject RestApi::handleReply(QNetworkRequest request, ReplyGeneratorF
       if (!provider->update())
          return false;
 
-      setAuthorization(request, provider->getBearerToken());
+      provider->setAuthorization(request);
       return true;
    };
 
@@ -216,7 +211,7 @@ inline QNetworkRequest RestApi::createRequest(const QString& endpoint, const QUr
    request.setUrl(url);
    request.setRawHeader("Accept", "application/json");
 
-   setAuthorization(request, provider->getBearerToken());
+   provider->setAuthorization(request);
 
    return request;
 }

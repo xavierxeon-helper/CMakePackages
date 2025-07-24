@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+#include <QNetworkRequest>
+
 class BearerTokenProvider : public QObject
 {
    // do not use Q_OBJECT
@@ -17,6 +19,7 @@ public:
 
    void setBearerToken(const QByteArray& token);
    virtual bool update();
+   virtual void setAuthorization(QNetworkRequest& request) const;
 
 private:
    QByteArray bearerToken;
