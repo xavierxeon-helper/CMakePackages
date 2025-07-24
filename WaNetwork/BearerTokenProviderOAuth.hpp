@@ -5,7 +5,13 @@
 
 #include <QDesktopServices>
 #include <QEventLoop>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
 #include <QOAuthHttpServerReplyHandler>
+#include <QUrlQuery>
+
+#include <FileTools.h>
 
 inline BearerTokenProviderOAuth::BearerTokenProviderOAuth(QObject* parent)
    : BearerTokenProvider(parent)
@@ -13,21 +19,7 @@ inline BearerTokenProviderOAuth::BearerTokenProviderOAuth(QObject* parent)
    , grantConnection()
    , finalHTML()
    , tokenInfoUrl()
-   , saveRefreshTokenFunction()
-   , loadRefreshTokenFunction()
 {
-}
-
-template <typename ClassType>
-void BearerTokenProviderOAuth::setSaveRefreshTokenFunction(ClassType* instance, void (ClassType::*function)(const QString& refreshToken))
-{
-   saveRefreshTokenFunction = std::bind(function, instance, std::placeholders::_1);
-}
-
-template <typename ClassType>
-void BearerTokenProviderOAuth::setLoadRefreshTokenFunction(ClassType* instance, QString (ClassType::*function)())
-{
-   loadRefreshTokenFunction = std::bind(function, instance);
 }
 
 inline QJsonObject BearerTokenProviderOAuth::getTokenInfo(QByteArray token) const
@@ -122,8 +114,7 @@ inline bool BearerTokenProviderOAuth::authorizeUser()
    loop.exec();
 
    setBearerToken(oauthFlow->token().toUtf8());
-   if (saveRefreshTokenFunction)
-      saveRefreshTokenFunction(oauthFlow->refreshToken());
+   saveRefreshToken(oauthFlow->refreshToken());
 
    redirectHandler.close();
 
@@ -151,9 +142,19 @@ inline bool BearerTokenProviderOAuth::update()
    if (isEmpty())
       return authorizeUser();
 
-   if (saveRefreshTokenFunction)
-      saveRefreshTokenFunction(oauthFlow->refreshToken());
+   saveRefreshToken(oauthFlow->refreshToken());
    return true;
+}
+
+inline void BearerTokenProviderOAuth::saveRefreshToken(const QString& refreshToken)
+{
+   // do nothing
+   Q_UNUSED(refreshToken);
+}
+
+inline QString BearerTokenProviderOAuth::loadRefreshToken()
+{
+   return QString();
 }
 
 inline void BearerTokenProviderOAuth::initFlow()
@@ -161,11 +162,8 @@ inline void BearerTokenProviderOAuth::initFlow()
    QObject::disconnect(grantConnection);
    grantConnection = QObject::connect(oauthFlow, &QAbstractOAuth::authorizeWithBrowser, &QDesktopServices::openUrl);
 
-   if (loadRefreshTokenFunction)
-   {
-      const QString token = loadRefreshTokenFunction();
-      oauthFlow->setRefreshToken(token);
-   }
+   const QString token = loadRefreshToken();
+   oauthFlow->setRefreshToken(token);
 }
 
 #endif // NOT BearerTokenProviderOAuthHPP

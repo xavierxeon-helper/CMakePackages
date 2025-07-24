@@ -8,33 +8,7 @@
 
 #include <FileTools.h>
 
-// token provider
-
-inline BearerTokenProvider::BearerTokenProvider(QObject* parent)
-   : QObject(parent)
-   , bearerToken()
-{
-}
-
-inline const QByteArray& BearerTokenProvider::getBearerToken() const
-{
-   return bearerToken;
-}
-
-inline bool BearerTokenProvider::isEmpty() const
-{
-   return bearerToken.isEmpty();
-}
-
-inline void BearerTokenProvider::setBearerToken(const QByteArray& token)
-{
-   bearerToken = token;
-}
-
-inline bool BearerTokenProvider::update()
-{
-   return true;
-}
+#include "BearerTokenProvider.h"
 
 // exception
 
@@ -61,7 +35,6 @@ inline RestApi::RestApi(QObject* parent, const QString& baseUrl)
 
    unauthorizedStatusCodes.append(401);
 }
-
 
 inline QJsonObject RestApi::get(const QString& endpoint, const QUrlQuery& params) const
 {

@@ -1,8 +1,9 @@
 #ifndef BearerTokenProviderOAuthH
 #define BearerTokenProviderOAuthH
 
-#include "RestApi.h"
+#include "BearerTokenProvider.h"
 
+#include <QJsonObject>
 #include <QOAuth2AuthorizationCodeFlow>
 
 class BearerTokenProviderOAuth : public BearerTokenProvider
@@ -11,19 +12,9 @@ class BearerTokenProviderOAuth : public BearerTokenProvider
    // this file will not be moc'ed automatically
 
 public:
-   using SaveRefreshTokenFunction = std::function<void(const QString& refreshToken)>;
-   using LoadRefreshTokenFunction = std::function<QString()>;
-
-public:
    BearerTokenProviderOAuth(QObject* parent);
 
 public:
-   template <typename ClassType>
-   void setSaveRefreshTokenFunction(ClassType* instance, void (ClassType::*function)(const QString& refreshToken));
-
-   template <typename ClassType>
-   void setLoadRefreshTokenFunction(ClassType* instance, QString (ClassType::*function)());
-
    void setTokenInfoUrl(const QString url);
    QJsonObject getTokenInfo(QByteArray token = QByteArray()) const;
 
@@ -36,6 +27,9 @@ protected:
    virtual bool authorizeUser();
    virtual bool update() override;
 
+   virtual void saveRefreshToken(const QString& refreshToken);
+   virtual QString loadRefreshToken();
+
 private:
    void initFlow();
 
@@ -44,8 +38,6 @@ private:
    QMetaObject::Connection grantConnection;
    QString finalHTML;
    QString tokenInfoUrl;
-   SaveRefreshTokenFunction saveRefreshTokenFunction;
-   LoadRefreshTokenFunction loadRefreshTokenFunction;
 };
 
 #ifndef BearerTokenProviderOAuthHPP
