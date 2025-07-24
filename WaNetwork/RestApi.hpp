@@ -8,7 +8,7 @@
 
 #include <FileTools.h>
 
-#include "BearerTokenProvider.h"
+#include "AuthProviderGeneral.h"
 
 // exception
 
@@ -31,7 +31,7 @@ inline RestApi::RestApi(QObject* parent, const QString& baseUrl)
    , verbose(false)
 {
    manager = new QNetworkAccessManager(this);
-   provider = new BearerTokenProvider(this);
+   provider = new AuthProvider::General(this);
 
    unauthorizedStatusCodes.append(401);
 }
@@ -96,7 +96,7 @@ inline void RestApi::putAsync(CallbackFunction callback, const QString& endpoint
    handleReplyAsync(callback, request, replyGenerator);
 }
 
-inline void RestApi::setBearerTokenProvider(BearerTokenProvider* newProvider)
+inline void RestApi::setAuthProvider(AuthProvider::General* newProvider)
 {
    if (provider)
       delete provider;
@@ -189,7 +189,7 @@ inline QJsonObject RestApi::handleReply(QNetworkRequest request, ReplyGeneratorF
       return true;
    };
 
-   if (provider->isEmpty() && !updateToken())
+   if (provider->isNull() && !updateToken())
       return content;
 
    if (handleReplyInternal())

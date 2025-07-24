@@ -9,7 +9,10 @@
 #include <QNetworkReply>
 #include <QUrlQuery>
 
-class BearerTokenProvider;
+namespace AuthProvider
+{
+   class General;
+};
 
 class RestApi : public QObject
 {
@@ -44,7 +47,7 @@ protected:
    using ReplyGeneratorFunction = std::function<QNetworkReply*(QNetworkRequest request)>;
 
 protected:
-   void setBearerTokenProvider(BearerTokenProvider* newProvider);
+   void setAuthProvider(AuthProvider::General* newProvider);
    void setUseExceptions(bool enabled);
    void setVerbose(bool enabled);
    bool isVerbose() const;
@@ -60,7 +63,7 @@ private:
    void handleReplyAsync(CallbackFunction callback, QNetworkRequest request, ReplyGeneratorFunction replyGenerator);
 
 private:
-   BearerTokenProvider* provider;
+   AuthProvider::General* provider;
    QString baseUrl;
    QList<int> unauthorizedStatusCodes;
 

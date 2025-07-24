@@ -1,7 +1,7 @@
-#ifndef BearerTokenProviderOAuthHPP
-#define BearerTokenProviderOAuthHPP
+#ifndef AuthProviderOAuthHPP
+#define AuthProviderOAuthHPP
 
-#include "BearerTokenProviderOAuth.h"
+#include "AuthProviderOAuth.h"
 
 #include <QDesktopServices>
 #include <QEventLoop>
@@ -13,8 +13,8 @@
 
 #include <FileTools.h>
 
-inline BearerTokenProviderOAuth::BearerTokenProviderOAuth(QObject* parent)
-   : BearerTokenProvider(parent)
+inline AuthProvider::OAuth::OAuth(QObject* parent)
+   : AuthProvider::General(parent)
    , oauthFlow(nullptr)
    , grantConnection()
    , finalHTML()
@@ -22,7 +22,7 @@ inline BearerTokenProviderOAuth::BearerTokenProviderOAuth(QObject* parent)
 {
 }
 
-inline QJsonObject BearerTokenProviderOAuth::getTokenInfo(QByteArray token) const
+inline QJsonObject AuthProvider::OAuth::getTokenInfo(QByteArray token) const
 {
    if (token.isEmpty())
       token = getBearerToken();
@@ -61,12 +61,12 @@ inline QJsonObject BearerTokenProviderOAuth::getTokenInfo(QByteArray token) cons
    return content;
 }
 
-inline void BearerTokenProviderOAuth::setTokenInfoUrl(const QString url)
+inline void AuthProvider::OAuth::setTokenInfoUrl(const QString url)
 {
    tokenInfoUrl = url;
 }
 
-inline void BearerTokenProviderOAuth::setStandardFlow(const QString& baseAuthUrl, const QString& clientId, const QString& clientSecret)
+inline void AuthProvider::OAuth::setStandardFlow(const QString& baseAuthUrl, const QString& clientId, const QString& clientSecret)
 {
    oauthFlow = new QOAuth2AuthorizationCodeFlow(this);
 
@@ -80,23 +80,28 @@ inline void BearerTokenProviderOAuth::setStandardFlow(const QString& baseAuthUrl
    initFlow();
 }
 
-inline void BearerTokenProviderOAuth::setCustomFlow(QOAuth2AuthorizationCodeFlow* _oauthFlow)
+inline void AuthProvider::OAuth::setCustomFlow(QOAuth2AuthorizationCodeFlow* _oauthFlow)
 {
    oauthFlow = _oauthFlow;
    initFlow();
 }
 
-inline void BearerTokenProviderOAuth::setFinalRedirect(const QString& url)
+inline void AuthProvider::OAuth::setFinalRedirect(const QString& url)
 {
    finalHTML = "<html><head><meta http-equiv=\"refresh\" content=\"0; url=" + url + "\"></head></html>";
 }
 
-inline QOAuth2AuthorizationCodeFlow* BearerTokenProviderOAuth::getFlow() const
+inline void AuthProvider::OAuth::setFinalHTML(const QString& html)
+{
+   finalHTML = html;
+}
+
+inline QOAuth2AuthorizationCodeFlow* AuthProvider::OAuth::getFlow() const
 {
    return oauthFlow;
 }
 
-inline bool BearerTokenProviderOAuth::authorizeUser()
+inline bool AuthProvider::OAuth::authorizeUser()
 {
    QOAuthHttpServerReplyHandler redirectHandler(1234, nullptr);
 
@@ -121,7 +126,7 @@ inline bool BearerTokenProviderOAuth::authorizeUser()
    return true;
 }
 
-inline bool BearerTokenProviderOAuth::update()
+inline bool AuthProvider::OAuth::update()
 {
    if (!oauthFlow)
    {
@@ -139,25 +144,25 @@ inline bool BearerTokenProviderOAuth::update()
    loop.exec();
 
    setBearerToken(oauthFlow->token().toUtf8());
-   if (isEmpty())
+   if (isNull())
       return authorizeUser();
 
    saveRefreshToken(oauthFlow->refreshToken());
    return true;
 }
 
-inline void BearerTokenProviderOAuth::saveRefreshToken(const QString& refreshToken)
+inline void AuthProvider::OAuth::saveRefreshToken(const QString& refreshToken)
 {
    // do nothing
    Q_UNUSED(refreshToken);
 }
 
-inline QString BearerTokenProviderOAuth::loadRefreshToken()
+inline QString AuthProvider::OAuth::loadRefreshToken()
 {
    return QString();
 }
 
-inline void BearerTokenProviderOAuth::initFlow()
+inline void AuthProvider::OAuth::initFlow()
 {
    QObject::disconnect(grantConnection);
    grantConnection = QObject::connect(oauthFlow, &QAbstractOAuth::authorizeWithBrowser, &QDesktopServices::openUrl);
@@ -166,4 +171,4 @@ inline void BearerTokenProviderOAuth::initFlow()
    oauthFlow->setRefreshToken(token);
 }
 
-#endif // NOT BearerTokenProviderOAuthHPP
+#endif // NOT AuthProviderOAuthHPP
