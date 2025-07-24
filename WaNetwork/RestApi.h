@@ -3,11 +3,30 @@
 
 #include <QObject>
 
+#include <QException>
 #include <QJsonObject>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QUrlQuery>
-#include <QException>
+
+class BearerTokenProvider : public QObject
+{
+   // do not use Q_OBJECT
+   // this file will not be moc'ed automatically
+
+public:
+   BearerTokenProvider(QObject* parent);
+
+public:
+   const QByteArray& getBearerToken() const;
+   bool isEmpty() const;
+
+   void setBearerToken(const QByteArray& token);
+   virtual bool update();
+
+private:
+   QByteArray bearerToken;
+};
 
 class RestApi : public QObject
 {
@@ -42,17 +61,14 @@ protected:
    using ReplyGeneratorFunction = std::function<QNetworkReply*(QNetworkRequest request)>;
 
 protected:
+   virtual void setAuthorization(QNetworkRequest& request, const QByteArray& bearerToken) const;
+
+   void setBearerTokenProvider(BearerTokenProvider* newProvider);
    void setUseExceptions(bool enabled);
    void setVerbose(bool enabled);
    bool isVerbose() const;
-
    void setBaseUrl(const QString& url);
-   void setBearerToken(const QByteArray& token);
-   const QByteArray& getBearerToken() const;
-   virtual QByteArray updateBearerToken() const;
-   virtual void setAuthorization(QNetworkRequest& request, const QByteArray& bearerToken) const;
    void addUnauthorizedStatusCode(int code);
-   QJsonObject parseBytes(const QByteArray& data) const;
    QJsonObject handleReply(QNetworkRequest request, ReplyGeneratorFunction replyGenerator) const;
 
 protected:
@@ -63,7 +79,7 @@ private:
    void handleReplyAsync(CallbackFunction callback, QNetworkRequest request, ReplyGeneratorFunction replyGenerator);
 
 private:
-   mutable QByteArray bearerToken;
+   BearerTokenProvider* provider;
    QString baseUrl;
    QList<int> unauthorizedStatusCodes;
 

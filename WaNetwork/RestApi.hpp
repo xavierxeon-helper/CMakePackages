@@ -6,6 +6,38 @@
 #include <QEventLoop>
 #include <QJsonDocument>
 
+#include <FileTools.h>
+
+// token provider
+
+inline BearerTokenProvider::BearerTokenProvider(QObject* parent)
+   : QObject(parent)
+   , bearerToken()
+{
+}
+
+inline const QByteArray& BearerTokenProvider::getBearerToken() const
+{
+   return bearerToken;
+}
+
+inline bool BearerTokenProvider::isEmpty() const
+{
+   return bearerToken.isEmpty();
+}
+
+inline void BearerTokenProvider::setBearerToken(const QByteArray& token)
+{
+   bearerToken = token;
+}
+
+inline bool BearerTokenProvider::update()
+{
+   return true;
+}
+
+// exception
+
 inline RestApi::StatusException::StatusException(int statusCode, const QJsonObject& content)
    : QException()
    , statusCode(statusCode)
@@ -13,19 +45,23 @@ inline RestApi::StatusException::StatusException(int statusCode, const QJsonObje
 {
 }
 
+// rest api
+
 inline RestApi::RestApi(QObject* parent, const QString& baseUrl)
    : QObject(parent)
    , manager(nullptr)
-   , bearerToken()
+   , provider(nullptr)
    , baseUrl(baseUrl)
    , unauthorizedStatusCodes({401})
    , useExceptions(false)
    , verbose(false)
 {
    manager = new QNetworkAccessManager(this);
+   provider = new BearerTokenProvider(this);
 
    unauthorizedStatusCodes.append(401);
 }
+
 
 inline QJsonObject RestApi::get(const QString& endpoint, const QUrlQuery& params) const
 {
@@ -87,6 +123,19 @@ inline void RestApi::putAsync(CallbackFunction callback, const QString& endpoint
    handleReplyAsync(callback, request, replyGenerator);
 }
 
+inline void RestApi::setAuthorization(QNetworkRequest& request, const QByteArray& bearerToken) const
+{
+   request.setRawHeader("Authorization", "Bearer " + bearerToken);
+}
+
+inline void RestApi::setBearerTokenProvider(BearerTokenProvider* newProvider)
+{
+   if (provider)
+      delete provider;
+
+   provider = newProvider;
+}
+
 inline void RestApi::setUseExceptions(bool enabled)
 {
    useExceptions = enabled;
@@ -107,60 +156,12 @@ inline void RestApi::setBaseUrl(const QString& url)
    baseUrl = url;
 }
 
-inline void RestApi::setBearerToken(const QByteArray& token)
-{
-   bearerToken = token;
-}
-
-inline const QByteArray& RestApi::getBearerToken() const
-{
-   return bearerToken;
-}
-
-inline QByteArray RestApi::updateBearerToken() const
-{
-   // do nothing
-   return bearerToken;
-}
-
-inline void RestApi::setAuthorization(QNetworkRequest& request, const QByteArray& bearerToken) const
-{
-   request.setRawHeader("Authorization", bearerToken);
-}
-
 inline void RestApi::addUnauthorizedStatusCode(int code)
 {
    if (unauthorizedStatusCodes.contains(code))
       return;
 
    unauthorizedStatusCodes.append(code);
-}
-
-inline QJsonObject RestApi::parseBytes(const QByteArray& data) const
-{
-   QJsonParseError error;
-   QJsonDocument doc = QJsonDocument::fromJson(data, &error);
-
-   if (QJsonParseError::NoError != error.error)
-   {
-      return QJsonObject();
-   }
-
-   return doc.object();
-}
-
-inline QNetworkRequest RestApi::createRequest(const QString& endpoint, const QUrlQuery& params) const
-{
-   QUrl url(baseUrl + endpoint);
-   url.setQuery(params);
-
-   QNetworkRequest request;
-   request.setUrl(url);
-   request.setRawHeader("Accept", "application/json");
-
-   setAuthorization(request, bearerToken);
-
-   return request;
 }
 
 inline QJsonObject RestApi::handleReply(QNetworkRequest request, ReplyGeneratorFunction replyGenerator) const
@@ -181,7 +182,7 @@ inline QJsonObject RestApi::handleReply(QNetworkRequest request, ReplyGeneratorF
       const QByteArray replyContent = reply->readAll();
       reply->deleteLater();
 
-      content = parseBytes(replyContent);
+      content = FileTools::parseBytes(replyContent);
 
       if (200 == statusCode)
       {
@@ -213,15 +214,14 @@ inline QJsonObject RestApi::handleReply(QNetworkRequest request, ReplyGeneratorF
 
    auto updateToken = [&]() -> bool
    {
-      bearerToken = updateBearerToken();
-      if (bearerToken.isEmpty())
+      if (!provider->update())
          return false;
 
-      setAuthorization(request, bearerToken);
+      setAuthorization(request, provider->getBearerToken());
       return true;
    };
 
-   if (bearerToken.isEmpty() && !updateToken())
+   if (provider->isEmpty() && !updateToken())
       return content;
 
    if (handleReplyInternal())
@@ -232,6 +232,20 @@ inline QJsonObject RestApi::handleReply(QNetworkRequest request, ReplyGeneratorF
 
    handleReplyInternal();
    return content;
+}
+
+inline QNetworkRequest RestApi::createRequest(const QString& endpoint, const QUrlQuery& params) const
+{
+   QUrl url(baseUrl + endpoint);
+   url.setQuery(params);
+
+   QNetworkRequest request;
+   request.setUrl(url);
+   request.setRawHeader("Accept", "application/json");
+
+   setAuthorization(request, provider->getBearerToken());
+
+   return request;
 }
 
 inline void RestApi::handleReplyAsync(CallbackFunction callback, QNetworkRequest request, ReplyGeneratorFunction replyGenerator)
@@ -245,7 +259,7 @@ inline void RestApi::handleReplyAsync(CallbackFunction callback, QNetworkRequest
       const QByteArray replyContent = reply->readAll();
       reply->deleteLater();
 
-      const QJsonObject content = parseBytes(replyContent);
+      const QJsonObject content = FileTools::parseBytes(replyContent);
 
       if (200 == statusCode)
       {
@@ -264,7 +278,7 @@ inline void RestApi::handleReplyAsync(CallbackFunction callback, QNetworkRequest
          }
       }
 
-      bearerToken = updateBearerToken();
+      provider->update();
       // TODO : set authorization and redo request
       return callback(content);
    };
