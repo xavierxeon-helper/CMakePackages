@@ -1,5 +1,5 @@
-#ifndef AuthProviderGeneralH
-#define AuthProviderGeneralH
+#ifndef AuthProviderTokenH
+#define AuthProviderTokenH
 
 #include <QObject>
 
@@ -7,13 +7,13 @@
 
 namespace AuthProvider
 {
-   class General : public QObject
+   class Token : public QObject
    {
       // do not use Q_OBJECT
       // this file will not be moc'ed automatically
 
    public:
-      General(QObject* parent);
+      Token(QObject* parent);
 
    public:
       const QByteArray& getBearerToken() const;
@@ -28,8 +28,8 @@ namespace AuthProvider
    };
 } // namespace AuthProvider
 
-#ifndef AuthProviderGeneralHPP
-#include "AuthProviderGeneral.hpp"
-#endif // NOT AuthProviderGeneralHPP
+#ifndef AuthProviderTokenHPP
+#include "AuthProviderToken.hpp"
+#endif // NOT AuthProviderTokenHPP
 
-#endif // NOT AuthProviderGeneralH
+#endif // NOT AuthProviderTokenH

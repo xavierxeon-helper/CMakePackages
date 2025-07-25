@@ -14,7 +14,7 @@
 #include <FileTools.h>
 
 inline AuthProvider::OAuth::OAuth(QObject* parent)
-   : AuthProvider::General(parent)
+   : AuthProvider::Token(parent)
    , oauthFlow(nullptr)
    , grantConnection()
    , finalHTML()

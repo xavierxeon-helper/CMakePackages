@@ -24,4 +24,16 @@ bool Locker<tag>::engaged()
    return lock;
 }
 
+template <CompileTimeString tag>
+bool Locker<tag>::doOnce()
+{
+   static bool done = false;
+   if (!done)
+   {
+      done = true;
+      return true;
+   }
+   return false;
+}
+
 #endif // NOT LockerHPP

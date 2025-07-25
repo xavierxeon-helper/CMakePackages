@@ -1,14 +1,14 @@
 #ifndef AuthProviderOAuthH
 #define AuthProviderOAuthH
 
-#include "AuthProviderGeneral.h"
+#include "AuthProviderToken.h"
 
 #include <QJsonObject>
 #include <QOAuth2AuthorizationCodeFlow>
 
 namespace AuthProvider
 {
-   class OAuth : public General
+   class OAuth : public Token
    {
       // do not use Q_OBJECT
       // this file will not be moc'ed automatically
