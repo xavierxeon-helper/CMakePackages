@@ -50,6 +50,9 @@ namespace RestApi
       bool useExceptions;
       bool verbose;
 
+   private :
+      friend class Async;
+
    private:
       QJsonObject handleReply(QNetworkRequest request, ReplyGeneratorFunction replyGenerator) const;
    };

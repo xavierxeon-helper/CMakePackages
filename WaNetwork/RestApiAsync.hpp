@@ -40,10 +40,15 @@ inline void RestApi::Async::putAsync(CallbackFunction callback, const QString& e
 
 inline void RestApi::Async::handleReplyAsync(CallbackFunction callback, QNetworkRequest request, ReplyGeneratorFunction replyGenerator)
 {
+   if(provider->isNull() && provider->update())
+   {
+      provider->setAuthorization(request);
+   }
+
    QNetworkReply* reply = replyGenerator(request);
    reply->ignoreSslErrors();
 
-   auto onFinshed = [this, reply, request, callback]()
+   auto onFinshed = [this, reply, request, callback, replyGenerator]()
    {
       const int statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
       const QByteArray replyContent = reply->readAll();
@@ -52,25 +57,10 @@ inline void RestApi::Async::handleReplyAsync(CallbackFunction callback, QNetwork
       const QJsonObject content = FileTools::parseBytes(replyContent);
 
       if (200 == statusCode)
-      {
          return callback(content);
-      }
-      else if (!unauthorizedStatusCodes.contains(statusCode))
-      {
-         if (useExceptions)
-         {
-            throw new StatusException(statusCode, content);
-         }
-         else
-         {
-            qWarning() << "unhandled status code" << statusCode << "for" << request.url().toString();
-            return callback(content);
-         }
-      }
 
-      provider->update();
-      // TODO : set authorization and redo request
-      return callback(content);
+      const QJsonObject blockingReply = handleReply(request, replyGenerator);
+      return callback(blockingReply);
    };
 
    QObject::connect(reply, &QNetworkReply::finished, onFinshed);

@@ -107,6 +107,18 @@ inline QNetworkRequest RestApi::Blocking::createRequest(const QString& endpoint,
 
 inline QJsonObject RestApi::Blocking::handleReply(QNetworkRequest request, ReplyGeneratorFunction replyGenerator) const
 {
+   auto updateToken = [&]() -> bool
+   {
+      if (!provider->update())
+         return false;
+
+      provider->setAuthorization(request);
+      return true;
+   };
+
+   if (provider->isNull() && !updateToken())
+      return QJsonObject();
+
    QEventLoop loop;
    int statusCode = 0;
    QJsonObject content;
@@ -153,17 +165,6 @@ inline QJsonObject RestApi::Blocking::handleReply(QNetworkRequest request, Reply
       return false;
    };
 
-   auto updateToken = [&]() -> bool
-   {
-      if (!provider->update())
-         return false;
-
-      provider->setAuthorization(request);
-      return true;
-   };
-
-   if (provider->isNull() && !updateToken())
-      return content;
 
    if (handleReplyInternal())
       return content;
