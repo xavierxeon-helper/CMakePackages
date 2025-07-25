@@ -27,11 +27,15 @@ namespace AuthProvider
       QOAuth2AuthorizationCodeFlow* getFlow() const;
 
    protected:
-      virtual bool authorizeUser();
       virtual bool update() override;
+      virtual bool authorizeUser();
 
       virtual void saveRefreshToken(const QString& refreshToken);
       virtual QString loadRefreshToken();
+
+      void setUseExceptions(bool enabled);
+      void setVerbose(bool enabled);
+      bool isVerbose() const;
 
    private:
       void initFlow();
@@ -41,6 +45,9 @@ namespace AuthProvider
       QMetaObject::Connection grantConnection;
       QString finalHTML;
       QString tokenInfoUrl;
+
+      bool useExceptions;
+      bool verbose;
    };
 } // namespace AuthProvider
 

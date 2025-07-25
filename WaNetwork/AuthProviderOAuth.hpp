@@ -13,12 +13,16 @@
 
 #include <FileTools.h>
 
+#include "RestApiStatusException.h"
+
 inline AuthProvider::OAuth::OAuth(QObject* parent)
    : AuthProvider::Token(parent)
    , oauthFlow(nullptr)
    , grantConnection()
    , finalHTML()
    , tokenInfoUrl()
+   , useExceptions(false)
+   , verbose(false)
 {
 }
 
@@ -51,13 +55,20 @@ inline QJsonObject AuthProvider::OAuth::getTokenInfo(QByteArray token) const
    const QByteArray replyContent = reply->readAll();
    reply->deleteLater();
 
+   const QJsonObject content = FileTools::parseBytes(replyContent);
    if (200 != statusCode)
    {
-      qWarning() << "Failed to get token info, status code:" << statusCode;
-      return QJsonObject();
+      if(useExceptions)
+      {
+         throw new RestApi::StatusException(statusCode, content);
+      }
+      else
+      {
+         qWarning() << "Failed to get token info, status code:" << statusCode;
+         return QJsonObject();
+      }
    }
 
-   const QJsonObject content = FileTools::parseBytes(replyContent);
    return content;
 }
 
@@ -111,6 +122,17 @@ inline bool AuthProvider::OAuth::authorizeUser()
    QEventLoop loop;
    QObject::connect(oauthFlow, &QAbstractOAuth::granted, &loop, &QEventLoop::quit);
 
+   auto onError = [&]()
+   {
+      loop.quit();
+
+      if(useExceptions)
+         throw new RestApi::StatusException(500, QJsonObject());
+   };
+
+   QObject::connect(oauthFlow, &QAbstractOAuth::requestFailed, onError);
+
+
    oauthFlow->setReplyHandler(&redirectHandler);
    if (!redirectHandler.isListening())
       return false;
@@ -139,7 +161,16 @@ inline bool AuthProvider::OAuth::update()
 
    QEventLoop loop;
    QObject::connect(oauthFlow, &QAbstractOAuth::granted, &loop, &QEventLoop::quit);
-   QObject::connect(oauthFlow, &QAbstractOAuth::requestFailed, &loop, &QEventLoop::quit);
+
+   auto onError = [&]()
+   {
+      loop.quit();
+
+      if(useExceptions)
+         throw new RestApi::StatusException(500, QJsonObject());
+   };
+
+   QObject::connect(oauthFlow, &QAbstractOAuth::requestFailed, onError);
    oauthFlow->refreshTokens();
    loop.exec();
 
@@ -160,6 +191,21 @@ inline void AuthProvider::OAuth::saveRefreshToken(const QString& refreshToken)
 inline QString AuthProvider::OAuth::loadRefreshToken()
 {
    return QString();
+}
+
+inline void AuthProvider::OAuth::setUseExceptions(bool enabled)
+{
+   useExceptions = enabled;
+}
+
+inline void AuthProvider::OAuth::setVerbose(bool enabled)
+{
+   verbose = enabled;
+}
+
+inline bool AuthProvider::OAuth::isVerbose() const
+{
+   return verbose;
 }
 
 inline void AuthProvider::OAuth::initFlow()
