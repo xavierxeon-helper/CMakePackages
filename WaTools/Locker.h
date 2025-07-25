@@ -12,7 +12,6 @@ public:
 
 public:
    static bool engaged();
-
    static bool doOnce();
 
 private:
