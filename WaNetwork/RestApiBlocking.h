@@ -1,6 +1,7 @@
 #ifndef RestApiBlockingH
 #define RestApiBlockingH
 
+#include "NetworkSettings.h"
 #include <QObject>
 
 #include <QJsonObject>
@@ -15,7 +16,7 @@ namespace AuthProvider
 
 namespace RestApi
 {
-   class Blocking : public QObject
+   class Blocking : public QObject, public Network::Settings
    {
       // do not use Q_OBJECT
       // this file will not be moc'ed automatically
@@ -33,12 +34,8 @@ namespace RestApi
 
    protected:
       void setAuthProvider(AuthProvider::Token* newProvider);
-      void setUseExceptions(bool enabled);
-      void setVerbose(bool enabled);
-      bool isVerbose() const;
       void setBaseUrl(const QString& url);
       void addUnauthorizedStatusCode(int code);
-
       QNetworkRequest createRequest(const QString& endpoint, const QUrlQuery& params) const;
 
    protected:
@@ -47,10 +44,7 @@ namespace RestApi
       AuthProvider::Token* provider;
       QString baseUrl;
 
-      bool useExceptions;
-      bool verbose;
-
-   private :
+   private:
       friend class Async;
 
    private:

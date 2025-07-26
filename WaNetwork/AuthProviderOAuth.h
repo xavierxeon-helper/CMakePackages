@@ -2,13 +2,14 @@
 #define AuthProviderOAuthH
 
 #include "AuthProviderToken.h"
+#include "NetworkSettings.h"
 
 #include <QJsonObject>
 #include <QOAuth2AuthorizationCodeFlow>
 
 namespace AuthProvider
 {
-   class OAuth : public Token
+   class OAuth : public Token, public Network::Settings
    {
       // do not use Q_OBJECT
       // this file will not be moc'ed automatically
@@ -33,10 +34,6 @@ namespace AuthProvider
       virtual void saveRefreshToken(const QString& refreshToken);
       virtual QString loadRefreshToken();
 
-      void setUseExceptions(bool enabled);
-      void setVerbose(bool enabled);
-      bool isVerbose() const;
-
    private:
       void initFlow();
 
@@ -45,9 +42,6 @@ namespace AuthProvider
       QMetaObject::Connection grantConnection;
       QString finalHTML;
       QString tokenInfoUrl;
-
-      bool useExceptions;
-      bool verbose;
    };
 } // namespace AuthProvider
 

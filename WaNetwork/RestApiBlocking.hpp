@@ -9,16 +9,15 @@
 #include <FileTools.h>
 
 #include "AuthProviderToken.h"
-#include "RestApiStatusException.h"
+#include "NetworkExceptions.h"
 
 inline RestApi::Blocking::Blocking(QObject* parent, const QString& baseUrl)
    : QObject(parent)
+   , Network::Settings()
    , manager(nullptr)
    , provider(nullptr)
    , baseUrl(baseUrl)
    , unauthorizedStatusCodes({401})
-   , useExceptions(false)
-   , verbose(false)
 {
    manager = new QNetworkAccessManager(this);
    provider = new AuthProvider::Token(this);
@@ -61,21 +60,6 @@ inline void RestApi::Blocking::setAuthProvider(AuthProvider::Token* newProvider)
       delete provider;
 
    provider = newProvider;
-}
-
-inline void RestApi::Blocking::setUseExceptions(bool enabled)
-{
-   useExceptions = enabled;
-}
-
-inline void RestApi::Blocking::setVerbose(bool enabled)
-{
-   verbose = enabled;
-}
-
-inline bool RestApi::Blocking::isVerbose() const
-{
-   return verbose;
 }
 
 inline void RestApi::Blocking::setBaseUrl(const QString& url)
@@ -139,7 +123,7 @@ inline QJsonObject RestApi::Blocking::handleReply(QNetworkRequest request, Reply
 
       if (200 == statusCode)
       {
-         if (verbose)
+         if (verbose())
             qDebug() << "good reply for" << request.url().toString();
 
          return true;
@@ -147,9 +131,9 @@ inline QJsonObject RestApi::Blocking::handleReply(QNetworkRequest request, Reply
       else if (!unauthorizedStatusCodes.contains(statusCode))
       {
          qWarning() << "unhandled status code" << statusCode << "for" << request.url().toString();
-         if (useExceptions)
+         if (useExceptions())
          {
-            throw new StatusException(statusCode, content);
+            throw new Network::StatusException(statusCode, content);
          }
          else
          {
@@ -157,14 +141,13 @@ inline QJsonObject RestApi::Blocking::handleReply(QNetworkRequest request, Reply
             return true;
          }
       }
-      else if (verbose)
+      else if (verbose())
       {
          qDebug() << "STATUS UNAUTHORIZED" << request.url().toString();
          qDebug() << content;
       }
       return false;
    };
-
 
    if (handleReplyInternal())
       return content;

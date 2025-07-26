@@ -13,16 +13,15 @@
 
 #include <FileTools.h>
 
-#include "RestApiStatusException.h"
+#include "NetworkExceptions.h"
 
 inline AuthProvider::OAuth::OAuth(QObject* parent)
    : AuthProvider::Token(parent)
+   , Network::Settings()
    , oauthFlow(nullptr)
    , grantConnection()
    , finalHTML()
    , tokenInfoUrl()
-   , useExceptions(false)
-   , verbose(false)
 {
 }
 
@@ -58,9 +57,9 @@ inline QJsonObject AuthProvider::OAuth::getTokenInfo(QByteArray token) const
    const QJsonObject content = FileTools::parseBytes(replyContent);
    if (200 != statusCode)
    {
-      if(useExceptions)
+      if (useExceptions())
       {
-         throw new RestApi::StatusException(statusCode, content);
+         throw new Network::StatusException(statusCode, content);
       }
       else
       {
@@ -126,12 +125,11 @@ inline bool AuthProvider::OAuth::authorizeUser()
    {
       loop.quit();
 
-      if(useExceptions)
-         throw new RestApi::StatusException(500, QJsonObject());
+      if (useExceptions())
+         throw new Network::StatusException(500, QJsonObject());
    };
 
    QObject::connect(oauthFlow, &QAbstractOAuth::requestFailed, onError);
-
 
    oauthFlow->setReplyHandler(&redirectHandler);
    if (!redirectHandler.isListening())
@@ -166,8 +164,8 @@ inline bool AuthProvider::OAuth::update()
    {
       loop.quit();
 
-      if(useExceptions)
-         throw new RestApi::StatusException(500, QJsonObject());
+      if (useExceptions())
+         throw new Network::StatusException(500, QJsonObject());
    };
 
    QObject::connect(oauthFlow, &QAbstractOAuth::requestFailed, onError);
@@ -191,21 +189,6 @@ inline void AuthProvider::OAuth::saveRefreshToken(const QString& refreshToken)
 inline QString AuthProvider::OAuth::loadRefreshToken()
 {
    return QString();
-}
-
-inline void AuthProvider::OAuth::setUseExceptions(bool enabled)
-{
-   useExceptions = enabled;
-}
-
-inline void AuthProvider::OAuth::setVerbose(bool enabled)
-{
-   verbose = enabled;
-}
-
-inline bool AuthProvider::OAuth::isVerbose() const
-{
-   return verbose;
 }
 
 inline void AuthProvider::OAuth::initFlow()
