@@ -10,14 +10,14 @@ namespace Network
 
    public:
       static void setUseExceptions(bool enabled);
-      static void setVerbose(bool enabled);
-
       static bool useExceptions();
-      static bool verbose();
+
+      void setVerbose(bool enabled);
+      bool verbose() const;
 
    private:
       static bool shallUseExceptions;
-      static bool isVerbose;
+      bool isVerbose;
    };
 } // namespace Network
 

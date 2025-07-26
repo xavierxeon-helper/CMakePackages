@@ -4,9 +4,9 @@
 #include "NetworkSettings.h"
 
 inline bool Network::Settings::shallUseExceptions = false;
-inline bool Network::Settings::isVerbose = false;
 
 inline Network::Settings::Settings()
+   : isVerbose(false)
 {
 }
 
@@ -25,7 +25,7 @@ inline bool Network::Settings::useExceptions()
    return shallUseExceptions;
 }
 
-inline bool Network::Settings::verbose()
+inline bool Network::Settings::verbose() const
 {
    return isVerbose;
 }
