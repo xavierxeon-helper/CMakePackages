@@ -9,9 +9,8 @@
 #include <Bytes.h>
 
 // see https://hangar.org/wp-content/uploads/2012/01/The-Open-Sound-Control-1.0-Specification-opensoundcontrol.org_.pdf
-// see https://github.com/mcallegari/qlcplus/blob/master/plugins/osc/oscpacketizer.cpp
 
-const char OscMessage::paddingChar = 0x00;
+inline const char OscMessage::paddingChar = 0x00;
 
 inline OscMessage::OscMessage(const QString& path, const QVariantList& values)
    : path(path)
@@ -49,7 +48,6 @@ inline OscMessage::OscMessage(const QByteArray& data)
    backIndex += (4 - extraIndex);
 
    const QByteArray back = parts[1].mid(backIndex - 1);
-   qDebug() << "BACK" << back.size() << back;
 
    int dataIndex = 0;
    for (const char type : types)
@@ -88,7 +86,7 @@ inline OscMessage::OscMessage(const QByteArray& data)
    }
 }
 
-QByteArray OscMessage::pack()
+inline QByteArray OscMessage::pack()
 {
    QByteArray packet = path.toUtf8();
    const int padSizeKey = 4 - packet.size() % 4;
