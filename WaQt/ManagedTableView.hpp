@@ -4,7 +4,7 @@
 #include "ManagedTableView.h"
 
 template <typename TargetClass>
-void Managed::TableView::onSelected(TargetClass* instance, void (TargetClass::*memberFunction)(const QModelIndex &))
+void Managed::TableView::onSelected(TargetClass* instance, void (TargetClass::*memberFunction)(const QModelIndex&))
 {
    selectedFunction = std::bind(memberFunction, instance, std::placeholders::_1);
 }
