@@ -54,6 +54,11 @@ inline QJsonObject RestApi::Blocking::put(const QString& endpoint, const QJsonOb
    return handleReply(request, replyGenerator);
 }
 
+inline const QString& RestApi::Blocking::getbaseUrl() const
+{
+   return baseUrl;
+}
+
 inline void RestApi::Blocking::setAuthProvider(AuthProvider::Token* newProvider)
 {
    if (provider)

@@ -29,6 +29,8 @@ namespace RestApi
       virtual QJsonObject post(const QString& endpoint, const QJsonObject& payload = QJsonObject(), const QUrlQuery& params = QUrlQuery()) const;
       virtual QJsonObject put(const QString& endpoint, const QJsonObject& payload = QJsonObject(), const QUrlQuery& params = QUrlQuery()) const;
 
+      const QString& getbaseUrl() const;
+
    protected:
       using ReplyGeneratorFunction = std::function<QNetworkReply*(QNetworkRequest request)>;
 
