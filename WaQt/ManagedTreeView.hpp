@@ -4,13 +4,13 @@
 #include <ManagedTreeView.h>
 
 template <typename TargetClass>
-void Managed::TreeView::onSelected(TargetClass* instance, void (TargetClass::*memberFunction)(QStandardItem*))
+void Managed::TreeView::onSelected(TargetClass* instance, void (TargetClass::*memberFunction)(QStandardItem *))
 {
    selectedFunction = std::bind(memberFunction, instance, std::placeholders::_1);
 }
 
 template <typename TargetClass>
-void Managed::TreeView::onDoubleClicked(TargetClass* instance, void (TargetClass::*memberFunction)(QStandardItem*))
+void Managed::TreeView::onDoubleClicked(TargetClass* instance, bool (TargetClass::*memberFunction)(QStandardItem*))
 {
    doubleClickFunction = std::bind(memberFunction, instance, std::placeholders::_1);
 }

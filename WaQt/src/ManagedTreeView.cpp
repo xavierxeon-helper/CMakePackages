@@ -57,7 +57,8 @@ void Managed::TreeView::mouseDoubleClickEvent(QMouseEvent* event)
       return QTreeView::mouseDoubleClickEvent(event);
 
    QStandardItem* item = getItemAtPoint(event->pos());
-   doubleClickFunction(item);
+   if (!doubleClickFunction(item))
+      QTreeView::mouseDoubleClickEvent(event);
 }
 
 void Managed::TreeView::contextMenuRequested(const QPoint& point)

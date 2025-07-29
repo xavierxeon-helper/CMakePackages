@@ -54,7 +54,9 @@ void Managed::TableView::mouseDoubleClickEvent(QMouseEvent* event)
       return QTableView::mouseDoubleClickEvent(event);
 
    QModelIndex index = indexAt(event->pos());
-   doubleClickFunction(index);
+
+   if (!doubleClickFunction(index))
+      QTableView::mouseDoubleClickEvent(event);
 }
 
 void Managed::TableView::contextMenuRequested(const QPoint& point)

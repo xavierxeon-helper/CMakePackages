@@ -16,7 +16,7 @@ namespace Managed
       void onSelected(TargetClass* instance, void (TargetClass::*memberFunction)(const QModelIndex&));
 
       template <typename TargetClass>
-      void onDoubleClicked(TargetClass* instance, void (TargetClass::*memberFunction)(const QModelIndex&));
+      void onDoubleClicked(TargetClass* instance, bool (TargetClass::*memberFunction)(const QModelIndex&));
 
       template <typename TargetClass>
       void onContextMenu(TargetClass* instance, QMenu* (TargetClass::*memberFunction)(const QModelIndex&));
@@ -30,13 +30,14 @@ namespace Managed
       void contextMenuRequested(const QPoint& point);
 
    private:
-      using ItemFunction = std::function<void(const QModelIndex&)>;
+      using SelectFunction = std::function<void(const QModelIndex&)>;
+      using DoubleClickFunction = std::function<bool(const QModelIndex&)>;
       using MenuFunction = std::function<QMenu*(const QModelIndex&)>;
 
    private:
       QMetaObject::Connection selectConnetion;
-      ItemFunction selectedFunction;
-      ItemFunction doubleClickFunction;
+      SelectFunction selectedFunction;
+      DoubleClickFunction doubleClickFunction;
       MenuFunction contextMenuFunction;
    };
 } // namespace Managed
