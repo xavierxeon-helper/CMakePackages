@@ -86,15 +86,6 @@ inline QString FileTools::compileDropboxPath(const QString& appName)
 
 inline QString FileTools::compileNextCloudPath(const QString& appName)
 {
-   /*
-   On Linux distributions:
-$HOME/.config/Nextcloud/nextcloud.cfg
-On Microsoft Windows systems:
-%APPDATA%\Nextcloud\nextcloud.cfg
-On macOS systems:
-$HOME/Library/Preferences/Nextcloud/nextcloud.cfg
-*/
-
 #if defined(Q_OS_WIN32)
    QString appPath = QStandardPaths ::writableLocation(QStandardPaths::AppDataLocation);
    appPath = QDir::fromNativeSeparators(appPath);
@@ -127,7 +118,7 @@ inline QJsonObject FileTools::readApiKeys(const QString& appName)
 }
 
 
-inline void FileTools::printAllResourceNames(const QStringList& ignoreList)
+inline QStringList FileTools::compileResourceNames(const QStringList& ignoreList)
 {
    auto ignoreName = [&](const QString& name)
    {
@@ -139,14 +130,19 @@ inline void FileTools::printAllResourceNames(const QStringList& ignoreList)
       return false;
    };
 
+   QStringList nameList;
+
    QDirIterator it(":", QDirIterator::Subdirectories);
    while (it.hasNext())
    {
       const QString name = it.next();
       if(ignoreName(name))
          continue;
-      qDebug() << name;
+
+      nameList.append(name);
    }
+
+   return nameList;
 }
 
 #endif // NOT FileToolsHPP
