@@ -4,6 +4,7 @@
 #include "FileTools.h"
 
 #include <QDir>
+#include <QDirIterator>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QSettings>
@@ -123,6 +124,29 @@ inline QJsonObject FileTools::readApiKeys(const QString& appName)
    const QString keyFileName = homePaths.first() + "/.ApiKeys/" + appName + ".json";
 
    return readJson(keyFileName);
+}
+
+
+inline void FileTools::printAllResourceNames(const QStringList& ignoreList)
+{
+   auto ignoreName = [&](const QString& name)
+   {
+      for(const QString& test: ignoreList)
+      {
+         if(name.startsWith(test))
+            return true;
+      }
+      return false;
+   };
+
+   QDirIterator it(":", QDirIterator::Subdirectories);
+   while (it.hasNext())
+   {
+      const QString name = it.next();
+      if(ignoreName(name))
+         continue;
+      qDebug() << name;
+   }
 }
 
 #endif // NOT FileToolsHPP

@@ -12,6 +12,7 @@ public:
    static QString compileDropboxPath(const QString& appName = QCoreApplication::applicationName());
    static QString compileNextCloudPath(const QString& appName = QCoreApplication::applicationName());
    static QJsonObject readApiKeys(const QString& appName);
+   static void printAllResourceNames(const QStringList& ignoreList = {":/qt-project.org"});
 };
 
 #ifndef FileToolsHPP
