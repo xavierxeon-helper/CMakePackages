@@ -130,11 +130,10 @@ endfunction()
 function(add_qml_sources SUBPATH)
 
    file(GLOB QML_FILES
+      RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/
       ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/*.qml
       ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/*.js
    )
-
-   list(TRANSFORM QML_FILES REPLACE "${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/" "${SUBPATH}/")
 
    message(STATUS "QML_FILES for ${PROJECT_NAME} found @ ${SUBPATH} = ${QML_FILES}")
 
