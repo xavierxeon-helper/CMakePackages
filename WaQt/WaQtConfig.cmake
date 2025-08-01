@@ -12,7 +12,7 @@ set(WAQT_INCLUDE_DIRS ${WAQT_CMAKE_DIR})
 include_directories(${WAQT_INCLUDE_DIRS})
 include(${WAQT_CMAKE_DIR}/functions.cmake)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets Xml)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Xml QuickWidgets)
 
 if(TARGET WaQt)
    message(STATUS "Re-using Target WaQt")
@@ -23,7 +23,7 @@ else()
    link_libraries(WaQt)
 endif()
 
-link_libraries(Qt6::Widgets Qt6::Xml)
+link_libraries(Qt6::Widgets Qt6::Xml Qt6::QuickWidgets)
 
 if(APPLE)
    link_libraries("-framework Foundation" "-framework StoreKit")

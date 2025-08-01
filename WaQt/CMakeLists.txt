@@ -11,7 +11,7 @@ endif()
 
 message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets Xml)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Xml QuickWidgets)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -31,4 +31,4 @@ add_os_files("src")
 
 qt_add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
 
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets Qt6::Xml)
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets Qt6::Xml Qt6::QuickWidgets)

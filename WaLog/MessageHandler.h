@@ -37,4 +37,8 @@ private:
    TargetMap targetMap;
 };
 
+#ifndef MessageHandlerHPP
+#include "MessageHandler.hpp"
+#endif // NOT MessageHandlerHPP
+
 #endif // NOT MessageHandlerH
