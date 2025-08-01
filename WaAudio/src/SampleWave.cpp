@@ -100,12 +100,17 @@ bool Sample::Wave::load(const QString& fileName)
       if ("data" == header.idName())
       {
          const int byteSize = (fmtHeader.bitsPerSample / 8);
+         if (2 != byteSize)
+         {
+            qDebug() << "Unsupported bits per sample:" << fmtHeader.bitsPerSample;
+            return false;
+         }
          meta.numberOfSamples = header.dataSize / byteSize;
 
          for (int index = 0; index < meta.numberOfSamples; index++)
          {
             const QByteArray data = consume(byteSize);
-            const int iValue = Bytes<uint16_t>::fromBytes(data, true);
+            const int iValue = Bytes<int16_t>::fromBytes(data, false);
             const float value = static_cast<float>(iValue) / maxValue;
 
             interlacedContent.append(value);

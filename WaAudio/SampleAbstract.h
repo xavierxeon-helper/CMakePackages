@@ -14,6 +14,9 @@ namespace Sample
       uint8_t noOfChannels = 1;
       uint16_t sampleRate = 1;
       size_t numberOfSamples = 0;
+
+      size_t noOfSamplesPerChannel() const;
+      double totalLength() const;
    };
 
    class Abstract

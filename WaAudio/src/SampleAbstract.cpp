@@ -1,5 +1,19 @@
 #include "SampleAbstract.h"
 
+// meta
+
+size_t Sample::Meta::noOfSamplesPerChannel() const
+{
+   return numberOfSamples / noOfChannels;
+}
+
+double Sample::Meta::totalLength() const
+{
+   return static_cast<double>(numberOfSamples / noOfChannels) / static_cast<double>(sampleRate);
+}
+
+// abstract
+
 Sample::Abstract::Abstract()
    : interlacedContent()
    , meta()
