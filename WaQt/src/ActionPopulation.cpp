@@ -120,6 +120,8 @@ void ActionPopulation::createToolBar(QDomElement thingElement)
          QAction* action = parentWidget->findChild<QAction*>(objectName, Qt::FindChildrenRecursively);
          if (action)
             toolBar->addAction(action);
+         else
+            qWarning() << __FUNCTION__ << "action not found" << objectName;
       }
       else if ("Separator" == what)
       {
@@ -145,6 +147,8 @@ void ActionPopulation::createToolBar(QDomElement thingElement)
          QWidget* widget = parentWidget->findChild<QWidget*>(objectName, Qt::FindChildrenRecursively);
          if (widget)
             toolBar->addWidget(widget);
+         else
+            qWarning() << __FUNCTION__ << "widget not found" << objectName;
       }
    }
 }
@@ -167,6 +171,8 @@ void ActionPopulation::createMenu(QDomElement thingElement, QMenu* parentMenu)
          QAction* action = parentWidget->findChild<QAction*>(name, Qt::FindChildrenRecursively);
          if (action)
             menu->addAction(action);
+         else
+            qWarning() << __FUNCTION__ << "action not found" << objectName;
       }
       else if ("Separator" == what)
       {
