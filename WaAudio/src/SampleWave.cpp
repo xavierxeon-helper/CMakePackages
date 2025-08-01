@@ -2,7 +2,10 @@
 
 #include <limits>
 
+#include <Bytes.h>
 #include <QFile>
+
+#include <QDebug>
 
 const float Sample::Wave::maxValue = static_cast<float>(std::numeric_limits<int16_t>::max());
 
@@ -101,8 +104,10 @@ bool Sample::Wave::load(const QString& fileName)
 
          for (int index = 0; index < meta.numberOfSamples; index++)
          {
-            const int data = consume(byteSize).toInt();
-            const float value = static_cast<float>(data) / maxValue;
+            const QByteArray data = consume(byteSize);
+            const int iValue = Bytes<uint16_t>::fromBytes(data, true);
+            const float value = static_cast<float>(iValue) / maxValue;
+
             interlacedContent.append(value);
          }
       }

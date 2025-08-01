@@ -15,16 +15,17 @@ namespace Sample
 
    public:
       const Meta& getMeta() const;
-      Data get(const size_t& position, const size_t& numberOfSamples);
+      Data get(const size_t& position, const size_t& numberOfSamples, const uint8_t& channel) const;
 
       size_t getPlayhead() const;
       void resetPlayhead();
       bool atEnd() const;
       void advancePlayhead();
 
-      float getSound(uint8_t channel);
+      float getSound(const uint8_t& channel) const;
 
    private:
+      Channels channels;
       size_t playhead;
    };
 } // namespace Sample
