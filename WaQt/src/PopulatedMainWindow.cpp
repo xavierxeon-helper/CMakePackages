@@ -1,6 +1,7 @@
 #include "PopulatedMainWindow.h"
 
 #include <QCloseEvent>
+#include <QDir>
 #include <QDockWidget>
 #include <QMenu>
 #include <QMenuBar>
@@ -36,7 +37,9 @@ PopulatedMainWindow* PopulatedMainWindow::the()
 void PopulatedMainWindow::printSettingsLocation()
 {
    QSettings settings;
-   qInfo() << "SETTINGS @" << settings.fileName();
+   const QString fileName = QDir::toNativeSeparators(settings.fileName());
+
+   qInfo() << "SETTINGS @" << qPrintable(fileName);
 }
 
 void PopulatedMainWindow::populateMenuAndToolBar(const QString& xmlResource)
@@ -92,7 +95,14 @@ QMenu* PopulatedMainWindow::findOrCreateMenu(const QString& objectName, const QS
 {
    QMenu* menu = findChild<QMenu*>(objectName, Qt::FindChildrenRecursively);
    if (menu)
+   {
+      if (parentMenu)
+      {
+         menu->setTitle(text);
+         parentMenu->addMenu(menu);
+      }
       return menu;
+   }
 
    menu = parentMenu ? parentMenu->addMenu(text) : menuBar()->addMenu(text);
    menu->setObjectName(objectName);
