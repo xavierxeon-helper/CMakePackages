@@ -28,8 +28,8 @@ namespace Sample
       virtual bool load(const QString& fileName) = 0;
       virtual bool save(const QString& fileName) = 0;
 
-      Data interlace(const Channels& input);
-      Channels deinterlace(const Data& input, const uint8_t numberOfChannels = 2);
+      static Data interlace(const Channels& input);
+      static Channels deinterlace(const Data& input, const uint8_t numberOfChannels = 2);
 
    protected:
       Data interlacedContent;

@@ -19,9 +19,9 @@ FastFourierTransfrom::FastFourierTransfrom(const size_t size)
       throw new Exception("FFT size must be a power of two");
 }
 
-FastFourierTransfrom::ComplexData FastFourierTransfrom::convert(const Data& data)
+FastFourierTransfrom::ComplexData FastFourierTransfrom::convert(const Sample::Data& data)
 {
-   ComplexData result(data.size());
+   ComplexData result;
 
    for (const float& value : data)
       result.append(ComplexType(value, 0.0));
@@ -29,14 +29,19 @@ FastFourierTransfrom::ComplexData FastFourierTransfrom::convert(const Data& data
    return result;
 }
 
-FastFourierTransfrom::Data FastFourierTransfrom::strip(const ComplexData& data)
+Sample::Data FastFourierTransfrom::strip(const ComplexData& data)
 {
-   Data result(data.size());
+   Sample::Data result;
 
    for (const ComplexType& value : data)
       result.append(static_cast<float>(value.real()));
 
    return result;
+}
+
+const size_t& FastFourierTransfrom::getSize() const
+{
+   return size;
 }
 
 FastFourierTransfrom::ComplexData FastFourierTransfrom::forward(const ComplexData& input)
@@ -111,7 +116,8 @@ void FastFourierTransfrom::transform(ComplexData& data, bool forward) const
 {
    prepareData(data);
 
-   double localPi = forward ? -M_PI : M_PI;
+   static const double pi = 2.0 * std::asin(1.0);
+   double localPi = forward ? -pi : pi;
 
    // declare variables to cycle the bits of initial signal
    size_t next, match;

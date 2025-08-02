@@ -5,14 +5,12 @@
 
 #include <complex>
 
-#include <QList>
-#include <QString>
+#include "SampleAbstract.h"
 
 // may throw Exception
 class FastFourierTransfrom
 {
 public:
-   using Data = QList<float>;
    using ComplexType = std::complex<float>;
    using ComplexData = QList<ComplexType>;
 
@@ -29,11 +27,13 @@ public:
    FastFourierTransfrom(const size_t size);
 
 public:
-   ComplexData convert(const Data& data);
-   Data strip(const ComplexData& data);
+   static ComplexData convert(const Sample::Data& data);
+   static Sample::Data strip(const ComplexData& data);
 
    ComplexData forward(const ComplexData& input);
    ComplexData inverse(const ComplexData& input);
+
+   const size_t& getSize() const;
 
 private:
    bool isPowerOfTwo(const size_t num) const;

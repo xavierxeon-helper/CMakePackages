@@ -15,6 +15,7 @@ namespace Sample
 
    public:
       const Meta& getMeta() const;
+      Data getChannel(const uint8_t& channel) const;
       Data get(const size_t& position, const size_t& numberOfSamples, const uint8_t& channel) const;
 
       size_t getPlayhead() const;

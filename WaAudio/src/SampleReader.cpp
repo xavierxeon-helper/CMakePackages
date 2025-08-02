@@ -15,10 +15,14 @@ const Sample::Meta& Sample::Reader::getMeta() const
    return meta;
 }
 
+Sample::Data Sample::Reader::getChannel(const uint8_t& channel) const
+{
+   const Data& target = channels[channel];
+   return target;
+}
+
 Sample::Data Sample::Reader::get(const size_t& position, const size_t& numberOfSamples, const uint8_t& channel) const
 {
-   return interlacedContent.mid(2 * position, numberOfSamples);
-
    const Data& target = channels[channel];
    const Data chunk = target.mid(position, numberOfSamples);
    return chunk;
