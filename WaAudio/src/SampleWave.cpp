@@ -42,7 +42,7 @@ struct WaveFmtHeader
 {
    // "fmt" sub-chunk
    uint8_t fmt[4] = {'f', 'm', 't', ' '}; // FMT header
-   uint32_t dataSize = 0;                 // Size of the fmt chunk
+   uint32_t dataSize = 16;                // Size of the fmt chunk
 
    uint16_t audioFormat = 1;    // Audio format 1=PCM,6=mulaw,7=alaw, 257=IBM Mu-Law, 258=IBM A-Law, 259=ADPCM
    uint16_t numChannels = 2;    // Number of channels 1=Mono 2=Stereo
@@ -127,33 +127,47 @@ bool Sample::Wave::load(const QString& fileName)
 
 bool Sample::Wave::save(const QString& fileName)
 {
-   return false;
-   /*
-   FILE* wavFile = fopen(fileName.c_str(), "w");
-   if (wavFile == nullptr)
+   QFile file(fileName);
+   if (!file.open(QIODevice::WriteOnly))
       return false;
 
+   auto write = [&](const auto& soure)
    {
-      WavHeader header;
+      const int length = sizeof(soure);
+      QByteArray bytes(length, 0);
 
-      header.sampleRate = meta.sampleRate;
-      header.numChannels = meta.noOfChannels;
-      header.blockAlign = header.numChannels * (header.bitsPerSample / 8);
-      header.bytesPerSec = header.sampleRate * header.blockAlign;
+      std::memcpy(bytes.data(), &soure, length);
 
-      header.dataSize = data.size();
-      header.chunkSize = 36 + header.dataSize;
+      file.write(bytes);
+   };
 
-      fwrite(&header, 1, sizeof(WavHeader), wavFile);
+   QByteArray data;
+   for (const float& value : interlacedContent)
+   {
+      const int16_t iValue = static_cast<int16_t>(value * maxValue);
+      const QByteArray bytes = Bytes<int16_t>::toBytes(iValue, false);
+      data.append(bytes);
    }
 
-   for (const float& value : data)
-   {
-      const int16_t buffer = static_cast<int16_t>(value * maxValue);
-      fwrite(&buffer, 1, sizeof(int16_t), wavFile);
-   }
+   WaveFmtHeader fmtHeader;
 
-   fclose(wavFile);
+   fmtHeader.sampleRate = meta.sampleRate;
+   fmtHeader.numChannels = meta.noOfChannels;
+   fmtHeader.blockAlign = fmtHeader.numChannels * (fmtHeader.bitsPerSample / 8);
+   fmtHeader.bytesPerSec = fmtHeader.sampleRate * fmtHeader.blockAlign;
+
+   WaveChunkHeader chunkHeader;
+
+   chunkHeader.dataSize = data.size();
+
+   WaveHeader header;
+   header.chunkSize = 36 + chunkHeader.dataSize;
+
+   write(header);
+   write(fmtHeader);
+   write(chunkHeader);
+
+   file.write(data);
+
    return true;
-   */
 }
