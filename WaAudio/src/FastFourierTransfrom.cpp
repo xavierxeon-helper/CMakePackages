@@ -1,5 +1,7 @@
 #include "FastFourierTransfrom.h"
 
+// see https://en.wikipedia.org/wiki/Cooley–Tukey_FFT_algorithm
+
 //
 
 FastFourierTransfrom::Exception::Exception(const QString& message)
