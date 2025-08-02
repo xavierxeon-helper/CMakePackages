@@ -45,7 +45,6 @@ FastFourierTransfrom::ComplexData FastFourierTransfrom::forward(const ComplexDat
       throw new Exception(QString("Data size must be %1 samples").arg(size));
 
    ComplexData data = input;
-   prepareData(data);
    transform(data, true);
 
    return data;
@@ -57,7 +56,6 @@ FastFourierTransfrom::ComplexData FastFourierTransfrom::inverse(const ComplexDat
       throw new Exception(QString("Data size must be %1 samples").arg(size));
 
    ComplexData data = input;
-   prepareData(data);
    transform(data, false);
 
    const int maxIndex = static_cast<int>(size);
@@ -111,6 +109,8 @@ void FastFourierTransfrom::prepareData(ComplexData& data) const
 
 void FastFourierTransfrom::transform(ComplexData& data, bool forward) const
 {
+   prepareData(data);
+
    double localPi = forward ? -M_PI : M_PI;
 
    // declare variables to cycle the bits of initial signal
