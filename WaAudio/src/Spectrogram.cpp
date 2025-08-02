@@ -30,7 +30,13 @@ void Spectrogram::load(const Sample::Data& data)
       FastFourierTransfrom::ComplexData data = FastFourierTransfrom::convert(frameData);
       fft.forward(data);
 
-      Sample::Data amplitudes = FastFourierTransfrom::strip(data);
+      Sample::Data amplitudes;
+      for (FastFourierTransfrom::ComplexType& cartesian : data)
+      {
+         FastFourierTransfrom::ComplexType polar = FastFourierTransfrom::cartesianToPolar(cartesian);
+         amplitudes.append(polar.real());
+      }
+
       frames.append(amplitudes);
    }
 }

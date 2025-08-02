@@ -39,6 +39,26 @@ Sample::Data FastFourierTransfrom::strip(const ComplexData& data)
    return result;
 }
 
+FastFourierTransfrom::ComplexType FastFourierTransfrom::cartesianToPolar(const ComplexType& cartesian)
+{
+   ComplexType result;
+
+   result.real(std::sqrt(cartesian.real() * cartesian.real() + cartesian.imag() * cartesian.imag()));
+   result.imag(std::atan2(cartesian.imag(), cartesian.real()));
+
+   return result;
+}
+
+FastFourierTransfrom::ComplexType FastFourierTransfrom::polarToCartesian(const ComplexType& polar)
+{
+   ComplexType result;
+
+   result.real(polar.real() * std::cos(polar.imag()));
+   result.imag(polar.real() * std::sin(polar.imag()));
+
+   return result;
+}
+
 const size_t& FastFourierTransfrom::getSize() const
 {
    return size;
