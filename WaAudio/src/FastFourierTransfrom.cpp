@@ -1,8 +1,8 @@
 #include "FastFourierTransfrom.h"
 
-// see https://en.wikipedia.org/wiki/Cooley–Tukey_FFT_algorithm
-
 //
+
+#include <QDebug>
 
 FastFourierTransfrom::Exception::Exception(const QString& message)
    : QException()
@@ -19,7 +19,7 @@ FastFourierTransfrom::FastFourierTransfrom(const size_t size)
       throw new Exception("FFT size must be a power of two");
 }
 
-FastFourierTransfrom::ComplexData FastFourierTransfrom::convert(const Sample::Data& data)
+FastFourierTransfrom::ComplexData FastFourierTransfrom::fill(const Sample::Data& data)
 {
    ComplexData result;
 
@@ -41,21 +41,25 @@ Sample::Data FastFourierTransfrom::strip(const ComplexData& data)
 
 FastFourierTransfrom::ComplexType FastFourierTransfrom::cartesianToPolar(const ComplexType& cartesian)
 {
-   ComplexType result;
+   const float x = cartesian.real();
+   const float y = cartesian.imag();
 
-   result.real(std::sqrt(cartesian.real() * cartesian.real() + cartesian.imag() * cartesian.imag()));
-   result.imag(std::atan2(cartesian.imag(), cartesian.real()));
+   const float r = std::sqrt(x * x + y * y);
+   const float theta = std::atan2(y, x);
 
+   ComplexType result(r, theta);
    return result;
 }
 
 FastFourierTransfrom::ComplexType FastFourierTransfrom::polarToCartesian(const ComplexType& polar)
 {
-   ComplexType result;
+   const float r = polar.real();
+   const float theta = polar.imag();
 
-   result.real(polar.real() * std::cos(polar.imag()));
-   result.imag(polar.real() * std::sin(polar.imag()));
+   const float x = r * std::cos(theta);
+   const float y = r * std::sin(theta);
 
+   ComplexType result(x, y);
    return result;
 }
 
@@ -90,83 +94,87 @@ FastFourierTransfrom::ComplexData FastFourierTransfrom::inverse(const ComplexDat
    return data;
 }
 
-bool FastFourierTransfrom::isPowerOfTwo(const size_t num) const
+bool FastFourierTransfrom::isPowerOfTwo(const size_t num)
 {
    // "complement and compare" method
    return num && (!(num & (num - 1)));
 }
 
-void FastFourierTransfrom::prepareData(ComplexData& data) const
+void FastFourierTransfrom::bitReverse(ComplexData& data) const
 {
-   ComplexType buf;
-
    auto swap = [&](const size_t& indexFrom, const size_t& indexTo)
    {
-      buf = data[indexFrom];
+      const ComplexType buf = data[indexFrom];
       data[indexFrom] = data[indexTo];
       data[indexTo] = buf;
    };
 
    size_t targetIndex = 0;
-   size_t bitMask = size;
-
    for (size_t index = 0; index < size; index++)
    {
       if (targetIndex > index)
          swap(targetIndex, index);
 
-      // Initialize the bit mask
-      bitMask = size;
+      size_t bitMask = size;
+      while (targetIndex & (bitMask >>= 1)) // shift bitmask
+         targetIndex &= ~bitMask;           // dop bits  in bitMask
 
-      // While bit is 1
-      while (targetIndex & (bitMask >>= 1)) // bitMask = bitMask >> 1
-      {
-         // Drop bit:
-         // & is bitwise AND,
-         // ~ is bitwise NOT
-         targetIndex &= ~bitMask; // targetIndex = targetIndex & (~bitMask)
-      }
-
-      // | is bitwise OR
-      targetIndex |= bitMask; // targetIndex = targetIndex | bitMask
+      targetIndex |= bitMask;
    }
 }
 
+// see https://en.wikipedia.org/wiki/Cooley–Tukey_FFT_algorithm
+
+/*
+algorithm iterative-fft is
+    input: Array a of n complex values where n is a power of 2.
+    output: Array A the DFT of a.
+
+    bit-reverse-copy(a, A)
+    n ← a.length
+    for s = 1 to log(n) do
+        m ← 2s
+        ωm ← exp(−2πi/m)
+        for k = 0 to n-1 by m do
+            ω ← 1
+            for j = 0 to m/2 – 1 do
+                u ← A[k + j]
+                t ← ω A[k + j + m/2]
+                A[k + j] ← u + t
+                A[k + j + m/2] ← u – t
+                ω ← ω ωm
+
+    return A
+*/
 void FastFourierTransfrom::transform(ComplexData& data, bool forward) const
 {
-   prepareData(data);
+   bitReverse(data);
 
    static const double pi = 2.0 * std::asin(1.0);
-   double localPi = forward ? -pi : pi;
+   const float twoPi = forward ? -2 * pi : 2 * pi;
 
-   // declare variables to cycle the bits of initial signal
-   size_t next, match;
-   float sine;
-   float delta;
-   ComplexType mult, factor, product;
-
-   // cycle for all bit positions of initial signal
-   for (size_t i = 1; i < size; i <<= 1)
+   const size_t n = data.size();
+   for (size_t s = 1; s < log(n); s++)
    {
-      next = i << 1;                // getting the next bit
-      delta = localPi / i;          // angle increasing
-      sine = std::sin(0.5 * delta); // supplementary sin
-
-      // multiplier for trigonometric recurrence
-      mult = ComplexType(-2.0 * sine * sine, std::sin(delta));
-      factor = 1.0; // start transform factor
-
-      for (size_t j = 0; j < i; j++) // iterations through groupswith different transform factors
+      const size_t m = 1 << s;                               // 2^s
+      const size_t m2 = m >> 1;                              // m/2
+      const ComplexType wm(cos(twoPi / m), -sin(twoPi / m)); // e^(-2πi/m))
+      for (size_t k = 0; k < n; k += m)                      // loop through the groups
       {
-         for (size_t k = j; k < size; k += next) // iterations through pairs within group
+         ComplexType w(1.0, 0.0);        // start multiplier
+         for (size_t j = 0; j < m2; j++) // loop through the pairs
          {
-            match = k + i;
+            const size_t index1 = k + j;
+            const size_t index2 = index1 + m2;
 
-            product = data[match] * factor;
-            data[match] = data[k] - product;
-            data[k] += product;
+            // butterfly operation
+            const ComplexType t = w * data[index2];
+            const ComplexType u = data[index1];
+            data[index1] = u + t;
+            data[index2] = u - t;
+
+            w *= wm; // update multiplier
          }
-         factor = mult * factor + factor;
       }
    }
 }

@@ -27,7 +27,7 @@ public:
    FastFourierTransfrom(const size_t size);
 
 public:
-   static ComplexData convert(const Sample::Data& data);
+   static ComplexData fill(const Sample::Data& data);
    static Sample::Data strip(const ComplexData& data);
 
    static ComplexType cartesianToPolar(const ComplexType& cartesian);
@@ -37,10 +37,10 @@ public:
    ComplexData inverse(const ComplexData& input);
 
    const size_t& getSize() const;
+   static bool isPowerOfTwo(const size_t num);
 
 private:
-   bool isPowerOfTwo(const size_t num) const;
-   void prepareData(ComplexData& data) const;
+   void bitReverse(ComplexData& data) const;
    void transform(ComplexData& data, bool forward) const;
 
 private:

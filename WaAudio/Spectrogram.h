@@ -10,7 +10,7 @@ public:
    using Frames = QList<Sample::Data>;
 
 public:
-   Spectrogram(const uint16_t& frameSize);
+   Spectrogram(const uint16_t& frameSize, const uint16_t& windowOffset);
 
 public:
    void load(const Sample::Data& data);
@@ -20,6 +20,8 @@ public:
 
 private:
    FastFourierTransfrom fft;
+   const uint16_t windowOffset;
+   Sample::Data windowData;
    Frames frames;
 };
 

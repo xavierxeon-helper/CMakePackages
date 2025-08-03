@@ -4,31 +4,60 @@
 
 #include <QDebug>
 
-Spectrogram::Spectrogram(const uint16_t& frameSize)
+Spectrogram::Spectrogram(const uint16_t& frameSize, const uint16_t& windowOffset)
    : fft(frameSize)
+   , windowOffset(windowOffset)
+   , windowData(frameSize, 0)
    , frames()
-
 {
+   if (!FastFourierTransfrom::isPowerOfTwo(windowOffset))
+      throw new FastFourierTransfrom::Exception("Window Offset size must be a power of two");
+
+   if (windowOffset > frameSize)
+      throw new FastFourierTransfrom::Exception("Window Offset size must not be greater than Frame Size");
+
+   for (size_t index = 0; index < frameSize / 2; index++)
+   {
+      const float value = static_cast<float>(2 * index) / frameSize;
+      windowData[index] = value;
+      windowData[frameSize - (index + 1)] = value;
+   }
 }
 
+// see https://www.nti-audio.com/en/support/know-how/fast-fourier-transform-fft
 void Spectrogram::load(const Sample::Data& data)
 {
    frames.clear();
 
    const size_t frameSize = fft.getSize();
-   const size_t frameCount = qCeil(data.size() / frameSize) + 1;
-   for (int index = 0; index < frameCount; index++)
+
+   auto windowedFrameData = [&](const size_t start)
    {
-      const size_t offset = index * frameSize;
-      Sample::Data frameData = data.mid(offset, frameSize);
+      Sample::Data frameData = data.mid(start, frameSize);
       if (frameData.size() < frameSize) // pad last frame
       {
          const size_t diffCount = frameSize - frameData.size();
          frameData.append(Sample::Data(diffCount, 0.0));
       }
 
-      FastFourierTransfrom::ComplexData complex = FastFourierTransfrom::convert(frameData);
+      for (size_t index = 0; index < frameData.size(); index++)
+      {
+         // apply window function
+         frameData[index] *= windowData[index];
+      }
+
+      return frameData;
+   };
+
+   const size_t windowCount = qCeil(data.size() / windowOffset) + 1;
+   for (int index = 0; index < windowCount; index++)
+   {
+      const size_t offset = index * windowOffset;
+      Sample::Data frameData = windowedFrameData(offset);
+
+      FastFourierTransfrom::ComplexData complex = FastFourierTransfrom::fill(frameData);
       fft.forward(complex);
+      //break;
 
       Sample::Data amplitudes;
       for (FastFourierTransfrom::ComplexType& cartesian : complex)
