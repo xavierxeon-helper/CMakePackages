@@ -14,15 +14,6 @@ public:
    using ComplexType = std::complex<float>;
    using ComplexData = QList<ComplexType>;
 
-   class Exception : public QException
-   {
-   public:
-      Exception(const QString& message);
-
-   private:
-      QString message;
-   };
-
 public:
    FastFourierTransfrom(const size_t size);
 
@@ -37,7 +28,6 @@ public:
    ComplexData inverse(const ComplexData& input);
 
    const size_t& getSize() const;
-   static bool isPowerOfTwo(const size_t num);
 
 private:
    void bitReverse(ComplexData& data) const;

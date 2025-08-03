@@ -1,20 +1,17 @@
 #include "Spectrogram.h"
 
-#include <QtMath>
+#include <MathHelper.h>
 
 #include <QDebug>
 
-Spectrogram::Spectrogram(const uint16_t& frameSize, const uint16_t& windowOffset)
+Spectrogram::Spectrogram(const uint16_t& frameSize, const uint16_t& _windowOffset)
    : fft(frameSize)
-   , windowOffset(windowOffset)
+   , windowOffset(MathHelper::getNearestPowerOfTwo(_windowOffset))
    , windowData(frameSize, 0)
    , frames()
 {
-   if (!FastFourierTransfrom::isPowerOfTwo(windowOffset))
-      throw new FastFourierTransfrom::Exception("Window Offset size must be a power of two");
-
    if (windowOffset > frameSize)
-      throw new FastFourierTransfrom::Exception("Window Offset size must not be greater than Frame Size");
+      windowOffset = frameSize;
 
    // seee https://en.wikipedia.org/wiki/Window_function
    // blackmann-harris window

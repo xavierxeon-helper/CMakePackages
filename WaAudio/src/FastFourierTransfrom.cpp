@@ -4,19 +4,11 @@
 
 #include <QDebug>
 
-FastFourierTransfrom::Exception::Exception(const QString& message)
-   : QException()
-   , message(message)
-{
-}
-
-//
+#include <MathHelper.h>
 
 FastFourierTransfrom::FastFourierTransfrom(const size_t size)
-   : size(size)
+   : size(MathHelper::getNearestPowerOfTwo(size))
 {
-   if (!isPowerOfTwo(size))
-      throw new Exception("FFT size must be a power of two");
 }
 
 FastFourierTransfrom::ComplexData FastFourierTransfrom::fill(const Sample::Data& data)
@@ -71,7 +63,7 @@ const size_t& FastFourierTransfrom::getSize() const
 FastFourierTransfrom::ComplexData FastFourierTransfrom::forward(const ComplexData& input)
 {
    if (size != input.size())
-      throw new Exception(QString("Data size must be %1 samples").arg(size));
+      return ComplexData();
 
    ComplexData data = input;
    transform(data, true);
@@ -82,7 +74,7 @@ FastFourierTransfrom::ComplexData FastFourierTransfrom::forward(const ComplexDat
 FastFourierTransfrom::ComplexData FastFourierTransfrom::inverse(const ComplexData& input)
 {
    if (size != input.size())
-      throw new Exception(QString("Data size must be %1 samples").arg(size));
+      return ComplexData();
 
    ComplexData data = input;
    transform(data, false);
@@ -92,12 +84,6 @@ FastFourierTransfrom::ComplexData FastFourierTransfrom::inverse(const ComplexDat
       data[index] /= size;
 
    return data;
-}
-
-bool FastFourierTransfrom::isPowerOfTwo(const size_t num)
-{
-   // "complement and compare" method
-   return num && (!(num & (num - 1)));
 }
 
 void FastFourierTransfrom::bitReverse(ComplexData& data) const
