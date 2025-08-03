@@ -7,7 +7,7 @@
 #include <MathHelper.h>
 
 FastFourierTransfrom::FastFourierTransfrom(const size_t size)
-   : size(MathHelper::getNearestPowerOfTwo(size))
+   : size(getNearestPowerOfTwo(size))
 {
 }
 
@@ -28,30 +28,6 @@ Sample::Data FastFourierTransfrom::strip(const ComplexData& data)
    for (const ComplexType& value : data)
       result.append(static_cast<float>(value.real()));
 
-   return result;
-}
-
-FastFourierTransfrom::ComplexType FastFourierTransfrom::cartesianToPolar(const ComplexType& cartesian)
-{
-   const float x = cartesian.real();
-   const float y = cartesian.imag();
-
-   const float r = std::sqrt(x * x + y * y);
-   const float theta = std::atan2(y, x);
-
-   ComplexType result(r, theta);
-   return result;
-}
-
-FastFourierTransfrom::ComplexType FastFourierTransfrom::polarToCartesian(const ComplexType& polar)
-{
-   const float r = polar.real();
-   const float theta = polar.imag();
-
-   const float x = r * std::cos(theta);
-   const float y = r * std::sin(theta);
-
-   ComplexType result(x, y);
    return result;
 }
 

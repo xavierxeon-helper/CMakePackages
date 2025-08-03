@@ -21,9 +21,6 @@ public:
    static ComplexData fill(const Sample::Data& data);
    static Sample::Data strip(const ComplexData& data);
 
-   static ComplexType cartesianToPolar(const ComplexType& cartesian);
-   static ComplexType polarToCartesian(const ComplexType& polar);
-
    ComplexData forward(const ComplexData& input);
    ComplexData inverse(const ComplexData& input);
 

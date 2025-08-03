@@ -6,7 +6,7 @@
 
 Spectrogram::Spectrogram(const uint16_t& frameSize, const uint16_t& _windowOffset)
    : fft(frameSize)
-   , windowOffset(MathHelper::getNearestPowerOfTwo(_windowOffset))
+   , windowOffset(getNearestPowerOfTwo(_windowOffset))
    , windowData(frameSize, 0)
    , frames()
 {
@@ -68,7 +68,7 @@ void Spectrogram::load(const Sample::Data& data)
       Sample::Data amplitudes;
       for (FastFourierTransfrom::ComplexType& cartesian : complex)
       {
-         FastFourierTransfrom::ComplexType polar = FastFourierTransfrom::cartesianToPolar(cartesian);
+         FastFourierTransfrom::ComplexType polar = cartesianToPolar(cartesian);
          amplitudes.append(polar.real());
       }
 
