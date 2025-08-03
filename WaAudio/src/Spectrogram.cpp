@@ -21,17 +21,17 @@ void Spectrogram::load(const Sample::Data& data)
    {
       const size_t offset = index * frameSize;
       Sample::Data frameData = data.mid(offset, frameSize);
-      if (frameData.size() < frameSize)
+      if (frameData.size() < frameSize) // pad last frame
       {
          const size_t diffCount = frameSize - frameData.size();
          frameData.append(Sample::Data(diffCount, 0.0));
       }
 
-      FastFourierTransfrom::ComplexData data = FastFourierTransfrom::convert(frameData);
-      fft.forward(data);
+      FastFourierTransfrom::ComplexData complex = FastFourierTransfrom::convert(frameData);
+      fft.forward(complex);
 
       Sample::Data amplitudes;
-      for (FastFourierTransfrom::ComplexType& cartesian : data)
+      for (FastFourierTransfrom::ComplexType& cartesian : complex)
       {
          FastFourierTransfrom::ComplexType polar = FastFourierTransfrom::cartesianToPolar(cartesian);
          amplitudes.append(polar.real());
