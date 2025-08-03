@@ -16,11 +16,20 @@ Spectrogram::Spectrogram(const uint16_t& frameSize, const uint16_t& windowOffset
    if (windowOffset > frameSize)
       throw new FastFourierTransfrom::Exception("Window Offset size must not be greater than Frame Size");
 
-   for (size_t index = 0; index < frameSize / 2; index++)
+   // seee https://en.wikipedia.org/wiki/Window_function
+   // blackmann-harris window
+   const float a0 = 0.35975;
+   const float a1 = 0.48829;
+   const float a2 = 0.14128;
+   const float a3 = 0.01168;
+
+   static const double pi = 2.0 * std::asin(1.0);
+
+   for (size_t index = 0; index < frameSize; index++)
    {
-      const float value = static_cast<float>(2 * index) / frameSize;
+      float indexValue = (pi * index) / frameSize;
+      float value = a0 - a1 * qCos(2.0 * indexValue) + a2 * qCos(4.0 * indexValue) - a3 * qCos(6.0 * indexValue);
       windowData[index] = value;
-      windowData[frameSize - (index + 1)] = value;
    }
 }
 
