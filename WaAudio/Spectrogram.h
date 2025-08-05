@@ -10,7 +10,7 @@ public:
    using Frames = QList<Sample::Data>;
 
 public:
-   Spectrogram(const uint16_t& frameSize = 2048, const uint16_t& windowOffset = 128);
+   Spectrogram(const uint16_t& frameSize = 2048, const uint16_t& hopFactor = 4);
 
 public:
    void load(const Sample::Data& data);

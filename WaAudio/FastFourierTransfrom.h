@@ -30,6 +30,9 @@ private:
    void bitReverse(ComplexData& data) const;
    void transform(ComplexData& data, bool forward) const;
 
+   void bitReverseB(ComplexData& data) const;
+   void transformB(ComplexData& data, bool forward) const;
+
 private:
    const size_t size;
 };

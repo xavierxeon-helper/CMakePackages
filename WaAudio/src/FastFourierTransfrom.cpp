@@ -62,6 +62,8 @@ FastFourierTransfrom::ComplexData FastFourierTransfrom::inverse(const ComplexDat
    return data;
 }
 
+// see https://cp-algorithms.com/algebra/fft.html
+
 void FastFourierTransfrom::bitReverse(ComplexData& data) const
 {
    auto swap = [&](const size_t& indexFrom, const size_t& indexTo)
@@ -71,17 +73,15 @@ void FastFourierTransfrom::bitReverse(ComplexData& data) const
       data[indexTo] = buf;
    };
 
-   size_t targetIndex = 0;
-   for (size_t index = 0; index < size; index++)
+   for (int i = 1, j = 0; i < size; i++)
    {
-      if (targetIndex > index)
-         swap(targetIndex, index);
+      int bit = size >> 1;
+      for (; j & bit; bit >>= 1)
+         j ^= bit;
+      j ^= bit;
 
-      size_t bitMask = size;
-      while (targetIndex & (bitMask >>= 1)) // shift bitmask
-         targetIndex &= ~bitMask;           // dop bits  in bitMask
-
-      targetIndex |= bitMask;
+      if (i < j)
+         swap(i, j);
    }
 }
 
@@ -108,7 +108,7 @@ algorithm iterative-fft is
 
     return A
 */
-void FastFourierTransfrom::transform(ComplexData& data, bool forward) const
+void FastFourierTransfrom::transformB(ComplexData& data, bool forward) const
 {
    bitReverse(data);
 
@@ -136,6 +136,32 @@ void FastFourierTransfrom::transform(ComplexData& data, bool forward) const
             data[index2] = u - t;
 
             w *= wm; // update multiplier
+         }
+      }
+   }
+}
+
+void FastFourierTransfrom::transform(ComplexData& data, bool forward) const
+{
+   bitReverse(data);
+
+   static const double pi = 2.0 * std::asin(1.0);
+   const float twoPi = forward ? -2 * pi : 2 * pi;
+
+   for (size_t len = 2; len <= size; len <<= 1)
+   {
+      const double ang = twoPi / len;
+      const ComplexType wlen(cos(ang), sin(ang));
+      for (int i = 0; i < size; i += len)
+      {
+         ComplexType w(1);
+         for (size_t j = 0; j < len / 2; j++)
+         {
+            const ComplexType u = data[i + j];
+            const ComplexType v = data[i + j + len / 2] * w;
+            data[i + j] = u + v;
+            data[i + j + len / 2] = u - v;
+            w *= wlen;
          }
       }
    }
