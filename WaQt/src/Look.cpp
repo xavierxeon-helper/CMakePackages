@@ -9,6 +9,7 @@ void Look::applyStlyeSheet(const QString& fileName, QWidget* widget)
       return;
 
    const QString styleSheet = file.readAll();
-   widget->setStyleSheet(styleSheet);
    file.close();
+
+   widget->setStyleSheet(styleSheet);
 }
