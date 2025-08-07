@@ -16,6 +16,8 @@ namespace Managed
       template <typename TargetClass>
       void onClicked(TargetClass* instance, bool (TargetClass::*memberFunction)(const QPointF&, QGraphicsItem*));
 
+      void deactivateFrame();
+
    private:
       using ClickFunction = std::function<bool(const QPointF&, QGraphicsItem*)>;
 

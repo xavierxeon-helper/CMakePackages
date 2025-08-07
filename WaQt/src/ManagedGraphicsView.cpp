@@ -7,6 +7,12 @@ Managed::GraphicsView::GraphicsView(QWidget* parent)
 {
 }
 
+void Managed::GraphicsView::deactivateFrame()
+{
+   setFrameShadow(QFrame::Plain);
+   setFrameShape(QFrame::NoFrame);
+}
+
 void Managed::GraphicsView::mousePressEvent(QMouseEvent* event)
 {
    if (!mousePressFunction)
