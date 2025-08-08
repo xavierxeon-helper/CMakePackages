@@ -13,7 +13,7 @@ public:
 
 public:
    TimeCode();
-   TimeCode(uint16_t bar, uint8_t quarter, uint8_t tick = 0);
+   TimeCode(uint16_t bar, uchar quarter, uchar tick = 0);
    TimeCode(const Duration& duration);
 
 public:
@@ -22,8 +22,8 @@ public:
 
 public:
    uint16_t bar;
-   uint8_t quarter;
-   uint8_t tick;
+   uchar quarter;
+   uchar tick;
 };
 
 #endif // NOT TimeCodeH

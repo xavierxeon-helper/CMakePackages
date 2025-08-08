@@ -1,16 +1,16 @@
 #ifndef NoteH
 #define NoteH
 
-#include <vector>
+#include <QList>
 
 class Note
 {
 public:
-   using List = std::vector<Note>;
-   using Index = uint8_t;
-   using Octave = uint8_t;
+   using List = QList<Note>;
+   using Index = uchar;
+   using Octave = uchar;
 
-   enum Value : uint8_t //
+   enum Value : uchar //
    {
       C = 0,
       Cs,
@@ -36,19 +36,26 @@ public:
 
 public:
    static const Note& fromVoltage(float voltage);
-   static const Note& fromMidi(uint8_t midi);
+   static const Note& fromMidi(uchar midi);
    static const Note& fromFrequency(float frequency);
 
-public:
-   const std::string name;
-   const Value value;
-   const Octave octave;
-   const float frequency;
-   const float voltage;
-   const uint8_t midiValue;
+   const QString& getName() const;
+   const Value& getValue() const;
+   const Octave& getOctave() const;
+   const float& getFrequency() const;
+   const float& getVoltage() const;
+   const uchar& getMidiValue() const;
 
 private:
-   Note(std::string name, Value value, Octave octave, float frequency, float voltage, uint8_t midiValue);
+   QString name;
+   Value value;
+   Octave octave;
+   float frequency;
+   float voltage;
+   uchar midiValue;
+
+private:
+   Note(QString name, Value value, Octave octave, float frequency, float voltage, uchar midiValue);
 };
 
 #endif // NoteH

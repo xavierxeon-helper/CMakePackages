@@ -10,7 +10,7 @@ TimeCode::TimeCode()
 {
 }
 
-TimeCode::TimeCode(uint16_t bar, uint8_t quarter, uint8_t tick)
+TimeCode::TimeCode(uint16_t bar, uchar quarter, uchar tick)
    : bar(bar)
    , quarter(quarter)
    , tick(tick)
@@ -23,7 +23,7 @@ TimeCode::TimeCode(const Duration& duration)
    tick = duration % 4;
    quarter = ((duration - tick) / 4) % 4;
 
-   const uint8_t restTicks = tick + (quarter * 4);
+   const uchar restTicks = tick + (quarter * 4);
    const uint16_t barTicks = duration - restTicks;
    bar = barTicks / 16;
 }

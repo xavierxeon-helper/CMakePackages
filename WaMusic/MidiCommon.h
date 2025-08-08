@@ -1,19 +1,19 @@
 #ifndef MidiCommonH
 #define MidiCommonH
 
-#include <vector>
+#include <QList>
 
-using Bytes = std::vector<uint8_t>;
-Bytes& operator<<(Bytes& data, const uint8_t& byte);
+using Bytes = QList<uchar>;
+Bytes& operator<<(Bytes& data, const uchar& byte);
 
 namespace Midi
 {
-   using Channel = uint8_t; // channels from 1 to 16
-   using Velocity = uint8_t;
+   using Channel = uchar; // channels from 1 to 16
+   using Velocity = uchar;
    using SongPosition = uint16_t;
-   using MessageList = std::vector<Bytes>;
+   using MessageList = QList<Bytes>;
 
-   enum Event : uint8_t
+   enum Event : uchar
    {
       Unknown = 0x00,
       // non system events
@@ -46,10 +46,10 @@ namespace Midi
 
    struct Manufacturer
    {
-      static constexpr uint8_t EducationalUse = 0x7D;
+      static constexpr uchar EducationalUse = 0x7D;
    };
 
-   enum MetaEvent : uint8_t // for midi files
+   enum MetaEvent : uchar // for midi files
    {
       MetaUnkown = 0x00,
       Text = 0x01,
@@ -69,7 +69,7 @@ namespace Midi
       KeySignature = 0x59
    };
 
-   enum ControllerMessage : uint8_t //
+   enum ControllerMessage : uchar //
    {
       BankSelect = 0x00,
       ModWheel = 0x01,
@@ -126,7 +126,7 @@ namespace Midi
       AllNotesOff = 0x78
    };
 
-   enum class Playback : uint8_t
+   enum class Playback : uchar
    {
       Start,
       Continue,
@@ -135,7 +135,7 @@ namespace Midi
 
    struct Device
    {
-      enum Channel : uint8_t
+      enum Channel : uchar
       {
          DopeferQuad1 = 1,
          DopeferQuad2 = 2,
@@ -169,9 +169,9 @@ namespace Midi
    };
 
    // utilities
-   bool isEvent(const uint8_t value, const Midi::Event mask);
-   bool hasFirstBit(const uint8_t value);
-   uint8_t removeFirstBit(const uint8_t value);
+   bool isEvent(const uchar value, const Midi::Event mask);
+   bool hasFirstBit(const uchar value);
+   uchar removeFirstBit(const uchar value);
 
 } // namespace Midi
 

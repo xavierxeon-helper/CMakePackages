@@ -2,7 +2,7 @@
 
 #include <Range.h>
 
-#include <map>
+#include <QMap>
 
 const Note Note::zeroNote = Note();
 
@@ -11,7 +11,7 @@ const Note::List Note::availableNotes = []()
    Note::List noteList;
    noteList.push_back(zeroNote);
 
-   using NameMap = std::map<Note::Value, std::string>;
+   using NameMap = QMap<Note::Value, QString>;
    const NameMap nameMap = {
       {C, "C"},
       {Cs, "C#"},
@@ -27,14 +27,14 @@ const Note::List Note::availableNotes = []()
       {B, "B"},
    };
 
-   const std::vector<float> noteAFreq = []()
+   const QList<float> noteAFreq = []()
    {
       float value = 0.25 * 55.0;
 
-      std::vector<float> freq;
+      QList<float> freq;
       freq.push_back(value);
 
-      for (uint8_t index = 1; index < 21; index++)
+      for (uchar index = 1; index < 21; index++)
       {
          value *= 2;
          freq.push_back(value);
@@ -44,16 +44,16 @@ const Note::List Note::availableNotes = []()
 
    auto fillNoteList = [&]()
    {
-      uint8_t midiValue = 24;
+      uchar midiValue = 24;
       for (Octave octave = 0; octave < 20; octave++)
       {
-         for (uint8_t voltageIndex = 0; voltageIndex < 12; voltageIndex++)
+         for (uchar voltageIndex = 0; voltageIndex < 12; voltageIndex++)
          {
             const Value value = static_cast<Value>(voltageIndex);
-            const std::string name = nameMap.at(value) + std::to_string(octave);
+            const QString name = nameMap.value(value) + QString::number(octave);
 
             const float voltage = octave + (voltageIndex / 12.0);
-            const uint8_t freqOctave = static_cast<uint8_t>(voltage + 0.25);
+            const uchar freqOctave = static_cast<uchar>(voltage + 0.25);
             const float rest = (voltage - freqOctave) + 0.25;
             const float frequency = noteAFreq[freqOctave] * pow(2, rest);
 
@@ -92,19 +92,19 @@ const Note& Note::fromVoltage(float voltage)
       return zeroNote;
 
    const float value = Range::clamp<float>(voltage, 0.0f, 10.0f) * 12.0;
-   const uint8_t index = 1 + static_cast<uint8_t>(value);
+   const uchar index = 1 + static_cast<uchar>(value);
    if (index >= maxNoteIndex)
       return availableNotes[maxNoteIndex];
    else
       return availableNotes[index];
 }
 
-const Note& Note::fromMidi(uint8_t midi)
+const Note& Note::fromMidi(uchar midi)
 {
    if (0 == midi)
       return zeroNote;
 
-   const uint8_t index = 1 + midi - availableNotes.at(1).midiValue;
+   const uchar index = 1 + midi - availableNotes.at(1).midiValue;
    if (index >= maxNoteIndex)
       return availableNotes[maxNoteIndex];
    else
@@ -127,7 +127,32 @@ const Note& Note::fromFrequency(float frequency)
    return note;
 }
 
-Note::Note(std::string name, Value value, Octave octave, float frequency, float voltage, uint8_t midiValue)
+const QString& Note::getName() const
+{
+   return name;
+}
+const Note::Value& Note::getValue() const
+{
+   return value;
+}
+const Note::Octave& Note::getOctave() const
+{
+   return octave;
+}
+const float& Note::getFrequency() const
+{
+   return frequency;
+}
+const float& Note::getVoltage() const
+{
+   return voltage;
+}
+const uchar& Note::getMidiValue() const
+{
+   return midiValue;
+}
+
+Note::Note(QString name, Value value, Octave octave, float frequency, float voltage, uchar midiValue)
    : name(name)
    , value(value)
    , octave(octave)

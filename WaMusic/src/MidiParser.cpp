@@ -22,19 +22,19 @@ void Midi::Parser::processMessage(const Bytes& message)
 
       if (Event::NoteOn == event)
       {
-         const uint8_t midiNote = message[1];
+         const uchar midiNote = message[1];
          const Velocity velocity = message[2];
          noteOn(channel, midiNote, velocity);
       }
       else if (Event::NoteOff == event)
       {
-         const uint8_t midiNote = message[1];
+         const uchar midiNote = message[1];
          noteOff(channel, midiNote);
       }
       else if (Event::ControlChange == event)
       {
          const ControllerMessage controllerMessage = static_cast<ControllerMessage>(message[1]);
-         const uint8_t value = message[2];
+         const uchar value = message[2];
          controllerChange(channel, controllerMessage, value);
       }
    }
@@ -69,19 +69,19 @@ void Midi::Parser::processMessage(const Bytes& message)
    }
 }
 
-void Midi::Parser::noteOn(const Channel& channel, const uint8_t& midiNote, const Velocity& velocity)
+void Midi::Parser::noteOn(const Channel& channel, const uchar& midiNote, const Velocity& velocity)
 {
    for (const NoteOnFunction& noteOnFunction : noteOnFunctionList)
       noteOnFunction(channel, midiNote, velocity);
 }
 
-void Midi::Parser::noteOff(const Channel& channel, const uint8_t& midiNote)
+void Midi::Parser::noteOff(const Channel& channel, const uchar& midiNote)
 {
    for (const NoteOffFunction& noteOffFunction : noteOffFunctionList)
       noteOffFunction(channel, midiNote);
 }
 
-void Midi::Parser::controllerChange(const Channel& channel, const ControllerMessage& controllerMessage, const uint8_t& value)
+void Midi::Parser::controllerChange(const Channel& channel, const ControllerMessage& controllerMessage, const uchar& value)
 {
    for (const ControllerChangeFunction& controllerChangeFunction : controllerChangeFunctionList)
       controllerChangeFunction(channel, controllerMessage, value);

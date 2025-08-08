@@ -1,8 +1,8 @@
 #ifndef MidiFileH
 #define MidiFileH
 
-#include <map>
-#include <vector>
+#include <QList>
+#include <QMap>
 
 #include "MidiCommon.h"
 #include "TimeCode.h"
@@ -13,7 +13,7 @@ namespace Midi
    {
    public:
       using Tick = uint64_t;
-      using TimeMessageMap = std::map<Tick, MessageList>;
+      using TimeMessageMap = QMap<Tick, MessageList>;
 
       struct Info
       {
@@ -21,7 +21,7 @@ namespace Midi
          uint64_t barCounter = 0;
          uint16_t bpm = 0;
          uint32_t minutes = 0;
-         uint8_t seconds = 0;
+         uchar seconds = 0;
       };
 
       struct Track
@@ -32,7 +32,7 @@ namespace Midi
 
          TimeMessageMap messageMap;
 
-         using List = std::vector<Track>;
+         using List = QList<Track>;
       };
 
    public:
@@ -67,7 +67,7 @@ namespace Midi
             std::string id;
             Bytes data;
 
-            using List = std::vector<Chunk>;
+            using List = QList<Chunk>;
          };
 
       private:
@@ -75,7 +75,7 @@ namespace Midi
          void readHeader(const Chunk& headerChunk);
          void readTrack(const Chunk& trackChunk);
          MetaEvent readMetaEventAndAdvanceCursor(const Bytes& trackChunkData, uint64_t& cursor, Track* track);
-         uint8_t compileMidiEventLength(const uint8_t marker) const;
+         uchar compileMidiEventLength(const uchar marker) const;
 
          uint64_t variableLength(const Bytes& data, uint64_t& cursor) const;
       };

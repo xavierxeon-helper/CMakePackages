@@ -28,7 +28,7 @@ namespace Midi
          void addPassThroughInterface(Interface::Output* passthrough);
 
       protected:
-         std::vector<Interface::Output*> passthroughList;
+         QList<Interface::Output*> passthroughList;
       };
    } // namespace Interface
 } // namespace Midi

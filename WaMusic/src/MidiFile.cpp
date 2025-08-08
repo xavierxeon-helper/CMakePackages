@@ -116,8 +116,8 @@ void Midi::File::Reader::readHeader(const Chunk& headerChunk)
 
    // format 0 & 1
    // no of tracks 2 & 3
-   const uint8_t div1 = headerChunk.data.at(4);
-   const uint8_t div2 = headerChunk.data.at(5);
+   const uchar div1 = headerChunk.data.at(4);
+   const uchar div2 = headerChunk.data.at(5);
 
    const bool isSMPTE = hasFirstBit(div1);
    if (isSMPTE)
@@ -153,7 +153,7 @@ void Midi::File::Reader::readTrack(const Chunk& trackChunk)
       if (cursor >= maxCursor)
          break;
 
-      const uint8_t marker = trackChunk.data.at(cursor);
+      const uchar marker = trackChunk.data.at(cursor);
 
       if (isEvent(marker, Event::Meta))
       {
@@ -170,7 +170,7 @@ void Midi::File::Reader::readTrack(const Chunk& trackChunk)
          else if (isEvent(marker, Event::NoteOff))
             lastNoteOffTick = fileTick;
 
-         const uint8_t length = compileMidiEventLength(marker);
+         const uchar length = compileMidiEventLength(marker);
          if (0 == length) // error
          {
             break;
@@ -197,27 +197,27 @@ void Midi::File::Reader::readTrack(const Chunk& trackChunk)
 Midi::MetaEvent Midi::File::Reader::readMetaEventAndAdvanceCursor(const Bytes& trackChunkData, uint64_t& cursor, Track* track)
 {
    // clang-format off
-   static const std::map<uint8_t, uint8_t> messageStaticLengthMap =
+   static const QMap<uchar, uchar> messageStaticLengthMap =
    {
-      {(uint8_t)MetaEvent::ChannelPrefix, 2},
-      {(uint8_t)MetaEvent::SMPTEOffset, 6},
-      {(uint8_t)MetaEvent::TimeSignature, 5},
-      {(uint8_t)MetaEvent::KeySignature, 3}
+      {(uchar)MetaEvent::ChannelPrefix, 2},
+      {(uchar)MetaEvent::SMPTEOffset, 6},
+      {(uchar)MetaEvent::TimeSignature, 5},
+      {(uchar)MetaEvent::KeySignature, 3}
    };
-   static const std::vector<uint8_t> messageVariableMarkerList =
+   static const QList<uchar> messageVariableMarkerList =
    {
-      (uint8_t)MetaEvent::Text,
-      (uint8_t)MetaEvent::Copyright,
-      (uint8_t)MetaEvent::TrackName,
-      (uint8_t)MetaEvent::InstrumentName,
-      (uint8_t)MetaEvent::Lyric,
-      (uint8_t)MetaEvent::Marker,
-      (uint8_t)MetaEvent::CuePoint,
-      (uint8_t)MetaEvent::MidiPort
+      (uchar)MetaEvent::Text,
+      (uchar)MetaEvent::Copyright,
+      (uchar)MetaEvent::TrackName,
+      (uchar)MetaEvent::InstrumentName,
+      (uchar)MetaEvent::Lyric,
+      (uchar)MetaEvent::Marker,
+      (uchar)MetaEvent::CuePoint,
+      (uchar)MetaEvent::MidiPort
    };
    // clang-format on
 
-   const uint8_t subMarker = trackChunkData.at(cursor);
+   const uchar subMarker = trackChunkData.at(cursor);
    cursor += 1;
 
    auto subBytes = [&](const uint64_t length)
@@ -234,7 +234,7 @@ Midi::MetaEvent Midi::File::Reader::readMetaEventAndAdvanceCursor(const Bytes& t
 
    if (messageStaticLengthMap.find(subMarker) != messageStaticLengthMap.end())
    {
-      cursor += messageStaticLengthMap.at(subMarker);
+      cursor += messageStaticLengthMap.value(subMarker);
       return static_cast<MetaEvent>(subMarker);
    }
    else if (std::find(messageVariableMarkerList.begin(), messageVariableMarkerList.end(), subMarker) != messageVariableMarkerList.end())
@@ -286,38 +286,38 @@ Midi::MetaEvent Midi::File::Reader::readMetaEventAndAdvanceCursor(const Bytes& t
    return MetaEvent::MetaUnkown;
 }
 
-uint8_t Midi::File::Reader::compileMidiEventLength(const uint8_t marker) const
+uchar Midi::File::Reader::compileMidiEventLength(const uchar marker) const
 {
    // clang-format off
-   static const std::map<uint8_t, uint8_t> messageStaticLengthMap =
+   static const QMap<uchar, uchar> messageStaticLengthMap =
    {
-      {(uint8_t)Event::NoteOff, 3},
-      {(uint8_t)Event::NoteOn, 3},
-      {(uint8_t)Event::PolyKeyPressure, 3},
-      {(uint8_t)Event::ControlChange, 3},
-      {(uint8_t)Event::ProgrammChange, 2},
-      {(uint8_t)Event::ChannelPressure, 2},
-      {(uint8_t)Event::PitchBend, 3},
+      {(uchar)Event::NoteOff, 3},
+      {(uchar)Event::NoteOn, 3},
+      {(uchar)Event::PolyKeyPressure, 3},
+      {(uchar)Event::ControlChange, 3},
+      {(uchar)Event::ProgrammChange, 2},
+      {(uchar)Event::ChannelPressure, 2},
+      {(uchar)Event::PitchBend, 3},
       // system common
-      {(uint8_t)Event::QuarterFrame, 2},
-      {(uint8_t)Event::SongPositionPointer, 3},
-      {(uint8_t)Event::SongSelect, 2},
-      {(uint8_t)Event::TuneRequest, 1},
+      {(uchar)Event::QuarterFrame, 2},
+      {(uchar)Event::SongPositionPointer, 3},
+      {(uchar)Event::SongSelect, 2},
+      {(uchar)Event::TuneRequest, 1},
       // system real time
-      {(uint8_t)Event::Clock, 1},
-      {(uint8_t)Event::Start, 1},
-      {(uint8_t)Event::Continue, 1},
-      {(uint8_t)Event::Stop, 1},
-      {(uint8_t)Event::ActiveSensinig, 1},
-      {(uint8_t)Event::Reset, 1}
+      {(uchar)Event::Clock, 1},
+      {(uchar)Event::Start, 1},
+      {(uchar)Event::Continue, 1},
+      {(uchar)Event::Stop, 1},
+      {(uchar)Event::ActiveSensinig, 1},
+      {(uchar)Event::Reset, 1}
    };
    // clang-format on
 
-   const std::map<uint8_t, uint8_t>::const_iterator it = messageStaticLengthMap.find(marker & 0xf0);
+   const QMap<uchar, uchar>::const_iterator it = messageStaticLengthMap.find(marker & 0xf0);
    if (it == messageStaticLengthMap.cend())
       return 0;
 
-   return it->second;
+   return it.value();
 }
 
 // see https://en.wikipedia.org/wiki/Variable-length_quantity
@@ -328,7 +328,7 @@ uint64_t Midi::File::Reader::variableLength(const Bytes& data, uint64_t& cursor)
    {
       length *= 128;
 
-      const uint8_t val = data.at(cursor);
+      const uchar val = data.at(cursor);
       cursor += 1;
 
       length += removeFirstBit(val);

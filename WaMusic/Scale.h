@@ -7,7 +7,7 @@ class Scale
 {
 public:
    using List = QList<Scale>;
-   using KeyList = QVector<bool>;
+   using KeyList = QList<bool>;
 
    static const QString sharpSymbol;
    static const QString flatSymbol;

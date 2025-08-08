@@ -21,7 +21,7 @@ namespace Midi
 
          void sendNoteOn(const Midi::Channel& channel, const Note& note, const Midi::Velocity& velocity);
          void sendNoteOff(const Midi::Channel& channel, const Note& note);
-         void sendControllerChange(const Midi::Channel& channel, const Midi::ControllerMessage& controllerMessage, const uint8_t& value);
+         void sendControllerChange(const Midi::Channel& channel, const Midi::ControllerMessage& controllerMessage, const uchar& value);
 
          virtual void sendBuffer(const Bytes& message) = 0;
       };

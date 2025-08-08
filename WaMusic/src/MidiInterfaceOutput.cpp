@@ -30,9 +30,9 @@ void Midi::Interface::Output::sendNoteOn(const Channel& channel, const Note& not
 
    Bytes buffer;
 
-   buffer << (Event::NoteOn | (channel - 1));
-   buffer << note.midiValue;
-   buffer << velocity;
+   buffer.append((Event::NoteOn | (channel - 1)));
+   buffer.append(note.getMidiValue());
+   buffer.append(velocity);
 
    sendBuffer(buffer);
 }
@@ -43,20 +43,20 @@ void Midi::Interface::Output::sendNoteOff(const Channel& channel, const Note& no
 
    Bytes buffer;
 
-   buffer << (Event::NoteOff | (channel - 1));
-   buffer << note.midiValue;
-   buffer << 127;
+   buffer.append((Event::NoteOff | (channel - 1)));
+   buffer.append(note.getMidiValue());
+   buffer.append(127);
 
    sendBuffer(buffer);
 }
 
-void Midi::Interface::Output::sendControllerChange(const Channel& channel, const ControllerMessage& cotrollerMessage, const uint8_t& value)
+void Midi::Interface::Output::sendControllerChange(const Channel& channel, const ControllerMessage& cotrollerMessage, const uchar& value)
 {
    Bytes buffer;
 
-   buffer << (Event::ControlChange | (channel - 1));
-   buffer << cotrollerMessage;
-   buffer << value;
+   buffer.append((Event::ControlChange | (channel - 1)));
+   buffer.append(cotrollerMessage);
+   buffer.append(value);
 
    sendBuffer(buffer);
 }

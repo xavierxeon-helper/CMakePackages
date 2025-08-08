@@ -11,9 +11,9 @@ namespace Midi
    class Parser
    {
    public:
-      using NoteOnFunction = std::function<void(const Channel& channel, const uint8_t& midiNote, const Velocity& velocity)>;
-      using NoteOffFunction = std::function<void(const Channel& channel, const uint8_t& midiNote)>;
-      using ControllerChangeFunction = std::function<void(const Channel& channel, const ControllerMessage& controllerMessage, const uint8_t& value)>;
+      using NoteOnFunction = std::function<void(const Channel& channel, const uchar& midiNote, const Velocity& velocity)>;
+      using NoteOffFunction = std::function<void(const Channel& channel, const uchar& midiNote)>;
+      using ControllerChangeFunction = std::function<void(const Channel& channel, const ControllerMessage& controllerMessage, const uchar& value)>;
       using ClockTickFunction = std::function<void()>;
       using ClockStatusFunction = std::function<void(const Playback& status)>;
       using SongPositionFunction = std::function<void(const uint16_t& position)>;
@@ -26,13 +26,13 @@ namespace Midi
 
       // register callback functions
       template <typename ClassType>
-      void onNoteOn(ClassType* instance, void (ClassType::*functionPointer)(const Channel&, const uint8_t&, const Velocity&));
+      void onNoteOn(ClassType* instance, void (ClassType::*functionPointer)(const Channel&, const uchar&, const Velocity&));
 
       template <typename ClassType>
-      void onNoteOff(ClassType* instance, void (ClassType::*functionPointer)(const Channel&, const uint8_t&));
+      void onNoteOff(ClassType* instance, void (ClassType::*functionPointer)(const Channel&, const uchar&));
 
       template <typename ClassType>
-      void onControllerChange(ClassType* instance, void (ClassType::*functionPointer)(const Channel&, const ControllerMessage&, const uint8_t&));
+      void onControllerChange(ClassType* instance, void (ClassType::*functionPointer)(const Channel&, const ControllerMessage&, const uchar&));
 
       template <typename ClassType>
       void onClockTick(ClassType* instance, void (ClassType::*functionPointer)());
@@ -45,20 +45,20 @@ namespace Midi
 
    protected:
       // default executes callback functions
-      virtual void noteOn(const Channel& channel, const uint8_t& midiNote, const Velocity& velocity);
-      virtual void noteOff(const Channel& channel, const uint8_t& midiNote);
-      virtual void controllerChange(const Channel& channel, const ControllerMessage& controllerMessage, const uint8_t& value);
+      virtual void noteOn(const Channel& channel, const uchar& midiNote, const Velocity& velocity);
+      virtual void noteOff(const Channel& channel, const uchar& midiNote);
+      virtual void controllerChange(const Channel& channel, const ControllerMessage& controllerMessage, const uchar& value);
       virtual void clockTick();
       virtual void clockStatus(const Playback& status);
       virtual void songPosition(const uint16_t& position);
 
    private:
-      std::vector<NoteOnFunction> noteOnFunctionList;
-      std::vector<NoteOffFunction> noteOffFunctionList;
-      std::vector<ControllerChangeFunction> controllerChangeFunctionList;
-      std::vector<ClockTickFunction> clockTickFunctionList;
-      std::vector<ClockStatusFunction> clockStatusFunctionList;
-      std::vector<SongPositionFunction> songPositionFunctionList;
+      QList<NoteOnFunction> noteOnFunctionList;
+      QList<NoteOffFunction> noteOffFunctionList;
+      QList<ControllerChangeFunction> controllerChangeFunctionList;
+      QList<ClockTickFunction> clockTickFunctionList;
+      QList<ClockStatusFunction> clockStatusFunctionList;
+      QList<SongPositionFunction> songPositionFunctionList;
    };
 } // namespace Midi
 
