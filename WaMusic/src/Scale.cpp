@@ -87,6 +87,16 @@ bool Scale::isActive(const int index) const
    return active[index];
 }
 
+Note Scale::quantize(const Note& input) const
+{
+   const bool noteActive = isActive(input.getValue());
+   if (noteActive)
+      return input;
+
+   uchar midiValue = input.getMidiValue();
+   return Note::fromMidi(midiValue + 1);
+}
+
 Scale::Scale()
    : offset()
    , majorName()

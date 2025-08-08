@@ -1,7 +1,7 @@
 #ifndef ScaleH
 #define ScaleH
 
-#include <QIcon>
+#include "Note.h"
 
 class Scale
 {
@@ -23,6 +23,8 @@ public:
 
    const KeyList& getActivceKeys() const;
    bool isActive(const int index) const;
+
+   Note quantize(const Note& input) const;
 
 private:
    Scale();
