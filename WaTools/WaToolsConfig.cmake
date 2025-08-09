@@ -7,9 +7,14 @@ endif()
 
 # Compute paths
 get_filename_component(WATOOLS_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
-set(WATOOLS_INCLUDE_DIRS ${WATOOLS_CMAKE_DIR})
 
-include_directories(${WATOOLS_INCLUDE_DIRS})
 include(${WATOOLS_CMAKE_DIR}/functions_compile.cmake)
 include(${WATOOLS_CMAKE_DIR}/functions_target.cmake)
 include(${WATOOLS_CMAKE_DIR}/functions_git.cmake)
+
+foreach(COMPONENT ${WaTools_FIND_COMPONENTS})
+   if(NOT TARGET WaTools${COMPONENT})
+      message(STATUS "NEED WaTools component: ${COMPONENT}")
+      find_package(WaTools${COMPONENT} REQUIRED)
+    endif()
+endforeach()
