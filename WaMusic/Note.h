@@ -35,9 +35,18 @@ public:
    Note();
 
 public:
+   bool operator==(const Note& other) const;
+   bool operator!=(const Note& other) const;
+   bool operator<(const Note& other) const;
+
+public:
    static const Note& fromVoltage(float voltage);
    static const Note& fromMidi(uchar midi);
    static const Note& fromFrequency(float frequency);
+   Note up() const;
+   Note down() const;
+
+   bool isVaid() const; // note is not zero note
 
    const QString& getName() const;
    const Value& getValue() const;

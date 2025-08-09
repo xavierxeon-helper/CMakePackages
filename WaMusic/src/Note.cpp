@@ -70,7 +70,6 @@ const Note::List Note::availableNotes = []()
    fillNoteList();
    return noteList;
 }();
-// clang-format on
 
 const Note::Index Note::maxNoteIndex = availableNotes.size() - 1;
 
@@ -84,6 +83,24 @@ Note::Note()
    , voltage(0.0f)
    , midiValue(0)
 {
+}
+
+bool Note::operator==(const Note& other) const
+{
+   return name == other.name;
+}
+
+bool Note::operator!=(const Note& other) const
+{
+   return name != other.name;
+}
+
+bool Note::operator<(const Note& other) const
+{
+   const int indexThis = availableNotes.indexOf(*this);
+   const int indexOther = availableNotes.indexOf(other);
+
+   return indexThis < indexOther;
 }
 
 const Note& Note::fromVoltage(float voltage)
@@ -125,6 +142,29 @@ const Note& Note::fromFrequency(float frequency)
 
    const Note& note = fromVoltage(voltage);
    return note;
+}
+
+Note Note::up() const
+{
+   const int index = availableNotes.indexOf(*this);
+   if (index < maxNoteIndex)
+      return availableNotes[index + 1];
+
+   return zeroNote;
+}
+
+Note Note::down() const
+{
+   const int index = availableNotes.indexOf(*this);
+   if (index > 0)
+      return availableNotes[index - 1];
+
+   return zeroNote;
+}
+
+bool Note::isVaid() const
+{
+   return (*this != zeroNote);
 }
 
 const QString& Note::getName() const

@@ -93,8 +93,7 @@ Note Scale::quantize(const Note& input) const
    if (noteActive)
       return input;
 
-   uchar midiValue = input.getMidiValue();
-   return Note::fromMidi(midiValue + 1);
+   return input.up();
 }
 
 Scale::Scale()
