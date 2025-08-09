@@ -6,7 +6,7 @@
 #include <QColor>
 #include <QVariant>
 
-#include <Bytes.h>
+#include <ByteConversion.h>
 
 // see https://hangar.org/wp-content/uploads/2012/01/The-Open-Sound-Control-1.0-Specification-opensoundcontrol.org_.pdf
 
@@ -58,14 +58,14 @@ inline OscMessage::OscMessage(const QByteArray& data)
          {
             const QByteArray data = back.mid(dataIndex, 4);
             dataIndex += 4;
-            values += Bytes<qint32>::fromBytes(data, true);
+            values += ByteConversion<qint32>::fromBytes(data, true);
             break;
          }
          case 'f':
          {
             const QByteArray data = back.mid(dataIndex, 4);
             dataIndex += 4;
-            values += Bytes<float>::fromBytes(data, true);
+            values += ByteConversion<float>::fromBytes(data, true);
             break;
          }
          case 's':
@@ -130,25 +130,25 @@ inline QByteArray OscMessage::pack()
          case QMetaType::Bool:
          {
             const bool boolValue = value.toBool();
-            packet += Bytes<qint32>::toBytes(boolValue ? 1 : 0, true);
+            packet += ByteConversion<qint32>::toBytes(boolValue ? 1 : 0, true);
             break;
          }
          case QMetaType::Int:
          {
-            packet += Bytes<qint32>::toBytes(value.toInt(), true);
+            packet += ByteConversion<qint32>::toBytes(value.toInt(), true);
             break;
          }
          case QMetaType::Double:
          {
-            packet += Bytes<float>::toBytes(value.toFloat(), true);
+            packet += ByteConversion<float>::toBytes(value.toFloat(), true);
             break;
          }
          case QMetaType::QColor:
          {
             const QColor color = value.value<QColor>();
-            packet += Bytes<qint32>::toBytes(color.red(), true);
-            packet += Bytes<qint32>::toBytes(color.green(), true);
-            packet += Bytes<qint32>::toBytes(color.blue(), true);
+            packet += ByteConversion<qint32>::toBytes(color.red(), true);
+            packet += ByteConversion<qint32>::toBytes(color.green(), true);
+            packet += ByteConversion<qint32>::toBytes(color.blue(), true);
          }
          case QMetaType::QString:
          default:

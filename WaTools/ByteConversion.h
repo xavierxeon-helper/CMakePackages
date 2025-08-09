@@ -1,10 +1,10 @@
-#ifndef BytesH
-#define BytesH
+#ifndef ByteConversionH
+#define ByteConversionH
 
 #include <QByteArray>
 
 template <typename DataType>
-class Bytes
+class ByteConversion
 {
 public:
    static QByteArray toBytes(const DataType& value, bool swap);
@@ -24,7 +24,7 @@ private:
 };
 
 #ifndef BytesHPP
-#include "Bytes.hpp"
+#include "ByteConversion.hpp"
 #endif // NOT BytesHPP
 
 #endif // NOT BytesH

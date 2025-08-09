@@ -2,9 +2,9 @@
 #define MidiParserH
 
 #include <functional>
+#include <vector>
 
 #include "MidiCommon.h"
-#include "Note.h"
 
 namespace Midi
 {
@@ -12,7 +12,7 @@ namespace Midi
    {
    public:
       using NoteOnFunction = std::function<void(const Channel& channel, const uchar& midiNote, const Velocity& velocity)>;
-      using NoteOffFunction = std::function<void(const Channel& channel, const uchar& midiNote)>;
+      using NoteOffFunction = std::function<void(const Channel& channel, const uchar& midiNote, const Velocity& velocity)>;
       using ControllerChangeFunction = std::function<void(const Channel& channel, const ControllerMessage& controllerMessage, const uchar& value)>;
       using ClockTickFunction = std::function<void()>;
       using ClockStatusFunction = std::function<void(const Playback& status)>;
@@ -22,14 +22,14 @@ namespace Midi
       Parser();
 
    public:
-      virtual void processMessage(const Bytes& message);
+      virtual void processMessage(const std::vector<uchar>& message);
 
       // register callback functions
       template <typename ClassType>
       void onNoteOn(ClassType* instance, void (ClassType::*functionPointer)(const Channel&, const uchar&, const Velocity&));
 
       template <typename ClassType>
-      void onNoteOff(ClassType* instance, void (ClassType::*functionPointer)(const Channel&, const uchar&));
+      void onNoteOff(ClassType* instance, void (ClassType::*functionPointer)(const Channel&, const uchar&, const Velocity&));
 
       template <typename ClassType>
       void onControllerChange(ClassType* instance, void (ClassType::*functionPointer)(const Channel&, const ControllerMessage&, const uchar&));
@@ -46,7 +46,7 @@ namespace Midi
    protected:
       // default executes callback functions
       virtual void noteOn(const Channel& channel, const uchar& midiNote, const Velocity& velocity);
-      virtual void noteOff(const Channel& channel, const uchar& midiNote);
+      virtual void noteOff(const Channel& channel, const uchar& midiNote, const Velocity& velocity);
       virtual void controllerChange(const Channel& channel, const ControllerMessage& controllerMessage, const uchar& value);
       virtual void clockTick();
       virtual void clockStatus(const Playback& status);

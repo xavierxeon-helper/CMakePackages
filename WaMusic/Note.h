@@ -7,7 +7,6 @@ class Note
 {
 public:
    using List = QList<Note>;
-   using Index = uchar;
    using Octave = uchar;
 
    enum Value : uchar //
@@ -29,7 +28,7 @@ public:
 
    static const Note zeroNote;       // an invalid note
    static const List availableNotes; // includes zero note
-   static const Index maxNoteIndex;  // size of availableNotes
+   static const uchar maxNoteIndex;  // size of availableNotes
 
 public:
    Note();
@@ -45,6 +44,8 @@ public:
    static const Note& fromFrequency(float frequency);
    Note up() const;
    Note down() const;
+   bool isWhiteKey() const;
+   bool isBlackKey() const;
 
    bool isVaid() const; // note is not zero note
 

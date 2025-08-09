@@ -11,9 +11,9 @@ void Midi::Parser::onNoteOn(ClassType* instance, void (ClassType::*functionPoint
 }
 
 template <typename ClassType>
-void Midi::Parser::onNoteOff(ClassType* instance, void (ClassType::*functionPointer)(const Channel&, const uchar&))
+void Midi::Parser::onNoteOff(ClassType* instance, void (ClassType::*functionPointer)(const Channel&, const uchar&, const Velocity&))
 {
-   NoteOffFunction noteOffFunction = std::bind(functionPointer, instance, std::placeholders::_1, std::placeholders::_2);
+   NoteOffFunction noteOffFunction = std::bind(functionPointer, instance, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
    noteOffFunctionList.push_back(noteOffFunction);
 }
 

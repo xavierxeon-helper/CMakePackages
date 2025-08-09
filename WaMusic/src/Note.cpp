@@ -71,7 +71,7 @@ const Note::List Note::availableNotes = []()
    return noteList;
 }();
 
-const Note::Index Note::maxNoteIndex = availableNotes.size() - 1;
+const uchar Note::maxNoteIndex = availableNotes.size() - 1;
 
 // note
 
@@ -160,6 +160,18 @@ Note Note::down() const
       return availableNotes[index - 1];
 
    return zeroNote;
+}
+
+bool Note::isWhiteKey() const
+{
+   static const QList<Note::Value> whiteKeys = {C, D, E, F, G, A, B};
+   return whiteKeys.contains(value);
+}
+
+bool Note::isBlackKey() const
+{
+   static const QList<Note::Value> blackKeys = {Cs, Ds, Fs, Gs, As};
+   return blackKeys.contains(value);
 }
 
 bool Note::isVaid() const
