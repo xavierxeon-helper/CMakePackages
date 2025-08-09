@@ -13,7 +13,7 @@ include_directories(${WATOOLS_QT_INCLUDE_DIRS})
 include(${WATOOLS_QT_CMAKE_DIR}/functions.cmake)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets Xml QuickWidgets)
-find_package(WaTools REQUIRED COMPONENTS Log)
+find_package(WaToolsLog REQUIRED)
 
 if(TARGET WaToolsQt)
    message(STATUS "Re-using Target WaToolsQt")
