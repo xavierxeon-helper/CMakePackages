@@ -6,10 +6,10 @@ if(APPLE)
 endif()
 
 # Compute paths
-get_filename_component(WACRYPT_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
-set(WACRYPT_INCLUDE_DIRS ${WACRYPT_CMAKE_DIR})
+get_filename_component(WATOOLS_CRYPT_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+set(WATOOLS_CRYPT_INCLUDE_DIRS ${WATOOLS_CRYPT_CMAKE_DIR})
 
-include_directories(${WACRYPT_INCLUDE_DIRS})
+include_directories(${WATOOLS_CRYPT_INCLUDE_DIRS})
 
 find_package(Qt6 REQUIRED COMPONENTS Core)
 link_libraries(Qt6::Core)

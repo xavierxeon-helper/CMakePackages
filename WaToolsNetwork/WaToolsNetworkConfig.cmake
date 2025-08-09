@@ -6,10 +6,10 @@ if(APPLE)
 endif()
 
 # Compute paths
-get_filename_component(WANETWORK_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
-set(WANETWORK_INCLUDE_DIRS ${WANETWORK_CMAKE_DIR})
+get_filename_component(WATOOLS_NETWORK_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+set(WATOOLS_NETWORK_INCLUDE_DIRS ${WATOOLS_NETWORK_CMAKE_DIR})
 
-include_directories(${WANETWORK_INCLUDE_DIRS})
+include_directories(${WATOOLS_NETWORK_INCLUDE_DIRS})
 
 find_package(Qt6 REQUIRED COMPONENTS Core Network NetworkAuth)
 link_libraries(Qt6::Core Qt6::Network Qt6::NetworkAuth)
