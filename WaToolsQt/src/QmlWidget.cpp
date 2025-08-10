@@ -1,16 +1,16 @@
-#include "QuickWidget.h"
+#include "QmlWidget.h"
 
 #include <QQmlContext>
 #include <QQmlEngine>
 
-QuickWidget::QuickWidget(QWidget* parent)
+QmlWidget::QmlWidget(QWidget* parent)
    : QQuickWidget(parent)
 {
    setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
    setResizeMode(SizeRootObjectToView);
 }
 
-void QuickWidget::setQuickProperty(const QString& name, QObject* object)
+void QmlWidget::setQuickProperty(const QString& name, QObject* object)
 {
    engine()->rootContext()->setContextProperty(name, object);
 }
