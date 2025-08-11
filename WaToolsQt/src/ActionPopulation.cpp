@@ -167,8 +167,8 @@ void ActionPopulation::createMenu(QDomElement thingElement, QMenu* parentMenu)
       const QString what = contentElement.tagName();
       if ("Action" == what)
       {
-         const QString name = contentElement.attribute("ObjectName");
-         QAction* action = parentWidget->findChild<QAction*>(name, Qt::FindChildrenRecursively);
+         const QString objectName = contentElement.attribute("ObjectName");
+         QAction* action = parentWidget->findChild<QAction*>(objectName, Qt::FindChildrenRecursively);
          if (action)
             menu->addAction(action);
          else
