@@ -92,32 +92,42 @@ inline QByteArray OscMessage::pack()
    const int padSizeKey = 4 - packet.size() % 4;
    packet += QByteArray(padSizeKey, 0x00);
 
+   static const int MetaTypeColorList = QMetaType::fromType<QList<QColor>>().id();
+
    packet += QByteArray(","); // OSC type tag indicator
    for (const QVariant& value : std::as_const(values))
    {
-      switch (value.typeId())
+      if (MetaTypeColorList == value.typeId())
       {
-         case QMetaType::Bool:
-         case QMetaType::Int:
+         const QList<QColor> colorList = value.value<QList<QColor>>();
+         packet += QByteArray(3 * colorList.size(), 'i'); // RGB color
+      }
+      else
+      {
+         switch (value.typeId())
          {
-            packet += QByteArray(1, 'i');
-            break;
-         }
-         case QMetaType::Double:
-         {
-            packet += QByteArray(1, 'f');
-            break;
-         }
-         case QMetaType::QColor:
-         {
-            packet += QByteArray(3, 'i'); // RGB color
-            break;
-         }
-         case QMetaType::QString:
-         default:
-         {
-            packet += QByteArray(1, 's');
-            break;
+            case QMetaType::Bool:
+            case QMetaType::Int:
+            {
+               packet += QByteArray(1, 'i');
+               break;
+            }
+            case QMetaType::Double:
+            {
+               packet += QByteArray(1, 'f');
+               break;
+            }
+            case QMetaType::QColor:
+            {
+               packet += QByteArray(3, 'i'); // RGB color
+               break;
+            }
+            case QMetaType::QString:
+            default:
+            {
+               packet += QByteArray(1, 's');
+               break;
+            }
          }
       }
    }
@@ -125,38 +135,51 @@ inline QByteArray OscMessage::pack()
 
    for (const QVariant& value : std::as_const(values))
    {
-      switch (value.typeId())
+      if (MetaTypeColorList == value.typeId())
       {
-         case QMetaType::Bool:
+         const QList<QColor> colorList = value.value<QList<QColor>>();
+         for (const QColor& color : colorList)
          {
-            const bool boolValue = value.toBool();
-            packet += ByteConversion<qint32>::toBytes(boolValue ? 1 : 0, true);
-            break;
-         }
-         case QMetaType::Int:
-         {
-            packet += ByteConversion<qint32>::toBytes(value.toInt(), true);
-            break;
-         }
-         case QMetaType::Double:
-         {
-            packet += ByteConversion<float>::toBytes(value.toFloat(), true);
-            break;
-         }
-         case QMetaType::QColor:
-         {
-            const QColor color = value.value<QColor>();
             packet += ByteConversion<qint32>::toBytes(color.red(), true);
             packet += ByteConversion<qint32>::toBytes(color.green(), true);
             packet += ByteConversion<qint32>::toBytes(color.blue(), true);
          }
-         case QMetaType::QString:
-         default:
+      }
+      else
+      {
+         switch (value.typeId())
          {
-            const QString data = value.toString();
-            packet += data.toUtf8();
-            addPad(packet);
-            break;
+            case QMetaType::Bool:
+            {
+               const bool boolValue = value.toBool();
+               packet += ByteConversion<qint32>::toBytes(boolValue ? 1 : 0, true);
+               break;
+            }
+            case QMetaType::Int:
+            {
+               packet += ByteConversion<qint32>::toBytes(value.toInt(), true);
+               break;
+            }
+            case QMetaType::Double:
+            {
+               packet += ByteConversion<float>::toBytes(value.toFloat(), true);
+               break;
+            }
+            case QMetaType::QColor:
+            {
+               const QColor color = value.value<QColor>();
+               packet += ByteConversion<qint32>::toBytes(color.red(), true);
+               packet += ByteConversion<qint32>::toBytes(color.green(), true);
+               packet += ByteConversion<qint32>::toBytes(color.blue(), true);
+            }
+            case QMetaType::QString:
+            default:
+            {
+               const QString data = value.toString();
+               packet += data.toUtf8();
+               addPad(packet);
+               break;
+            }
          }
       }
    }
