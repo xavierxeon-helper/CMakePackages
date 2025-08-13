@@ -23,33 +23,47 @@ function(add_all_subdirs_include SUB_DIR_PATH) # args = list of skip directories
    endforeach()
 endfunction()
 
-# add a specific subdir
+# add a list of subdirs
 function(add_sub_dirs_files) # args = list of directories
-   foreach(SUB_DIR ${ARGN})
-      if(NOT IS_DIRECTORY ${SUB_DIR})
+   foreach(DIR ${ARGN})
+      if(NOT IS_DIRECTORY ${DIR})
          continue()
       endif()
 
-      if(${SUB_DIR} STREQUAL ${PROJECT_SOURCE_DIR}/build)
+      if(${DIR} STREQUAL ${PROJECT_SOURCE_DIR}/build)
          continue()
       endif()
 
-      if(EXISTS ${SUB_DIR}/CMakeLists.txt)
-         message(STATUS "Skipping directory files: ${SUB_DIR}")
+      if(EXISTS ${DIR}/CMakeLists.txt)
+         message(STATUS "Skipping directory files: ${DIR}")
          continue()
       endif()
 
-      message(STATUS "Include directory files: ${SUB_DIR}")
+      message(STATUS "Include directory files: ${DIR}")
+      include_directories(${DIR})
 
-      include_directories(${SUB_DIR})
-      file(GLOB SUBDIR_FILES
-         ${SUB_DIR}/*.h
-         ${SUB_DIR}/*.hpp
-         ${SUB_DIR}/*.cpp
-         ${SUB_DIR}/*.ui
-         ${SUB_DIR}/*.qrc
+      file(GLOB DIR_FILES
+         ${DIR}/*.h
+         ${DIR}/*.hpp
+         ${DIR}/*.cpp
+         ${DIR}/*.ui
+         ${DIR}/*.qrc
       )
-      target_sources(${PROJECT_NAME} PRIVATE ${SUBDIR_FILES})
+      target_sources(${PROJECT_NAME} PRIVATE ${DIR_FILES})
+
+      # recurse sub directories
+      SET(SUB_DIRECTORIES "")
+      file(GLOB CHILDREN LIST_DIRECTORIES true
+         ${DIR}/*
+      )
+      foreach(ENTRY ${CHILDREN})
+         if(NOT IS_DIRECTORY ${ENTRY})
+            continue()
+         endif()
+         list(APPEND SUB_DIRECTORIES ${ENTRY})
+      endforeach()
+      add_sub_dirs_files(${SUB_DIRECTORIES})
+
    endforeach()
 endfunction()
 
