@@ -11,7 +11,6 @@ endif()
 
 message(STATUS "${PROJECT_NAME} CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 
-
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 file(GLOB SOURCE_FILES
@@ -19,7 +18,14 @@ file(GLOB SOURCE_FILES
    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
 )
 
-
 qt_add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
 
-#target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets Qt6::Xml Qt6::QuickWidgets)
+if(APPLE)
+   add_compile_definitions(__MACOSX_CORE__)
+elseif(WIN32)
+   add_compile_definitions(__WINDOWS_MM__)
+elseif(UNIX)
+   add_compile_definitions(__UNIX_JACK__)
+endif()
+
+
