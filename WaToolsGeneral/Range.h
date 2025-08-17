@@ -1,8 +1,8 @@
 #ifndef RangeH
 #define RangeH
 
+#include <cstddef>
 #include <type_traits>
-
 
 // optional compiler tests
 template <typename TestType>
@@ -16,7 +16,6 @@ using isSigned = typename std::enable_if<std::is_signed<TestType>::value, bool>:
 
 template <typename TestType>
 using isUnsigned = typename std::enable_if<!std::is_signed<TestType>::value, bool>::type;
-
 
 struct Range
 {
@@ -60,18 +59,18 @@ struct Range
    class Mapper
    {
    public:
-       Mapper(const float& minInput, const float& maxInput, const float& minOutput, const float& maxOutput);
+      Mapper(const float& minInput, const float& maxInput, const float& minOutput, const float& maxOutput);
 
    public:
-       float operator()(const float& input) const;
+      float operator()(const float& input) const;
 
-       void setMinInput(const float& value);
-       void setMaxInput(const float& value);
-       void setMinOutput(const float& value);
-       void setMaxOutput(const float& value);
+      void setMinInput(const float& value);
+      void setMaxInput(const float& value);
+      void setMinOutput(const float& value);
+      void setMaxOutput(const float& value);
 
    private:
-       void updateScale();
+      void updateScale();
 
    private:
       float minInput;
