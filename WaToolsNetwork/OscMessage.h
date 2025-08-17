@@ -27,8 +27,4 @@ private:
    QVariantList values;
 };
 
-#ifndef OscMessageHPP
-#include "OscMessage.hpp"
-#endif // NOT OscMessageHPP
-
 #endif // NOT OscMessageH

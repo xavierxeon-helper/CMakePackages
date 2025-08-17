@@ -12,8 +12,4 @@ QDebug operator<<(QDebug stream, const Math::Spherical& data);
 QTextStream& operator<<(QTextStream& stream, const Math::Vector3& data);
 QTextStream& operator>>(QTextStream& stream, Math::Vector3& data);
 
-#ifndef MatQthStreamingHPP
-#include "MathQtStreaming.hpp"
-#endif // NOT MathQtStreamingHPP
-
 #endif // NOT MathQtStreamingH

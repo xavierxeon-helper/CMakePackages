@@ -1,6 +1,3 @@
-#ifndef RestApiBlockingHPP
-#define RestApiBlockingHPP
-
 #include "RestApiBlocking.h"
 
 #include <QEventLoop>
@@ -11,7 +8,7 @@
 #include "AuthProviderToken.h"
 #include "NetworkExceptions.h"
 
-inline RestApi::Blocking::Blocking(QObject* parent, const QString& baseUrl)
+RestApi::Blocking::Blocking(QObject* parent, const QString& baseUrl)
    : QObject(parent)
    , Network::Settings()
    , manager(nullptr)
@@ -25,14 +22,14 @@ inline RestApi::Blocking::Blocking(QObject* parent, const QString& baseUrl)
    unauthorizedStatusCodes.append(401);
 }
 
-inline QJsonObject RestApi::Blocking::get(const QString& endpoint, const QUrlQuery& params) const
+QJsonObject RestApi::Blocking::get(const QString& endpoint, const QUrlQuery& params) const
 {
    QNetworkRequest request = createRequest(endpoint, params);
 
    ReplyGeneratorFunction replyGenerator = std::bind(qOverload<const QNetworkRequest&>(&QNetworkAccessManager::get), manager, std::placeholders::_1);
    return handleReply(request, replyGenerator);
 }
-inline QJsonObject RestApi::Blocking::post(const QString& endpoint, const QJsonObject& payload, const QUrlQuery& params) const
+QJsonObject RestApi::Blocking::post(const QString& endpoint, const QJsonObject& payload, const QUrlQuery& params) const
 {
    QNetworkRequest request = createRequest(endpoint, params);
    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -43,7 +40,7 @@ inline QJsonObject RestApi::Blocking::post(const QString& endpoint, const QJsonO
    return handleReply(request, replyGenerator);
 }
 
-inline QJsonObject RestApi::Blocking::put(const QString& endpoint, const QJsonObject& payload, const QUrlQuery& params) const
+QJsonObject RestApi::Blocking::put(const QString& endpoint, const QJsonObject& payload, const QUrlQuery& params) const
 {
    QNetworkRequest request = createRequest(endpoint, params);
    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -54,12 +51,12 @@ inline QJsonObject RestApi::Blocking::put(const QString& endpoint, const QJsonOb
    return handleReply(request, replyGenerator);
 }
 
-inline const QString& RestApi::Blocking::getbaseUrl() const
+const QString& RestApi::Blocking::getbaseUrl() const
 {
    return baseUrl;
 }
 
-inline void RestApi::Blocking::setAuthProvider(AuthProvider::Token* newProvider)
+void RestApi::Blocking::setAuthProvider(AuthProvider::Token* newProvider)
 {
    if (provider)
       delete provider;
@@ -67,12 +64,12 @@ inline void RestApi::Blocking::setAuthProvider(AuthProvider::Token* newProvider)
    provider = newProvider;
 }
 
-inline void RestApi::Blocking::setBaseUrl(const QString& url)
+void RestApi::Blocking::setBaseUrl(const QString& url)
 {
    baseUrl = url;
 }
 
-inline void RestApi::Blocking::addUnauthorizedStatusCode(int code)
+void RestApi::Blocking::addUnauthorizedStatusCode(int code)
 {
    if (unauthorizedStatusCodes.contains(code))
       return;
@@ -80,7 +77,7 @@ inline void RestApi::Blocking::addUnauthorizedStatusCode(int code)
    unauthorizedStatusCodes.append(code);
 }
 
-inline QNetworkRequest RestApi::Blocking::createRequest(const QString& endpoint, const QUrlQuery& params) const
+QNetworkRequest RestApi::Blocking::createRequest(const QString& endpoint, const QUrlQuery& params) const
 {
    QUrl url(baseUrl + endpoint);
    url.setQuery(params);
@@ -94,7 +91,7 @@ inline QNetworkRequest RestApi::Blocking::createRequest(const QString& endpoint,
    return request;
 }
 
-inline QJsonObject RestApi::Blocking::handleReply(QNetworkRequest request, ReplyGeneratorFunction replyGenerator) const
+QJsonObject RestApi::Blocking::handleReply(QNetworkRequest request, ReplyGeneratorFunction replyGenerator) const
 {
    auto updateToken = [&]() -> bool
    {
@@ -163,5 +160,3 @@ inline QJsonObject RestApi::Blocking::handleReply(QNetworkRequest request, Reply
    handleReplyInternal();
    return content;
 }
-
-#endif // NOT RestApiBlockingHPP

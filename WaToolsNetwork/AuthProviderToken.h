@@ -9,8 +9,7 @@ namespace AuthProvider
 {
    class Token : public QObject
    {
-      // do not use Q_OBJECT
-      // this file will not be moc'ed automatically
+      Q_OBJECT
 
    public:
       Token(QObject* parent);
@@ -27,9 +26,5 @@ namespace AuthProvider
       QByteArray bearerToken;
    };
 } // namespace AuthProvider
-
-#ifndef AuthProviderTokenHPP
-#include "AuthProviderToken.hpp"
-#endif // NOT AuthProviderTokenHPP
 
 #endif // NOT AuthProviderTokenH

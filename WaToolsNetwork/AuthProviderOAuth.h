@@ -11,8 +11,7 @@ namespace AuthProvider
 {
    class OAuth : public Token, public Network::Settings
    {
-      // do not use Q_OBJECT
-      // this file will not be moc'ed automatically
+      Q_OBJECT
 
    public:
       OAuth(QObject* parent);
@@ -44,9 +43,5 @@ namespace AuthProvider
       QString tokenInfoUrl;
    };
 } // namespace AuthProvider
-
-#ifndef AuthProviderOAuthHPP
-#include "AuthProviderOAuth.hpp"
-#endif // NOT AuthProviderOAuthHPP
 
 #endif // NOT AuthProviderOAuthH

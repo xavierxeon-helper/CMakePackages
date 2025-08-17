@@ -10,8 +10,4 @@ namespace Math
 
 } // namespace Math
 
-#ifndef MathGeneralHPP
-#include "MathGeneral.hpp"
-#endif // NOT MathGeneralHPP
-
 #endif // NOT MathGeneralH

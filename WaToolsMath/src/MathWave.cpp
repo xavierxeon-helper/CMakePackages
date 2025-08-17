@@ -1,11 +1,10 @@
-#ifndef MathWaveHPP
-#define MathWaveHPP
-
 #include "MathWave.h"
+
+#include <QtTypes>
 
 #include <cmath>
 
-inline Math::Wave::Wave(const Size& size, const int& threadCount)
+Math::Wave::Wave(const Size& size, const int& threadCount)
    : size(size)
    , threadCount(threadCount)
    , threads(threadCount)
@@ -31,7 +30,7 @@ inline Math::Wave::Wave(const Size& size, const int& threadCount)
       lineLists.push_back(list);
 }
 
-inline void Math::Wave::step(const double& time, bool clamp)
+void Math::Wave::step(const double& time, bool clamp)
 {
    heightField.swap();
 
@@ -45,7 +44,7 @@ inline void Math::Wave::step(const double& time, bool clamp)
       clampBoundaries();
 }
 
-inline void Math::Wave::clampBoundaries()
+void Math::Wave::clampBoundaries()
 {
    Matrix<double>& current = heightField.current();
    for (uint16_t x = 0; x < size.width; x++)
@@ -64,38 +63,38 @@ inline void Math::Wave::clampBoundaries()
    }
 }
 
-inline const Matrix<double>& Math::Wave::getHeightField() const
+const Matrix<double>& Math::Wave::getHeightField() const
 {
    return heightField.current();
 }
 
-inline const Size& Math::Wave::getSize() const
+const Size& Math::Wave::getSize() const
 {
    return size;
 }
 
-inline const double& Math::Wave::getFrequency() const
+const double& Math::Wave::getFrequency() const
 {
    return frequency;
 }
 
-inline void Math::Wave::setFrequency(const double& value)
+void Math::Wave::setFrequency(const double& value)
 {
    frequency = value;
    omega = value * 2.0 * M_PI;
 }
 
-inline const double& Math::Wave::getSpeed() const
+const double& Math::Wave::getSpeed() const
 {
    return speed;
 }
 
-inline void Math::Wave::setSpeed(const double& value)
+void Math::Wave::setSpeed(const double& value)
 {
    speed = value;
 }
 
-inline Matrix<Math::Vector3> Math::Wave::compileNormals() const
+Matrix<Math::Vector3> Math::Wave::compileNormals() const
 {
    Matrix<Math::Vector3> normals(size, Math::Vector3(0.0, 0.0, 1.0));
 
@@ -144,7 +143,7 @@ inline Matrix<Math::Vector3> Math::Wave::compileNormals() const
    return normals;
 }
 
-inline void Math::Wave::advanceLines(const quint16 lineIndex)
+void Math::Wave::advanceLines(const quint16 lineIndex)
 {
    const double damping = 1.0;
 
@@ -158,7 +157,6 @@ inline void Math::Wave::advanceLines(const quint16 lineIndex)
       {
          double height = 0.0;
          const double center = current[x][y];
-
 
          if (x > 0) [[unlikely]]
             height += previous[x - 1][y];
@@ -174,5 +172,3 @@ inline void Math::Wave::advanceLines(const quint16 lineIndex)
       }
    }
 }
-
-#endif // NOT MathWaveHPP

@@ -17,8 +17,4 @@ namespace Network
    };
 } // namespace Network
 
-#ifndef NetworkExceptionsHPP
-#include "NetworkExceptions.hpp"
-#endif // NOT NetworkExceptionsHPP
-
 #endif // NOT NetworkExceptionsH

@@ -10,8 +10,4 @@ namespace Math
    };
 } // namespace Math
 
-#ifndef MathQuaternionHPP
-#include "MathQuaternion.hpp"
-#endif // NOT MathQuaternionHPP
-
 #endif // NOT MathQuaternionH

@@ -1,6 +1,3 @@
-#ifndef AuthProviderOAuthHPP
-#define AuthProviderOAuthHPP
-
 #include "AuthProviderOAuth.h"
 
 #include <QDesktopServices>
@@ -15,7 +12,7 @@
 
 #include "NetworkExceptions.h"
 
-inline AuthProvider::OAuth::OAuth(QObject* parent)
+AuthProvider::OAuth::OAuth(QObject* parent)
    : AuthProvider::Token(parent)
    , Network::Settings()
    , oauthFlow(nullptr)
@@ -25,7 +22,7 @@ inline AuthProvider::OAuth::OAuth(QObject* parent)
 {
 }
 
-inline QJsonObject AuthProvider::OAuth::getTokenInfo(QByteArray token) const
+QJsonObject AuthProvider::OAuth::getTokenInfo(QByteArray token) const
 {
    if (token.isEmpty())
       token = getBearerToken();
@@ -71,12 +68,12 @@ inline QJsonObject AuthProvider::OAuth::getTokenInfo(QByteArray token) const
    return content;
 }
 
-inline void AuthProvider::OAuth::setTokenInfoUrl(const QString url)
+void AuthProvider::OAuth::setTokenInfoUrl(const QString url)
 {
    tokenInfoUrl = url;
 }
 
-inline void AuthProvider::OAuth::setStandardFlow(const QString& baseAuthUrl, const QString& clientId, const QString& clientSecret)
+void AuthProvider::OAuth::setStandardFlow(const QString& baseAuthUrl, const QString& clientId, const QString& clientSecret)
 {
    oauthFlow = new QOAuth2AuthorizationCodeFlow(this);
 
@@ -90,28 +87,28 @@ inline void AuthProvider::OAuth::setStandardFlow(const QString& baseAuthUrl, con
    initFlow();
 }
 
-inline void AuthProvider::OAuth::setCustomFlow(QOAuth2AuthorizationCodeFlow* _oauthFlow)
+void AuthProvider::OAuth::setCustomFlow(QOAuth2AuthorizationCodeFlow* _oauthFlow)
 {
    oauthFlow = _oauthFlow;
    initFlow();
 }
 
-inline void AuthProvider::OAuth::setFinalRedirect(const QString& url)
+void AuthProvider::OAuth::setFinalRedirect(const QString& url)
 {
    finalHTML = "<html><head><meta http-equiv=\"refresh\" content=\"0; url=" + url + "\"></head></html>";
 }
 
-inline void AuthProvider::OAuth::setFinalHTML(const QString& html)
+void AuthProvider::OAuth::setFinalHTML(const QString& html)
 {
    finalHTML = html;
 }
 
-inline QOAuth2AuthorizationCodeFlow* AuthProvider::OAuth::getFlow() const
+QOAuth2AuthorizationCodeFlow* AuthProvider::OAuth::getFlow() const
 {
    return oauthFlow;
 }
 
-inline bool AuthProvider::OAuth::authorizeUser()
+bool AuthProvider::OAuth::authorizeUser()
 {
    QOAuthHttpServerReplyHandler redirectHandler(1234, nullptr);
 
@@ -146,7 +143,7 @@ inline bool AuthProvider::OAuth::authorizeUser()
    return true;
 }
 
-inline bool AuthProvider::OAuth::update()
+bool AuthProvider::OAuth::update()
 {
    if (!oauthFlow)
    {
@@ -180,18 +177,18 @@ inline bool AuthProvider::OAuth::update()
    return true;
 }
 
-inline void AuthProvider::OAuth::saveRefreshToken(const QString& refreshToken)
+void AuthProvider::OAuth::saveRefreshToken(const QString& refreshToken)
 {
    // do nothing
    Q_UNUSED(refreshToken);
 }
 
-inline QString AuthProvider::OAuth::loadRefreshToken()
+QString AuthProvider::OAuth::loadRefreshToken()
 {
    return QString();
 }
 
-inline void AuthProvider::OAuth::initFlow()
+void AuthProvider::OAuth::initFlow()
 {
    QObject::disconnect(grantConnection);
    grantConnection = QObject::connect(oauthFlow, &QAbstractOAuth::authorizeWithBrowser, &QDesktopServices::openUrl);
@@ -199,5 +196,3 @@ inline void AuthProvider::OAuth::initFlow()
    const QString token = loadRefreshToken();
    oauthFlow->setRefreshToken(token);
 }
-
-#endif // NOT AuthProviderOAuthHPP

@@ -1,14 +1,15 @@
-#ifndef RestApiAsyncHPP
-#define RestApiAsyncHPP
-
 #include "RestApiAsync.h"
 
-inline RestApi::Async::Async(QObject* parent, const QString& baseUrl)
+#include <FileTools.h>
+
+#include "AuthProviderToken.h"
+
+RestApi::Async::Async(QObject* parent, const QString& baseUrl)
    : Blocking(parent, baseUrl)
 {
 }
 
-inline void RestApi::Async::getAsync(CallbackFunction callback, const QString& endpoint, const QUrlQuery& params)
+void RestApi::Async::getAsync(CallbackFunction callback, const QString& endpoint, const QUrlQuery& params)
 {
    QNetworkRequest request = createRequest(endpoint, params);
 
@@ -16,7 +17,7 @@ inline void RestApi::Async::getAsync(CallbackFunction callback, const QString& e
    handleReplyAsync(callback, request, replyGenerator);
 }
 
-inline void RestApi::Async::postAsync(CallbackFunction callback, const QString& endpoint, const QJsonObject& payload, const QUrlQuery& params)
+void RestApi::Async::postAsync(CallbackFunction callback, const QString& endpoint, const QJsonObject& payload, const QUrlQuery& params)
 {
    QNetworkRequest request = createRequest(endpoint, params);
    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -27,7 +28,7 @@ inline void RestApi::Async::postAsync(CallbackFunction callback, const QString& 
    handleReplyAsync(callback, request, replyGenerator);
 }
 
-inline void RestApi::Async::putAsync(CallbackFunction callback, const QString& endpoint, const QJsonObject& payload, const QUrlQuery& params)
+void RestApi::Async::putAsync(CallbackFunction callback, const QString& endpoint, const QJsonObject& payload, const QUrlQuery& params)
 {
    QNetworkRequest request = createRequest(endpoint, params);
    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -38,9 +39,9 @@ inline void RestApi::Async::putAsync(CallbackFunction callback, const QString& e
    handleReplyAsync(callback, request, replyGenerator);
 }
 
-inline void RestApi::Async::handleReplyAsync(CallbackFunction callback, QNetworkRequest request, ReplyGeneratorFunction replyGenerator)
+void RestApi::Async::handleReplyAsync(CallbackFunction callback, QNetworkRequest request, ReplyGeneratorFunction replyGenerator)
 {
-   if(provider->isNull() && provider->update())
+   if (provider->isNull() && provider->update())
    {
       provider->setAuthorization(request);
    }
@@ -65,5 +66,3 @@ inline void RestApi::Async::handleReplyAsync(CallbackFunction callback, QNetwork
 
    QObject::connect(reply, &QNetworkReply::finished, onFinshed);
 }
-
-#endif // NOT RestApiAsyncHPP

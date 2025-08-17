@@ -18,8 +18,7 @@ namespace RestApi
 {
    class Blocking : public QObject, public Network::Settings
    {
-      // do not use Q_OBJECT
-      // this file will not be moc'ed automatically
+      Q_OBJECT
 
    public:
       Blocking(QObject* parent, const QString& baseUrl);
@@ -53,9 +52,5 @@ namespace RestApi
       QJsonObject handleReply(QNetworkRequest request, ReplyGeneratorFunction replyGenerator) const;
    };
 } // namespace RestApi
-
-#ifndef RestApiBlockingHPP
-#include "RestApiBlocking.hpp"
-#endif // NOT RestApiBlockingHPP
 
 #endif // NOT RestApiBlockingH

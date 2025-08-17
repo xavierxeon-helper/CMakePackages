@@ -7,8 +7,9 @@
 #include <thread>
 #include <vector>
 
-#include "../WaTools/DoubleBuffer.h"
-#include "../WaTools/Matrix.h"
+#include <DoubleBuffer.h>
+#include <Matrix.h>
+
 #include "MathVector3.h"
 
 namespace Math
@@ -54,9 +55,5 @@ namespace Math
       std::vector<LineList> lineLists;
    };
 } // namespace Math
-
-#ifndef MathWaveHPP
-#include "MathWave.hpp"
-#endif // NOT MathWaveHPP
 
 #endif // NOT MathWaveH

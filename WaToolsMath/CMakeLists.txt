@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(WaToolsLog LANGUAGES CXX)
+project(WaToolsMath LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -17,9 +17,8 @@ endif()
 
 message(STATUS "${PROJECT_NAME} CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 
-find_package(Qt6 REQUIRED COMPONENTS Gui)
-set(CMAKE_AUTOMOC ON)
-
+find_package(Qt6 REQUIRED COMPONENTS Core)
+find_package(WaTools REQUIRED COMPONENTS General)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -29,6 +28,6 @@ file(GLOB SOURCE_FILES
    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
 )
 
-qt_add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
+add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
 
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Gui)
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Core)

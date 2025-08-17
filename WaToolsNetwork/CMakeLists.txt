@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(WaToolsLog LANGUAGES CXX)
+project(WaToolsNetwork LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -17,9 +17,12 @@ endif()
 
 message(STATUS "${PROJECT_NAME} CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 
-find_package(Qt6 REQUIRED COMPONENTS Gui)
+find_package(Qt6 REQUIRED COMPONENTS Core Network NetworkAuth)
+set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 
+find_package(WaTools REQUIRED COMPONENTS General Log)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -29,6 +32,7 @@ file(GLOB SOURCE_FILES
    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
 )
 
+
 qt_add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
 
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Gui)
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Core Qt6::Network Qt6::NetworkAuth)

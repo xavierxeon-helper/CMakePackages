@@ -21,8 +21,4 @@ namespace Network
    };
 } // namespace Network
 
-#ifndef NetworkSettingsHPP
-#include "NetworkSettings.hpp"
-#endif // NOT NetworkSettingsHPP
-
 #endif // NOT NetworkSettingsH

@@ -78,8 +78,4 @@ namespace Math
 
 } // namespace Math
 
-#ifndef MathVector3HPP
-#include "MathVector3.hpp"
-#endif // NOT MathVector3HPP
-
 #endif // NOT LinalgH

@@ -9,4 +9,12 @@ endif()
 get_filename_component(WAMATH_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
 set(WATTOLS_MATHS_INCLUDE_DIRS ${WAMATH_CMAKE_DIR})
 
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+   link_directories(${WAMATH_CMAKE_DIR}/../lib/release)
+else()
+   link_directories(${WAMATH_CMAKE_DIR}/../lib/debug)
+endif()
+
 include_directories(${WATTOLS_MATHS_INCLUDE_DIRS})
+
+link_libraries(WaToolsMath)
