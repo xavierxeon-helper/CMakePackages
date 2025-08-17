@@ -14,6 +14,7 @@ message(STATUS "${PROJECT_NAME} CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 find_package(Qt6 REQUIRED COMPONENTS Core)
 set(CMAKE_AUTOMOC ON)
 
+find_package(WaTools REQUIRED COMPONENTS General)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 

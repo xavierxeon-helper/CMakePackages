@@ -16,8 +16,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(WaTools REQUIRED)
-find_package(WaToolsLog REQUIRED)
+find_package(WaTools REQUIRED COMPONENTS Log)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 

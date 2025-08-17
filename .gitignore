@@ -1,2 +1,4 @@
 .vscode
 /documentation
+/build
+**/CMakeLists.txt.user

@@ -7,7 +7,6 @@ set(RTMIDI_INCLUDE_DIRS ${RTMIDI_CMAKE_DIR})
 
 include_directories(${RTMIDI_INCLUDE_DIRS})
 
-
 if(TARGET RtMidi)
    message(STATUS "Re-using Target RtMidi")
    link_libraries(RtMidi)
@@ -16,7 +15,6 @@ else()
    add_subdirectory(${RTMIDI_CMAKE_DIR} RtMidi)
    link_libraries(RtMidi)
 endif()
-
 
 if(APPLE)
    add_compile_definitions(__MACOSX_CORE__)
