@@ -15,9 +15,9 @@ include_directories(${WATOOLS_AUDIO_INCLUDE_DIRS})
 find_package(Qt6 REQUIRED COMPONENTS Core)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
-   link_directories(${WATOOLS_AUDIO_CMAKE_DIR}/../lib)
+   link_directories(${WATOOLS_AUDIO_CMAKE_DIR}/../lib/release)
 else()
-   link_directories(${WATOOLS_AUDIO_CMAKE_DIR}/../lib_debug)
+   link_directories(${WATOOLS_AUDIO_CMAKE_DIR}/../lib/debug)
 endif()
 
 link_libraries(Qt6::Core WaToolsAudio)

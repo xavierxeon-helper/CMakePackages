@@ -16,9 +16,9 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets Xml QuickWidgets)
 find_package(WaToolsLog REQUIRED)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
-   link_directories(${WATOOLS_QT_CMAKE_DIR}/../lib)
+   link_directories(${WATOOLS_QT_CMAKE_DIR}/../lib/release)
 else()
-   link_directories(${WATOOLS_QT_CMAKE_DIR}/../lib_debug)
+   link_directories(${WATOOLS_QT_CMAKE_DIR}/../lib/debug)
 endif()
 
 link_libraries(Qt6::Widgets Qt6::Xml Qt6::QuickWidgets WaToolsQt)

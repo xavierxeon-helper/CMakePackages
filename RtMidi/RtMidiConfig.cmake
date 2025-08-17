@@ -8,9 +8,9 @@ set(RTMIDI_INCLUDE_DIRS ${RTMIDI_CMAKE_DIR})
 include_directories(${RTMIDI_INCLUDE_DIRS})
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
-   link_directories(${RTMIDI_CMAKE_DIR}/../lib)
+   link_directories(${RTMIDI_CMAKE_DIR}/../lib/release)
 else()
-   link_directories(${RTMIDI_CMAKE_DIR}/../lib_debug)
+   link_directories(${RTMIDI_CMAKE_DIR}/../lib/debug)
 endif()
 
 link_libraries(RtMidi)
