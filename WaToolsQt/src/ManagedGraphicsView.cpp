@@ -5,6 +5,7 @@ Managed::GraphicsView::GraphicsView(QWidget* parent)
    : QGraphicsView(parent)
    , mousePressFunction()
 {
+   setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
 }
 
 void Managed::GraphicsView::deactivateFrame()
