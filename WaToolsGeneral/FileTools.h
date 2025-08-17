@@ -2,6 +2,7 @@
 #define FileToolsH
 
 #include <QCoreApplication>
+#include <QJsonObject>
 
 class FileTools
 {

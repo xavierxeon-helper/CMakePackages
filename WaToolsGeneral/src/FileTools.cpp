@@ -3,7 +3,6 @@
 #include <QDir>
 #include <QDirIterator>
 #include <QJsonDocument>
-#include <QJsonObject>
 #include <QSettings>
 #include <QStandardPaths>
 
