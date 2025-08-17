@@ -11,10 +11,6 @@ message(STATUS "WaToolsGeneral include directories: ${WATOOLS_GENRAL_INCLUDE_DIR
 
 find_package(Qt6 REQUIRED COMPONENTS Core)
 
-if(CMAKE_BUILD_TYPE STREQUAL "Release")
-   link_directories(${WATOOLS_GENRAL_CMAKE_DIR}/../lib/release)
-else()
-   link_directories(${WATOOLS_GENRAL_CMAKE_DIR}/../lib/debug)
-endif()
+include(${CMAKE_CURRENT_LIST_DIR}/../CommonUse.cmake)
 
 link_libraries(Qt6::Core WaToolsGeneral)

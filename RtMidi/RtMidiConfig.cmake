@@ -7,11 +7,7 @@ set(RTMIDI_INCLUDE_DIRS ${RTMIDI_CMAKE_DIR})
 
 include_directories(${RTMIDI_INCLUDE_DIRS})
 
-if(CMAKE_BUILD_TYPE STREQUAL "Release")
-   link_directories(${RTMIDI_CMAKE_DIR}/../lib/release)
-else()
-   link_directories(${RTMIDI_CMAKE_DIR}/../lib/debug)
-endif()
+include(${CMAKE_CURRENT_LIST_DIR}/../CommonUse.cmake)
 
 link_libraries(RtMidi)
 

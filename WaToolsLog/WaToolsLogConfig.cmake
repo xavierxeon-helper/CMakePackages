@@ -12,10 +12,6 @@ set(WATOOLS_LOG_INCLUDE_DIRS ${WATOOLS_LOG_CMAKE_DIR})
 include_directories(${WATOOLS_LOG_INCLUDE_DIRS})
 find_package(Qt6 REQUIRED COMPONENTS Gui)
 
-if(CMAKE_BUILD_TYPE STREQUAL "Release")
-   link_directories(${WATOOLS_LOG_CMAKE_DIR}/../lib/release)
-else()
-   link_directories(${WATOOLS_LOG_CMAKE_DIR}/../lib/debug)
-endif()
+include(${CMAKE_CURRENT_LIST_DIR}/../CommonUse.cmake)
 
 link_libraries(Qt6::Gui WaToolsLog)

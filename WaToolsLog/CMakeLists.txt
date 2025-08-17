@@ -5,22 +5,10 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_COMPILE_WARNING_AS_ERROR ON)
 
-if(APPLE)
-   set(CMAKE_OSX_DEPLOYMENT_TARGET "14.0") # for Qt
-endif()
-
-if(NOT CMAKE_BUILD_TYPE)
-   set(CMAKE_BUILD_TYPE Release CACHE STRING "" FORCE)
-endif()
-
 include(../CommonBuild.cmake)
-
-
-message(STATUS "${PROJECT_NAME} CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 
 find_package(Qt6 REQUIRED COMPONENTS Gui)
 set(CMAKE_AUTOMOC ON)
-
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 

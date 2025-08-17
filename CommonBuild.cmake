@@ -1,6 +1,13 @@
 
+if(APPLE)
+   set(CMAKE_OSX_DEPLOYMENT_TARGET "14.0") # for Qt
+endif()
 
-message(STATUS "Common CMake settings applied ${CMAKE_CURRENT_LIST_DIR}")
+if(NOT CMAKE_BUILD_TYPE)
+   set(CMAKE_BUILD_TYPE Release CACHE STRING "" FORCE)
+endif()
+
+message(STATUS "${PROJECT_NAME} CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib/release) #UNIX   

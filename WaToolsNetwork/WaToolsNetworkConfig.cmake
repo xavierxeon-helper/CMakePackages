@@ -13,10 +13,6 @@ include_directories(${WATOOLS_NETWORK_INCLUDE_DIRS})
 
 find_package(Qt6 REQUIRED COMPONENTS Core Network NetworkAuth)
 
-if(CMAKE_BUILD_TYPE STREQUAL "Release")
-   link_directories(${WATOOLS_NETWORK_CMAKE_DIR}/../lib/release)
-else()
-   link_directories(${WATOOLS_NETWORK_CMAKE_DIR}/../lib/debug)
-endif()
+include(${CMAKE_CURRENT_LIST_DIR}/../CommonUse.cmake)
 
 link_libraries(Qt6::Core Qt6::Network Qt6::NetworkAuth WaToolsNetwork)

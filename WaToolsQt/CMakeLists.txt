@@ -11,13 +11,8 @@ endif()
 
 include(../CommonBuild.cmake)
 
-
-message(STATUS "${PROJECT_NAME} CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
-
 find_package(Qt6 REQUIRED COMPONENTS Widgets Xml QuickWidgets)
-set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
 
 find_package(WaTools REQUIRED COMPONENTS Log)
 
