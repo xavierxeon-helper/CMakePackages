@@ -22,7 +22,6 @@ set(CMAKE_AUTOMOC ON)
 
 find_package(WaTools REQUIRED COMPONENTS General)
 
-
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 file(GLOB SOURCE_FILES

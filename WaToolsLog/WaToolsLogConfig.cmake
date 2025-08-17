@@ -10,16 +10,12 @@ get_filename_component(WATOOLS_LOG_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
 set(WATOOLS_LOG_INCLUDE_DIRS ${WATOOLS_LOG_CMAKE_DIR})
 
 include_directories(${WATOOLS_LOG_INCLUDE_DIRS})
-
 find_package(Qt6 REQUIRED COMPONENTS Gui)
 
-if(TARGET WaToolsLog)
-   message(STATUS "Re-using Target WaToolsLog")
-   link_libraries(WaToolsLog)
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+   link_directories(${WATOOLS_LOG_CMAKE_DIR}/../lib)
 else()
-   # add this package to YOUR project
-   add_subdirectory(${WATOOLS_LOG_CMAKE_DIR} WaToolsLog)
-   link_libraries(WaToolsLog)
+   link_directories(${WATOOLS_LOG_CMAKE_DIR}/../lib_debug)
 endif()
 
-link_libraries(Qt6::Gui)
+link_libraries(Qt6::Gui WaToolsLog)

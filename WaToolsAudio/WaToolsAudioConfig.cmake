@@ -14,13 +14,10 @@ include_directories(${WATOOLS_AUDIO_INCLUDE_DIRS})
 
 find_package(Qt6 REQUIRED COMPONENTS Core)
 
-if(TARGET WaToolsAudio)
-   message(STATUS "Re-using Target WaToolsAudio")
-   link_libraries(WaToolsAudio)
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+   link_directories(${WATOOLS_AUDIO_CMAKE_DIR}/../lib)
 else()
-   # add this package to YOUR project
-   add_subdirectory(${WATOOLS_AUDIO_CMAKE_DIR} WaToolsAudio)
-   link_libraries(WaToolsAudio)
+   link_directories(${WATOOLS_AUDIO_CMAKE_DIR}/../lib_debug)
 endif()
 
-link_libraries(Qt6::Core)
+link_libraries(Qt6::Core WaToolsAudio)

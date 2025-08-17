@@ -7,14 +7,13 @@ set(RTMIDI_INCLUDE_DIRS ${RTMIDI_CMAKE_DIR})
 
 include_directories(${RTMIDI_INCLUDE_DIRS})
 
-if(TARGET RtMidi)
-   message(STATUS "Re-using Target RtMidi")
-   link_libraries(RtMidi)
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+   link_directories(${RTMIDI_CMAKE_DIR}/../lib)
 else()
-   # add this package to YOUR project
-   add_subdirectory(${RTMIDI_CMAKE_DIR} RtMidi)
-   link_libraries(RtMidi)
+   link_directories(${RTMIDI_CMAKE_DIR}/../lib_debug)
 endif()
+
+link_libraries(RtMidi)
 
 if(APPLE)
    add_compile_definitions(__MACOSX_CORE__)

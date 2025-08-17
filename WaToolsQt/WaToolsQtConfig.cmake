@@ -15,16 +15,13 @@ include(${WATOOLS_QT_CMAKE_DIR}/functions.cmake)
 find_package(Qt6 REQUIRED COMPONENTS Widgets Xml QuickWidgets)
 find_package(WaToolsLog REQUIRED)
 
-if(TARGET WaToolsQt)
-   message(STATUS "Re-using Target WaToolsQt")
-   link_libraries(WaToolsQt)
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+   link_directories(${WATOOLS_QT_CMAKE_DIR}/../lib)
 else()
-   # add this package to YOUR project
-   add_subdirectory(${WATOOLS_QT_CMAKE_DIR} WaToolsQt)
-   link_libraries(WaToolsQt)
+   link_directories(${WATOOLS_QT_CMAKE_DIR}/../lib_debug)
 endif()
 
-link_libraries(Qt6::Widgets Qt6::Xml Qt6::QuickWidgets)
+link_libraries(Qt6::Widgets Qt6::Xml Qt6::QuickWidgets WaToolsQt)
 
 if(APPLE)
    link_libraries("-framework Foundation" "-framework StoreKit")
