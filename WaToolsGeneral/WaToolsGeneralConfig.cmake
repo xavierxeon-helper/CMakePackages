@@ -7,3 +7,14 @@ set(WATOOLS_GENRAL_INCLUDE_DIRS ${WATOOLS_GENRAL_CMAKE_DIR})
 
 include_directories(${WATOOLS_GENRAL_INCLUDE_DIRS})
 message(STATUS "WaToolsGeneral include directories: ${WATOOLS_GENRAL_INCLUDE_DIRS}")
+
+
+find_package(Qt6 REQUIRED COMPONENTS Core)
+
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+   link_directories(${WATOOLS_GENRAL_CMAKE_DIR}/../lib/release)
+else()
+   link_directories(${WATOOLS_GENRAL_CMAKE_DIR}/../lib/debug)
+endif()
+
+link_libraries(Qt6::Core WaToolsGeneral)

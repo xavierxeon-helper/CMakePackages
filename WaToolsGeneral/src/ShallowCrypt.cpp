@@ -1,11 +1,8 @@
-#ifndef ShallowCryptHPP
-#define ShallowCryptHPP
-
 #include "ShallowCrypt.h"
 
 #include <QRandomGenerator>
 
-inline ShallowCrypt::ShallowCrypt(QByteArray key, QCryptographicHash::Algorithm algorithm)
+ShallowCrypt::ShallowCrypt(QByteArray key, QCryptographicHash::Algorithm algorithm)
    : key(key)
    , algorithm(algorithm)
    , checkLength(0)
@@ -13,7 +10,7 @@ inline ShallowCrypt::ShallowCrypt(QByteArray key, QCryptographicHash::Algorithm 
    checkLength = QCryptographicHash::hashLength(algorithm);
 }
 
-inline QByteArray ShallowCrypt::bury(const QString& plainText) const
+QByteArray ShallowCrypt::bury(const QString& plainText) const
 {
    if (key.isEmpty())
       return plainText.toUtf8();
@@ -25,7 +22,7 @@ inline QByteArray ShallowCrypt::bury(const QString& plainText) const
    return data.toBase64();
 }
 
-inline QString ShallowCrypt::revive(const QByteArray encryptedText) const
+QString ShallowCrypt::revive(const QByteArray encryptedText) const
 {
    if (key.isEmpty())
       return QString::fromUtf8(encryptedText);
@@ -39,7 +36,7 @@ inline QString ShallowCrypt::revive(const QByteArray encryptedText) const
    return QString::fromUtf8(data);
 }
 
-inline void ShallowCrypt::encrypt(QByteArray& data) const
+void ShallowCrypt::encrypt(QByteArray& data) const
 {
    if (key.isEmpty())
       return;
@@ -57,7 +54,7 @@ inline void ShallowCrypt::encrypt(QByteArray& data) const
    }
 }
 
-inline void ShallowCrypt::decrypt(QByteArray& data) const
+void ShallowCrypt::decrypt(QByteArray& data) const
 {
    if (key.isEmpty())
       return;
@@ -75,7 +72,7 @@ inline void ShallowCrypt::decrypt(QByteArray& data) const
    }
 }
 
-inline QByteArray ShallowCrypt::randomByte() const
+QByteArray ShallowCrypt::randomByte() const
 {
    const quint8 random = QRandomGenerator::global()->bounded(255);
    const QByteArray byte = QByteArray(reinterpret_cast<const char*>(&random), 1);
@@ -83,7 +80,7 @@ inline QByteArray ShallowCrypt::randomByte() const
    return byte;
 }
 
-inline QByteArray ShallowCrypt::addCheckAndScramble(const QByteArray& payload) const
+QByteArray ShallowCrypt::addCheckAndScramble(const QByteArray& payload) const
 {
    // create check
    const QByteArray check = QCryptographicHash::hash(payload, algorithm);
@@ -95,7 +92,7 @@ inline QByteArray ShallowCrypt::addCheckAndScramble(const QByteArray& payload) c
    return qCompress(content, 9); // less to store and false trail
 }
 
-inline QByteArray ShallowCrypt::unscrambleAndVerify(const QByteArray& data) const
+QByteArray ShallowCrypt::unscrambleAndVerify(const QByteArray& data) const
 {
    QByteArray content = qUncompress(data); // uncompress
    content = rotateUnevenBytes(content);
@@ -110,7 +107,7 @@ inline QByteArray ShallowCrypt::unscrambleAndVerify(const QByteArray& data) cons
    return payload;
 }
 
-inline QByteArray ShallowCrypt::rotateUnevenBytes(const QByteArray& data) const
+QByteArray ShallowCrypt::rotateUnevenBytes(const QByteArray& data) const
 {
    const quint32 length = data.length();
    const quint32 halfLength = [&]()
@@ -134,5 +131,3 @@ inline QByteArray ShallowCrypt::rotateUnevenBytes(const QByteArray& data) const
 
    return content;
 }
-
-#endif // ShallowCryptHPP

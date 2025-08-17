@@ -15,8 +15,4 @@ public:
    static QStringList compileResourceNames(const QStringList& ignoreList = {":/qt-project.org"});
 };
 
-#ifndef FileToolsHPP
-#include "FileTools.hpp"
-#endif // NOT FileToolsHPP
-
 #endif // NOT FileToolsH

@@ -33,8 +33,4 @@ private:
    int checkLength;
 };
 
-#ifndef ShallowCryptHPP
-#include "ShallowCrypt.hpp"
-#endif // NOT ShallowCryptHPP
-
 #endif // NOT ShallowCryptH

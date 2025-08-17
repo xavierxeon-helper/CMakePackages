@@ -1,6 +1,3 @@
-#ifndef FileToolsHPP
-#define FileToolsHPP
-
 #include "FileTools.h"
 
 #include <QDir>
@@ -10,7 +7,7 @@
 #include <QSettings>
 #include <QStandardPaths>
 
-inline QJsonObject FileTools::readJson(const QString& filePath)
+QJsonObject FileTools::readJson(const QString& filePath)
 {
    QFile file(filePath);
    if (!file.open(QIODevice::ReadOnly))
@@ -20,12 +17,10 @@ inline QJsonObject FileTools::readJson(const QString& filePath)
    file.close();
 
    return parseBytes(fileContent);
-
 }
 
-inline QJsonObject FileTools::parseBytes(const QByteArray& data)
+QJsonObject FileTools::parseBytes(const QByteArray& data)
 {
-
    QJsonParseError parseError;
    QJsonDocument doc = QJsonDocument::fromJson(data, &parseError);
 
@@ -39,7 +34,7 @@ inline QJsonObject FileTools::parseBytes(const QByteArray& data)
    return object;
 }
 
-inline void FileTools::writeJson(const QJsonObject& data, const QString& filePath)
+void FileTools::writeJson(const QJsonObject& data, const QString& filePath)
 {
    if (data.isEmpty())
       return;
@@ -53,7 +48,7 @@ inline void FileTools::writeJson(const QJsonObject& data, const QString& filePat
    file.close();
 }
 
-inline QString FileTools::compileDropboxPath(const QString& appName)
+QString FileTools::compileDropboxPath(const QString& appName)
 {
 #if defined(Q_OS_WIN32)
    QString homePath = QDir::homePath();
@@ -84,7 +79,7 @@ inline QString FileTools::compileDropboxPath(const QString& appName)
    return path;
 }
 
-inline QString FileTools::compileNextCloudPath(const QString& appName)
+QString FileTools::compileNextCloudPath(const QString& appName)
 {
 #if defined(Q_OS_WIN32)
    QString appPath = QStandardPaths ::writableLocation(QStandardPaths::AppDataLocation);
@@ -109,7 +104,7 @@ inline QString FileTools::compileNextCloudPath(const QString& appName)
    return path;
 }
 
-inline QJsonObject FileTools::readApiKeys(const QString& appName)
+QJsonObject FileTools::readApiKeys(const QString& appName)
 {
    static const QStringList homePaths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
    const QString keyFileName = homePaths.first() + "/.ApiKeys/" + appName + ".json";
@@ -117,14 +112,13 @@ inline QJsonObject FileTools::readApiKeys(const QString& appName)
    return readJson(keyFileName);
 }
 
-
-inline QStringList FileTools::compileResourceNames(const QStringList& ignoreList)
+QStringList FileTools::compileResourceNames(const QStringList& ignoreList)
 {
    auto ignoreName = [&](const QString& name)
    {
-      for(const QString& test: ignoreList)
+      for (const QString& test : ignoreList)
       {
-         if(name.startsWith(test))
+         if (name.startsWith(test))
             return true;
       }
       return false;
@@ -136,7 +130,7 @@ inline QStringList FileTools::compileResourceNames(const QStringList& ignoreList
    while (it.hasNext())
    {
       const QString name = it.next();
-      if(ignoreName(name))
+      if (ignoreName(name))
          continue;
 
       nameList.append(name);
@@ -144,5 +138,3 @@ inline QStringList FileTools::compileResourceNames(const QStringList& ignoreList
 
    return nameList;
 }
-
-#endif // NOT FileToolsHPP
