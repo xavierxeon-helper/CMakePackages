@@ -1,7 +1,5 @@
 #include "MathVector3.h"
 
-#include <cmath>
-
 #include "MathGeneral.h"
 
 Math::Spherical::Spherical(const double& az, const double& el, const double& radius)
@@ -129,7 +127,7 @@ Math::Spherical Math::Vector3::toSpherical(const bool toDegree) const
    const double planeRadius = std::sqrt((x * x) + (y * y));
    double az = (planeRadius > 0) ? std::acos(x / planeRadius) : 0.0;
    if (y < 0)
-      az = (2 * M_PI) - az;
+      az = (2 * Math::pi) - az;
 
    if (toDegree)
    {

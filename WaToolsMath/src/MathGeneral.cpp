@@ -1,16 +1,14 @@
 #include "MathGeneral.h"
 
-#include <math.h>
-
 double Math::deg2Rad(const double& degrees)
 {
-   const double radians = degrees * (M_PI / 180);
+   const double radians = degrees * (pi / 180);
    return radians;
 }
 
 double Math::rad2Deg(const double& radians)
 {
-   const double degrees = radians * (180 / M_PI);
+   const double degrees = radians * (180 / pi);
    return degrees;
 }
 

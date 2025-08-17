@@ -2,7 +2,7 @@
 
 #include <QtTypes>
 
-#include <cmath>
+#include "MathGeneral.h"
 
 Math::Wave::Wave(const Size& size, const int& threadCount)
    : size(size)
@@ -11,7 +11,7 @@ Math::Wave::Wave(const Size& size, const int& threadCount)
    , lineLists()
    , frequency(1.0)
    , speed(1.0)
-   , omega(2.0 * M_PI)
+   , omega(2.0 * Math::pi)
    , heightField(Matrix<double>(size, 0.0), Matrix<double>(size, 0.0))
 {
    const int maxCount = std::ceil(size.height / threadCount);
@@ -81,7 +81,7 @@ const double& Math::Wave::getFrequency() const
 void Math::Wave::setFrequency(const double& value)
 {
    frequency = value;
-   omega = value * 2.0 * M_PI;
+   omega = value * 2.0 * Math::pi;
 }
 
 const double& Math::Wave::getSpeed() const
