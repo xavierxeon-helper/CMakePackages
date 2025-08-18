@@ -26,6 +26,8 @@ protected:
    virtual void closeEvent(QCloseEvent* ce) override;
    virtual QMenu* createPopupMenu() override;
 
+   void saveWindowSettings();
+
 private:
    QToolBar* findOrCreateToolBar(const QString& objectName);
    QMenu* findOrCreateMenu(const QString& objectName, const QString& text, QMenu* parentMenu);

@@ -65,16 +65,20 @@ QDockWidget* PopulatedMainWindow::addDockWidget(QWidget* widget, const Qt::DockW
 
 void PopulatedMainWindow::closeEvent(QCloseEvent* ce)
 {
-   QSettings settings;
-   settings.setValue("MainWidget/Geometry", saveGeometry());
-   settings.setValue("MainWidget/State", saveState());
-
+   saveWindowSettings();
    ce->accept();
 }
 
 QMenu* PopulatedMainWindow::createPopupMenu()
 {
    return nullptr;
+}
+
+void PopulatedMainWindow::saveWindowSettings()
+{
+   QSettings settings;
+   settings.setValue("MainWidget/Geometry", saveGeometry());
+   settings.setValue("MainWidget/State", saveState());
 }
 
 QToolBar* PopulatedMainWindow::findOrCreateToolBar(const QString& objectName)
