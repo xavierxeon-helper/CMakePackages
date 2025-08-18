@@ -1,12 +1,4 @@
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-# Compute paths
-get_filename_component(RTMIDI_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
-set(RTMIDI_INCLUDE_DIRS ${RTMIDI_CMAKE_DIR})
-
-include_directories(${RTMIDI_INCLUDE_DIRS})
-
+include_directories(${CMAKE_CURRENT_LIST_DIR})
 include(${CMAKE_CURRENT_LIST_DIR}/../CommonUse.cmake)
 
 link_libraries(RtMidi)
