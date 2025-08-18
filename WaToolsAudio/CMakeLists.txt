@@ -22,6 +22,6 @@ file(GLOB SOURCE_FILES
 
 add_os_files("src")
 
-qt_add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
+qt_add_library(${PROJECT_NAME} ${SOURCE_FILES})
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Core)
