@@ -80,11 +80,18 @@ void TabStack::Widget::setActiveDepth(int depth)
          activeindex = index;
    }
 
-   if (-1 != activeindex)
-      tabBar->setCurrentIndex(activeindex);
+   qDebug() << barInfo.tabOrder << barInfo.activeWidget << activeindex;
 
-   if (barInfo.activeWidget)
+   if (-1 != activeindex && barInfo.activeWidget)
+   {
+      tabBar->setCurrentIndex(activeindex);
       stack->setCurrentWidget(barInfo.activeWidget);
+   }
+   else
+   {
+      tabBar->setCurrentIndex(0);
+      tabSelected(0);
+   }
 }
 
 QStringList TabStack::Widget::getTabOrder(int depth) const

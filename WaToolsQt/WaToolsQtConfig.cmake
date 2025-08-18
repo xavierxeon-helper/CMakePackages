@@ -1,5 +1,6 @@
 include_directories(${CMAKE_CURRENT_LIST_DIR})
 include(${CMAKE_CURRENT_LIST_DIR}/functions.cmake)
+
 include(${CMAKE_CURRENT_LIST_DIR}/../CommonUse.cmake)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets Xml QuickWidgets)
