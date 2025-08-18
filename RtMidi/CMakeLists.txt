@@ -14,7 +14,11 @@ file(GLOB SOURCE_FILES
    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
 )
 
-add_library(${PROJECT_NAME} ${SOURCE_FILES})
+if((WIN32))
+   add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
+else()
+   add_library(${PROJECT_NAME} ${SOURCE_FILES})
+endif()
 
 if(APPLE)
    add_compile_definitions(__MACOSX_CORE__)

@@ -22,6 +22,10 @@ file(GLOB SOURCE_FILES
 
 add_os_files("src")
 
-qt_add_library(${PROJECT_NAME} ${SOURCE_FILES})
+if((WIN32))
+   qt_add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
+else()
+   qt_add_library(${PROJECT_NAME} ${SOURCE_FILES})
+endif()
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Core)
