@@ -11,7 +11,6 @@ find_package(Qt6 REQUIRED COMPONENTS Core Network NetworkAuth)
 set(CMAKE_AUTOMOC ON)
 
 find_package(WaTools REQUIRED COMPONENTS General Log)
-
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 file(GLOB SOURCE_FILES
@@ -20,7 +19,7 @@ file(GLOB SOURCE_FILES
    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
 )
 
-qt_add_library(${PROJECT_NAME} ${SOURCE_FILES})
+qt_add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
 add_compile_definitions(EXTENSION_WATOOLSNETWORK)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Core Qt6::Network Qt6::NetworkAuth)

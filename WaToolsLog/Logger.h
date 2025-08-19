@@ -10,7 +10,7 @@
 /// provide streams for logging messages and warnings
 namespace Logger
 {
-   QTextStream stream(const Qt::GlobalColor& color = Qt::black);
+   WATOOLSLOG_DECLSPEC QTextStream stream(const Qt::GlobalColor& color = Qt::black);
 
    class WATOOLSLOG_DECLSPEC Target
    {

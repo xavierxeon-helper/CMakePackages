@@ -8,7 +8,6 @@ set(CMAKE_COMPILE_WARNING_AS_ERROR ON)
 include(../CommonBuild.cmake)
 
 find_package(Qt6 REQUIRED COMPONENTS Core)
-
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 file(GLOB SOURCE_FILES
@@ -17,7 +16,7 @@ file(GLOB SOURCE_FILES
    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
 )
 
-add_library(${PROJECT_NAME} ${SOURCE_FILES})
+add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
 add_compile_definitions(EXTENSION_WATOOLSGENERAL)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Core)

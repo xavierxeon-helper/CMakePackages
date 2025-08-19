@@ -22,7 +22,7 @@ file(GLOB SOURCE_FILES
 
 add_os_files("src")
 
-qt_add_library(${PROJECT_NAME} ${SOURCE_FILES})
+qt_add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
 add_compile_definitions(EXTENSION_WATOOLSAUDIO)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Core)

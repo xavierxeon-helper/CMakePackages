@@ -5,7 +5,7 @@
 #if defined(__unix) || defined(__QNXNTO__) || defined(__APPLE__)
    #define WATOOLSGENERAL_DECLSPEC
 #else
-   #ifdef EXTENSION_WATOOLSGENERAL
+   #ifdef EXTENSION_WATOOLSGENERAL      
       #define WATOOLSGENERAL_DECLSPEC __declspec(dllexport)
    #else
       #define WATOOLSGENERAL_DECLSPEC __declspec(dllimport)
@@ -14,4 +14,3 @@
 // clang-format on
 
 #endif // NOT WaToolsGeneralExportDefH
-
