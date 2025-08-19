@@ -1,12 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 
-// see https://raymii.org/s/tutorials/Qml_Drag_and_Drop_example_including_reordering_the_Cpp_Model.html
-
-Rectangle
+Item
 {
-    color: "white"
-
     Component
     {
         id: tableDelegate
