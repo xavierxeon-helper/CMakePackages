@@ -39,6 +39,6 @@ file(GLOB SOURCE_FILES
 add_os_files("src")
 
 qt_add_library(${PROJECT_NAME} ${SOURCE_FILES})
-add_compile_definitions(EXTENSION_WATOOLS_QT)
+add_compile_definitions(EXTENSION_WATOOLSQT)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets Qt6::Xml Qt6::QuickWidgets WaToolsQt_QMLplugin)

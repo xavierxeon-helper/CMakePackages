@@ -7,7 +7,7 @@
 
 namespace Managed
 {
-   class WATOOLS_QT_DECLSPEC GraphicsView : public QGraphicsView
+   class WATOOLSQT_DECLSPEC GraphicsView : public QGraphicsView
    {
       Q_OBJECT
 

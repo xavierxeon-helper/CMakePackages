@@ -5,7 +5,7 @@
 
 #include <QColor>
 
-class WATOOLS_QT_DECLSPEC ColorSpace
+class WATOOLSQT_DECLSPEC ColorSpace
 {
 public:
    struct XYB

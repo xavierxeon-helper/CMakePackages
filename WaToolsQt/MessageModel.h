@@ -5,7 +5,7 @@
 #include <Logger.h>
 #include <QStandardItemModel>
 
-class WATOOLS_QT_DECLSPEC MessageModel : public QStandardItemModel, private Logger::Target
+class WATOOLSQT_DECLSPEC MessageModel : public QStandardItemModel, private Logger::Target
 {
    Q_OBJECT
 

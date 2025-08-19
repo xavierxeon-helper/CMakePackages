@@ -5,7 +5,7 @@
 
 #include <QWidget>
 
-struct WATOOLS_QT_DECLSPEC Look
+struct WATOOLSQT_DECLSPEC Look
 {
    static void applyStlyeSheet(const QString& fileName, QWidget* widget);
 

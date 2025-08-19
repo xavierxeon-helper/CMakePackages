@@ -7,7 +7,7 @@
 #include <QDomElement>
 #include <QToolBar>
 
-class WATOOLS_QT_DECLSPEC ActionPopulation : public QObject
+class WATOOLSQT_DECLSPEC ActionPopulation : public QObject
 {
    Q_OBJECT
 

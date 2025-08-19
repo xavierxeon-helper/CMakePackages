@@ -7,7 +7,7 @@
 
 #include <QDateTime>
 
-class WATOOLS_QT_DECLSPEC MessageLabel : public QLabel, public Logger::Target
+class WATOOLSQT_DECLSPEC MessageLabel : public QLabel, public Logger::Target
 {
    Q_OBJECT
 

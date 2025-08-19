@@ -10,7 +10,7 @@
 
 namespace TabStack
 {
-   class WATOOLS_QT_DECLSPEC Widget : public QWidget
+   class WATOOLSQT_DECLSPEC Widget : public QWidget
    {
       Q_OBJECT
 

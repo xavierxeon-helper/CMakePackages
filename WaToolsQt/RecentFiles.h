@@ -6,7 +6,7 @@
 #include <QMenu>
 #include <QWidget>
 
-class WATOOLS_QT_DECLSPEC RecentFiles
+class WATOOLSQT_DECLSPEC RecentFiles
 {
 public:
    using LoadFunction = std::function<void(const QString& fileName)>;

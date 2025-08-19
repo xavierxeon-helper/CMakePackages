@@ -8,7 +8,7 @@
 
 namespace Managed
 {
-   class WATOOLS_QT_DECLSPEC TreeView : public QTreeView
+   class WATOOLSQT_DECLSPEC TreeView : public QTreeView
    {
       Q_OBJECT
 

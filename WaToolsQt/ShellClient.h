@@ -5,7 +5,7 @@
 
 #include <QObject>
 
-class WATOOLS_QT_DECLSPEC ShellClient
+class WATOOLSQT_DECLSPEC ShellClient
 {
 public:
    static QByteArray executeLocal(const QString& command, QByteArray* error = nullptr);

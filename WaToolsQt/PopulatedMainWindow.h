@@ -6,7 +6,7 @@
 
 #include "ActionPopulation.h"
 
-class WATOOLS_QT_DECLSPEC PopulatedMainWindow : public QMainWindow
+class WATOOLSQT_DECLSPEC PopulatedMainWindow : public QMainWindow
 {
    Q_OBJECT
 

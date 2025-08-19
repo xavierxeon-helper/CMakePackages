@@ -8,7 +8,7 @@ namespace TabStack
 {
    class Widget;
 
-   class WATOOLS_QT_DECLSPEC Model : public QStandardItemModel
+   class WATOOLSQT_DECLSPEC Model : public QStandardItemModel
    {
       Q_OBJECT
 

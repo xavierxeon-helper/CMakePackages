@@ -7,7 +7,7 @@
 
 namespace Managed
 {
-   class WATOOLS_QT_DECLSPEC TableView : public QTableView
+   class WATOOLSQT_DECLSPEC TableView : public QTableView
    {
       Q_OBJECT
    public:
