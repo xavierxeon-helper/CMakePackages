@@ -3,9 +3,11 @@
 
 #include <QTableView>
 
+#include "WaToolsQtExportDef.h"
+
 namespace Managed
 {
-   class TableView : public QTableView
+   class WATOOLS_QT_DECLSPEC TableView : public QTableView
    {
       Q_OBJECT
    public:

@@ -1,9 +1,11 @@
 #ifndef ColorSpaceH
 #define ColorSpaceH
 
+#include "WaToolsQtExportDef.h"
+
 #include <QColor>
 
-class ColorSpace
+class WATOOLS_QT_DECLSPEC ColorSpace
 {
 public:
    struct XYB

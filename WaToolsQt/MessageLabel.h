@@ -1,12 +1,13 @@
 #ifndef MessageLabelH
 #define MessageLabelH
 
+#include "WaToolsQtExportDef.h"
 #include <Logger.h>
 #include <QLabel>
 
 #include <QDateTime>
 
-class MessageLabel : public QLabel, public Logger::Target
+class WATOOLS_QT_DECLSPEC MessageLabel : public QLabel, public Logger::Target
 {
    Q_OBJECT
 

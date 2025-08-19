@@ -1,9 +1,10 @@
 #ifndef WorkFlowQmlWidgetH
 #define WorkFlowQmlWidgetH
 
+#include "WaToolsQtExportDef.h"
 #include <QQuickWidget>
 
-class QmlWidget : public QQuickWidget
+class WATOOLS_QT_DECLSPEC QmlWidget : public QQuickWidget
 {
 public:
    QmlWidget(QWidget* parent);

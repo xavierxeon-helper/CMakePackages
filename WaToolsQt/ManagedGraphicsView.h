@@ -3,9 +3,11 @@
 
 #include <QGraphicsView>
 
+#include "WaToolsQtExportDef.h"
+
 namespace Managed
 {
-   class GraphicsView : public QGraphicsView
+   class WATOOLS_QT_DECLSPEC GraphicsView : public QGraphicsView
    {
       Q_OBJECT
 

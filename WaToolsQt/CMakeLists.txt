@@ -10,8 +10,24 @@ include(../CommonBuild.cmake)
 find_package(Qt6 REQUIRED COMPONENTS Widgets Xml QuickWidgets)
 set(CMAKE_AUTOMOC ON)
 
-find_package(WaTools REQUIRED COMPONENTS Log)
+#QML -> will be statically linked into this library
+file(GLOB QML_FILES
+   RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/
+   ${CMAKE_CURRENT_SOURCE_DIR}/Gui/*.qml
+   ${CMAKE_CURRENT_SOURCE_DIR}/Gui/*.js
+)
 
+message(STATUS "QML_FILES for ${PROJECT_NAME} found @ Gui = ${QML_FILES}")
+
+#see https://doc.qt.io/qt-6/qt-add-qml-module.html
+qt_add_qml_module(${PROJECT_NAME}_QML
+    URI "WaToolsQt"
+    STATIC
+    RESOURCE_PREFIX "/qt/qml"
+    QML_FILES ${QML_FILES}
+)
+# C++
+find_package(WaTools REQUIRED COMPONENTS Log)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 file(GLOB SOURCE_FILES
@@ -22,10 +38,7 @@ file(GLOB SOURCE_FILES
 
 add_os_files("src")
 
-if((WIN32))
-   qt_add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
-else()
-   qt_add_library(${PROJECT_NAME} ${SOURCE_FILES})
-endif()
+qt_add_library(${PROJECT_NAME} ${SOURCE_FILES})
+add_compile_definitions(EXTENSION_WATOOLS_QT)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets Qt6::Xml Qt6::QuickWidgets)
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets Qt6::Xml Qt6::QuickWidgets WaToolsQt_QML)
