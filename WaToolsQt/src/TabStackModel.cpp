@@ -60,7 +60,7 @@ void TabStack::Model::init(Widget* tabStack)
 
 void TabStack::Model::apply(Widget* tabStack)
 {
-   for (int depth = 0; depth < maxDepth + 1; depth++)
+   for (int depth = 0; depth < maxDepth ; depth++)
    {
       const QStringList& labels = labelMatrix[depth];
       tabStack->setTabOrder(depth, labels);
