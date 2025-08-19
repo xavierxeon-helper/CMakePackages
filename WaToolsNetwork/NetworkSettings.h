@@ -1,9 +1,11 @@
 #ifndef NetworkSettingsH
 #define NetworkSettingsH
 
+#include "WaToolsNetworkExportDef.h"
+
 namespace Network
 {
-   class Settings
+   class WATOOLSNETWORK_DECLSPEC Settings
    {
    public:
       Settings();

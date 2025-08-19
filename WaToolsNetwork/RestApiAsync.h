@@ -2,10 +2,11 @@
 #define RestApiAsyncH
 
 #include "RestApiBlocking.h"
+#include "WaToolsNetworkExportDef.h"
 
 namespace RestApi
 {
-   class Async : public Blocking
+   class WATOOLSNETWORK_DECLSPEC Async : public Blocking
    {
       Q_OBJECT
 

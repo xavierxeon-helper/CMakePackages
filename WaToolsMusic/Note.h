@@ -1,9 +1,11 @@
 #ifndef NoteH
 #define NoteH
 
+#include "WaToolsMusicExportDef.h"
+
 #include <QList>
 
-class Note
+class WATOOLSMUSIC_DECLSPEC Note
 {
 public:
    using List = QList<Note>;

@@ -1,10 +1,12 @@
 #ifndef FileToolsH
 #define FileToolsH
 
+#include "WaToolsGeneralExportDef.h"
+
 #include <QCoreApplication>
 #include <QJsonObject>
 
-class FileTools
+class WATOOLSGENERAL_DECLSPEC FileTools
 {
 public:
    static QJsonObject readJson(const QString& filePath);

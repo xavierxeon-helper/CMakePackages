@@ -1,6 +1,8 @@
 #ifndef SampleAbstractH
 #define SampleAbstractH
 
+#include "WaToolsAudioExportDef.h"
+
 #include <QList>
 #include <QString>
 
@@ -9,7 +11,7 @@ namespace Sample
    using Data = QList<float>;
    using Channels = QList<Data>;
 
-   struct Meta
+   struct WATOOLSAUDIO_DECLSPEC Meta
    {
       uint8_t noOfChannels = 1;
       uint16_t sampleRate = 1;
@@ -19,7 +21,7 @@ namespace Sample
       double totalLength() const;
    };
 
-   class Abstract
+   class WATOOLSAUDIO_DECLSPEC Abstract
    {
    public:
       Abstract();

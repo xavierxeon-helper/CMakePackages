@@ -1,12 +1,14 @@
 #ifndef NetworkExceptionsH
 #define NetworkExceptionsH
 
+#include "WaToolsNetworkExportDef.h"
 #include <QException>
+
 #include <QJsonObject>
 
 namespace Network
 {
-   class StatusException : public QException
+   class WATOOLSNETWORK_DECLSPEC StatusException : public QException
    {
    public:
       StatusException(int statusCode, const QJsonObject& content);

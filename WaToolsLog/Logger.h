@@ -1,6 +1,8 @@
 #ifndef LoggerH
 #define LoggerH
 
+#include "WaToolsLogExportDef.h"
+
 #include <QColor>
 #include <QDateTime>
 #include <QTextStream>
@@ -10,7 +12,7 @@ namespace Logger
 {
    QTextStream stream(const Qt::GlobalColor& color = Qt::black);
 
-   class Target
+   class WATOOLSLOG_DECLSPEC Target
    {
    public:
       class StreamProxy;

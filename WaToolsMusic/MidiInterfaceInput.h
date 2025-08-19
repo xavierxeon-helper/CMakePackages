@@ -2,11 +2,7 @@
 #define MidiInterfaceInputH
 
 #include "MidiParser.h"
-
-#include <functional>
-
-#include "MidiCommon.h"
-#include "Note.h"
+#include "WaToolsMusicExportDef.h"
 
 namespace Midi
 {
@@ -14,7 +10,7 @@ namespace Midi
    {
       class Output;
 
-      class Input : public Parser
+      class WATOOLSMUSIC_DECLSPEC Input : public Parser
       {
       public:
          Input();

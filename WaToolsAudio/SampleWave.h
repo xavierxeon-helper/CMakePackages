@@ -2,10 +2,11 @@
 #define SampleWaveH
 
 #include "SampleAbstract.h"
+#include "WaToolsAudioExportDef.h"
 
 namespace Sample
 {
-   class Wave : public Abstract
+   class WATOOLSAUDIO_DECLSPEC Wave : public Abstract
    {
    protected:
       bool load(const QString& fileName) override;

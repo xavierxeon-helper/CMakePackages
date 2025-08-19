@@ -1,9 +1,11 @@
 #ifndef LogSymbolH
 #define LogSymbolH
 
+#include "WaToolsLogExportDef.h"
+
 #include <QString>
 
-struct LogSymbol
+struct WATOOLSLOG_DECLSPEC LogSymbol
 {
    static const QString Warning;
    static const QString Attention;

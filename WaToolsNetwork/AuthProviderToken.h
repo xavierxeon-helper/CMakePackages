@@ -1,13 +1,14 @@
 #ifndef AuthProviderTokenH
 #define AuthProviderTokenH
 
+#include "WaToolsNetworkExportDef.h"
 #include <QObject>
 
 #include <QNetworkRequest>
 
 namespace AuthProvider
 {
-   class Token : public QObject
+   class WATOOLSNETWORK_DECLSPEC Token : public QObject
    {
       Q_OBJECT
 

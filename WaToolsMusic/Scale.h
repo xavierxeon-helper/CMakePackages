@@ -1,9 +1,11 @@
 #ifndef ScaleH
 #define ScaleH
 
+#include "WaToolsMusicExportDef.h"
+
 #include "Note.h"
 
-class Scale
+class WATOOLSMUSIC_DECLSPEC Scale
 {
 public:
    using List = QList<Scale>;

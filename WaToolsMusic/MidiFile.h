@@ -1,6 +1,8 @@
 #ifndef MidiFileH
 #define MidiFileH
 
+#include "WaToolsMusicExportDef.h"
+
 #include <QList>
 #include <QMap>
 
@@ -9,7 +11,7 @@
 
 namespace Midi
 {
-   class Sequence
+   class WATOOLSMUSIC_DECLSPEC Sequence
    {
    public:
       using Tick = uint64_t;
@@ -56,7 +58,7 @@ namespace Midi
    {
       // see http://www.music.mcgill.ca/~ich/classes/mumt306/StandardMIDIfileformat.html
 
-      class Reader : public Sequence
+      class WATOOLSMUSIC_DECLSPEC Reader : public Sequence
       {
       public:
          Reader(const Bytes& content);

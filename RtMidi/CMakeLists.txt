@@ -14,11 +14,8 @@ file(GLOB SOURCE_FILES
    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
 )
 
-if((WIN32))
-   add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
-else()
-   add_library(${PROJECT_NAME} ${SOURCE_FILES})
-endif()
+add_library(${PROJECT_NAME} ${SOURCE_FILES})
+add_compile_definitions(RTMIDI_EXPORT)
 
 if(APPLE)
    add_compile_definitions(__MACOSX_CORE__)

@@ -1,11 +1,13 @@
 #ifndef MathVector3H
 #define MathVector3H
 
+#include "WaToolsMathExportDef.h"
+
 #include <iostream>
 
 namespace Math
 {
-   class Spherical
+   class WATOOLSMATH_DECLSPEC Spherical
    {
    public:
       Spherical(const double& az = 0.0, const double& el = 0.0, const double& radius = 1.0);

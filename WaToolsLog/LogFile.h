@@ -1,12 +1,14 @@
 #ifndef LogFileH
 #define LogFileH
 
+#include "WaToolsLogExportDef.h"
+
 #include <CompileTimeString.h>
 #include <QFile>
 
 #include <QDateTime>
 
-struct LogFileBase
+struct WATOOLSLOG_DECLSPEC LogFileBase
 {
    static QString appendTimeStampToFileName(const QString& fileName, const QDateTime& timestamp = QDateTime::currentDateTime());
 };

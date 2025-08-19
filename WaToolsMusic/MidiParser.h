@@ -1,6 +1,8 @@
 #ifndef MidiParserH
 #define MidiParserH
 
+#include "WaToolsMusicExportDef.h"
+
 #include <functional>
 #include <vector>
 
@@ -8,7 +10,7 @@
 
 namespace Midi
 {
-   class Parser
+   class WATOOLSMUSIC_DECLSPEC Parser
    {
    public:
       using NoteOnFunction = std::function<void(const Channel& channel, const uchar& midiNote, const Velocity& velocity)>;

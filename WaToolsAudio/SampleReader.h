@@ -1,14 +1,15 @@
 #ifndef SampleOscilatorH
 #define SampleOscilatorH
 
-#include <QString>
-
 #include "SampleWave.h"
+#include "WaToolsAudioExportDef.h"
+
+#include <QString>
 
 // wav file only!
 namespace Sample
 {
-   class Reader : public Wave
+   class WATOOLSAUDIO_DECLSPEC Reader : public Wave
    {
    public:
       Reader(const QString& fileName);

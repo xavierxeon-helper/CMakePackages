@@ -3,13 +3,14 @@
 
 #include "AuthProviderToken.h"
 #include "NetworkSettings.h"
+#include "WaToolsNetworkExportDef.h"
 
 #include <QJsonObject>
 #include <QOAuth2AuthorizationCodeFlow>
 
 namespace AuthProvider
 {
-   class OAuth : public Token, public Network::Settings
+   class WATOOLSNETWORK_DECLSPEC OAuth : public Token, public Network::Settings
    {
       Q_OBJECT
 

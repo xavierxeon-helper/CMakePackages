@@ -1,6 +1,8 @@
 #ifndef FastFourierTransfromH
 #define FastFourierTransfromH
 
+#include "WaToolsAudioExportDef.h"
+
 #include <QException>
 
 #include <complex>
@@ -8,7 +10,7 @@
 #include "SampleAbstract.h"
 
 // may throw Exception
-class FastFourierTransfrom
+class WATOOLSAUDIO_DECLSPEC FastFourierTransfrom
 {
 public:
    using ComplexType = std::complex<float>;

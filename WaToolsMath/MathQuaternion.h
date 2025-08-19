@@ -1,9 +1,11 @@
 #ifndef MathQuaternionH
 #define MathQuaternionH
 
+#include "WaToolsMathExportDef.h"
+
 namespace Math
 {
-   class Quaternion
+   class WATOOLSMATH_DECLSPEC Quaternion
    {
    public:
       Quaternion();

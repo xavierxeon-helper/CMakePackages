@@ -20,12 +20,7 @@ file(GLOB SOURCE_FILES
    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
 )
 
-#add_os_files("src")
-
-if((WIN32))
-   qt_add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
-else()
-   qt_add_library(${PROJECT_NAME} ${SOURCE_FILES})
-endif()
+qt_add_library(${PROJECT_NAME} ${SOURCE_FILES})
+add_compile_definitions(EXTENSION_WATOOLSMUSIC)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Core)

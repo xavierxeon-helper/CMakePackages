@@ -1,6 +1,8 @@
 #ifndef MidiCommonH
 #define MidiCommonH
 
+#include "WaToolsMusicExportDef.h"
+
 #include <QList>
 
 using Bytes = QList<uchar>;
@@ -44,7 +46,7 @@ namespace Midi
 
    };
 
-   struct Manufacturer
+   struct WATOOLSMUSIC_DECLSPEC Manufacturer
    {
       static constexpr uchar EducationalUse = 0x7D;
    };
@@ -162,16 +164,16 @@ namespace Midi
       };
    };
 
-   struct Variables
+   struct WATOOLSMUSIC_DECLSPEC Variables
    {
       // see https://ccrma.stanford.edu/~gary/controllers/midi.html
       static constexpr float msPerByte = 1000.0f / 3125.0f; // -> 3125 bytes per second
    };
 
    // utilities
-   bool isEvent(const uchar value, const Midi::Event mask);
-   bool hasFirstBit(const uchar value);
-   uchar removeFirstBit(const uchar value);
+   WATOOLSMUSIC_DECLSPEC bool isEvent(const uchar value, const Midi::Event mask);
+   WATOOLSMUSIC_DECLSPEC bool hasFirstBit(const uchar value);
+   WATOOLSMUSIC_DECLSPEC uchar removeFirstBit(const uchar value);
 
 } // namespace Midi
 

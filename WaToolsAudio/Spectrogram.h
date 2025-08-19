@@ -1,10 +1,12 @@
 #ifndef SpectrogramH
 #define SpectrogramH
 
+#include "WaToolsAudioExportDef.h"
+
 #include "FastFourierTransfrom.h"
 #include "SampleAbstract.h"
 
-class Spectrogram
+class WATOOLSAUDIO_DECLSPEC Spectrogram
 {
 public:
    using Frames = QList<Sample::Data>;

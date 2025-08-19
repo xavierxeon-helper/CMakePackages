@@ -2,10 +2,11 @@
 #define SampleWriterH
 
 #include "SampleWave.h"
+#include "WaToolsAudioExportDef.h"
 
 namespace Sample
 {
-   class Writer : public Wave
+   class WATOOLSAUDIO_DECLSPEC Writer : public Wave
    {
    public:
       Writer(const uint8_t& numerOfChannels);

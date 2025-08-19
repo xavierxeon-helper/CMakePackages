@@ -1,6 +1,8 @@
 #ifndef RangeH
 #define RangeH
 
+#include "WaToolsGeneralExportDef.h"
+
 #include <cstddef>
 #include <type_traits>
 
@@ -56,7 +58,7 @@ struct Range
       DataType maxValue;
    };
 
-   class Mapper
+   class WATOOLSGENERAL_DECLSPEC Mapper
    {
    public:
       Mapper(const float& minInput, const float& maxInput, const float& minOutput, const float& maxOutput);

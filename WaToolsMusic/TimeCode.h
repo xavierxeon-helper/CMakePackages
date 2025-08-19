@@ -1,11 +1,13 @@
 #ifndef TimeCodeH
 #define TimeCodeH
 
+#include "WaToolsMusicExportDef.h"
+
 #include <limits>
 
 #include <QString>
 
-class TimeCode
+class WATOOLSMUSIC_DECLSPEC TimeCode
 {
 public:
    using Duration = uint16_t;

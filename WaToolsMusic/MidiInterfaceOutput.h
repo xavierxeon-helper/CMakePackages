@@ -1,6 +1,8 @@
 #ifndef MidiInterfaceOutputH
 #define MidiInterfaceOutputH
 
+#include "WaToolsMusicExportDef.h"
+
 #include "MidiCommon.h"
 #include "Note.h"
 
@@ -8,7 +10,7 @@ namespace Midi
 {
    namespace Interface
    {
-      class Output
+      class WATOOLSMUSIC_DECLSPEC Output
       {
       public:
          Output();

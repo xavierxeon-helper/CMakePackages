@@ -1,6 +1,8 @@
 #ifndef ShallowCryptH
 #define ShallowCryptH
 
+#include "WaToolsGeneralExportDef.h"
+
 #include <QCryptographicHash>
 #include <QString>
 #include <QSysInfo>
@@ -9,7 +11,7 @@
 // see https://en.wikipedia.org/wiki/XOR_cipher
 // THIS IS NOT A SAFE ENCRYPTION!
 
-class ShallowCrypt
+class WATOOLSGENERAL_DECLSPEC ShallowCrypt
 {
 public:
    // no key => no encryption!

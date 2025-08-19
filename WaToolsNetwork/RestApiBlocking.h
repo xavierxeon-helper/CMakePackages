@@ -2,6 +2,7 @@
 #define RestApiBlockingH
 
 #include "NetworkSettings.h"
+#include "WaToolsNetworkExportDef.h"
 #include <QObject>
 
 #include <QJsonObject>
@@ -16,7 +17,7 @@ namespace AuthProvider
 
 namespace RestApi
 {
-   class Blocking : public QObject, public Network::Settings
+   class WATOOLSNETWORK_DECLSPEC Blocking : public QObject, public Network::Settings
    {
       Q_OBJECT
 

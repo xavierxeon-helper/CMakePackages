@@ -1,6 +1,7 @@
 #ifndef MessageHandlerH
 #define MessageHandlerH
 
+#include "WaToolsLogExportDef.h"
 #include <QObject>
 
 #include <functional>
@@ -8,7 +9,7 @@
 #include <QMap>
 
 /// override the default Qt message handler
-struct MessageHandler : public QObject
+struct WATOOLSLOG_DECLSPEC MessageHandler : public QObject
 {
    Q_OBJECT
 
