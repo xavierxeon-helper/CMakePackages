@@ -8,7 +8,7 @@ function(add_qml_module_dir SUBPATH NAME)
    )
 
    file(GLOB QML_FILES
-      #RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/
+      RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/
       ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/*.qml
       ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/*.js
    )
