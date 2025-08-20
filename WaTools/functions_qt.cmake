@@ -1,10 +1,16 @@
-function(add_module_dir PATH NAME)
+function(add_qml_module_dir SUBPATH NAME)
 
-   include_directories(${CMAKE_CURRENT_SOURCE_DIR}/${PATH})
+   include_directories(${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH})
 
    file(GLOB QML_SOURCE_FILES
-      ${CMAKE_CURRENT_SOURCE_DIR}/${PATH}/*.h
-      ${CMAKE_CURRENT_SOURCE_DIR}/${PATH}/*.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/*.h
+      ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/*.cpp
+   )
+
+   file(GLOB QML_FILES
+      #RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/
+      ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/*.qml
+      ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/*.js
    )
 
    qt_add_qml_module(${PROJECT_NAME}_QML
@@ -13,6 +19,7 @@ function(add_module_dir PATH NAME)
       STATIC
       RESOURCE_PREFIX "/qt/qml"
       SOURCES ${QML_SOURCE_FILES}
+      QML_FILES ${QML_FILES}
    )
 
    target_link_libraries(${PROJECT_NAME}_QML PUBLIC Qt6::Quick)
