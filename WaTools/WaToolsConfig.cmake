@@ -1,4 +1,5 @@
 include(${CMAKE_CURRENT_LIST_DIR}/functions_compile.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/functions_qt.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/functions_target.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/functions_git.cmake)
 

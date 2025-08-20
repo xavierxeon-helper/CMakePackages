@@ -141,20 +141,3 @@ function(add_os_files SOURCE_SUB_DIR)
    set(SOURCE_FILES ${SOURCE_FILES} ${OS_FILES} PARENT_SCOPE)
 endfunction()
 
-function(add_qml_sources SUBPATH)
-
-   file(GLOB QML_FILES
-      RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/
-      ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/*.qml
-      ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/*.js
-   )
-
-   message(STATUS "QML_FILES for ${PROJECT_NAME} found @ ${SUBPATH} = ${QML_FILES}")
-
-   qt6_add_resources(${PROJECT_NAME} "${PROJECT_NAME}_${SUBPATH}"
-       PREFIX "/"
-       FILES ${QML_FILES}
-   )
-endfunction()
-
-
