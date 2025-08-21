@@ -41,7 +41,7 @@ void ShallowCrypt::encrypt(QByteArray& data) const
    if (key.isEmpty())
       return;
 
-   const quint32 length = data.size();
+   const size_t length = data.size();
    quint8 lastChar = 0;
 
    for (quint32 pos = 0; pos < length; pos++)
@@ -59,7 +59,7 @@ void ShallowCrypt::decrypt(QByteArray& data) const
    if (key.isEmpty())
       return;
 
-   const quint32 length = data.size();
+   const size_t length = data.size();
    quint8 lastChar = 0;
 
    for (quint32 pos = 0; pos < length; pos++)
@@ -109,8 +109,8 @@ QByteArray ShallowCrypt::unscrambleAndVerify(const QByteArray& data) const
 
 QByteArray ShallowCrypt::rotateUnevenBytes(const QByteArray& data) const
 {
-   const quint32 length = data.length();
-   const quint32 halfLength = [&]()
+   const size_t length = data.length();
+   const size_t halfLength = [&]()
    {
       if (0 != (length % 2))
          return (length + 1) / 2;
@@ -121,7 +121,7 @@ QByteArray ShallowCrypt::rotateUnevenBytes(const QByteArray& data) const
    QByteArray content = data;
    for (quint32 frontIndex = 0; frontIndex < halfLength; frontIndex += 2)
    {
-      const quint32 backIndex = halfLength + frontIndex;
+      const size_t backIndex = halfLength + frontIndex;
       if (backIndex >= length)
          break;
 

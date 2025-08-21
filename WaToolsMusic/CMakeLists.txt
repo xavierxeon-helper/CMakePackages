@@ -20,7 +20,7 @@ file(GLOB SOURCE_FILES
    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
 )
 
-qt_add_library(${PROJECT_NAME} ${SOURCE_FILES})
+qt_add_library(${PROJECT_NAME} ${WATOOLS_LIB_TYPE} ${SOURCE_FILES})
 add_compile_definitions(EXTENSION_WATOOLSMUSIC)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Core)
