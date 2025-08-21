@@ -29,22 +29,9 @@ endfunction()
 function(set_application_icon PATH_TO_ICON)
    if(IOS)
       set(ASSET_CATALOG_PATH "ios/Assets.xcassets")
-      if(NOT EXISTS ${ICON_RC_FILE})
-         file(WRITE ${ASSET_CATALOG_PATH}/AppIcon.appiconset/Contents.json
-            "{\n"
-            "  \"images\": [\n"
-            "     {\n"
-            "        \"filename\" : \"AppIcon1024x1024.png\",\n"
-            "        \"idiom\" : \"universal\",\n"
-            "        \"platform\" : \"ios\",\n"
-            "        \"size\" : \"1024x1024\"\n"
-            "     }\n"
-            "  ],\n"
-            "  \"info\": {\n"
-            "    \"version\": 1,\n"
-            "    \"author\": \"xcode\"\n"
-            "  }\n"
-            "}\n")
+      if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${ASSET_CATALOG_PATH})
+         file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${ASSET_CATALOG_PATH}/AppIcon.appiconset)
+         file(COPY ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/Contents.json DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/${ASSET_CATALOG_PATH}/AppIcon.appiconset)
       endif()
       target_sources(${PROJECT_NAME} PRIVATE "${ASSET_CATALOG_PATH}")
       set_source_files_properties(${ASSET_CATALOG_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
