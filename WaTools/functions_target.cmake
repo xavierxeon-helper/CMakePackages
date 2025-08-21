@@ -27,7 +27,29 @@ endfunction()
 
 # application icon
 function(set_application_icon PATH_TO_ICON)
-   if(APPLE)
+   if(IOS)
+      set(ASSET_CATALOG_PATH "ios/Assets.xcassets")
+      if(NOT EXISTS ${ICON_RC_FILE})
+         file(WRITE ${ASSET_CATALOG_PATH}/AppIcon.appiconset/Contents.json
+            "{\n"
+            "  \"images\": [\n"
+            "     {\n"
+            "        \"filename\" : \"AppIcon1024x1024.png\",\n"
+            "        \"idiom\" : \"universal\",\n"
+            "        \"platform\" : \"ios\",\n"
+            "        \"size\" : \"1024x1024\"\n"
+            "     }\n"
+            "  ],\n"
+            "  \"info\": {\n"
+            "    \"version\": 1,\n"
+            "    \"author\": \"xcode\"\n"
+            "  }\n"
+            "}\n")
+      endif()
+      target_sources(${PROJECT_NAME} PRIVATE "${ASSET_CATALOG_PATH}")
+      set_source_files_properties(${ASSET_CATALOG_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+      set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME AppIcon)
+   elseif(APPLE)
       set_target_properties(${PROJECT_NAME} PROPERTIES MACOSX_BUNDLE TRUE)
       set(APP_ICON ${PATH_TO_ICON}.icns)
       message(STATUS "APP_ICON: ${APP_ICON}")

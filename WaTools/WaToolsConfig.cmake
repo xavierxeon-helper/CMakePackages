@@ -5,7 +5,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/functions_git.cmake)
 
 foreach(COMPONENT ${WaTools_FIND_COMPONENTS})
    #message(STATUS "NEED WaTools component: ${COMPONENT}")
-   if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
+   if(IOS)
       message(STATUS "ADD WaTools${COMPONENT} as subdirectory")
       set(CMAKE_XCODE_ATTRIBUTE_EXCLUDED_ARCHS[sdk=iphonesimulator*] "arm64")      
       add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../WaTools${COMPONENT} WaTools${COMPONENT})

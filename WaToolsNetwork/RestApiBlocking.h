@@ -26,6 +26,7 @@ namespace RestApi
 
    public:
       virtual QJsonObject get(const QString& endpoint, const QUrlQuery& params = QUrlQuery()) const;
+      virtual QByteArray getRaw(const QString& endpoint, const QUrlQuery& params = QUrlQuery()) const;
       virtual QJsonObject post(const QString& endpoint, const QJsonObject& payload = QJsonObject(), const QUrlQuery& params = QUrlQuery()) const;
       virtual QJsonObject put(const QString& endpoint, const QJsonObject& payload = QJsonObject(), const QUrlQuery& params = QUrlQuery()) const;
 
@@ -51,6 +52,7 @@ namespace RestApi
 
    private:
       QJsonObject handleReply(QNetworkRequest request, ReplyGeneratorFunction replyGenerator) const;
+      QByteArray handleReplyRaw(QNetworkRequest request, ReplyGeneratorFunction replyGenerator) const;
    };
 } // namespace RestApi
 
