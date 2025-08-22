@@ -7,14 +7,16 @@
 #include <QString>
 #include <QSysInfo>
 
-// uses a simple XOR cipher + some additional obfuscations
-// see https://en.wikipedia.org/wiki/XOR_cipher
-// THIS IS NOT A SAFE ENCRYPTION!
+/**  
+uses a simple XOR cipher + some additional obfuscations
+see https://en.wikipedia.org/wiki/XOR_cipher
+THIS IS NOT A SAFE ENCRYPTION!
+*/
 
 class WATOOLSGENERAL_DECLSPEC ShallowCrypt
 {
 public:
-   // no key => no encryption!
+   /// no key => no encryption!
    ShallowCrypt(QByteArray key = QSysInfo::machineUniqueId(), QCryptographicHash::Algorithm algorithm = QCryptographicHash::Sha1);
 
 public:

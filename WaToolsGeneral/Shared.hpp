@@ -19,10 +19,10 @@ QString Shared<AppName>::appName()
 template <CompileTimeString AppName>
 QString Shared<AppName>::compileSharedFileName(const QString& suffix, const QStandardPaths::StandardLocation& location)
 {
-   const QString socketPath = QStandardPaths::writableLocation(location);
+   const QString path = QStandardPaths::writableLocation(location);
 
-   const QString socketName = socketPath + "/." + Shared<AppName>::appName().toLower() + "." + suffix;
-   return socketName;
+   const QString fileName = path + "/." + Shared<AppName>::appName().toLower() + "." + suffix;
+   return fileName;
 }
 
 template <CompileTimeString AppName>

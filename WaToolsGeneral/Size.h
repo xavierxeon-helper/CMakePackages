@@ -5,6 +5,7 @@
 
 #include <inttypes.h>
 
+/// @brief simple size structure, to be used where QSize is not available
 struct WATOOLSGENERAL_DECLSPEC Size
 {
    uint16_t width;

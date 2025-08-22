@@ -5,6 +5,7 @@
 
 #include "Size.h"
 
+/// @brief a 2d array
 template <typename DataType>
 class Matrix : public std::vector<std::vector<DataType>>
 {
