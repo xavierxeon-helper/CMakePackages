@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if [[ $(grep -i Microsoft /proc/version) ]]
+then
+   cmd.exe /c "create.bat"
+   exit 0
+fi
+
 HERE=$(dirname "$(readlink -f "$0")")
 
 mkdir -p $HERE/build/cmd_line_release
