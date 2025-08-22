@@ -10,7 +10,7 @@ include(../CommonBuild.cmake)
 find_package(Qt6 REQUIRED COMPONENTS Core)
 set(CMAKE_AUTOMOC ON)
 
-find_package(WaTools REQUIRED COMPONENTS General)
+find_package(WaTools REQUIRED COMPONENTS General Math)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 

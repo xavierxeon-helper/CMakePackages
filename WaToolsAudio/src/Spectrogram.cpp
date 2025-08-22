@@ -1,12 +1,12 @@
 #include "Spectrogram.h"
 
-#include <MathHelper.h>
+#include <MathGeneral.h>
 
 #include <QDebug>
 
 Spectrogram::Spectrogram(const uint16_t& frameSize, const uint16_t& hopFactor)
    : fft(frameSize)
-   , windowOffset(getNearestPowerOfTwo(frameSize / hopFactor))
+   , windowOffset(Math::getNearestPowerOfTwo(frameSize / hopFactor))
    , windowData(frameSize, 0)
    , frames()
 {
@@ -68,7 +68,7 @@ void Spectrogram::load(const Sample::Data& data)
       Sample::Data amplitudes;
       for (FastFourierTransfrom::ComplexType& cartesian : complex)
       {
-         FastFourierTransfrom::ComplexType polar = cartesianToPolar(cartesian);
+         FastFourierTransfrom::ComplexType polar = Math::cartesianToPolar(cartesian);
          amplitudes.append(polar.real());
       }
 

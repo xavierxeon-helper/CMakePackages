@@ -4,10 +4,10 @@
 
 #include <QDebug>
 
-#include <MathHelper.h>
+#include <MathGeneral.h>
 
 FastFourierTransfrom::FastFourierTransfrom(const size_t size)
-   : size(getNearestPowerOfTwo(size))
+   : size(Math::getNearestPowerOfTwo(size))
 {
 }
 

@@ -21,3 +21,20 @@ bool Math::signChange(const double& value1, const double& value2)
    else
       return false;
 }
+
+size_t Math::getNearestPowerOfTwo(const size_t& num)
+{
+   if (num == 0)
+      return 1;
+
+   size_t powerOfTwo = 1;
+   while (powerOfTwo < num)
+      powerOfTwo <<= 1;
+
+   return powerOfTwo;
+}
+
+bool Math::isPowerOfTwo(const size_t& num)
+{
+   return (num == getNearestPowerOfTwo(num));
+}
