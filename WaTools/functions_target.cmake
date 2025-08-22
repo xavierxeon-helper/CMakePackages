@@ -28,7 +28,7 @@ endfunction()
 # application icon
 function(set_application_icon PATH_TO_ICON)
    if(IOS)
-      set(ASSET_CATALOG_PATH "ios/Assets.xcassets")
+      set(ASSET_CATALOG_PATH "Icons/Assets.xcassets")
       if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${ASSET_CATALOG_PATH})
          file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${ASSET_CATALOG_PATH}/AppIcon.appiconset)
          file(COPY ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/Contents.json DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/${ASSET_CATALOG_PATH}/AppIcon.appiconset)
