@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.20)
 project(WaTools LANGUAGES CXX)
 
+set(CMAKE_SUPPRESS_DEVELOPER_WARNINGS TRUE)
+
 add_subdirectory(RtMidi)
 add_subdirectory(WaToolsAudio)
 add_subdirectory(WaToolsGeneral)

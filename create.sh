@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ $(grep -i Microsoft /proc/version) ]]
+if [[ -f /proc/version && $(grep -i Microsoft /proc/version) ]]
 then
    cmd.exe /c "create.bat"
    exit 0
