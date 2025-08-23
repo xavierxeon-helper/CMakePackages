@@ -132,7 +132,11 @@ QStringList FileTools::compileResourceNames(const QStringList& ignoreList)
       if (ignoreName(name))
          continue;
 
-      nameList.append(name);
+      QFileInfo fileInfo(name);
+      if (fileInfo.isFile())
+         nameList.append(name);
+
+      //nameList.append(name);
    }
 
    return nameList;
