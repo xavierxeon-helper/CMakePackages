@@ -3,6 +3,9 @@ project(WaTools LANGUAGES CXX)
 
 set(CMAKE_SUPPRESS_DEVELOPER_WARNINGS TRUE)
 
+find_package(Qt6 REQUIRED)
+message(STATUS "Qt6 version is ${Qt6_VERSION}")
+
 add_subdirectory(RtMidi)
 add_subdirectory(WaToolsAudio)
 add_subdirectory(WaToolsGeneral)
