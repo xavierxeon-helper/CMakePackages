@@ -3,6 +3,8 @@
 
 #include "CompileTimeString.h"
 
+#include <QList>
+
 namespace Function
 {
    class AbstrractCaller
