@@ -13,6 +13,7 @@ TabStack::Widget::Widget(QWidget* parent)
 {
    tabBar = new QTabBar(this);
    tabBar->setDocumentMode(true);
+   tabBar->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
    connect(tabBar, &QTabBar::tabBarClicked, this, &TabStack::Widget::tabSelected);
 
    stack = new QStackedWidget(this);
@@ -21,14 +22,34 @@ TabStack::Widget::Widget(QWidget* parent)
    masterLayout->setContentsMargins(0, 0, 0, 0);
    masterLayout->setSpacing(0);
 
-   masterLayout->addWidget(tabBar, 0, 0);
-   masterLayout->addWidget(stack, 1, 0, 2, 1);
+   masterLayout->addWidget(tabBar, 0, 1);
+   masterLayout->addWidget(stack, 1, 0, 1, 3);
 
    while (depthOrder.size() < 3)
       depthOrder.append(TabBarInfo{});
 }
 
+void TabStack::Widget::clearTabs()
+{
+   while (stack->count() > 0)
+   {
+      QWidget* widget = stack->widget(0);
+      stack->removeWidget(widget);
+      widget->deleteLater();
+   }
+
+   qDeleteAll(infoList);
+   infoList.clear();
+
+   for (TabBarInfo& barInfo : depthOrder)
+   {
+      barInfo.tabOrder.clear();
+      barInfo.activeWidget = nullptr;
+   }
+}
+
 void TabStack::Widget::addTab(QWidget* widget, const QString& label, int depth)
+
 {
    stack->addWidget(widget);
 
@@ -41,10 +62,10 @@ void TabStack::Widget::addTab(QWidget* widget, const QString& label, int depth)
    depthOrder[depth].tabOrder.append(info);
 }
 
-void TabStack::Widget::setCornerWidget(QWidget* widget)
+void TabStack::Widget::setCornerWidget(QWidget* widget, bool right)
 {
    QGridLayout* masterLayout = qobject_cast<QGridLayout*>(layout());
-   masterLayout->addWidget(widget, 0, 1, Qt::AlignRight);
+   masterLayout->addWidget(widget, 0, right ? 2 : 0);
 }
 
 QStringList TabStack::Widget::getAllTabLabels() const

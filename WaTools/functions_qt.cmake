@@ -12,7 +12,6 @@ function(add_qml_module_dir SUBPATH NAME)
       ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/*.qml
       ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/*.js
    )
-   target_sources(${PROJECT_NAME} PRIVATE ${QML_FILES})
 
    qt_add_qml_module(${PROJECT_NAME}_QML
       URI ${NAME}

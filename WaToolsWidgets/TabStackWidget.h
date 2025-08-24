@@ -18,8 +18,9 @@ namespace TabStack
       Widget(QWidget* parent);
 
    public:
+      void clearTabs();
       void addTab(QWidget* widget, const QString& label, int depth = 0);
-      void setCornerWidget(QWidget* widget);
+      void setCornerWidget(QWidget* widget, bool right = true);
 
       QStringList getAllTabLabels() const;
 
