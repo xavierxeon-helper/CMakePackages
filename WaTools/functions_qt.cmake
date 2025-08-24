@@ -21,6 +21,7 @@ function(add_qml_module_dir SUBPATH NAME)
       RESOURCE_PREFIX "/qt/qml"
       SOURCES ${QML_SOURCE_FILES}
       QML_FILES ${QML_FILES}
+      OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${NAME}
    )
 
    target_link_libraries(${PROJECT_NAME}_QML PUBLIC Qt6::Quick)

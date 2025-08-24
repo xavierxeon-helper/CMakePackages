@@ -25,7 +25,10 @@ endfunction()
 
 # add a list of subdirs
 function(add_sub_dirs_files) # args = list of directories
-   foreach(DIR ${ARGN})
+
+   cmake_parse_arguments(PARSE_ARGV 0 ADD_SUB_DIR "" "" "DIRS;SKIP" )
+
+   foreach(DIR ${ADD_SUB_DIR_DIRS})
       if(NOT IS_DIRECTORY ${DIR})
          continue()
       endif()
@@ -34,8 +37,13 @@ function(add_sub_dirs_files) # args = list of directories
          continue()
       endif()
 
+      if(${DIR} IN_LIST ADD_SUB_DIR_SKIP)
+         #message(STATUS "Skipping directory files: ${DIR}")
+         continue()
+      endif()
+
       if(EXISTS ${DIR}/CMakeLists.txt)
-         message(STATUS "Skipping directory files: ${DIR}")
+         #message(STATUS "Skipping directory files: ${DIR}")
          continue()
       endif()
 
@@ -62,7 +70,10 @@ function(add_sub_dirs_files) # args = list of directories
          endif()
          list(APPEND SUB_DIRECTORIES ${ENTRY})
       endforeach()
-      add_sub_dirs_files(${SUB_DIRECTORIES})
+
+      if(SUB_DIRECTORIES)
+         add_sub_dirs_files(DIRS ${SUB_DIRECTORIES} SKIP ${ADD_SUB_DIR_SKIP})
+      endif()
 
    endforeach()
 endfunction()
@@ -71,9 +82,7 @@ endfunction()
 function(add_all_subdirs_files SUB_DIR_PATH) # args = list of skip directories
    include_directories("${SUB_DIR_PATH}")
    file(GLOB SUB_DIRECTORIES LIST_DIRECTORIES true "${SUB_DIR_PATH}/*")
-
-   list(REMOVE_ITEM SUB_DIRECTORIES ${ARGN})
-   add_sub_dirs_files(${SUB_DIRECTORIES})
+   add_sub_dirs_files(DIRS ${SUB_DIRECTORIES} SKIP ${ARGN})
 endfunction()
 
 # precompiled headers
