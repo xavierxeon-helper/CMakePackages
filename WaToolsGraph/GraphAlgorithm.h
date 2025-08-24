@@ -24,7 +24,7 @@ public:
       using Map = QMap<int, Path>; // end vertex index vs path
    };
 
-   struct Tree
+   struct WATOOLSGRAPH_DECLSPEC Tree
    {
       struct VertexData
       {
