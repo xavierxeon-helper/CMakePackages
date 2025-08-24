@@ -49,7 +49,6 @@ void TabStack::Widget::clearTabs()
 }
 
 void TabStack::Widget::addTab(QWidget* widget, const QString& label, int depth)
-
 {
    stack->addWidget(widget);
 
