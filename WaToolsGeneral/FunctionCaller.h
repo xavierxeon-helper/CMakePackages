@@ -7,21 +7,21 @@
 
 namespace Function
 {
-   class AbstrractCaller
+   class AbstractCaller
    {
    protected:
-      AbstrractCaller() = default;
+      AbstractCaller() = default;
    };
 
    template <typename T>
    concept CallerClass = requires(T instance) //
    {
-      std::is_base_of<AbstrractCaller, T>::value;
+      std::is_base_of<AbstractCaller, T>::value;
    };
 
    /// @brief allows an instance of derived class to call functions on all other instance (ncluding itself)
    template <CompileTimeString tag>
-   class Caller : public AbstrractCaller
+   class Caller : public AbstractCaller
    {
    public:
       Caller();
