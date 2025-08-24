@@ -29,13 +29,13 @@ endfunction()
 
 function(add_qml_source_dir SUBPATH)
 
-   file(GLOB QML_FILES
+   file(GLOB_RECURSE QML_FILES
       RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/
       ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/*.qml
       ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/*.js
    )
 
-   #message(STATUS "QML_FILES for ${PROJECT_NAME} found @ ${SUBPATH} = ${QML_FILES}")
+   message(STATUS "QML_FILES for ${PROJECT_NAME} found @ ${SUBPATH} = ${QML_FILES}")
 
    qt6_add_resources(${PROJECT_NAME} "${PROJECT_NAME}_${SUBPATH}"
        PREFIX "/"
