@@ -1,18 +1,16 @@
-#include "DiscreteMathsAlgorithm.h"
+#include "GraphAlgorithm.h"
 
 #include <QDebug>
 #include <QMap>
 #include <QQueue>
 
-#include "DiscreteMathsGraph.h"
-
 // path
 
-const double DiscreteMaths::Algorithm::Path::invalidDistance = std::numeric_limits<double>::max();
+const double Graph::Algorithm::Path::invalidDistance = std::numeric_limits<double>::max();
 
 // tree
 
-DiscreteMaths::Algorithm::Tree::VertexData DiscreteMaths::Algorithm::Tree::findData(const int vertexIndex) const
+Graph::Algorithm::Tree::VertexData Graph::Algorithm::Tree::findData(const int vertexIndex) const
 {
    for (const VertexData& data : verticies)
    {
@@ -23,7 +21,7 @@ DiscreteMaths::Algorithm::Tree::VertexData DiscreteMaths::Algorithm::Tree::findD
    return VertexData{};
 }
 
-DiscreteMaths::Algorithm::Path DiscreteMaths::Algorithm::Tree::compilePath(const int vertexIndex) const
+Graph::Algorithm::Path Graph::Algorithm::Tree::compilePath(const int vertexIndex) const
 {
    Path path;
 
@@ -41,14 +39,14 @@ DiscreteMaths::Algorithm::Path DiscreteMaths::Algorithm::Tree::compilePath(const
    return path;
 }
 
-int DiscreteMaths::Algorithm::Tree::compileDepth(const int vertexIndex) const
+int Graph::Algorithm::Tree::compileDepth(const int vertexIndex) const
 {
    return findData(vertexIndex).depth;
 }
 
 // algorithm
 
-DiscreteMaths::Algorithm::Algorithm(const Graph* graph)
+Graph::Algorithm::Algorithm(const Graph* graph)
    : graph(graph)
    , edgeMatrix()
 {
@@ -70,7 +68,7 @@ DiscreteMaths::Algorithm::Algorithm(const Graph* graph)
    }
 }
 
-DiscreteMaths::Algorithm::Tree DiscreteMaths::Algorithm::depthFirst(const Vertex* vertexStart) const
+Graph::Algorithm::Tree Graph::Algorithm::depthFirst(const Vertex* vertexStart) const
 {
    const int startIndex = graph->vertexIndex(vertexStart);
    QVector<bool> visited(graph->vertexCount(), false);
@@ -100,7 +98,7 @@ DiscreteMaths::Algorithm::Tree DiscreteMaths::Algorithm::depthFirst(const Vertex
    return tree;
 }
 
-DiscreteMaths::Algorithm::Tree DiscreteMaths::Algorithm::breadthFirst(const Vertex* vertexStart) const
+Graph::Algorithm::Tree Graph::Algorithm::breadthFirst(const Vertex* vertexStart) const
 {
    const int startIndex = graph->vertexIndex(vertexStart);
    QVector<bool> visited(graph->vertexCount(), false);
@@ -138,7 +136,7 @@ DiscreteMaths::Algorithm::Tree DiscreteMaths::Algorithm::breadthFirst(const Vert
    return tree;
 }
 
-DiscreteMaths::Algorithm::Path::Map DiscreteMaths::Algorithm::pathDijkstra(const Vertex* vertexStart) const
+Graph::Algorithm::Path::Map Graph::Algorithm::pathDijkstra(const Vertex* vertexStart) const
 {
    QVector<double> distances(graph->vertexCount(), Path::invalidDistance);
    const int startIndex = graph->vertexIndex(vertexStart);
@@ -203,7 +201,7 @@ DiscreteMaths::Algorithm::Path::Map DiscreteMaths::Algorithm::pathDijkstra(const
    return pathMap;
 }
 
-DiscreteMaths::Algorithm::TreeEdges DiscreteMaths::Algorithm::compileTreeEdges(const Tree& tree) const
+Graph::Algorithm::TreeEdges Graph::Algorithm::compileTreeEdges(const Tree& tree) const
 {
    TreeEdges treeEdges;
 
@@ -219,7 +217,7 @@ DiscreteMaths::Algorithm::TreeEdges DiscreteMaths::Algorithm::compileTreeEdges(c
    return treeEdges;
 }
 
-DiscreteMaths::Algorithm::IndexList DiscreteMaths::Algorithm::topologicalSort() const
+Graph::Algorithm::IndexList Graph::Algorithm::topologicalSort() const
 {
    QVector<int> in_degree(graph->vertexCount(), 0);
    QQueue<int> startNodes;
@@ -263,7 +261,7 @@ DiscreteMaths::Algorithm::IndexList DiscreteMaths::Algorithm::topologicalSort() 
    return list;
 }
 
-int DiscreteMaths::Algorithm::findEdgeIndex(const int vertexIndexA, const int vertexIndexB) const
+int Graph::Algorithm::findEdgeIndex(const int vertexIndexA, const int vertexIndexB) const
 {
    if (-1 == vertexIndexA || -1 == vertexIndexB)
       return -1;
@@ -274,7 +272,7 @@ int DiscreteMaths::Algorithm::findEdgeIndex(const int vertexIndexA, const int ve
    return graph->findEdgeIndex(vertexA, vertexB);
 }
 
-DiscreteMaths::Algorithm::IndexList DiscreteMaths::Algorithm::compileAdjacencyList(const int vertexIndex) const
+Graph::Algorithm::IndexList Graph::Algorithm::compileAdjacencyList(const int vertexIndex) const
 {
    IndexList indexList;
 
