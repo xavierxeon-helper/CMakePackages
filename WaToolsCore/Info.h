@@ -1,11 +1,11 @@
 #ifndef InfoH
 #define InfoH
 
-#include "WaToolsQtExportDef.h"
+#include "WaToolsCoreExportDef.h"
 
 #include <QString>
 
-struct WATOOLSQT_DECLSPEC Info
+struct WATOOLSCORE_DECLSPEC Info
 {
    static QString getHostName();
 };

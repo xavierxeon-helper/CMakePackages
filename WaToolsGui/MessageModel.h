@@ -1,11 +1,11 @@
 #ifndef MessageModelH
 #define MessageModelH
 
-#include "WaToolsQtExportDef.h"
+#include "WaToolsGuiExportDef.h"
 #include <Logger.h>
 #include <QStandardItemModel>
 
-class WATOOLSQT_DECLSPEC MessageModel : public QStandardItemModel, private Logger::Target
+class WATOOLSGUI_DECLSPEC MessageModel : public QStandardItemModel, private Logger::Target
 {
    Q_OBJECT
 

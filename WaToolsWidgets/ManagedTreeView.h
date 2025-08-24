@@ -1,14 +1,14 @@
 #ifndef ManagedTreeViewH
 #define ManagedTreeViewH
 
-#include "WaToolsQtExportDef.h"
+#include "WaToolsWidgetsExportDef.h"
 #include <QTreeView>
 
 #include <QStandardItem>
 
 namespace Managed
 {
-   class WATOOLSQT_DECLSPEC TreeView : public QTreeView
+   class WATOOLSWIDGETS_DECLSPEC TreeView : public QTreeView
    {
       Q_OBJECT
 

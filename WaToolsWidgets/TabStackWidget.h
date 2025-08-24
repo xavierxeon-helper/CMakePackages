@@ -1,7 +1,7 @@
 #ifndef TabStackWidgetH
 #define TabStackWidgetH
 
-#include "WaToolsQtExportDef.h"
+#include "WaToolsWidgetsExportDef.h"
 #include <QWidget>
 
 #include <QStackedWidget>
@@ -10,7 +10,7 @@
 
 namespace TabStack
 {
-   class WATOOLSQT_DECLSPEC Widget : public QWidget
+   class WATOOLSWIDGETS_DECLSPEC Widget : public QWidget
    {
       Q_OBJECT
 

@@ -1,11 +1,11 @@
 #ifndef LookH
 #define LookH
 
-#include "WaToolsQtExportDef.h"
+#include "WaToolsWidgetsExportDef.h"
 
 #include <QWidget>
 
-struct WATOOLSQT_DECLSPEC Look
+struct WATOOLSWIDGETS_DECLSPEC Look
 {
    static void applyStlyeSheet(const QString& fileName, QWidget* widget);
 

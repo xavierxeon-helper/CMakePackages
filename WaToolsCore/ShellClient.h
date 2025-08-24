@@ -1,11 +1,11 @@
 #ifndef ShellClientH
 #define ShellClientH
 
-#include "WaToolsQtExportDef.h"
+#include "WaToolsCoreExportDef.h"
 
 #include <QObject>
 
-class WATOOLSQT_DECLSPEC ShellClient
+class WATOOLSCORE_DECLSPEC ShellClient
 {
 public:
    static QByteArray executeLocal(const QString& command, QByteArray* error = nullptr);

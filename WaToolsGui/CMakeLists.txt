@@ -7,9 +7,10 @@ set(CMAKE_COMPILE_WARNING_AS_ERROR ON)
 
 include(../CommonBuild.cmake)
 
-find_package(Qt6 REQUIRED COMPONENTS Core)
+find_package(Qt6 REQUIRED COMPONENTS Gui)
 set(CMAKE_AUTOMOC ON)
 
+find_package(WaTools REQUIRED COMPONENTS Log)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 file(GLOB SOURCE_FILES
@@ -21,5 +22,5 @@ file(GLOB SOURCE_FILES
 qt_add_library(${PROJECT_NAME} ${WATOOLS_LIB_TYPE} ${SOURCE_FILES})
 add_compile_definitions(EXTENSION_WATOOLSGUI)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Core)
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Gui)
 

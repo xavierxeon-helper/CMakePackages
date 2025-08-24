@@ -1,13 +1,13 @@
 #ifndef ActionPopulationH
 #define ActionPopulationH
 
-#include "WaToolsQtExportDef.h"
+#include "WaToolsWidgetsExportDef.h"
 #include <QObject>
 
 #include <QDomElement>
 #include <QToolBar>
 
-class WATOOLSQT_DECLSPEC ActionPopulation : public QObject
+class WATOOLSWIDGETS_DECLSPEC ActionPopulation : public QObject
 {
    Q_OBJECT
 

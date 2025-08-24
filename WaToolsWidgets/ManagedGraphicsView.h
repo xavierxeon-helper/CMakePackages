@@ -1,13 +1,12 @@
 #ifndef ManagedGraphicsViewH
 #define ManagedGraphicsViewH
 
+#include "WaToolsWidgetsExportDef.h"
 #include <QGraphicsView>
-
-#include "WaToolsQtExportDef.h"
 
 namespace Managed
 {
-   class WATOOLSQT_DECLSPEC GraphicsView : public QGraphicsView
+   class WATOOLSWIDGETS_DECLSPEC GraphicsView : public QGraphicsView
    {
       Q_OBJECT
 

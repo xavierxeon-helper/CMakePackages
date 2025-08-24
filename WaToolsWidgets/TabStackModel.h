@@ -1,14 +1,14 @@
 #ifndef TabStackModelH
 #define TabStackModelH
 
-#include "WaToolsQtExportDef.h"
+#include "WaToolsWidgetsExportDef.h"
 #include <QStandardItemModel>
 
 namespace TabStack
 {
    class Widget;
 
-   class WATOOLSQT_DECLSPEC Model : public QStandardItemModel
+   class WATOOLSWIDGETS_DECLSPEC Model : public QStandardItemModel
    {
       Q_OBJECT
 

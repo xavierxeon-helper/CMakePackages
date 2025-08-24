@@ -1,13 +1,12 @@
 #ifndef ManagedTableViewH
 #define ManagedTableViewH
 
+#include "WaToolsWidgetsExportDef.h"
 #include <QTableView>
-
-#include "WaToolsQtExportDef.h"
 
 namespace Managed
 {
-   class WATOOLSQT_DECLSPEC TableView : public QTableView
+   class WATOOLSWIDGETS_DECLSPEC TableView : public QTableView
    {
       Q_OBJECT
    public:
