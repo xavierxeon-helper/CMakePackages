@@ -40,4 +40,11 @@ void Function::Caller<tag>::callOnAll(void (TargetClass::*function)())
       std::invoke(function, target);
    }
 }
+
+template <CompileTimeString tag>
+size_t Function::Caller<tag>::instanceCount()
+{
+   return instances.size();
+}
+
 #endif // NOT FunctionCallerHPP

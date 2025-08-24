@@ -34,6 +34,8 @@ namespace Function
       template <CallerClass TargetClass>
       static void callOnAll(void (TargetClass::*function)());
 
+      static size_t instanceCount();
+
    private:
       static QList<Caller*> instances;
    };
