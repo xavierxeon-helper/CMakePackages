@@ -62,7 +62,7 @@ def createComponent(name, useQt=True):
 
       line(f'#ifndef {name}ExportDefH')
       line(f'#define {name}ExportDefH')
-      line('')
+      line()
       line('// clang-format off')
       line('#if defined(__unix) || defined(__QNXNTO__) || defined(__APPLE__)')
       line(f'   #define {macroName}_DECLSPEC')
@@ -74,65 +74,68 @@ def createComponent(name, useQt=True):
       line('   #endif')
       line('#endif')
       line('// clang-format on')
-      line('')
+      line()
       line(f'#endif // NOT {name}ExportDefH')
-      line('')
+      line()
 
    with FileWriter(f'{name}Config.cmake') as line:
 
       line('include_directories(${CMAKE_CURRENT_LIST_DIR})')
       line('include(${CMAKE_CURRENT_LIST_DIR}/../CommonUse.cmake)')
-      line('')
+      line()
       if useQt:
          line('find_package(Qt6 REQUIRED COMPONENTS Core)')
          line(f'link_libraries(Qt6::Core {name})')
       else:
          line(f'link_libraries({name})')
-      line('')
+      line()
 
    with FileWriter(f'CMakeLists.txt') as line:
 
       line('cmake_minimum_required(VERSION 3.20)')
       line(f'project({name} LANGUAGES CXX)')
-      line('')
+      line()
       line('set(CMAKE_CXX_STANDARD 20)')
       line('set(CMAKE_CXX_STANDARD_REQUIRED ON)')
       line('set(CMAKE_COMPILE_WARNING_AS_ERROR ON)')
-      line('')
+      line()
       line('include(../CommonBuild.cmake)')
-      line('')
+      line()
 
       if useQt:
          line('find_package(Qt6 REQUIRED COMPONENTS Core)')
          line('set(CMAKE_AUTOMOC ON)')
-         line('')
+         line()
 
       line('include_directories(${CMAKE_CURRENT_SOURCE_DIR})')
-      line('')
-      line('file(GLOB SOURCE_FILES')
+      line()
+      line('file(GLOB HEADER_FILES')
       line('   ${CMAKE_CURRENT_SOURCE_DIR}/*.h')
       line('   ${CMAKE_CURRENT_SOURCE_DIR}/*.hpp')
+      line(')')
+      line()
+      line('file(GLOB SOURCE_FILES')
       line('   ${CMAKE_CURRENT_SOURCE_DIR}/src/*.h')
       line('   ${CMAKE_CURRENT_SOURCE_DIR}/src/*.hpp')
       line('   ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp')
       line(')')
-      line('')
+      line()
 
       if useQt:
-         line('qt_add_library(${PROJECT_NAME} ${WATOOLS_LIB_TYPE} ${SOURCE_FILES})')
+         line('qt_add_library(${PROJECT_NAME} ${WATOOLS_LIB_TYPE} ${HEADER_FILES} ${SOURCE_FILES})')
       else:
-         line('add_library(${PROJECT_NAME} ${WATOOLS_LIB_TYPE} ${SOURCE_FILES})')
+         line('add_library(${PROJECT_NAME} ${WATOOLS_LIB_TYPE} ${HEADER_FILES} ${SOURCE_FILES})')
       line(f'add_compile_definitions(EXTENSION_{macroName})')
 
       if useQt:
-         line('')
+         line()
          line('target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Core)')
-      line('')
+      line()
 
    with FileWriter('README.md') as line:
 
       line(f'# {name}')
-      line('')
+      line()
 
 
 def main():

@@ -13,17 +13,20 @@ set(CMAKE_AUTOMOC ON)
 find_package(WaTools REQUIRED COMPONENTS Log)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
-file(GLOB SOURCE_FILES
+file(GLOB HEADER_FILES
    ${CMAKE_CURRENT_SOURCE_DIR}/*.h
    ${CMAKE_CURRENT_SOURCE_DIR}/*.hpp
+)
+
+file(GLOB_RECURSE SOURCE_FILES
    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.h
    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.hpp
    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
 )
 
-add_os_files("src")
+add_os_files(src_os)
 
-qt_add_library(${PROJECT_NAME} ${WATOOLS_LIB_TYPE} ${SOURCE_FILES})
+qt_add_library(${PROJECT_NAME} ${WATOOLS_LIB_TYPE} ${HEADER_FILES} ${SOURCE_FILES})
 add_compile_definitions(EXTENSION_WATOOLSWIDGETS)
 
 add_qml_module_dir(Gui WaToolsQt)
