@@ -1,11 +1,11 @@
 #ifndef OscMessageH
 #define OscMessageH
 
-#include "WaToolsNetworkExportDef.h"
+#include "WaToolsGuiExportDef.h"
 
 #include <QVariant>
 
-class WATOOLSNETWORK_DECLSPEC OscMessage
+class WATOOLSGUI_DECLSPEC OscMessage
 {
 public:
    OscMessage() = delete;

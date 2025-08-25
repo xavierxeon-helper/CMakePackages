@@ -1,8 +1,9 @@
 #ifndef BusyCursorH
 #define BusyCursorH
 
+#include "WaToolsGuiExportDef.h"
 
-class BusyCursor
+class WATOOLSGUI_DECLSPEC BusyCursor
 {
 public:
    BusyCursor();

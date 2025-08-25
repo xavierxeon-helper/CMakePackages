@@ -2,12 +2,13 @@
 #define SecureNetworkClientH
 
 #include "SecureNetworkSocket.h"
+#include "WaToolsNetworkExportDef.h"
 
 #include <QSslConfiguration>
 
 namespace SecureNetwork
 {
-   class Client : public Socket
+   class WATOOLSNETWORK_DECLSPEC Client : public Socket
    {
       Q_OBJECT
    public:

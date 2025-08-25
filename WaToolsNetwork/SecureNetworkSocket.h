@@ -1,6 +1,7 @@
 #ifndef SecureNetworkSocketH
 #define SecureNetworkSocketH
 
+#include "WaToolsNetworkExportDef.h"
 #include <QObject>
 
 #include <QPointer>
@@ -10,7 +11,7 @@
 
 namespace SecureNetwork
 {
-   class Socket : public QObject
+   class WATOOLSNETWORK_DECLSPEC Socket : public QObject
    {
       Q_OBJECT
    public:

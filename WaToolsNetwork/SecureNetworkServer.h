@@ -1,6 +1,7 @@
 #ifndef SecureNetworkServerH
 #define SecureNetworkServerH
 
+#include "WaToolsNetworkExportDef.h"
 #include <QObject>
 
 #include <QSslConfiguration>
@@ -12,7 +13,7 @@ namespace SecureNetwork
    class Socket;
    class ServerInternal;
 
-   class Server : public QObject
+   class WATOOLSNETWORK_DECLSPEC Server : public QObject
    {
       Q_OBJECT
    public:
