@@ -5,6 +5,7 @@
 
 namespace Network
 {
+
    class WATOOLSNETWORK_DECLSPEC Settings
    {
    public:
@@ -21,6 +22,7 @@ namespace Network
       static bool shallUseExceptions;
       bool isVerbose;
    };
+
 } // namespace Network
 
 #endif // NOT NetworkSettingsH
