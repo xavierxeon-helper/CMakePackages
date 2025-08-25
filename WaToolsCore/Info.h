@@ -8,6 +8,7 @@
 struct WATOOLSCORE_DECLSPEC Info
 {
    static QString getHostName();
+   static QString whatCppStandard();
 };
 
 #endif // NOT InfoH
