@@ -112,6 +112,8 @@ def createComponent(name, useQt=True):
       line('file(GLOB SOURCE_FILES')
       line('   ${CMAKE_CURRENT_SOURCE_DIR}/*.h')
       line('   ${CMAKE_CURRENT_SOURCE_DIR}/*.hpp')
+      line('   ${CMAKE_CURRENT_SOURCE_DIR}/src/*.h')
+      line('   ${CMAKE_CURRENT_SOURCE_DIR}/src/*.hpp')
       line('   ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp')
       line(')')
       line('')

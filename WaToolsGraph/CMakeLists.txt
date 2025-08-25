@@ -15,6 +15,8 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 file(GLOB SOURCE_FILES
    ${CMAKE_CURRENT_SOURCE_DIR}/*.h
    ${CMAKE_CURRENT_SOURCE_DIR}/*.hpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/*.h
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/*.hpp
    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
 )
 

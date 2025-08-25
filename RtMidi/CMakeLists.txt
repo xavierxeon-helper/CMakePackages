@@ -15,7 +15,7 @@ file(GLOB SOURCE_FILES
 )
 
 add_library(${PROJECT_NAME} ${SOURCE_FILES})
-add_compile_definitions(RTMIDI_EXPORT)
+add_compile_definitions(RTMIDI_EXPORT JACK_HAS_PORT_RENAME)
 
 if(APPLE)
    add_compile_definitions(__MACOSX_CORE__)
