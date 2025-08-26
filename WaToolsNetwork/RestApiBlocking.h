@@ -17,6 +17,8 @@ namespace AuthProvider
 
 namespace RestApi
 {
+   /// @brief Blocking REST API client
+
    class WATOOLSNETWORK_DECLSPEC Blocking : public QObject, public Network::Settings
    {
       Q_OBJECT

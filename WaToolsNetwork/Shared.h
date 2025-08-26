@@ -5,6 +5,8 @@
 
 #include <QStandardPaths>
 
+/// @brief tools for shared application
+
 template <CompileTimeString AppName>
 struct Shared
 {

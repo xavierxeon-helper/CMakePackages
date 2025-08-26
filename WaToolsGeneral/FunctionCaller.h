@@ -20,6 +20,7 @@ namespace Function
    };
 
    /// @brief allows an instance of derived class to call functions on all other instance (ncluding itself)
+
    template <CompileTimeString tag>
    class Caller : public AbstractCaller
    {

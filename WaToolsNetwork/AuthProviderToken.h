@@ -8,6 +8,8 @@
 
 namespace AuthProvider
 {
+   /// @brief Token-based authentication provider
+
    class WATOOLSNETWORK_DECLSPEC Token : public QObject
    {
       Q_OBJECT

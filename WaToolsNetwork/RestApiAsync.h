@@ -6,6 +6,8 @@
 
 namespace RestApi
 {
+   /// @brief Asynchronous REST API client
+
    class WATOOLSNETWORK_DECLSPEC Async : public Blocking
    {
       Q_OBJECT

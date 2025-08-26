@@ -8,6 +8,8 @@
 
 namespace Network
 {
+   /// @brief Exception class for network-related errors
+
    class WATOOLSNETWORK_DECLSPEC StatusException : public QException
    {
    public:

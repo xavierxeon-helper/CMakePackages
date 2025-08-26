@@ -5,6 +5,7 @@
 
 namespace Network
 {
+   /// @brief Network settings class
 
    class WATOOLSNETWORK_DECLSPEC Settings
    {

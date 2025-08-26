@@ -1,6 +1,8 @@
 #ifndef WaToolsNetworkExportDefH
 #define WaToolsNetworkExportDefH
 
+/// @addtogroup WaToolsNetwork
+
 // clang-format off
 #if defined(__unix) || defined(__QNXNTO__) || defined(__APPLE__)
    #define WATOOLSNETWORK_DECLSPEC

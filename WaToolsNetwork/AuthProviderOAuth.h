@@ -10,6 +10,8 @@
 
 namespace AuthProvider
 {
+   /// @brief OAuth2 authentication provider
+
    class WATOOLSNETWORK_DECLSPEC OAuth : public Token, public Network::Settings
    {
       Q_OBJECT
