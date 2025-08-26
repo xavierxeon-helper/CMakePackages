@@ -1,7 +1,7 @@
 # CMakePackages
 cmake packages
 
-[Documentation](https://xavierxeon.github.io/WaTools/html/index.html)
+[Documentation](https://xavierxeon.github.io/WaTools/html/index.html){:target="_blank"}
 
 ## install
 set CMAKE_PREFIX_PATH to include this directory
