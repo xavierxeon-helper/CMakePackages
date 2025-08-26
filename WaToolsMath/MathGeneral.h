@@ -19,6 +19,7 @@ namespace Math
    WATOOLSMATH_DECLSPEC size_t getNearestPowerOfTwo(const size_t& num);
    WATOOLSMATH_DECLSPEC bool isPowerOfTwo(const size_t& num);
 
+   // for 3d version see Math::Vector3
    template <typename RealType = float>
    std::complex<RealType> cartesianToPolar(const std::complex<RealType>& cartesian);
 

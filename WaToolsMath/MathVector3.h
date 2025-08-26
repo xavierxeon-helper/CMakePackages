@@ -50,6 +50,7 @@ namespace Math
       const double& getY() const;
       const double& getZ() const;
 
+      // for 2d version see MathGeneral.h
       static Vector3 fromSpherical(const Spherical& spherical, const bool fromDegree = true);
       Spherical toSpherical(const bool toDegree = true) const;
 
