@@ -2,17 +2,19 @@
 
 HERE=$(dirname "$(readlink -f "$0")")
 
-cd $HERE
-doxygen WaTools.doxy
+ROOT_DIR=/home/waspe/tmp/
 
-echo "create PDF (y/N)?"
-read CREATE_PDF
-if [ "$CREATE_PDF" == "y" ] 
+if [ ! -d $ROOT_DIR/xavierxeon.github.io ]
 then
-   cd $HERE/documentation/latex
-   make
-
-   cp $HERE/documentation/latex/refman.pdf $HERE/documentation/WaTools.pdf
-   cd $HERE
+  cd $ROOT_DIR
+  git clone git@github.com:xavierxeon/xavierxeon.github.io.git
 fi
 
+cd $HERE
+export WATOOLS_DOC_PATH=$ROOT_DIR/xavierxeon.github.io/WaTools
+doxygen WaTools.doxy
+
+cd $ROOT_DIR/xavierxeon.github.io
+git add *
+git commit -m "Update documentation"
+git push
