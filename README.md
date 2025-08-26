@@ -1,6 +1,8 @@
 # CMakePackages
 cmake packages
 
+<a href="https://xavierxeon.github.io/WaTools/html/index.html" target="_blank">Documentation</a>
+
 [Documentation](https://xavierxeon.github.io/WaTools/html/index.html){:target="_blank"}
 
 ## install
