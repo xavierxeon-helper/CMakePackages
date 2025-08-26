@@ -22,7 +22,7 @@ namespace Math
       double radius = 0.0;
    };
 
-   class Vector3
+   class WATOOLSMATH_DECLSPEC Vector3
    {
       enum Index
       {
