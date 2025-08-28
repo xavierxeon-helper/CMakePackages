@@ -9,7 +9,7 @@ QString Info::getHostName()
    {
       QString hostName = QSysInfo::machineHostName();
 
-      int index = hostName.indexOf('.');
+      size_t index = hostName.indexOf('.');
       if (index != -1)
          hostName = hostName.left(index);
 

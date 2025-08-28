@@ -106,7 +106,7 @@ bool SecureNetwork::Server::setPeerCommmonNameList(const QString& authUserFileNa
          continue;
       line = line.mid(4);
 
-      const int index = line.indexOf(":");
+      const size_t index = line.indexOf(":");
       line = line.mid(0, index);
 
       peerCommonNameList.append(line);

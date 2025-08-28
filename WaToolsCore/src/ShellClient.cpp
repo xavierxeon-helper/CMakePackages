@@ -14,6 +14,9 @@ QByteArray ShellClient::executeRemote(const QString& host, const QString& comman
 
 QByteArray ShellClient::execute(const QString& program, const QStringList& args, QByteArray* error)
 {
+#ifdef Q_OS_IOS
+   return QByteArray();
+#else
    QProcess process;
    process.start(program, args);
    process.waitForFinished();
@@ -23,4 +26,5 @@ QByteArray ShellClient::execute(const QString& program, const QStringList& args,
 
    const QByteArray output = process.readAllStandardOutput();
    return output;
+#endif
 }
