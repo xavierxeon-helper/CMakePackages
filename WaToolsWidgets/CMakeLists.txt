@@ -33,3 +33,9 @@ add_qml_module_dir(Gui WaToolsQt)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets Qt6::Xml Qt6::QuickWidgets)
 
+
+if(APPLE)
+   link_libraries("-framework Foundation" 
+      "-framework StoreKit"
+   )
+endif()

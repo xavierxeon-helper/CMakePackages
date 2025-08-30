@@ -6,7 +6,7 @@ find_package(WaToolsLog REQUIRED)
 link_libraries(Qt6::Widgets Qt6::Xml Qt6::QuickWidgets WaToolsWidgets)
 
 if(APPLE)
-   link_libraries("-framework Foundation" "-framework StoreKit")
+   #link_libraries("-framework Foundation" "-framework StoreKit")
 endif()
 
 

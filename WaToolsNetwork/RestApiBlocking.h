@@ -32,14 +32,14 @@ namespace RestApi
       virtual QJsonObject post(const QString& endpoint, const QJsonObject& payload = QJsonObject(), const QUrlQuery& params = QUrlQuery()) const;
       virtual QJsonObject put(const QString& endpoint, const QJsonObject& payload = QJsonObject(), const QUrlQuery& params = QUrlQuery()) const;
 
+      void setAuthProvider(AuthProvider::Token* newProvider);
+      void setBaseUrl(const QString& url);
       const QString& getbaseUrl() const;
 
    protected:
       using ReplyGeneratorFunction = std::function<QNetworkReply*(QNetworkRequest request)>;
 
    protected:
-      void setAuthProvider(AuthProvider::Token* newProvider);
-      void setBaseUrl(const QString& url);
       void addUnauthorizedStatusCode(int code);
       QNetworkRequest createRequest(const QString& endpoint, const QUrlQuery& params) const;
 

@@ -1,6 +1,7 @@
 #include "Info.h"
 
 #include <QMap>
+
 #include <QSysInfo>
 
 QString Info::getHostName()
