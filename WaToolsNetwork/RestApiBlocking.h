@@ -34,7 +34,7 @@ namespace RestApi
 
       void setAuthProvider(AuthProvider::Token* newProvider);
       void setBaseUrl(const QString& url);
-      const QString& getbaseUrl() const;
+      const QString& getBaseUrl() const;
 
    protected:
       using ReplyGeneratorFunction = std::function<QNetworkReply*(QNetworkRequest request)>;

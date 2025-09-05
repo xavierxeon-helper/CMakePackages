@@ -60,7 +60,7 @@ QJsonObject RestApi::Blocking::put(const QString& endpoint, const QJsonObject& p
    return handleReply(request, replyGenerator);
 }
 
-const QString& RestApi::Blocking::getbaseUrl() const
+const QString& RestApi::Blocking::getBaseUrl() const
 {
    return baseUrl;
 }
