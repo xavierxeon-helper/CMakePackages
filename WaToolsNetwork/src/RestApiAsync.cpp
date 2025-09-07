@@ -51,17 +51,18 @@ void RestApi::Async::handleReplyAsync(CallbackFunction callback, QNetworkRequest
 
    auto onFinshed = [this, reply, request, callback, replyGenerator]()
    {
-      const int statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-      const QByteArray replyContent = reply->readAll();
+      Result result;
+      result.statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+      result.raw = reply->readAll();
       reply->deleteLater();
 
-      const QJsonObject content = FileTools::parseBytes(replyContent);
+      result.parseJson();
 
-      if (200 == statusCode)
-         return callback(content);
+      if (200 == result.statusCode)
+         return callback(result);
 
-      const QJsonObject blockingReply = handleReply(request, replyGenerator);
-      return callback(blockingReply);
+      result = handleReply(request, replyGenerator);
+      return callback(result);
    };
 
    QObject::connect(reply, &QNetworkReply::finished, onFinshed);

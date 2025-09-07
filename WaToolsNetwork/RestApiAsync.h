@@ -13,7 +13,7 @@ namespace RestApi
       Q_OBJECT
 
    public:
-      using CallbackFunction = std::function<void(QJsonObject result)>;
+      using CallbackFunction = std::function<void(Result result)>;
 
    public:
       Async(QObject* parent, const QString& baseUrl);

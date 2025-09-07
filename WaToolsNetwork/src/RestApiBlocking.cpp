@@ -6,7 +6,7 @@
 #include <FileTools.h>
 
 #include "AuthProviderToken.h"
-#include "NetworkExceptions.h"
+#include "RestApiException.h"
 
 RestApi::Blocking::Blocking(QObject* parent, const QString& baseUrl)
    : QObject(parent)
@@ -22,7 +22,7 @@ RestApi::Blocking::Blocking(QObject* parent, const QString& baseUrl)
    unauthorizedStatusCodes.append(401);
 }
 
-QJsonObject RestApi::Blocking::get(const QString& endpoint, const QUrlQuery& params) const
+RestApi::Result RestApi::Blocking::get(const QString& endpoint, const QUrlQuery& params) const
 {
    QNetworkRequest request = createRequest(endpoint, params);
 
@@ -30,7 +30,7 @@ QJsonObject RestApi::Blocking::get(const QString& endpoint, const QUrlQuery& par
    return handleReply(request, replyGenerator);
 }
 
-QByteArray RestApi::Blocking::getRaw(const QString& endpoint, const QUrlQuery& params) const
+RestApi::ResultRaw RestApi::Blocking::getRaw(const QString& endpoint, const QUrlQuery& params) const
 {
    QNetworkRequest request = createRequest(endpoint, params);
 
@@ -38,7 +38,7 @@ QByteArray RestApi::Blocking::getRaw(const QString& endpoint, const QUrlQuery& p
    return handleReplyRaw(request, replyGenerator);
 }
 
-QJsonObject RestApi::Blocking::post(const QString& endpoint, const QJsonObject& payload, const QUrlQuery& params) const
+RestApi::Result RestApi::Blocking::post(const QString& endpoint, const QJsonObject& payload, const QUrlQuery& params) const
 {
    QNetworkRequest request = createRequest(endpoint, params);
    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -49,7 +49,7 @@ QJsonObject RestApi::Blocking::post(const QString& endpoint, const QJsonObject& 
    return handleReply(request, replyGenerator);
 }
 
-QJsonObject RestApi::Blocking::put(const QString& endpoint, const QJsonObject& payload, const QUrlQuery& params) const
+RestApi::Result RestApi::Blocking::put(const QString& endpoint, const QJsonObject& payload, const QUrlQuery& params) const
 {
    QNetworkRequest request = createRequest(endpoint, params);
    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -100,7 +100,7 @@ QNetworkRequest RestApi::Blocking::createRequest(const QString& endpoint, const 
    return request;
 }
 
-QJsonObject RestApi::Blocking::handleReply(QNetworkRequest request, ReplyGeneratorFunction replyGenerator) const
+RestApi::Result RestApi::Blocking::handleReply(QNetworkRequest request, ReplyGeneratorFunction replyGenerator) const
 {
    auto updateToken = [&]() -> bool
    {
@@ -112,11 +112,10 @@ QJsonObject RestApi::Blocking::handleReply(QNetworkRequest request, ReplyGenerat
    };
 
    if (provider->isNull() && !updateToken())
-      return QJsonObject();
+      return Result{};
 
    QEventLoop loop;
-   int statusCode = 0;
-   QJsonObject content;
+   Result result;
 
    auto handleReplyInternal = [&]() -> bool
    {
@@ -126,51 +125,51 @@ QJsonObject RestApi::Blocking::handleReply(QNetworkRequest request, ReplyGenerat
       QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
       loop.exec();
 
-      statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-      const QByteArray replyContent = reply->readAll();
+      result.statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+      result.raw = reply->readAll();
       reply->deleteLater();
 
-      content = FileTools::parseBytes(replyContent);
+      result.parseJson();
 
-      if (200 == statusCode)
+      if (200 == result.statusCode)
       {
          if (verbose())
             qDebug() << "good reply for" << request.url().toString();
 
          return true;
       }
-      else if (!unauthorizedStatusCodes.contains(statusCode))
+      else if (!unauthorizedStatusCodes.contains(result.statusCode))
       {
-         qWarning() << "unhandled status code" << statusCode << "for" << request.url().toString();
+         qWarning() << "unhandled status code" << result.statusCode << "for" << request.url().toString();
          if (useExceptions())
          {
-            throw new Network::StatusException(statusCode, content);
+            throw new StatusException(result.statusCode, result.json);
          }
          else
          {
-            qWarning() << content;
+            qWarning() << result.raw;
             return true;
          }
       }
       else if (verbose())
       {
          qDebug() << "STATUS UNAUTHORIZED" << request.url().toString();
-         qDebug() << content;
+         qDebug() << result.raw;
       }
       return false;
    };
 
    if (handleReplyInternal())
-      return content;
+      return result;
 
    if (!updateToken())
-      return content;
+      return result;
 
    handleReplyInternal();
-   return content;
+   return result;
 }
 
-QByteArray RestApi::Blocking::handleReplyRaw(QNetworkRequest request, ReplyGeneratorFunction replyGenerator) const
+RestApi::ResultRaw RestApi::Blocking::handleReplyRaw(QNetworkRequest request, ReplyGeneratorFunction replyGenerator) const
 {
    auto updateToken = [&]() -> bool
    {
@@ -182,11 +181,10 @@ QByteArray RestApi::Blocking::handleReplyRaw(QNetworkRequest request, ReplyGener
    };
 
    if (provider->isNull() && !updateToken())
-      return QByteArray();
+      return ResultRaw{};
 
    QEventLoop loop;
-   int statusCode = 0;
-   QByteArray replyContent;
+   ResultRaw result;
 
    auto handleReplyInternal = [&]() -> bool
    {
@@ -196,22 +194,22 @@ QByteArray RestApi::Blocking::handleReplyRaw(QNetworkRequest request, ReplyGener
       QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
       loop.exec();
 
-      statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-      replyContent = reply->readAll();
+      result.statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+      result.raw = reply->readAll();
       reply->deleteLater();
 
-      if (200 == statusCode)
+      if (200 == result.statusCode)
       {
          if (verbose())
             qDebug() << "good reply for" << request.url().toString();
 
          return true;
       }
-      else if (!unauthorizedStatusCodes.contains(statusCode))
+      else if (!unauthorizedStatusCodes.contains(result.statusCode))
       {
-         qWarning() << "unhandled status code" << statusCode << "for" << request.url().toString();
+         qWarning() << "unhandled status code" << result.statusCode << "for" << request.url().toString();
          if (useExceptions())
-            throw new Network::StatusException(statusCode, QJsonObject());
+            throw new StatusException(result.statusCode, QJsonObject());
          else
             return true;
       }
@@ -223,11 +221,11 @@ QByteArray RestApi::Blocking::handleReplyRaw(QNetworkRequest request, ReplyGener
    };
 
    if (handleReplyInternal())
-      return replyContent;
+      return result;
 
    if (!updateToken())
-      return replyContent;
+      return result;
 
    handleReplyInternal();
-   return replyContent;
+   return result;
 }

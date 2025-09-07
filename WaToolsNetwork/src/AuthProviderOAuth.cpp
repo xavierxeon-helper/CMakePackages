@@ -10,7 +10,7 @@
 
 #include <FileTools.h>
 
-#include "NetworkExceptions.h"
+#include "RestApiException.h"
 
 AuthProvider::OAuth::OAuth(QObject* parent)
    : AuthProvider::Token(parent)
@@ -56,7 +56,7 @@ QJsonObject AuthProvider::OAuth::getTokenInfo(QByteArray token) const
    {
       if (useExceptions())
       {
-         throw new Network::StatusException(statusCode, content);
+         throw new RestApi::StatusException(statusCode, content);
       }
       else
       {
@@ -123,7 +123,7 @@ bool AuthProvider::OAuth::authorizeUser()
       loop.quit();
 
       if (useExceptions())
-         throw new Network::StatusException(500, QJsonObject());
+         throw new RestApi::StatusException(500, QJsonObject());
    };
 
    QObject::connect(oauthFlow, &QAbstractOAuth::requestFailed, onError);
@@ -162,7 +162,7 @@ bool AuthProvider::OAuth::update()
       loop.quit();
 
       if (useExceptions())
-         throw new Network::StatusException(500, QJsonObject());
+         throw new RestApi::StatusException(500, QJsonObject());
    };
 
    QObject::connect(oauthFlow, &QAbstractOAuth::requestFailed, onError);

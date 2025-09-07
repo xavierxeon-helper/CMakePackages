@@ -165,6 +165,9 @@ void TabStack::Widget::tabSelected(int index)
 {
    TabBarInfo& barInfo = depthOrder[depthIndex];
 
+   if (index < 0 || index >= barInfo.tabOrder.size())
+      return;
+
    TabInfo* info = barInfo.tabOrder.at(index);
    stack->setCurrentWidget(info->widget);
    barInfo.activeWidget = info->widget;

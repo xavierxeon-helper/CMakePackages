@@ -10,6 +10,8 @@
 #include <QNetworkReply>
 #include <QUrlQuery>
 
+#include "RestApiResult.h"
+
 namespace AuthProvider
 {
    class Token;
@@ -27,10 +29,10 @@ namespace RestApi
       Blocking(QObject* parent, const QString& baseUrl);
 
    public:
-      virtual QJsonObject get(const QString& endpoint, const QUrlQuery& params = QUrlQuery()) const;
-      virtual QByteArray getRaw(const QString& endpoint, const QUrlQuery& params = QUrlQuery()) const;
-      virtual QJsonObject post(const QString& endpoint, const QJsonObject& payload = QJsonObject(), const QUrlQuery& params = QUrlQuery()) const;
-      virtual QJsonObject put(const QString& endpoint, const QJsonObject& payload = QJsonObject(), const QUrlQuery& params = QUrlQuery()) const;
+      virtual Result get(const QString& endpoint, const QUrlQuery& params = QUrlQuery()) const;
+      virtual ResultRaw getRaw(const QString& endpoint, const QUrlQuery& params = QUrlQuery()) const;
+      virtual Result post(const QString& endpoint, const QJsonObject& payload = QJsonObject(), const QUrlQuery& params = QUrlQuery()) const;
+      virtual Result put(const QString& endpoint, const QJsonObject& payload = QJsonObject(), const QUrlQuery& params = QUrlQuery()) const;
 
       void setAuthProvider(AuthProvider::Token* newProvider);
       void setBaseUrl(const QString& url);
@@ -53,8 +55,8 @@ namespace RestApi
       friend class Async;
 
    private:
-      QJsonObject handleReply(QNetworkRequest request, ReplyGeneratorFunction replyGenerator) const;
-      QByteArray handleReplyRaw(QNetworkRequest request, ReplyGeneratorFunction replyGenerator) const;
+      Result handleReply(QNetworkRequest request, ReplyGeneratorFunction replyGenerator) const;
+      ResultRaw handleReplyRaw(QNetworkRequest request, ReplyGeneratorFunction replyGenerator) const;
    };
 } // namespace RestApi
 
