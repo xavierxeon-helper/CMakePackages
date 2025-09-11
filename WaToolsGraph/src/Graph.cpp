@@ -65,6 +65,17 @@ Graph::Vertex* Graph::getVertex(int vertexIndex) const
    return vertexList.at(vertexIndex);
 }
 
+Graph::Vertex* Graph::findVertexByName(const QString& name) const
+{
+   for (Vertex* vertex : vertexList)
+   {
+      if (vertex->getName() == name)
+         return vertex;
+   }
+
+   return nullptr;
+}
+
 int Graph::addEdge(Edge* edge)
 {
    if (edgeList.contains(edge))

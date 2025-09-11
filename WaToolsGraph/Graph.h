@@ -21,6 +21,7 @@ public:
    int vertexIndex(const Vertex* vertex) const;
    int vertexCount() const;
    Vertex* getVertex(int vertexIndex) const;
+   Vertex* findVertexByName(const QString& name) const;
 
    int addEdge(Edge* edge);
    bool removeEdge(Edge* edge, bool deleteEdge = false);

@@ -118,8 +118,9 @@ bool AuthProvider::OAuth::authorizeUser()
    QEventLoop loop;
    QObject::connect(oauthFlow, &QAbstractOAuth::granted, &loop, &QEventLoop::quit);
 
-   auto onError = [&]()
+   auto onError = [&](const QAbstractOAuth::Error error)
    {
+      qWarning() << "OAuth error @ authorizeUser():" << (int)error;
       loop.quit();
 
       if (useExceptions())
@@ -157,8 +158,9 @@ bool AuthProvider::OAuth::update()
    QEventLoop loop;
    QObject::connect(oauthFlow, &QAbstractOAuth::granted, &loop, &QEventLoop::quit);
 
-   auto onError = [&]()
+   auto onError = [&](const QAbstractOAuth::Error error)
    {
+      qWarning() << "OAuth error @ update():" << (int)error;
       loop.quit();
 
       if (useExceptions())
