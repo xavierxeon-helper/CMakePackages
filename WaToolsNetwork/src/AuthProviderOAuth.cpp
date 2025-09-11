@@ -19,6 +19,7 @@ AuthProvider::OAuth::OAuth(QObject* parent)
    , grantConnection()
    , finalHTML()
    , tokenInfoUrl()
+   , state(State::Initial)
 {
 }
 
@@ -110,6 +111,7 @@ QOAuth2AuthorizationCodeFlow* AuthProvider::OAuth::getFlow() const
 
 bool AuthProvider::OAuth::authorizeUser()
 {
+   state = State::AuthUser;
    QOAuthHttpServerReplyHandler redirectHandler(1234, nullptr);
 
    if (!finalHTML.isEmpty())
@@ -141,6 +143,7 @@ bool AuthProvider::OAuth::authorizeUser()
 
    redirectHandler.close();
 
+   state = State::Ready;
    return true;
 }
 
@@ -151,6 +154,13 @@ bool AuthProvider::OAuth::update()
       qWarning() << "No OAuth flow set";
       return false;
    }
+
+   if (State::Ready != state)
+   {
+      return false;
+   }
+
+   state = State::Update;
 
    if (oauthFlow->refreshToken().isEmpty())
       return authorizeUser();
@@ -176,6 +186,8 @@ bool AuthProvider::OAuth::update()
       return authorizeUser();
 
    saveRefreshToken(oauthFlow->refreshToken());
+
+   state = State::Ready;
    return true;
 }
 
@@ -197,4 +209,6 @@ void AuthProvider::OAuth::initFlow()
 
    const QString token = loadRefreshToken();
    oauthFlow->setRefreshToken(token);
+
+   state = State::Ready;
 }

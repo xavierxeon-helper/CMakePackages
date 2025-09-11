@@ -38,6 +38,15 @@ namespace AuthProvider
       virtual QString loadRefreshToken();
 
    private:
+      enum class State
+      {
+         Initial,
+         AuthUser,
+         Update,
+         Ready
+      };
+
+   private:
       void initFlow();
 
    private:
@@ -45,6 +54,7 @@ namespace AuthProvider
       QMetaObject::Connection grantConnection;
       QString finalHTML;
       QString tokenInfoUrl;
+      State state;
    };
 } // namespace AuthProvider
 
