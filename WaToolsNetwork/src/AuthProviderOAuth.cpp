@@ -12,6 +12,25 @@
 
 #include "RestApiException.h"
 
+// block
+
+AuthProvider::OAuth::BlockState::BlockState(OAuth* auth)
+   : auth(auth)
+   , previousState(auth->state)
+{
+   if (auth->state == State::Ready)
+   {
+      auth->state = State::Blocked;
+   }
+}
+
+AuthProvider::OAuth::BlockState::~BlockState()
+{
+   auth->state = previousState;
+}
+
+// oauth
+
 AuthProvider::OAuth::OAuth(QObject* parent)
    : AuthProvider::Token(parent)
    , Network::Settings()

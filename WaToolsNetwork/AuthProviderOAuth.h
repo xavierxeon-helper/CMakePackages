@@ -31,20 +31,33 @@ namespace AuthProvider
       QOAuth2AuthorizationCodeFlow* getFlow() const;
 
    protected:
-      virtual bool update() override;
-      virtual bool authorizeUser();
-
-      virtual void saveRefreshToken(const QString& refreshToken);
-      virtual QString loadRefreshToken();
-
-   private:
       enum class State
       {
          Initial,
          AuthUser,
          Update,
+         Blocked,
          Ready
       };
+
+      class BlockState
+      {
+      public:
+         BlockState(OAuth* auth);
+         ~BlockState();
+
+      private:
+         OAuth* auth;
+         State previousState;
+      };
+
+   protected:
+      virtual bool
+      update() override;
+      virtual bool authorizeUser();
+
+      virtual void saveRefreshToken(const QString& refreshToken);
+      virtual QString loadRefreshToken();
 
    private:
       void initFlow();
