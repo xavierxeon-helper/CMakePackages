@@ -132,7 +132,7 @@ function(add_os_files SOURCE_SUB_DIR)
          ${WIN_SOURCE_DIR}/*.hpp
          ${WIN_SOURCE_DIR}/*.cpp
       )
-   else()
+   elseif(UNIX)
       set(LINUX_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/${SOURCE_SUB_DIR}/linux)
 
       if(NOT EXISTS ${LINUX_SOURCE_DIR})
