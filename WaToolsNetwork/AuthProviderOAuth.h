@@ -40,7 +40,7 @@ namespace AuthProvider
          Ready
       };
 
-      class BlockState
+      class WATOOLSNETWORK_DECLSPEC BlockState
       {
       public:
          BlockState(OAuth* auth);
