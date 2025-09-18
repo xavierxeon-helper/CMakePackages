@@ -2,7 +2,7 @@
 
 HERE=$(dirname "$(readlink -f "$0")")
 
-ROOT_DIR=/home/waspe/tmp/
+ROOT_DIR=~/tmp/
 
 if [ ! -d $ROOT_DIR/xavierxeon.github.io ]
 then
