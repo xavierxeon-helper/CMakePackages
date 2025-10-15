@@ -22,7 +22,7 @@ public:
 protected:
    void initSettings(const QString& key, const QJsonValue& content);
    void setSettings(const QString& key, const QJsonValue& content);
-   QJsonValue getSettings(const QString& key);
+   QJsonValue getSettings(const QString& key) const;
 
    virtual void reload();
    virtual void modified(bool dirty);

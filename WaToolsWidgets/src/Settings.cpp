@@ -205,7 +205,7 @@ void Settings::setSettings(const QString& key, const QJsonValue& content)
    data[key] = content;
 }
 
-QJsonValue Settings::getSettings(const QString& key)
+QJsonValue Settings::getSettings(const QString& key) const
 {
    return data[key];
 }
