@@ -1,4 +1,4 @@
-#include "ProjectSettings.h"
+#include "Settings.h"
 
 #include <QFileDialog>
 #include <QSettings>
@@ -8,7 +8,7 @@
 
 // admin
 
-ProjectSettings::Admin::Admin(QWidget* mainWindow, const QString& fileDescription)
+Settings::Admin::Admin(QWidget* mainWindow, const QString& fileDescription)
    : QObject(mainWindow)
    , mainWindow(mainWindow)
    , fileDescription(fileDescription)
@@ -37,7 +37,7 @@ ProjectSettings::Admin::Admin(QWidget* mainWindow, const QString& fileDescriptio
    recentFiles.setup(loadFunction, 10);
 }
 
-void ProjectSettings::Admin::loadLastFile()
+void Settings::Admin::loadLastFile()
 {
    QSettings settings;
 
@@ -45,7 +45,7 @@ void ProjectSettings::Admin::loadLastFile()
    loadFile(fileName);
 }
 
-void ProjectSettings::Admin::loadFile(const QString& fileName)
+void Settings::Admin::loadFile(const QString& fileName)
 {
    if (fileName.isEmpty() || !QFile::exists(fileName))
       return;
@@ -54,7 +54,7 @@ void ProjectSettings::Admin::loadFile(const QString& fileName)
    loadInternal();
 }
 
-void ProjectSettings::Admin::newSettings()
+void Settings::Admin::newSettings()
 {
    const QString fileName = QFileDialog::getSaveFileName(mainWindow, "New Project Settings", QString(), fileDescription);
    if (fileName.isEmpty())
@@ -65,10 +65,10 @@ void ProjectSettings::Admin::newSettings()
 
    loadInternal();
 
-   ProjectSettings::modifiedAll(false);
+   Settings::modifiedAll(false);
 }
 
-void ProjectSettings::Admin::loadSettings()
+void Settings::Admin::loadSettings()
 {
    const QString fileName = QFileDialog::getOpenFileName(mainWindow, "Load Project Settings", QString(), fileDescription);
    if (fileName.isEmpty())
@@ -80,20 +80,20 @@ void ProjectSettings::Admin::loadSettings()
    setFileName(fileName);
    loadInternal();
 
-   ProjectSettings::modifiedAll(false);
+   Settings::modifiedAll(false);
 }
 
-void ProjectSettings::Admin::saveSettings()
+void Settings::Admin::saveSettings()
 {
    if (fileName.isEmpty())
       return saveAsSettings();
 
    saveInternal();
 
-   ProjectSettings::modifiedAll(false);
+   Settings::modifiedAll(false);
 }
 
-void ProjectSettings::Admin::saveAsSettings()
+void Settings::Admin::saveAsSettings()
 {
    const QString fileName = QFileDialog::getSaveFileName(mainWindow, "Save Project Settings", QString(), fileDescription);
    if (fileName.isEmpty())
@@ -102,10 +102,10 @@ void ProjectSettings::Admin::saveAsSettings()
    setFileName(fileName);
    saveInternal();
 
-   ProjectSettings::modifiedAll(false);
+   Settings::modifiedAll(false);
 }
 
-void ProjectSettings::Admin::setFileName(const QString& newFileName)
+void Settings::Admin::setFileName(const QString& newFileName)
 {
    if (!newFileName.endsWith(".voc"))
       fileName = newFileName + ".voc";
@@ -121,7 +121,7 @@ void ProjectSettings::Admin::setFileName(const QString& newFileName)
    settings.setValue("LastFile", fileName);
 }
 
-void ProjectSettings::Admin::loadInternal()
+void Settings::Admin::loadInternal()
 {
    using MergeFunction = std::function<void(const QJsonObject&, QJsonObject&)>;
    MergeFunction mergeObject = [&](const QJsonObject& source, QJsonObject& target)
@@ -158,19 +158,19 @@ void ProjectSettings::Admin::loadInternal()
    };
 
    const QJsonObject loadData = FileTools::readJson(fileName);
-   mergeObject(loadData, ProjectSettings::data);
+   mergeObject(loadData, Settings::data);
 
    Logger::stream() << "Project settings loaded from" << fileName;
 
    QSettings settings;
    settings.setValue("LastFile", fileName);
 
-   ProjectSettings::reloadAll();
+   Settings::reloadAll();
 }
 
-void ProjectSettings::Admin::saveInternal() const
+void Settings::Admin::saveInternal() const
 {
-   FileTools::writeJson(ProjectSettings::data, fileName);
+   FileTools::writeJson(Settings::data, fileName);
 
    QSettings settings;
    settings.setValue("LastFile", fileName);
@@ -178,44 +178,44 @@ void ProjectSettings::Admin::saveInternal() const
 
 // settings
 
-QJsonObject ProjectSettings::data;
+QJsonObject Settings::data;
 
-ProjectSettings::ProjectSettings()
+Settings::Settings()
    : Function::Caller<"Settings">()
 {
 }
 
-void ProjectSettings::reloadAll()
+void Settings::reloadAll()
 {
-   callOnAll(&ProjectSettings::reload);
+   callOnAll(&Settings::reload);
 }
 
-void ProjectSettings::modifiedAll(bool dirty)
+void Settings::modifiedAll(bool dirty)
 {
-   callOnAll(&ProjectSettings::modified, dirty);
+   callOnAll(&Settings::modified, dirty);
 }
 
-void ProjectSettings::initSettings(const QString& key, const QJsonValue& content)
-{
-   data[key] = content;
-}
-
-void ProjectSettings::setSettings(const QString& key, const QJsonValue& content)
+void Settings::initSettings(const QString& key, const QJsonValue& content)
 {
    data[key] = content;
 }
 
-QJsonValue ProjectSettings::getSettings(const QString& key)
+void Settings::setSettings(const QString& key, const QJsonValue& content)
+{
+   data[key] = content;
+}
+
+QJsonValue Settings::getSettings(const QString& key)
 {
    return data[key];
 }
 
-void ProjectSettings::reload()
+void Settings::reload()
 {
    // do nothing
 }
 
-void ProjectSettings::modified(bool dirty)
+void Settings::modified(bool dirty)
 {
    // do nothing
 }

@@ -1,15 +1,16 @@
-#ifndef ProjectSettingsH
-#define ProjectSettingsH
+#ifndef SettingsH
+#define SettingsH
 
+#include "WaToolsWidgetsExportDef.h"
 #include <FunctionCaller.h>
 #include <QObject>
 
 #include <RecentFiles.h>
 
-class ProjectSettings : public Function::Caller<"Settings">
+class WATOOLSWIDGETS_DECLSPEC Settings : public Function::Caller<"Settings">
 {
 public:
-   ProjectSettings();
+   Settings();
 
 public:
    class Admin;
@@ -30,7 +31,7 @@ private:
    static QJsonObject data;
 };
 
-class ProjectSettings::Admin : public QObject
+class WATOOLSWIDGETS_DECLSPEC Settings::Admin : public QObject
 {
    Q_OBJECT
 
@@ -58,4 +59,4 @@ private:
    QString fileName;
 };
 
-#endif // NOT ProjectSettingsH
+#endif // NOT SettingsH
