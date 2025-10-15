@@ -1,5 +1,6 @@
 #include "Settings.h"
 
+#include <QApplication>
 #include <QFileDialog>
 #include <QSettings>
 
@@ -56,7 +57,7 @@ void Settings::Admin::loadFile(const QString& fileName)
 
 void Settings::Admin::newSettings()
 {
-   const QString fileName = QFileDialog::getSaveFileName(mainWindow, "New Project Settings", QString(), fileDescription);
+   const QString fileName = QFileDialog::getSaveFileName(mainWindow, "New Project Settings", QString(), QApplication::applicationName() + "(*." + fileDescription + ")");
    if (fileName.isEmpty())
       return;
 
@@ -70,7 +71,7 @@ void Settings::Admin::newSettings()
 
 void Settings::Admin::loadSettings()
 {
-   const QString fileName = QFileDialog::getOpenFileName(mainWindow, "Load Project Settings", QString(), fileDescription);
+   const QString fileName = QFileDialog::getOpenFileName(mainWindow, "Load Project Settings", QString(), QApplication::applicationName() + "(*." + fileDescription + ")");
    if (fileName.isEmpty())
    {
       qDebug() << __FUNCTION__ << "No file selected";
@@ -95,7 +96,7 @@ void Settings::Admin::saveSettings()
 
 void Settings::Admin::saveAsSettings()
 {
-   const QString fileName = QFileDialog::getSaveFileName(mainWindow, "Save Project Settings", QString(), fileDescription);
+   const QString fileName = QFileDialog::getSaveFileName(mainWindow, "Save Project Settings", QString(), QApplication::applicationName() + "(*." + fileDescription + ")");
    if (fileName.isEmpty())
       return;
 
@@ -107,15 +108,15 @@ void Settings::Admin::saveAsSettings()
 
 void Settings::Admin::setFileName(const QString& newFileName)
 {
-   if (!newFileName.endsWith(".voc"))
-      fileName = newFileName + ".voc";
+   if (!newFileName.endsWith("." + fileDescription))
+      fileName = newFileName + "." + fileDescription;
    else
       fileName = newFileName;
 
    recentFiles.add(fileName);
 
    QFileInfo info(fileName);
-   mainWindow->setWindowTitle("VoiceGenerator - " + info.fileName() + " [*]");
+   mainWindow->setWindowTitle(QApplication::applicationName() + " - " + info.fileName() + " [*]");
 
    QSettings settings;
    settings.setValue("LastFile", fileName);
