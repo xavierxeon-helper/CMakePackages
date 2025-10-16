@@ -1,7 +1,8 @@
 include(${CMAKE_CURRENT_LIST_DIR}/functions_compile.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/functions_qt.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/functions_target.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/functions_deploy.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/functions_git.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/functions_qml.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/functions_target.cmake)
 
 foreach(COMPONENT ${WaTools_FIND_COMPONENTS})
    #message(STATUS "NEED WaTools component: ${COMPONENT}")
