@@ -1,12 +1,12 @@
 #ifndef PopulatedMainWindowH
 #define PopulatedMainWindowH
 
-#include "WaToolsWidgetsExportDef.h"
+#include "WaToolsApplicationExportDef.h"
 #include <QMainWindow>
 
 #include "ActionPopulation.h"
 
-class WATOOLSWIDGETS_DECLSPEC PopulatedMainWindow : public QMainWindow
+class WATOOLSAPPLICATION_DECLSPEC PopulatedMainWindow : public QMainWindow
 {
    Q_OBJECT
 

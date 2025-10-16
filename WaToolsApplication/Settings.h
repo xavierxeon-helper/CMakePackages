@@ -1,13 +1,18 @@
 #ifndef SettingsH
 #define SettingsH
 
-#include "WaToolsWidgetsExportDef.h"
+#include "WaToolsApplicationExportDef.h"
 #include <FunctionCaller.h>
 #include <QObject>
 
 #include <RecentFiles.h>
 
-class WATOOLSWIDGETS_DECLSPEC Settings : public Function::Caller<"Settings">
+/**
+ * @brief The Settings class
+ * recent files menu is called "Settings.Recent"
+ */
+
+class WATOOLSAPPLICATION_DECLSPEC Settings : public Function::Caller<"Settings">
 {
 public:
    Settings();
@@ -31,7 +36,7 @@ private:
    static QJsonObject data;
 };
 
-class WATOOLSWIDGETS_DECLSPEC Settings::Admin : public QObject
+class WATOOLSAPPLICATION_DECLSPEC Settings::Admin : public QObject
 {
    Q_OBJECT
 

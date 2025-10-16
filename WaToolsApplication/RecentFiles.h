@@ -1,12 +1,12 @@
 #ifndef RecentFilesH
 #define RecentFilesH
 
-#include "WaToolsWidgetsExportDef.h"
+#include "WaToolsApplicationExportDef.h"
 
 #include <QMenu>
 #include <QWidget>
 
-class WATOOLSWIDGETS_DECLSPEC RecentFiles
+class WATOOLSAPPLICATION_DECLSPEC RecentFiles
 {
 public:
    using LoadFunction = std::function<void(const QString& fileName)>;
