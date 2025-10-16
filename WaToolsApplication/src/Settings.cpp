@@ -204,6 +204,7 @@ void Settings::initSettings(const QString& key, const QJsonValue& content)
 void Settings::setSettings(const QString& key, const QJsonValue& content)
 {
    data[key] = content;
+   modifiedAll(true);
 }
 
 QJsonValue Settings::getSettings(const QString& key) const
