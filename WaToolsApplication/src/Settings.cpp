@@ -124,40 +124,6 @@ void Settings::Admin::setFileName(const QString& newFileName)
 
 void Settings::Admin::loadInternal()
 {
-   using MergeFunction = std::function<void(const QJsonObject&, QJsonObject&)>;
-   MergeFunction mergeObject = [&](const QJsonObject& source, QJsonObject& target)
-   {
-      for (QJsonObject::const_iterator it = source.constBegin(); it != source.constEnd(); ++it)
-      {
-         const QString& key = it.key();
-         if ("settings" == key)
-         {
-            target[key] = it.value();
-         }
-         else
-         {
-            if (!target.contains(key))
-            {
-               qWarning() << __FUNCTION__ << "Key not found in target:" << key;
-               continue;
-            }
-
-            if (!it.value().isObject())
-            {
-               target[key] = it.value();
-            }
-            else
-            {
-               QJsonObject sourceObject = it.value().toObject();
-               QJsonObject targetObject = target[key].toObject();
-
-               mergeObject(sourceObject, targetObject);
-               target[key] = targetObject;
-            }
-         }
-      }
-   };
-
    const QJsonObject loadData = FileTools::readJson(fileName);
    mergeObject(loadData, Settings::data);
 
@@ -175,6 +141,21 @@ void Settings::Admin::saveInternal() const
 
    QSettings settings;
    settings.setValue("LastFile", fileName);
+}
+
+void Settings::Admin::mergeObject(const QJsonObject& source, QJsonObject& target) const
+{
+   for (QJsonObject::const_iterator it = source.constBegin(); it != source.constEnd(); ++it)
+   {
+      const QString& key = it.key();
+      if (!target.contains(key))
+      {
+         qWarning() << __FUNCTION__ << "Key not found in target:" << key;
+         continue;
+      }
+
+      target[key] = it.value();
+   }
 }
 
 // settings

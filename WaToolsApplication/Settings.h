@@ -57,6 +57,8 @@ private:
    void loadInternal();
    void saveInternal() const;
 
+   void mergeObject(const QJsonObject& source, QJsonObject& target) const;
+
 private:
    QWidget* mainWindow;
    const QString fileDescription;
