@@ -36,7 +36,7 @@ class WATOOLSWIDGETS_DECLSPEC Settings::Admin : public QObject
    Q_OBJECT
 
 public:
-   Admin(QWidget* mainWindow, const QString& fileDescription);
+   Admin(QWidget* mainWindow, const QString& fileDescription = "json");
 
 public:
    void loadLastFile();
