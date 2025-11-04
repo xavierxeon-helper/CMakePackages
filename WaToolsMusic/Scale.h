@@ -23,7 +23,7 @@ public:
    const QString& getMajorName() const;
    const QString& getMinorName() const;
 
-   const KeyList& getActivceKeys() const;
+   const KeyList& getActiveKeys() const;
    bool isActive(const int index) const;
 
    Note quantize(const Note& input) const;

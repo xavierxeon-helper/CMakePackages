@@ -74,7 +74,7 @@ const QString& Scale::getMinorName() const
    return minorName;
 }
 
-const Scale::KeyList& Scale::getActivceKeys() const
+const Scale::KeyList& Scale::getActiveKeys() const
 {
    return active;
 }
