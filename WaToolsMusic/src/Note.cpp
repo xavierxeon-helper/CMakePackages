@@ -174,7 +174,7 @@ bool Note::isBlackKey() const
    return blackKeys.contains(value);
 }
 
-bool Note::isVaid() const
+bool Note::isValid() const
 {
    return (*this != zeroNote);
 }

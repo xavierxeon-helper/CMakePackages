@@ -2,11 +2,14 @@
 #define NoteH
 
 #include "WaToolsMusicExportDef.h"
+#include <QObject>
 
 #include <QList>
 
 class WATOOLSMUSIC_DECLSPEC Note
 {
+   Q_GADGET
+
 public:
    using List = QList<Note>;
    using Octave = uchar;
@@ -27,6 +30,7 @@ public:
       B,
       Invalid
    };
+   Q_ENUM(Value)
 
    static const Note zeroNote;       // an invalid note
    static const List availableNotes; // includes zero note
@@ -48,9 +52,7 @@ public:
    Note down() const;
    bool isWhiteKey() const;
    bool isBlackKey() const;
-
-   bool isVaid() const; // note is not zero note
-
+   bool isValid() const; // note is not zero note
    const QString& getName() const;
    const Value& getValue() const;
    const Octave& getOctave() const;
