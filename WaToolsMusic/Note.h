@@ -32,6 +32,9 @@ public:
    };
    Q_ENUM(Value)
 
+   static const QString sharpSymbol;
+   static const QString flatSymbol;
+
    static const Note zeroNote;       // an invalid note
    static const List availableNotes; // includes zero note
    static const uchar maxNoteIndex;  // size of availableNotes

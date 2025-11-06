@@ -1,8 +1,5 @@
 #include "Scale.h"
 
-const QString Scale::sharpSymbol = QString::fromUtf8("\u266F");
-const QString Scale::flatSymbol = QString::fromUtf8("\u266D");
-
 const Scale::Map Scale::availableScales = []()
 {
    Map map;
@@ -10,11 +7,11 @@ const Scale::Map Scale::availableScales = []()
    static const bool inScale[12] = {true, false, true, false, true, true, false, true, false, true, false, true};
    auto addScale = [&](const int& offset, QString majorName, QString minorName)
    {
-      majorName.replace("sharp", sharpSymbol);
-      majorName.replace("flat", flatSymbol);
+      majorName.replace("sharp", Note::sharpSymbol);
+      majorName.replace("flat", Note::flatSymbol);
 
-      minorName.replace("sharp", sharpSymbol);
-      minorName.replace("flat", flatSymbol);
+      minorName.replace("sharp", Note::sharpSymbol);
+      minorName.replace("flat", Note::flatSymbol);
 
       Scale data;
       data.offset = offset;
@@ -104,8 +101,7 @@ bool Scale::isActive(const int index) const
 
 Note Scale::quantize(const Note& input) const
 {
-   const bool noteActive = isActive(input.getValue());
-   if (noteActive)
+   if (noteInScale(input))
       return input;
 
    return input.up();

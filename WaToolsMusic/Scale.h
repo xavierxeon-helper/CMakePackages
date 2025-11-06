@@ -13,9 +13,6 @@ public:
    using List = QList<Scale>;
    using KeyList = QList<bool>;
 
-   static const QString sharpSymbol;
-   static const QString flatSymbol;
-
    class Finder;
 
 public:

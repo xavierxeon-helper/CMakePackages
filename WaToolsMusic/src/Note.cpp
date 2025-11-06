@@ -4,6 +4,9 @@
 
 #include <QMap>
 
+const QString Note::sharpSymbol = QString::fromUtf8("\u266F");
+const QString Note::flatSymbol = QString::fromUtf8("\u266D");
+
 const Note Note::zeroNote = Note();
 
 const Note::List Note::availableNotes = []()
@@ -14,16 +17,16 @@ const Note::List Note::availableNotes = []()
    using NameMap = QMap<Note::Value, QString>;
    const NameMap nameMap = {
       {C, "C"},
-      {Cs, "C#"},
+      {Cs, "C" + sharpSymbol},
       {D, "D"},
-      {Ds, "D#"},
+      {Ds, "D" + sharpSymbol},
       {E, "E"},
       {F, "F"},
-      {Fs, "F#"},
+      {Fs, "F" + sharpSymbol},
       {G, "G"},
-      {Gs, "G#"},
+      {Gs, "G" + sharpSymbol},
       {A, "A"},
-      {As, "A#"},
+      {As, "A" + sharpSymbol},
       {B, "B"},
    };
 
