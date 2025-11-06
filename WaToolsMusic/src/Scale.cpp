@@ -7,12 +7,6 @@ const Scale::Map Scale::availableScales = []()
    static const bool inScale[12] = {true, false, true, false, true, true, false, true, false, true, false, true};
    auto addScale = [&](const int& offset, QString majorName, QString minorName)
    {
-      majorName.replace("sharp", Note::sharpSymbol);
-      majorName.replace("flat", Note::flatSymbol);
-
-      minorName.replace("sharp", Note::sharpSymbol);
-      minorName.replace("flat", Note::flatSymbol);
-
       Scale data;
       data.offset = offset;
       data.majorName = majorName;
@@ -30,21 +24,21 @@ const Scale::Map Scale::availableScales = []()
       map.insert(offset, data);
    };
 
-   //addScale(-7, "Cflat", "");
-   addScale(-6, "Gflat", "eflat");
-   addScale(-5, "Dflat", "bflat");
-   addScale(-4, "Aflat", "f");
-   addScale(-3, "Eflat", "c");
-   addScale(-2, "Bflat", "g");
+   //addScale(-7, "C" + Note::flatSymbol, "");
+   addScale(-6, "G" + Note::flatSymbol, "e" + Note::flatSymbol);
+   addScale(-5, "D" + Note::flatSymbol, "b" + Note::flatSymbol);
+   addScale(-4, "A" + Note::flatSymbol, "f");
+   addScale(-3, "E" + Note::flatSymbol, "c");
+   addScale(-2, "B" + Note::flatSymbol, "g");
    addScale(-1, "F", "d");
    addScale(0, "C", "a");
    addScale(+1, "G", "e");
    addScale(+2, "D", "b");
-   addScale(+3, "A", "fsharp");
-   addScale(+4, "E", "csharp");
-   addScale(+5, "B", "gsharp");
-   addScale(+6, "Fsharp", "dsharp");
-   //addScale(+7, "Csharp", "");
+   addScale(+3, "A", "f" + Note::sharpSymbol);
+   addScale(+4, "E", "c" + Note::sharpSymbol);
+   addScale(+5, "B", "g" + Note::sharpSymbol);
+   addScale(+6, "F" + Note::sharpSymbol, "d" + Note::sharpSymbol);
+   //addScale(+7, "C"+Note::sharpSymbol, "");
 
    return map;
 }();
