@@ -1,13 +1,11 @@
 #include "Scale.h"
 
-#include <QDirIterator>
-
 const QString Scale::sharpSymbol = QString::fromUtf8("\u266F");
 const QString Scale::flatSymbol = QString::fromUtf8("\u266D");
 
-Scale::List Scale::compileList()
+const Scale::Map Scale::availableScales = []()
 {
-   List list;
+   Map map;
 
    static const bool inScale[12] = {true, false, true, false, true, true, false, true, false, true, false, true};
    auto addScale = [&](const int& offset, QString majorName, QString minorName)
@@ -32,7 +30,7 @@ Scale::List Scale::compileList()
          data.active[note] = inScale[index];
       }
 
-      list.append(data);
+      map.insert(offset, data);
    };
 
    //addScale(-7, "Cflat", "");
@@ -51,10 +49,27 @@ Scale::List Scale::compileList()
    addScale(+6, "Fsharp", "dsharp");
    //addScale(+7, "Csharp", "");
 
-   return list;
+   return map;
+}();
+
+Scale::List Scale::getList()
+{
+   return availableScales.values();
 }
 
-Scale::KeyList Scale::initKeyList()
+Scale Scale::getScaleByName(const QString& name, bool isMajor)
+{
+   for (const Scale& scale : availableScales)
+   {
+      if (isMajor && scale.getMajorName() == name)
+         return scale;
+      if (!isMajor && scale.getMinorName() == name)
+         return scale;
+   }
+   return availableScales.value(0, Scale());
+}
+
+Scale::KeyList Scale::emptyKeyList()
 {
    return KeyList(12, false);
 }
@@ -96,10 +111,39 @@ Note Scale::quantize(const Note& input) const
    return input.up();
 }
 
+bool Scale::noteInScale(const Note& note) const
+{
+   return isActive(note.getValue());
+}
+
 Scale::Scale()
    : offset()
    , majorName()
    , minorName()
-   , active(initKeyList())
+   , active(emptyKeyList())
 {
+}
+
+// Finder
+
+Scale::Finder::Finder()
+   : validScales(Scale::getList())
+{
+}
+
+void Scale::Finder::addNote(const Note& note)
+{
+   Scale::List filteredScales;
+   for (const Scale& scale : validScales)
+   {
+      if (scale.noteInScale(note))
+         filteredScales.append(scale);
+   }
+
+   validScales = filteredScales;
+}
+
+const Scale::List& Scale::Finder::getScales() const
+{
+   return validScales;
 }

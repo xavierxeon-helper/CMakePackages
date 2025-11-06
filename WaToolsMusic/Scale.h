@@ -3,6 +3,8 @@
 
 #include "WaToolsMusicExportDef.h"
 
+#include <QMap>
+
 #include "Note.h"
 
 class WATOOLSMUSIC_DECLSPEC Scale
@@ -17,8 +19,9 @@ public:
    class Finder;
 
 public:
-   static List compileList();
-   static KeyList initKeyList();
+   static List getList();
+   static KeyList emptyKeyList();
+   static Scale getScaleByName(const QString& name, bool isMajor = true);
 
 public:
    const QString getOffset() const;
@@ -32,6 +35,9 @@ public:
    bool noteInScale(const Note& note) const;
 
 private:
+   using Map = QMap<int, Scale>;
+
+private:
    Scale();
 
 private:
@@ -40,6 +46,8 @@ private:
    QString minorName;
 
    KeyList active;
+
+   static const Map availableScales;
 };
 
 class WATOOLSMUSIC_DECLSPEC Scale::Finder
@@ -48,7 +56,11 @@ public:
    Finder();
 
 public:
-   Scale::List addNote(const Note& note);
+   void addNote(const Note& note);
+   const Scale::List& getScales() const;
+
+private:
+   Scale::List validScales;
 };
 
 #endif // NOT ScaleH
