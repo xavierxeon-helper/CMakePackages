@@ -14,6 +14,8 @@ public:
    static const QString sharpSymbol;
    static const QString flatSymbol;
 
+   class Finder;
+
 public:
    static List compileList();
    static KeyList initKeyList();
@@ -27,6 +29,7 @@ public:
    bool isActive(const int index) const;
 
    Note quantize(const Note& input) const;
+   bool noteInScale(const Note& note) const;
 
 private:
    Scale();
@@ -37,6 +40,15 @@ private:
    QString minorName;
 
    KeyList active;
+};
+
+class WATOOLSMUSIC_DECLSPEC Scale::Finder
+{
+public:
+   Finder();
+
+public:
+   Scale::List addNote(const Note& note);
 };
 
 #endif // NOT ScaleH
