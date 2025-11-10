@@ -68,3 +68,67 @@ float Range::Mapper::operator()(const float& input) const
 
    return output;
 }
+
+// spread iterator
+
+Range::Spread::Iterator::Iterator(int startValue, int step)
+   : number(startValue)
+   , step(step)
+   , isEnd(false)
+{
+}
+
+Range::Spread::Iterator::Iterator(int endValue)
+   : number(endValue)
+   , step(0)
+   , isEnd(true)
+{
+}
+
+int Range::Spread::Iterator::operator*() const
+{
+   return number;
+}
+
+Range::Spread::Iterator& Range::Spread::Iterator::operator++()
+{
+   number += step;
+   return *this;
+}
+
+bool Range::Spread::Iterator::operator==(const Iterator& other) const
+{
+   if (other.isEnd && number > other.number)
+      return true;
+
+   return (number == other.number);
+}
+
+bool Range::Spread::Iterator::operator!=(const Iterator& other) const
+{
+   return !operator==(other);
+}
+
+// spread
+
+Range::Spread::Spread(int max)
+   : Spread(0, max, 1)
+{
+}
+
+Range::Spread::Spread(int min, int max, int step)
+   : min(min)
+   , max(max)
+   , step(step)
+{
+}
+
+Range::Spread::Iterator Range::Spread::begin()
+{
+   return Iterator(min, step);
+}
+
+Range::Spread::Iterator Range::Spread::end()
+{
+   return Iterator(max);
+}

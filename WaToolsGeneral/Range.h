@@ -4,6 +4,7 @@
 #include "WaToolsGeneralExportDef.h"
 
 #include <cstddef>
+#include <iterator> // For std::forward_iterator_tag
 #include <type_traits>
 
 // optional compiler tests
@@ -80,6 +81,52 @@ struct Range
       float minOutput;
       float maxOutput;
       float scale;
+   };
+
+   class Spread
+   {
+   public:
+      class Iterator
+      {
+      public: // for std:algorithm
+         using iterator_category = std::forward_iterator_tag;
+         using difference_type = std::ptrdiff_t;
+         using value_type = int;
+         using pointer = void;
+         using reference = void;
+
+      public:
+         int operator*() const;
+         Iterator& operator++();
+
+         bool operator==(const Iterator& other) const;
+         bool operator!=(const Iterator& other) const;
+
+      private:
+         Iterator(int startValue, int step); // start iterator
+         Iterator(int endValue);             // end iterator
+
+      private:
+         friend class Spread;
+
+      private:
+         int number;
+         const int step;
+         const bool isEnd;
+      };
+
+   public:
+      Spread(int max);
+      Spread(int min, int max, int step = 1);
+
+   public:
+      Iterator begin();
+      Iterator end();
+
+   private:
+      const int min;
+      const int max;
+      const int step;
    };
 
    template <typename DataType>
