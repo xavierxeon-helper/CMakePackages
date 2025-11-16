@@ -9,7 +9,6 @@ struct CompileTimeString
    constexpr CompileTimeString(const char (&str)[N]);
    char value[N];
 
-
    std::string text() const;
 };
 

@@ -3,8 +3,7 @@
 
 #include "CompileTimeString.h"
 
-//#include <algorithm>
-
+#include <algorithm>
 
 template <size_t N>
 constexpr CompileTimeString<N>::CompileTimeString(const char (&str)[N])
