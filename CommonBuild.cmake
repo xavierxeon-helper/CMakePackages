@@ -2,6 +2,8 @@ set(WATOOLS_LIB_TYPE "SHARED")
 
 if(IOS)
    set(WATOOLS_LIB_TYPE "STATIC")
+elseif(ANDROID)
+   set(WATOOLS_LIB_TYPE "STATIC")
 elseif(APPLE)
    set(CMAKE_OSX_DEPLOYMENT_TARGET "14.0") # for Qt
 endif()
