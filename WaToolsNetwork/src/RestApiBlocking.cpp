@@ -143,7 +143,7 @@ RestApi::Result RestApi::Blocking::handleReply(QNetworkRequest request, ReplyGen
          qWarning() << "unhandled status code" << result.statusCode << "for" << request.url().toString();
          if (useExceptions())
          {
-            throw new StatusException(result.statusCode, result.json);
+            throw new StatusException(result.statusCode, baseUrl, result.json);
          }
          else
          {
@@ -209,7 +209,7 @@ RestApi::ResultRaw RestApi::Blocking::handleReplyRaw(QNetworkRequest request, Re
       {
          qWarning() << "unhandled status code" << result.statusCode << "for" << request.url().toString();
          if (useExceptions())
-            throw new StatusException(result.statusCode, QJsonObject());
+            throw new StatusException(result.statusCode, baseUrl);
          else
             return true;
       }

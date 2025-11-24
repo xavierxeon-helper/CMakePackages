@@ -15,11 +15,20 @@ namespace RestApi
    class WATOOLSNETWORK_DECLSPEC StatusException : public QException
    {
    public:
-      StatusException(const Result& result);
-      StatusException(int statusCode, const QJsonObject& json = QJsonObject());
+      StatusException(const Result& result, const QUrl sourceUrl);
+      StatusException(int statusCode, const QUrl sourceUrl, const QJsonObject& json = QJsonObject());
+
+   public:
+      operator QString() const;
+
+   public:
+      int getStatusCode() const;
+      const QJsonObject& getContent() const;
+      const QUrl& getSourceUrl() const;
 
    private:
       Result result;
+      const QUrl sourceUrl;
    };
 } // namespace RestApi
 

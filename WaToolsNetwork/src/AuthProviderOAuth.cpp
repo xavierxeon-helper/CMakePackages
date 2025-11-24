@@ -76,7 +76,7 @@ QJsonObject AuthProvider::OAuth::getTokenInfo(QByteArray token) const
    {
       if (useExceptions())
       {
-         throw new RestApi::StatusException(statusCode, content);
+         throw new RestApi::StatusException(statusCode, oauthFlow->authorizationUrl(), content);
       }
       else
       {
@@ -145,7 +145,7 @@ bool AuthProvider::OAuth::authorizeUser()
       loop.quit();
 
       if (useExceptions())
-         throw new RestApi::StatusException(500, QJsonObject());
+         throw new RestApi::StatusException(500 + (int)error, oauthFlow->authorizationUrl());
    };
 
    QObject::connect(oauthFlow, &QAbstractOAuth::requestFailed, onError);
@@ -193,7 +193,7 @@ bool AuthProvider::OAuth::update()
       loop.quit();
 
       if (useExceptions())
-         throw new RestApi::StatusException(500, QJsonObject());
+         throw new RestApi::StatusException(500 + (int)error, oauthFlow->authorizationUrl());
    };
 
    QObject::connect(oauthFlow, &QAbstractOAuth::requestFailed, onError);
