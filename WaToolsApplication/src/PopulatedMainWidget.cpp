@@ -7,6 +7,7 @@
 Populated::MainWidget::MainWidget()
    : QWidget(nullptr)
    , Abstract(this)
+   , Singleton<MainWidget>()
    , menuBar(nullptr)
 {
    ToolBarCreationFunction toolBarCreationFunction = std::bind(&MainWidget::findOrCreateToolBar, this, std::placeholders::_1);

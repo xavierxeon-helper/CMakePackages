@@ -2,21 +2,20 @@
 #define PopulatedMainWindowH
 
 #include "PopulatedAbstract.h"
+#include "Singleton.h"
 #include "WaToolsApplicationExportDef.h"
 #include <QMainWindow>
 
 namespace Populated
 {
-   class WATOOLSAPPLICATION_DECLSPEC MainWindow : public QMainWindow, public Abstract
+   class WATOOLSAPPLICATION_DECLSPEC MainWindow : public QMainWindow, public Abstract, public Singleton<MainWindow>
    {
       Q_OBJECT
 
    public:
       MainWindow();
-      virtual ~MainWindow();
 
    public:
-      static MainWindow* the();
       static QAction* addAction(QIcon icon, QString text, QString objectName, auto function);
 
    protected:
@@ -30,9 +29,6 @@ namespace Populated
    private:
       QToolBar* findOrCreateToolBar(const QString& objectName);
       QMenu* findOrCreateMenu(const QString& objectName, const QString& text, QMenu* parentMenu);
-
-   private:
-      static MainWindow* me;
    };
 } // namespace Populated
 

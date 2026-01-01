@@ -7,7 +7,7 @@
 
 inline QAction* Populated::MainWindow::addAction(QIcon icon, QString text, QString objectName, auto function)
 {
-   return Abstract::addAction(icon, text, objectName, the(), function);
+   return Abstract::addAction(icon, text, objectName, instance(), function);
 }
 
 #endif // NOT PopulatedMainWindowHPP

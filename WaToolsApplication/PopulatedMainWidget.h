@@ -2,6 +2,7 @@
 #define PopulatedMainWidgetH
 
 #include "PopulatedAbstract.h"
+#include "Singleton.h"
 #include "WaToolsApplicationExportDef.h"
 #include <QWidget>
 
@@ -9,21 +10,30 @@
 
 namespace Populated
 {
-   class WATOOLSAPPLICATION_DECLSPEC MainWidget : public QWidget, public Abstract
+   class WATOOLSAPPLICATION_DECLSPEC MainWidget : public QWidget, public Abstract, public Singleton<MainWidget>
    {
       Q_OBJECT
 
    public:
       MainWidget();
 
+   public:
+      static QAction* addAction(QIcon icon, QString text, QString objectName, auto function);
+
    protected:
       virtual void closeEvent(QCloseEvent* ce) override;
-      QToolBar* findOrCreateToolBar(const QString& objectName);
-      QMenu* findOrCreateMenu(const QString& objectName, const QString& text, QMenu* parentMenu);
 
    protected:
       QMenuBar* menuBar;
+
+   private:
+      QToolBar* findOrCreateToolBar(const QString& objectName);
+      QMenu* findOrCreateMenu(const QString& objectName, const QString& text, QMenu* parentMenu);
    };
 } // namespace Populated
+
+#ifndef PopulatedMainWidgetHPP
+#include "PopulatedMainWidget.hpp"
+#endif // NOT PopulatedMainWidgetHPP
 
 #endif // NOT PopulatedMainWidgetH

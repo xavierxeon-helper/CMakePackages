@@ -7,14 +7,11 @@
 #include <QMenuBar>
 #include <QSettings>
 
-Populated::MainWindow* Populated::MainWindow::me = nullptr;
-
 Populated::MainWindow::MainWindow()
    : QMainWindow(nullptr)
    , Abstract(this)
+   , Singleton<MainWindow>()
 {
-   me = this;
-
    ToolBarCreationFunction toolBarCreationFunction = std::bind(&Populated::MainWindow::findOrCreateToolBar, this, std::placeholders::_1);
    MenuCreationFunction menuCreationFunction = std::bind(&Populated::MainWindow::findOrCreateMenu, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
    setFunctions(toolBarCreationFunction, menuCreationFunction);
@@ -22,16 +19,6 @@ Populated::MainWindow::MainWindow()
    QSettings settings;
    restoreGeometry(settings.value("MainWindow/Geometry").toByteArray());
    restoreState(settings.value("MainWindow/State").toByteArray());
-}
-
-Populated::MainWindow::~MainWindow()
-{
-   me = nullptr;
-}
-
-Populated::MainWindow* Populated::MainWindow::the()
-{
-   return me;
 }
 
 QDockWidget* Populated::MainWindow::addDockWidget(QWidget* widget, const Qt::DockWidgetArea& area)
