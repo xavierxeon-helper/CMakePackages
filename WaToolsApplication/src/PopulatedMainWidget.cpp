@@ -45,7 +45,20 @@ QMenu* Populated::MainWidget::findOrCreateMenu(const QString& objectName, const 
       return menu;
    }
 
-   menu = parentMenu ? parentMenu->addMenu(text) : (menuBar ? menuBar->addMenu(text) : nullptr);
-   menu->setObjectName(objectName);
+   auto createMenu = [&]()
+   {
+      if(parentMenu)
+         return parentMenu->addMenu(text);
+
+      if(!menuBar)
+         menuBar = new QMenuBar(this);
+
+      return menuBar->addMenu(text);
+   };
+
+   menu = createMenu();
+   if(menu)
+      menu->setObjectName(objectName);
+
    return menu;
 }

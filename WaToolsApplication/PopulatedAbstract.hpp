@@ -9,7 +9,7 @@ inline QAction* Populated::Abstract::addAction(QIcon icon, QString text, QString
 {
    QAction* action = new QAction(icon, text, instance);
    action->setObjectName(objectName);
-   connect(action, &QAction::triggered, instance, slotFunction);
+   QObject::connect(action, &QAction::triggered, instance, slotFunction);
 
    return action;
 }
