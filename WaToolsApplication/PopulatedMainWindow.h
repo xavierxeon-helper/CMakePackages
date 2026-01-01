@@ -1,42 +1,40 @@
 #ifndef PopulatedMainWindowH
 #define PopulatedMainWindowH
 
+#include "PopulatedAbstract.h"
 #include "WaToolsApplicationExportDef.h"
 #include <QMainWindow>
 
-#include "ActionPopulation.h"
-
-class WATOOLSAPPLICATION_DECLSPEC PopulatedMainWindow : public QMainWindow
+namespace Populated
 {
-   Q_OBJECT
+   class WATOOLSAPPLICATION_DECLSPEC MainWindow : public QMainWindow, public Abstract
+   {
+      Q_OBJECT
 
-public:
-   PopulatedMainWindow();
-   virtual ~PopulatedMainWindow();
+   public:
+      MainWindow();
+      virtual ~MainWindow();
 
-public:
-   static PopulatedMainWindow* the();
-   static void printSettingsLocation();
-   static QAction* addAction(QIcon icon, QString text, QString objectName, auto function);
-   static QAction* addAction(QIcon icon, QString text, QString objectName, QObject* instance, auto slotFunction);
+   public:
+      static MainWindow* the();
+      static QAction* addAction(QIcon icon, QString text, QString objectName, auto function);
 
-protected:
-   void populateMenuAndToolBar(const QString& xmlResource);
-   QDockWidget* addDockWidget(QWidget* widget, const Qt::DockWidgetArea& area);
+   protected:
+      QDockWidget* addDockWidget(QWidget* widget, const Qt::DockWidgetArea& area);
 
-   virtual void closeEvent(QCloseEvent* ce) override;
-   virtual QMenu* createPopupMenu() override;
+      virtual void closeEvent(QCloseEvent* ce) override;
+      virtual QMenu* createPopupMenu() override;
 
-   void saveWindowSettings();
+      void saveWindowSettings();
 
-private:
-   QToolBar* findOrCreateToolBar(const QString& objectName);
-   QMenu* findOrCreateMenu(const QString& objectName, const QString& text, QMenu* parentMenu);
+   private:
+      QToolBar* findOrCreateToolBar(const QString& objectName);
+      QMenu* findOrCreateMenu(const QString& objectName, const QString& text, QMenu* parentMenu);
 
-private:
-   static PopulatedMainWindow* me;
-   ActionPopulation* actionPopulation;
-};
+   private:
+      static MainWindow* me;
+   };
+} // namespace Populated
 
 #ifndef PopulatedMainWindowHPP
 #include "PopulatedMainWindow.hpp"

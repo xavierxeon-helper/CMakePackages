@@ -7,47 +7,34 @@
 #include <QMenuBar>
 #include <QSettings>
 
-PopulatedMainWindow* PopulatedMainWindow::me = nullptr;
+Populated::MainWindow* Populated::MainWindow::me = nullptr;
 
-PopulatedMainWindow::PopulatedMainWindow()
+Populated::MainWindow::MainWindow()
    : QMainWindow(nullptr)
-   , actionPopulation(nullptr)
+   , Abstract(this)
 {
    me = this;
 
-   ActionPopulation::ToolBarCreationFunction toolBarCreationFunction = std::bind(&PopulatedMainWindow::findOrCreateToolBar, this, std::placeholders::_1);
-   ActionPopulation::MenuCreationFunction menuCreationFunction = std::bind(&PopulatedMainWindow::findOrCreateMenu, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-   actionPopulation = new ActionPopulation(this, toolBarCreationFunction, menuCreationFunction);
+   ToolBarCreationFunction toolBarCreationFunction = std::bind(&Populated::MainWindow::findOrCreateToolBar, this, std::placeholders::_1);
+   MenuCreationFunction menuCreationFunction = std::bind(&Populated::MainWindow::findOrCreateMenu, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+   setFunctions(toolBarCreationFunction, menuCreationFunction);
 
    QSettings settings;
-   restoreGeometry(settings.value("MainWidget/Geometry").toByteArray());
-   restoreState(settings.value("MainWidget/State").toByteArray());
+   restoreGeometry(settings.value("MainWindow/Geometry").toByteArray());
+   restoreState(settings.value("MainWindow/State").toByteArray());
 }
 
-PopulatedMainWindow::~PopulatedMainWindow()
+Populated::MainWindow::~MainWindow()
 {
    me = nullptr;
 }
 
-PopulatedMainWindow* PopulatedMainWindow::the()
+Populated::MainWindow* Populated::MainWindow::the()
 {
    return me;
 }
 
-void PopulatedMainWindow::printSettingsLocation()
-{
-   QSettings settings;
-   const QString fileName = QDir::toNativeSeparators(settings.fileName());
-
-   qInfo() << "SETTINGS @" << qPrintable(fileName);
-}
-
-void PopulatedMainWindow::populateMenuAndToolBar(const QString& xmlResource)
-{
-   actionPopulation->populateMenuAndToolBar(xmlResource);
-}
-
-QDockWidget* PopulatedMainWindow::addDockWidget(QWidget* widget, const Qt::DockWidgetArea& area)
+QDockWidget* Populated::MainWindow::addDockWidget(QWidget* widget, const Qt::DockWidgetArea& area)
 {
    QDockWidget* dockWidget = new QDockWidget(this);
    dockWidget->setFeatures(QDockWidget::NoDockWidgetFeatures);
@@ -63,25 +50,25 @@ QDockWidget* PopulatedMainWindow::addDockWidget(QWidget* widget, const Qt::DockW
    return dockWidget;
 }
 
-void PopulatedMainWindow::closeEvent(QCloseEvent* ce)
+void Populated::MainWindow::closeEvent(QCloseEvent* ce)
 {
    saveWindowSettings();
    ce->accept();
 }
 
-QMenu* PopulatedMainWindow::createPopupMenu()
+QMenu* Populated::MainWindow::createPopupMenu()
 {
    return nullptr;
 }
 
-void PopulatedMainWindow::saveWindowSettings()
+void Populated::MainWindow::saveWindowSettings()
 {
    QSettings settings;
-   settings.setValue("MainWidget/Geometry", saveGeometry());
-   settings.setValue("MainWidget/State", saveState());
+   settings.setValue("MainWindow/Geometry", saveGeometry());
+   settings.setValue("MainWindow/State", saveState());
 }
 
-QToolBar* PopulatedMainWindow::findOrCreateToolBar(const QString& objectName)
+QToolBar* Populated::MainWindow::findOrCreateToolBar(const QString& objectName)
 {
    QToolBar* toolBar = findChild<QToolBar*>(objectName, Qt::FindChildrenRecursively);
    if (toolBar)
@@ -95,7 +82,7 @@ QToolBar* PopulatedMainWindow::findOrCreateToolBar(const QString& objectName)
    return toolBar;
 }
 
-QMenu* PopulatedMainWindow::findOrCreateMenu(const QString& objectName, const QString& text, QMenu* parentMenu)
+QMenu* Populated::MainWindow::findOrCreateMenu(const QString& objectName, const QString& text, QMenu* parentMenu)
 {
    QMenu* menu = findChild<QMenu*>(objectName, Qt::FindChildrenRecursively);
    if (menu)
