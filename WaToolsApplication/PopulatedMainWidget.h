@@ -21,6 +21,7 @@ namespace Populated
       static QAction* addAction(QIcon icon, QString text, QString objectName, auto function);
 
    protected:
+      void loadSettings();
       virtual void closeEvent(QCloseEvent* ce) override;
 
    protected:

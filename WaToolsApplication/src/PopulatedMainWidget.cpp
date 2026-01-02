@@ -14,6 +14,11 @@ Populated::MainWidget::MainWidget()
    MenuCreationFunction menuCreationFunction = std::bind(&MainWidget::findOrCreateMenu, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
    setFunctions(toolBarCreationFunction, menuCreationFunction);
 
+   loadSettings();
+}
+
+void Populated::MainWidget::loadSettings()
+{
    QSettings settings;
    restoreGeometry(settings.value("MainWidget/Geometry").toByteArray());
 }
@@ -47,17 +52,17 @@ QMenu* Populated::MainWidget::findOrCreateMenu(const QString& objectName, const 
 
    auto createMenu = [&]()
    {
-      if(parentMenu)
+      if (parentMenu)
          return parentMenu->addMenu(text);
 
-      if(!menuBar)
+      if (!menuBar)
          menuBar = new QMenuBar(this);
 
       return menuBar->addMenu(text);
    };
 
    menu = createMenu();
-   if(menu)
+   if (menu)
       menu->setObjectName(objectName);
 
    return menu;
