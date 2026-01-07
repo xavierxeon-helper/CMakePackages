@@ -23,13 +23,14 @@ namespace Populated
    protected:
       void loadSettings();
       virtual void closeEvent(QCloseEvent* ce) override;
-
-   protected:
-      QMenuBar* menuBar;
+      virtual void placeMenuBar(QMenuBar* menuBar);
 
    private:
       QToolBar* findOrCreateToolBar(const QString& objectName);
       QMenu* findOrCreateMenu(const QString& objectName, const QString& text, QMenu* parentMenu);
+
+   private:
+      QMenuBar* menuBar;
    };
 } // namespace Populated
 

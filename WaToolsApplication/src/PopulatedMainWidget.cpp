@@ -31,6 +31,12 @@ void Populated::MainWidget::closeEvent(QCloseEvent* ce)
    ce->accept();
 }
 
+void Populated::MainWidget::placeMenuBar(QMenuBar* menuBar)
+{
+   Q_UNUSED(menuBar);
+   qFatal() << "You must override Populated::MainWidget::placeMenuBar to place the menu bar in your main widget.";
+}
+
 QToolBar* Populated::MainWidget::findOrCreateToolBar(const QString& objectName)
 {
    QToolBar* toolBar = findChild<QToolBar*>(objectName, Qt::FindChildrenRecursively);
@@ -56,7 +62,10 @@ QMenu* Populated::MainWidget::findOrCreateMenu(const QString& objectName, const 
          return parentMenu->addMenu(text);
 
       if (!menuBar)
+      {
          menuBar = new QMenuBar(this);
+         placeMenuBar(menuBar);
+      }
 
       return menuBar->addMenu(text);
    };
