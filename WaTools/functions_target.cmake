@@ -38,7 +38,7 @@ function(set_application_icon PATH_TO_ICON)
       set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME AppIcon)
    elseif(APPLE)
       set_target_properties(${PROJECT_NAME} PROPERTIES MACOSX_BUNDLE TRUE)
-      set(APP_ICON ${PATH_TO_ICON}.icns)
+      set(APP_ICON ${PATH_TO_ICON}/${PROJECT_NAME}.icns)
       message(STATUS "APP_ICON: ${APP_ICON}")
 
       set(MACOSX_BUNDLE_ICON_FILE ${PROJECT_NAME}.icns PARENT_SCOPE)
@@ -50,7 +50,7 @@ function(set_application_icon PATH_TO_ICON)
       set(ICON_RC_FILE ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.rc)
 
       if(NOT EXISTS ${ICON_RC_FILE})
-         file(WRITE ${ICON_RC_FILE} "#include \"winver.h\"\nIDI_ICON1 ICON \"${PATH_TO_ICON}.ico\"\n")
+         file(WRITE ${ICON_RC_FILE} "#include \"winver.h\"\nIDI_ICON1 ICON \"${PATH_TO_ICON}/${PROJECT_NAME}.ico\"\n")
       endif()
 
       set(APP_ICON "${ICON_RC_FILE}")
