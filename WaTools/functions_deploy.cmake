@@ -3,6 +3,10 @@ function(run_watools_deploy)
       return()
    endif()
 
+   if(IOS OR ANDROID)
+      return()
+   endif()
+
    if(APPLE)
       file(GLOB WATOOLS_FILES
          ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../lib/release/*.so
@@ -31,6 +35,10 @@ endfunction()
 # qt deploy , see https://www.qt.io/blog/cmake-deployment-api
 function(run_qt_deploy)
    if(NOT CMAKE_BUILD_TYPE STREQUAL "Release")
+      return()
+   endif()
+
+   if(IOS OR ANDROID)
       return()
    endif()
    
