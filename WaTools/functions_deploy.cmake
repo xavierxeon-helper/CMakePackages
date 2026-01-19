@@ -9,11 +9,11 @@ function(run_watools_deploy)
 
    if(APPLE)
       file(GLOB WATOOLS_FILES
-         ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../lib/release/*.so
+         ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../lib/release/*.dylib
       )
    elseif(WIN32)
       file(GLOB WATOOLS_FILES
-         ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../lib/release/*.dylib
+         ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../lib/release/*.dll
       )
    elseif(UNIX)
       file(GLOB WATOOLS_FILES
