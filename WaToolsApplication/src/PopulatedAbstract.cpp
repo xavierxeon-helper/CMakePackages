@@ -128,6 +128,8 @@ void Populated::Abstract::createToolBar(QDomElement thingElement)
 
    const QString objectName = thingElement.attribute("ObjectName");
    QToolBar* toolBar = toolBarCreationFunction(objectName);
+   if(!toolBar)
+      return;
 
    for (QDomElement contentElement = thingElement.firstChildElement(); !contentElement.isNull(); contentElement = contentElement.nextSiblingElement())
    {
@@ -179,6 +181,8 @@ void Populated::Abstract::createMenu(QDomElement thingElement, QMenu* parentMenu
    const QString objectName = thingElement.attribute("ObjectName");
    const QString text = thingElement.attribute("Text");
    QMenu* menu = menuCreationFunction(objectName, text, parentMenu);
+   if(!menu)
+      return;
 
    for (QDomElement contentElement = thingElement.firstChildElement(); !contentElement.isNull(); contentElement = contentElement.nextSiblingElement())
    {
