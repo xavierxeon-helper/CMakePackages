@@ -9,11 +9,11 @@ function(run_watools_deploy)
 
    if(APPLE)
       file(GLOB WATOOLS_FILES
-         ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../lib/release/*.so
+         ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../lib/release/*.dylib
       )
    elseif(WIN32)
       file(GLOB WATOOLS_FILES
-         ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../lib/release/*.dylib
+         ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../lib/release/*.dll
       )
    elseif(UNIX)
       file(GLOB WATOOLS_FILES
@@ -26,7 +26,7 @@ function(run_watools_deploy)
    add_custom_command(TARGET ${PROJECT_NAME}
       POST_BUILD
       COMMENT "copy watools ..."
-      COMMAND ${CMAKE_COMMAND} -E copy ${WATOOLS_FILES} $<TARGET_FILE_DIR:${PROJECT_NAME}>
+      COMMAND ${CMAKE_COMMAND} -E copy_if_different ${WATOOLS_FILES} $<TARGET_FILE_DIR:${PROJECT_NAME}>
    )
 
 endfunction()
