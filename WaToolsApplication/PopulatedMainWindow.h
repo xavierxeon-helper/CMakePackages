@@ -16,7 +16,6 @@ namespace Populated
       MainWindow();
 
    public:
-      static QAction* addAction(QIcon icon, QString text, QString objectName, auto function);
       static QAction* addFunctorAction(QIcon icon, QString text, QString objectName, auto functor);
 
    protected:
