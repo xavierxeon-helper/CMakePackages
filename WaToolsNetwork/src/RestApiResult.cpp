@@ -4,5 +4,8 @@
 
 void RestApi::Result::parseJson()
 {
-   json = FileTools::parseBytes(raw);
+   if (raw.isEmpty())
+      json = QJsonObject{};
+   else
+      json = FileTools::parseBytes(raw);
 }

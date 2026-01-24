@@ -14,6 +14,7 @@ RestApi::Blocking::Blocking(QObject* parent, const QString& baseUrl)
    , manager(nullptr)
    , provider(nullptr)
    , baseUrl(baseUrl)
+   , successStatusCodes{200, 201, 202, 204}
    , unauthorizedStatusCodes({401})
 {
    manager = new QNetworkAccessManager(this);
@@ -131,7 +132,7 @@ RestApi::Result RestApi::Blocking::handleReply(QNetworkRequest request, ReplyGen
 
       result.parseJson();
 
-      if (200 == result.statusCode)
+      if (successStatusCodes.contains(result.statusCode))
       {
          if (verbose())
             qDebug() << "good reply for" << request.url().toString();

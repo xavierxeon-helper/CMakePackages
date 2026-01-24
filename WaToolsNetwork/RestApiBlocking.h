@@ -47,6 +47,7 @@ namespace RestApi
 
    protected:
       QNetworkAccessManager* manager;
+      QList<int> successStatusCodes;
       QList<int> unauthorizedStatusCodes;
       AuthProvider::Token* provider;
       QString baseUrl;
