@@ -1,3 +1,5 @@
+set(WATOOLS_DIR ${CMAKE_CURRENT_LIST_DIR})
+
 include(${CMAKE_CURRENT_LIST_DIR}/functions_compile.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/functions_deploy.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/functions_git.cmake)
@@ -27,3 +29,4 @@ foreach(COMPONENT ${WaTools_FIND_COMPONENTS})
    endif()
    find_package(WaTools${COMPONENT} REQUIRED)
 endforeach()
+

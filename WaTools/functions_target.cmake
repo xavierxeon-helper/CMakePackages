@@ -34,7 +34,7 @@ function(set_application_icon PATH_TO_ICON)
          file(COPY ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/Contents.json DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/${ASSET_CATALOG_PATH}/AppIcon.appiconset)
       endif()
       target_sources(${PROJECT_NAME} PRIVATE "${ASSET_CATALOG_PATH}")
-      set_source_files_properties(${ASSET_CATALOG_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+      set_source_files_properties(${ASSET_CATALOG_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
       set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME AppIcon)
    elseif(APPLE)
       set_target_properties(${PROJECT_NAME} PROPERTIES MACOSX_BUNDLE TRUE)
@@ -67,4 +67,25 @@ function(set_application_no_icon)
    elseif(WIN32)
       set_target_properties(${PROJECT_NAME} PROPERTIES WIN32_EXECUTABLE TRUE)
    endif()
+endfunction()
+
+# apple
+
+function(add_plist_premission KEY TEXT)
+   if(NOT APPLE)
+      return()
+   endif()
+
+   find_program(INFO_PLIST_FIX_EXECUTABLE fix_plist HINTS "${WATOOLS_DIR}")
+   message(STATUS "INFO_PLIST_FIX_EXECUTABLE ${INFO_PLIST_FIX_EXECUTABLE}")
+
+   add_custom_command(TARGET ${PROJECT_NAME}
+      PRE_BUILD
+      COMMAND "${INFO_PLIST_FIX_EXECUTABLE}" $<TARGET_BUNDLE_DIR:${PROJECT_NAME}> NSCameraUsageDescription "${TEXT}"
+   )
+
+endfunction()
+
+function(add_plist_camera_premission TEXT)
+   add_plist_premission(NSCameraUsageDescription "${TEXT}")
 endfunction()

@@ -1,0 +1,70 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+import xml.etree.ElementTree as ET
+
+
+class Logger:
+
+   def __init__(self):
+
+      here = os.path.abspath(os.path.dirname(__file__))
+      self.log = open(here + "/log.txt", "w")
+
+   def __del__(self):
+
+      self.log.close()
+
+   def write(self, text):
+
+      self.log.write(text + "\n")
+
+
+def main():
+
+   logger = Logger()
+
+   if len(sys.argv) != 4:
+      logger.write("Usage: fix_plist <bundlePath> <key> <text>")
+      logger.write(f"  got {len(sys.argv)} arguments")
+      return
+
+   bundlePath = sys.argv[1]
+   plistFile = os.path.join(bundlePath, "Contents", "Info.plist")
+   if not os.path.exists(plistFile):
+      logger.write(f"plist file does not exist: {plistFile}")
+      return
+
+   key = sys.argv[2]
+   text = sys.argv[3]
+
+   logger.write(f"key: {key}")
+   logger.write(f"text: {text}")
+
+   tree = ET.parse(plistFile)
+   root = tree.getroot()
+   data = root.find('dict')
+
+   data.findall('key')
+   for element in data:
+      if element.tag == 'key' and element.text == key:
+         logger.write(f"key already exists: {key}")
+         return
+
+   keyElement = ET.SubElement(data, 'key')
+   keyElement.text = key
+
+   stringElement = ET.SubElement(data, 'string')
+   stringElement.text = text
+
+   ET.indent(tree, '  ')
+
+   with open(plistFile, 'wb') as xmlFile:
+      xmlFile.write('<?xml version="1.0" encoding="UTF-8" ?>\n'.encode('utf8'))
+      xmlFile.write('<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n'.encode('utf8'))
+      tree.write(xmlFile, encoding='utf-8')
+
+
+if __name__ == "__main__":
+   main()
