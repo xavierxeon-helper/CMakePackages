@@ -15,9 +15,6 @@ namespace Populated
    public:
       MainWindow();
 
-   public:
-      static QAction* addFunctorAction(QIcon icon, QString text, QString objectName, auto functor);
-
    protected:
       QDockWidget* addDockWidget(QWidget* widget, const Qt::DockWidgetArea& area);
 
@@ -32,8 +29,6 @@ namespace Populated
    };
 } // namespace Populated
 
-#ifndef PopulatedMainWindowHPP
-#include "PopulatedMainWindow.hpp"
-#endif // NOT PopulatedMainWindowHPP
+
 
 #endif // NOT PopulatedMainWindowH

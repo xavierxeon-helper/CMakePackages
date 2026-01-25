@@ -14,4 +14,13 @@ inline QAction* Populated::Abstract::addAction(QIcon icon, QString text, QString
    return action;
 }
 
+inline QAction* Populated::Abstract::addFunctorAction(QIcon icon, QString text, QString objectName, QObject* parent, auto functor)
+{
+   QAction* action = new QAction(icon, text, parent);
+   action->setObjectName(objectName);
+   QObject::connect(action, &QAction::triggered, functor);
+
+   return action;
+}
+
 #endif // NOT PopulatedAbstractHPP

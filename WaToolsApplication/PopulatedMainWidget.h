@@ -17,9 +17,6 @@ namespace Populated
    public:
       MainWidget();
 
-   public:
-      static QAction* addFunctorAction(QIcon icon, QString text, QString objectName, auto functor);
-
    protected:
       void loadSettings();
       virtual void closeEvent(QCloseEvent* ce) override;
@@ -33,9 +30,5 @@ namespace Populated
       QMenuBar* menuBar;
    };
 } // namespace Populated
-
-#ifndef PopulatedMainWidgetHPP
-#include "PopulatedMainWidget.hpp"
-#endif // NOT PopulatedMainWidgetHPP
 
 #endif // NOT PopulatedMainWidgetH

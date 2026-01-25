@@ -22,6 +22,7 @@ namespace Populated
    public:
       static void printSettingsLocation();
       static QAction* addAction(QIcon icon, QString text, QString objectName, QObject* instance, auto slotFunction);
+      static QAction* addFunctorAction(QIcon icon, QString text, QString objectName, QObject* parent, auto functor);
 
       static QString writeExampleResource(const QString& xmlResource);
       void populateMenuAndToolBar(const QString& xmlResource);
