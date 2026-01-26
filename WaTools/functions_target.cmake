@@ -86,10 +86,10 @@ function(auto_build_number)
    )
 
    target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
-
-   add_custom_command(
-      TARGET ${PROJECT_NAME}
-      PRE_BUILD
+   add_custom_target(
+      BUILD_NUMBER_INCREMENT
       COMMAND ${CMAKE_COMMAND} -DBUILD_NUMBER_CACHE_FILE=${BUILD_NUMBER_CACHE_FILE}  -P "${CMAKE_CURRENT_FUNCTION_LIST_DIR}/increment_build_number.cmake"
-   )   
+   )
+
+   add_dependencies(${PROJECT_NAME} BUILD_NUMBER_INCREMENT) 
 endfunction()
