@@ -72,24 +72,16 @@ endfunction()
 # build number
 function(auto_build_number)
    
-   set(BUILD_NUMBER_CACHE_FILE "${CMAKE_CURRENT_SOURCE_DIR}/AppVersionNumber.txt" )
+   set(BUILD_NUMBER_CACHE_FILE "${CMAKE_CURRENT_SOURCE_DIR}/AppVersionNumber.txt")
+   set(BUILD_NUMBER_VERSION_FILE "${CMAKE_CURRENT_FUNCTION_LIST_DIR}/AppVersionNumber.h.in")
+
    include(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/increment_build_number.cmake) # initialize build number   
    
-   file (READ "${BUILD_NUMBER_CACHE_FILE}" APP_VERSION_LIST)
-   LIST(GET APP_VERSION_LIST 0 APP_VERSION_MAJOR)
-   LIST(GET APP_VERSION_LIST 1 APP_VERSION_MINOR)
-   LIST(GET APP_VERSION_LIST 2 APP_VERSION_PATCH)
-
-   configure_file(
-      ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/AppVersionNumber.h.in
-      ${CMAKE_CURRENT_BINARY_DIR}/AppVersionNumber.h
-   )
-
-   target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
    add_custom_target(
       BUILD_NUMBER_INCREMENT
-      COMMAND ${CMAKE_COMMAND} -DBUILD_NUMBER_CACHE_FILE=${BUILD_NUMBER_CACHE_FILE}  -P "${CMAKE_CURRENT_FUNCTION_LIST_DIR}/increment_build_number.cmake"
+      COMMAND ${CMAKE_COMMAND} -DBUILD_NUMBER_CACHE_FILE=${BUILD_NUMBER_CACHE_FILE} -DBUILD_NUMBER_VERSION_FILE=${BUILD_NUMBER_VERSION_FILE} -P "${CMAKE_CURRENT_FUNCTION_LIST_DIR}/increment_build_number.cmake"
    )
+   add_dependencies(${PROJECT_NAME} BUILD_NUMBER_INCREMENT)
+   target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 
-   add_dependencies(${PROJECT_NAME} BUILD_NUMBER_INCREMENT) 
 endfunction()
