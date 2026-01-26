@@ -1,0 +1,22 @@
+#ifndef AppVersionVersionH
+#define AppVersionVersionH
+
+#include <string>
+
+struct AppVersionNumber
+{
+   // clang-format off
+   static const int major = @APP_VERSION_MAJOR@;
+   static const int minor = @APP_VERSION_MINOR@;
+   static const int patch = @APP_VERSION_PATCH@;
+   // clang-format on
+
+   static std::string versionString();
+};
+
+inline std::string AppVersionNumber::versionString()
+{
+   return std::to_string(major) + "." + std::to_string(minor) + "." + std::to_string(patch);
+}
+
+#endif // NOT AppVersionVersionH
