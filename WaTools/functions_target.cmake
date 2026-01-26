@@ -86,23 +86,3 @@ function(auto_build_number)
 
 endfunction()
 
-# apple plist 
-function(add_plist_permission KEY TEXT)
-   if(NOT APPLE)
-      return()
-   endif()
-
-   find_program(INFO_PLIST_FIX_EXECUTABLE fix_plist HINTS "${WATOOLS_DIR}")
-   message(STATUS "INFO_PLIST_FIX_EXECUTABLE ${INFO_PLIST_FIX_EXECUTABLE}")
-
-   add_custom_target(
-      ${KEY}_PLIST_PERMISSON
-      COMMAND "${INFO_PLIST_FIX_EXECUTABLE}" $<TARGET_BUNDLE_DIR:${PROJECT_NAME}> "${KEY}" "${TEXT}"
-   )
-   add_dependencies(${PROJECT_NAME} ${KEY}_PLIST_PERMISSON)
-
-endfunction()
-
-function(add_plist_camera_permission TEXT)
-   add_plist_permission(NSCameraUsageDescription "${TEXT}")
-endfunction()
