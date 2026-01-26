@@ -69,23 +69,20 @@ function(set_application_no_icon)
    endif()
 endfunction()
 
-# apple
+# build number
+function(auto_build_number)
+   
+   set(BUILD_NUMBER_CACHE_FILE "${CMAKE_CURRENT_SOURCE_DIR}/AppVersionNumber.txt")
+   set(BUILD_NUMBER_VERSION_FILE "${CMAKE_CURRENT_FUNCTION_LIST_DIR}/AppVersionNumber.h.in")
 
-function(add_plist_premission KEY TEXT)
-   if(NOT APPLE)
-      return()
-   endif()
-
-   find_program(INFO_PLIST_FIX_EXECUTABLE fix_plist HINTS "${WATOOLS_DIR}")
-   message(STATUS "INFO_PLIST_FIX_EXECUTABLE ${INFO_PLIST_FIX_EXECUTABLE}")
-
-   add_custom_command(TARGET ${PROJECT_NAME}
-      PRE_BUILD
-      COMMAND "${INFO_PLIST_FIX_EXECUTABLE}" $<TARGET_BUNDLE_DIR:${PROJECT_NAME}> NSCameraUsageDescription "${TEXT}"
+   include(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/increment_build_number.cmake) # initialize build number   
+   
+   add_custom_target(
+      BUILD_NUMBER_INCREMENT
+      COMMAND ${CMAKE_COMMAND} -DBUILD_NUMBER_CACHE_FILE=${BUILD_NUMBER_CACHE_FILE} -DBUILD_NUMBER_VERSION_FILE=${BUILD_NUMBER_VERSION_FILE} -P "${CMAKE_CURRENT_FUNCTION_LIST_DIR}/increment_build_number.cmake"
    )
+   add_dependencies(${PROJECT_NAME} BUILD_NUMBER_INCREMENT)
+   target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 
 endfunction()
 
-function(add_plist_camera_premission TEXT)
-   add_plist_premission(NSCameraUsageDescription "${TEXT}")
-endfunction()
