@@ -103,6 +103,6 @@ function(add_plist_permission KEY TEXT)
 
 endfunction()
 
-function(add_plist_camera_premission TEXT)
-   add_plist_premission(NSCameraUsageDescription "${TEXT}")
+function(add_plist_camera_permission TEXT)
+   add_plist_permission(NSCameraUsageDescription "${TEXT}")
 endfunction()
