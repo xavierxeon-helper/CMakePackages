@@ -25,6 +25,15 @@ void Populated::Abstract::printSettingsLocation()
    qInfo() << "SETTINGS @" << qPrintable(fileName);
 }
 
+void Populated::Abstract::setActionIcon(QObject* parent, QString objectName, QIcon icon)
+{
+   QAction* action = parent->findChild<QAction*>(objectName, Qt::FindChildrenRecursively);
+   if (action)
+      action->setIcon(icon);
+   else
+      qWarning() << __FUNCTION__ << "action not found" << objectName;
+}
+
 QString Populated::Abstract::writeExampleResource(const QString& xmlResource)
 {
    QDomDocument doc;
@@ -128,7 +137,7 @@ void Populated::Abstract::createToolBar(QDomElement thingElement)
 
    const QString objectName = thingElement.attribute("ObjectName");
    QToolBar* toolBar = toolBarCreationFunction(objectName);
-   if(!toolBar)
+   if (!toolBar)
       return;
 
    for (QDomElement contentElement = thingElement.firstChildElement(); !contentElement.isNull(); contentElement = contentElement.nextSiblingElement())
@@ -142,6 +151,20 @@ void Populated::Abstract::createToolBar(QDomElement thingElement)
             toolBar->addAction(action);
          else
             qWarning() << __FUNCTION__ << "action not found" << objectName;
+      }
+      else if ("Menu" == what)
+      {
+         const QString objectName = contentElement.attribute("ObjectName");
+         const QString text = contentElement.attribute("Text");
+
+         QMenu* menu = new QMenu(parentWidget);
+         menu->setObjectName(objectName);
+         menu->setTitle(text);
+
+         createMenu(contentElement, nullptr);
+
+         toolBar->addAction(menu->menuAction());
+         menu->menuAction()->setObjectName(objectName);
       }
       else if ("Separator" == what)
       {
@@ -181,7 +204,7 @@ void Populated::Abstract::createMenu(QDomElement thingElement, QMenu* parentMenu
    const QString objectName = thingElement.attribute("ObjectName");
    const QString text = thingElement.attribute("Text");
    QMenu* menu = menuCreationFunction(objectName, text, parentMenu);
-   if(!menu)
+   if (!menu)
       return;
 
    for (QDomElement contentElement = thingElement.firstChildElement(); !contentElement.isNull(); contentElement = contentElement.nextSiblingElement())
