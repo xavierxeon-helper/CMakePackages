@@ -27,6 +27,7 @@ namespace Managed
 
       void setModel(QAbstractItemModel* model) override;
       QModelIndex currentSourceIndex() const;
+      QStandardItem* getCurrentItem() const;
 
    private:
       using SelectFunction = std::function<void(QStandardItem*)>;

@@ -39,6 +39,12 @@ QModelIndex Managed::TreeView::currentSourceIndex() const
    return currentIndex();
 }
 
+QStandardItem* Managed::TreeView::getCurrentItem() const
+{
+   QModelIndex index = currentSourceIndex();
+   return getItemFromIndex(index);
+}
+
 void Managed::TreeView::selected(const QModelIndex& index)
 {
    if (!selectedFunction)
