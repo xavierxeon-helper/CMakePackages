@@ -8,7 +8,7 @@ set(CMAKE_COMPILE_WARNING_AS_ERROR ON)
 include(../CommonBuild.cmake)
 
 find_package(Qt6 REQUIRED COMPONENTS Core)
-find_package(WaTools REQUIRED COMPONENTS General)
+find_package(WaTools REQUIRED COMPONENTS Cpp)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 

@@ -48,13 +48,13 @@ function(set_application_icon PATH_TO_ICON)
    elseif(WIN32)
       set_target_properties(${PROJECT_NAME} PROPERTIES WIN32_EXECUTABLE TRUE)
       set(ICON_RC_FILE ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.rc)
+      set(APP_ICON ${PATH_TO_ICON}/${PROJECT_NAME}.ico)
 
-      if(NOT EXISTS ${ICON_RC_FILE})
-         file(WRITE ${ICON_RC_FILE} "#include \"winver.h\"\nIDI_ICON1 ICON \"${PATH_TO_ICON}/${PROJECT_NAME}.ico\"\n")
+      if(NOT EXISTS ${ICON_RC_FILE})         
+         file(WRITE ${ICON_RC_FILE} "#include \"winver.h\"\nIDI_ICON1 ICON \"${APP_ICON}\"\n")
       endif()
 
-      set(APP_ICON "${ICON_RC_FILE}")
-      message(STATUS "APP_ICON: ${APP_ICON}")
+      message(STATUS "APP_ICON: ${APP_ICON} @ ${ICON_RC_FILE}")
 
       target_sources(${PROJECT_NAME} PRIVATE ${APP_ICON})   
    endif()
