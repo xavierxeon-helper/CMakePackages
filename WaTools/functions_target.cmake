@@ -86,3 +86,18 @@ function(auto_build_number)
 
 endfunction()
 
+# markdown
+function(add_markdown_files SUBPATH NAME)
+
+   file(GLOB MARKDOWN_FILES
+      RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/
+      ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/*.md
+   )
+
+   qt6_add_resources(${PROJECT_NAME} ${NAME}
+       PREFIX "/"
+       FILES ${MARKDOWN_FILES}
+   )
+endfunction()
+
+
