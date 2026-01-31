@@ -11,6 +11,7 @@ public:
 
 public:
    void setQuickProperty(const QString& name, QObject* object);
+   void setQuickProperty(const QString& name, const QVariant& value);
 };
 
 #endif // NOT WorkFlowQmlWidgetH

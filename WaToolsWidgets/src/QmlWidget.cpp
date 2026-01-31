@@ -14,3 +14,8 @@ void QmlWidget::setQuickProperty(const QString& name, QObject* object)
 {
    engine()->rootContext()->setContextProperty(name, object);
 }
+
+void QmlWidget::setQuickProperty(const QString& name, const QVariant& value)
+{
+   engine()->rootContext()->setContextProperty(name, value);
+}
