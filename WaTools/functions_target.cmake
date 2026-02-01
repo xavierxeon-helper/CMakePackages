@@ -62,7 +62,8 @@ endfunction()
 
 # application without icon
 function(set_application_no_icon)
-   if(APPLE)
+   if(IOS)
+   elseif(APPLE)
       set_target_properties(${PROJECT_NAME} PROPERTIES MACOSX_BUNDLE TRUE)
    elseif(WIN32)
       set_target_properties(${PROJECT_NAME} PROPERTIES WIN32_EXECUTABLE TRUE)
