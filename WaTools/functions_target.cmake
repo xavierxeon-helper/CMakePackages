@@ -70,35 +70,24 @@ function(set_application_no_icon)
    endif()
 endfunction()
 
-# build number
-function(auto_build_number)
-   
-   set(BUILD_NUMBER_CACHE_FILE "${CMAKE_CURRENT_SOURCE_DIR}/AppVersionNumber.txt")
-   set(BUILD_NUMBER_VERSION_FILE "${CMAKE_CURRENT_FUNCTION_LIST_DIR}/AppVersionNumber.h.in")
 
-   include(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/increment_build_number.cmake) # initialize build number   
+# build version
+function(auto_build_version)
+   
+   set(BUILD_VERSION_CACHE_FILE "${CMAKE_CURRENT_SOURCE_DIR}/AppVersionNumber.txt")
+   set(BUILD_VERSION_VERSION_SOURCE_FILE "${CMAKE_CURRENT_FUNCTION_LIST_DIR}/AppVersionNumber.h.in")
+
+   include(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/set_build_timestamp.cmake) # initialize build number
    
    add_custom_target(
-      BUILD_NUMBER_INCREMENT
-      COMMAND ${CMAKE_COMMAND} -DBUILD_NUMBER_CACHE_FILE=${BUILD_NUMBER_CACHE_FILE} -DBUILD_NUMBER_VERSION_FILE=${BUILD_NUMBER_VERSION_FILE} -P "${CMAKE_CURRENT_FUNCTION_LIST_DIR}/increment_build_number.cmake"
+      BUILD_VERSION_INCREMENT
+      COMMAND ${CMAKE_COMMAND}
+      -DBUILD_VERSION_CACHE_FILE=${BUILD_VERSION_CACHE_FILE}
+      -DBUILD_VERSION_VERSION_SOURCE_FILE=${BUILD_VERSION_VERSION_SOURCE_FILE}
+      -P "${CMAKE_CURRENT_FUNCTION_LIST_DIR}/set_build_timestamp.cmake"
    )
-   add_dependencies(${PROJECT_NAME} BUILD_NUMBER_INCREMENT)
+   add_dependencies(${PROJECT_NAME} BUILD_VERSION_INCREMENT)
    target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 
 endfunction()
-
-# markdown
-function(add_markdown_files SUBPATH NAME)
-
-   file(GLOB MARKDOWN_FILES
-      RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/
-      ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/*.md
-   )
-
-   qt6_add_resources(${PROJECT_NAME} ${NAME}
-       PREFIX "/"
-       FILES ${MARKDOWN_FILES}
-   )
-endfunction()
-
 
