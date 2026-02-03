@@ -21,7 +21,7 @@ Rainbow::Rainbow(quint64 maxIndex, quint16 shade)
       const quint64 sectionIndex = (index - sectionRest) / sectionSize;
       if (sectionIndex >= sectionList.count())
       {
-         colorMap[index] = sectionList.first().color;
+         colorMap[index] = sectionList.first().color.darker(shade);
       }
       else
       {
