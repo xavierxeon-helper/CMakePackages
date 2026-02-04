@@ -37,3 +37,22 @@ const QUrl& RestApi::StatusException::getSourceUrl() const
 {
    return sourceUrl;
 }
+
+//
+
+RestApi::UnreachableException::UnreachableException(const QUrl& sourceUrl)
+   : QException()
+   , sourceUrl(sourceUrl)
+{
+}
+
+RestApi::UnreachableException::operator QString() const
+{
+   const QString source = sourceUrl.toString();
+   return QString("UnreachableException from %2").arg(source);
+}
+
+const QUrl& RestApi::UnreachableException::getSourceUrl() const
+{
+   return sourceUrl;
+}

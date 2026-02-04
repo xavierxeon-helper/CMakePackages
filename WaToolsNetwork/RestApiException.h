@@ -30,6 +30,21 @@ namespace RestApi
       Result result;
       const QUrl sourceUrl;
    };
+
+   class WATOOLSNETWORK_DECLSPEC UnreachableException : public QException
+   {
+   public:
+      UnreachableException(const QUrl& sourceUrl);
+
+   public:
+      operator QString() const;
+
+   public:
+      const QUrl& getSourceUrl() const;
+
+   private:
+      const QUrl sourceUrl;
+   };
 } // namespace RestApi
 
 #endif // NOT RestApiExceptionH
