@@ -1,5 +1,8 @@
 #include "DeviceTools.h"
 
+#include <QGuiApplication>
+#include <QStyleHints>
+
 QSize DeviceTools::getSize(const DeviceIdentifier& deviceId)
 {
    switch (deviceId)
@@ -22,4 +25,10 @@ void DeviceTools::fixSize(QQmlApplicationEngine* engine, const DeviceIdentifier&
 
    mainWindow->setProperty("minimumHeight", size.height());
    mainWindow->setProperty("maximumHeight", size.height());
+}
+
+void DeviceTools::forceDisplayMode(bool light)
+{
+   const Qt::ColorScheme scheme = light ? Qt::ColorScheme::Light : Qt::ColorScheme::Dark;
+   QGuiApplication::styleHints()->setColorScheme(scheme);
 }

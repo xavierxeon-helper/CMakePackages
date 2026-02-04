@@ -18,6 +18,4 @@ cd $HERE/build/cmd_line_release
 cmake  $HERE  -DCMAKE_BUILD_TYPE=Release
 cmake --build . --parallel --config Release
 
-cd $HERE/build/cmd_line_release/DesignerPlugin
-make install
 

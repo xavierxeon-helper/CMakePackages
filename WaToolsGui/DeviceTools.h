@@ -21,6 +21,8 @@ public:
 public:
    static QSize getSize(const DeviceIdentifier& deviceId);
    static void fixSize(QQmlApplicationEngine* engine, const DeviceIdentifier& deviceId);
+
+   static void forceDisplayMode(bool light = true);
 };
 
 #endif // NOT DeviceToolsH
