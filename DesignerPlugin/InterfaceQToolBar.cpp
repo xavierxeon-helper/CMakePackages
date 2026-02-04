@@ -27,7 +27,7 @@ QWidget* InterfaceQToolBar::createWidget(QWidget* parent)
 
 QString InterfaceQToolBar::name() const
 {
-   return "QToolBar";
+   return "_QToolBar";
 }
 
 QT_END_NAMESPACE

@@ -1,6 +1,8 @@
 #ifndef DesignerPluginH
 #define DesignerPluginH
 
+// see /Users/waspe/Devel/Qt/6.10.2/Src/qttools/src/designer
+
 #include <QtUiPlugin/QDesignerCustomWidgetCollectionInterface>
 
 class DesignerPlugin : public QObject, public QDesignerCustomWidgetCollectionInterface
