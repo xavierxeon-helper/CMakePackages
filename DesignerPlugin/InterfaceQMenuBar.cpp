@@ -2,6 +2,8 @@
 
 #include <QMenuBar>
 
+QT_BEGIN_NAMESPACE
+
 InterfaceQMenuBar::InterfaceQMenuBar(QObject* parent)
    : InterfaceAbstract(parent)
 {
@@ -19,10 +21,13 @@ QString InterfaceQMenuBar::includeFile() const
 
 QWidget* InterfaceQMenuBar::createWidget(QWidget* parent)
 {
-   return new QMenuBar(parent);
+   QMenuBar* menuBar = new QMenuBar(parent);
+   return menuBar;
 }
 
 QString InterfaceQMenuBar::name() const
 {
    return "QMenuBar";
 }
+
+QT_END_NAMESPACE

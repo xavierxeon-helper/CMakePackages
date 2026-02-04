@@ -1,16 +1,16 @@
-#ifndef InterfaceQMenuBarH
-#define InterfaceQMenuBarH
+#ifndef InterfaceQToolBarH
+#define InterfaceQToolBarH
 
 #include "InterfaceAbstract.h"
 
 QT_BEGIN_NAMESPACE
 
-class InterfaceQMenuBar : public InterfaceAbstract
+class InterfaceQToolBar : public InterfaceAbstract
 {
    Q_OBJECT
 
 public:
-   explicit InterfaceQMenuBar(QObject* parent = nullptr);
+   explicit InterfaceQToolBar(QObject* parent = nullptr);
 
 public:
    QString domXml() const override;
@@ -21,4 +21,4 @@ public:
 
 QT_END_NAMESPACE
 
-#endif // NOT InterfaceQMenuBarH
+#endif // NOT InterfaceQToolBarH

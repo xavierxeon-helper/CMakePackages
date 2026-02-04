@@ -27,7 +27,7 @@ file(GLOB XML_FILES
    ${CMAKE_CURRENT_SOURCE_DIR}/xml/*.xml
 )
 
-qt6_add_resources(${PROJECT_NAME} XML
+qt_add_resources(${PROJECT_NAME} XML
     PREFIX "/"
     FILES ${XML_FILES}
 )
