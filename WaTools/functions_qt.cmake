@@ -39,7 +39,7 @@ function(add_qml_source_dir SUBPATH)
 
    message(STATUS "QML_FILES for ${PROJECT_NAME} found @ ${SUBPATH} = ${QML_FILES}")
 
-   qt6_add_resources(${PROJECT_NAME} "${PROJECT_NAME}_${SUBPATH}"
+   qt_add_resources(${PROJECT_NAME} "${PROJECT_NAME}_${SUBPATH}"
        PREFIX "/"
        FILES ${QML_FILES}
    )
@@ -47,17 +47,37 @@ endfunction()
 
 
 # markdown
-function(add_markdown_files SUBPATH NAME)
+function(add_markdown_files SUBPATH)
+
+   cmake_parse_arguments(PARSE_ARGV 1 MARKDOWN_ARG "" "RCNAME" "")
+
+   if(NOT MARKDOWN_ARG_RCNAME)
+      set(MARKDOWN_ARG_RCNAME "${PROJECT_NAME}_${SUBPATH}")
+   endif()
 
    file(GLOB MARKDOWN_FILES
       RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/
       ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/*.md
    )
 
-   qt6_add_resources(${PROJECT_NAME} ${NAME}
-       PREFIX "/"
-       FILES ${MARKDOWN_FILES}
-   )
+   qt_add_resources(${PROJECT_NAME} ${MARKDOWN_ARG_RCNAME} FILES ${MARKDOWN_FILES})
 endfunction()
 
+# markdown
+function(add_icon_files SUBPATH)
 
+   cmake_parse_arguments(PARSE_ARGV 1 ICON_ARG "" "RCNAME" "")
+
+   if(NOT ICON_ARG_RCNAME)
+      set(ICON_ARG_RCNAME "${PROJECT_NAME}_${SUBPATH}")
+   endif()
+
+   file(GLOB ICON_FILES
+      RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/
+      ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/*.svg
+   )
+
+   message(STATUS "ICON_FILES for ${PROJECT_NAME} found @ ${SUBPATH} = ${ICON_FILES}")
+
+   qt_add_resources(${PROJECT_NAME} ${ICON_ARG_RCNAME} FILES ${ICON_FILES})
+endfunction()
