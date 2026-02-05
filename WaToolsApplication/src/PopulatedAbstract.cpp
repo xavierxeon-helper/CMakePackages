@@ -9,7 +9,6 @@ Populated::Abstract::Abstract(QWidget* parentWidget)
    : parentWidget(parentWidget)
    , toolBarCreationFunction(nullptr)
    , menuCreationFunction(nullptr)
-
 {
 }
 
@@ -34,10 +33,19 @@ void Populated::Abstract::setActionIcon(QObject* parent, QString objectName, QIc
       qWarning() << __FUNCTION__ << "action not found" << objectName;
 }
 
+void Populated::Abstract::setActionShortcut(QObject* parent, QString objectName, QKeySequence shortcut)
+{
+   QAction* action = parent->findChild<QAction*>(objectName, Qt::FindChildrenRecursively);
+   if (action)
+      action->setShortcut(shortcut);
+   else
+      qWarning() << __FUNCTION__ << "action not found" << objectName;
+}
+
 QString Populated::Abstract::writeExampleResource(const QString& xmlResource)
 {
    QDomDocument doc;
-   QDomElement rootElement = doc.createElement("MenuAndTooBar");
+   QDomElement rootElement = doc.createElement("MenuAndToolBar");
    doc.appendChild(rootElement);
 
    // toolbar
@@ -53,8 +61,8 @@ QString Populated::Abstract::writeExampleResource(const QString& xmlResource)
    actionElement.setAttribute("ObjectName", "Action.Name");
    toolBarElement.appendChild(actionElement);
 
-   QDomElement seperatorElement = doc.createElement("Separator");
-   toolBarElement.appendChild(seperatorElement);
+   QDomElement separatorElement = doc.createElement("Separator");
+   toolBarElement.appendChild(separatorElement);
 
    QDomElement spacerElement = doc.createElement("Spacer");
    toolBarElement.appendChild(spacerElement);
@@ -78,8 +86,8 @@ QString Populated::Abstract::writeExampleResource(const QString& xmlResource)
    actionElement3.setAttribute("ObjectName", "Action.Name");
    subMenuElement.appendChild(actionElement3);
 
-   QDomElement seperatorElement2 = doc.createElement("Separator");
-   menuElement.appendChild(seperatorElement2);
+   QDomElement separatorElement2 = doc.createElement("Separator");
+   menuElement.appendChild(separatorElement2);
 
    QDomElement subMenuElement2 = doc.createElement("Menu");
    subMenuElement2.setAttribute("ObjectName", "DynamicMenu.Name");
