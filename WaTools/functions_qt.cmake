@@ -45,39 +45,51 @@ function(add_qml_source_dir SUBPATH)
    )
 endfunction()
 
+# all files
+function(add_resource_dir SUBPATH)
 
-# markdown
-function(add_markdown_files SUBPATH)
+   cmake_parse_arguments(PARSE_ARGV 1 RESOURCE_ARG "" "RCNAME;PREFIX;FILTER" "")
 
-   cmake_parse_arguments(PARSE_ARGV 1 MARKDOWN_ARG "" "RCNAME" "")
-
-   if(NOT MARKDOWN_ARG_RCNAME)
-      set(MARKDOWN_ARG_RCNAME "${PROJECT_NAME}_${SUBPATH}")
+   if(NOT RESOURCE_ARG_RCNAME)
+      set(RESOURCE_ARG_RCNAME "${PROJECT_NAME}_${SUBPATH}")
    endif()
 
-   file(GLOB MARKDOWN_FILES
+   if(NOT RESOURCE_ARG_PREFIX)
+      set(RESOURCE_ARG_PREFIX "/")
+   endif()
+
+   if(NOT RESOURCE_ARG_FILTER)
+      set(RESOURCE_ARG_FILTER "*")
+   endif()
+
+   file(GLOB RESOURCE_FILES
       RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/
-      ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/*.md
+      ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/${RESOURCE_ARG_FILTER}
    )
 
-   qt_add_resources(${PROJECT_NAME} ${MARKDOWN_ARG_RCNAME} FILES ${MARKDOWN_FILES})
+   message(STATUS "RESOURCE_FILES for ${PROJECT_NAME} found @ ${SUBPATH} = ${RESOURCE_FILES}")
+   message(STATUS " => rcname = ${RESOURCE_ARG_RCNAME}, prefix = ${RESOURCE_ARG_PREFIX}, filter = ${RESOURCE_ARG_FILTER}")
+
+   qt_add_resources(${PROJECT_NAME} ${RESOURCE_ARG_RCNAME}
+      PREFIX ${RESOURCE_ARG_PREFIX}
+      FILES ${RESOURCE_FILES}
+   )
+endfunction()
+
+
+# markdown
+function(add_markdown_dir SUBPATH)
+
+   cmake_parse_arguments(PARSE_ARGV 1 MARKDOWN_ARG "" "RCNAME;PREFIX" "")
+   add_resource_dir(${SUBPATH} RCNAME ${MARKDOWN_ARG_RCNAME} PREFIX ${MARKDOWN_ARG_PREFIX FILTER "*.md")
+
 endfunction()
 
 # markdown
-function(add_icon_files SUBPATH)
+function(add_icon_dir SUBPATH)
 
-   cmake_parse_arguments(PARSE_ARGV 1 ICON_ARG "" "RCNAME" "")
+   cmake_parse_arguments(PARSE_ARGV 1 ICON_ARG "" "RCNAME;PREFIX" "")
+   add_resource_dir(${SUBPATH} RCNAME ${ICON_ARG_RCNAME} PREFIX ${ICON_ARG_PREFIX} FILTER "*.svg")
 
-   if(NOT ICON_ARG_RCNAME)
-      set(ICON_ARG_RCNAME "${PROJECT_NAME}_${SUBPATH}")
-   endif()
-
-   file(GLOB ICON_FILES
-      RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/
-      ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/*.svg
-   )
-
-   message(STATUS "ICON_FILES for ${PROJECT_NAME} found @ ${SUBPATH} = ${ICON_FILES}")
-
-   qt_add_resources(${PROJECT_NAME} ${ICON_ARG_RCNAME} FILES ${ICON_FILES})
 endfunction()
+
