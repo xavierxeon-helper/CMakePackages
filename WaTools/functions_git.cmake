@@ -24,6 +24,15 @@ function(init_all_git_submodules)
       RESULT_VARIABLE GIT_UPDATE_RESULT)
 
    if(NOT GIT_UPDATE_RESULT EQUAL "0")
-      message(FATAL_ERROR "git submodule update --init failed with ${GIT_UPDATE_RESULT}, please checkout submodules")
+      message(FATAL_ERROR "git submodule update --init failed with ${GIT_UPDATE_RESULT}, please checkout submodules manually")
    endif()
+
+   execute_process(COMMAND ${GIT_EXECUTABLE} submodule foreach "git switch master"
+      WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+      RESULT_VARIABLE GIT_SWITCH_RESULT)
+
+   if(NOT GIT_SWITCH_RESULT EQUAL "0")
+      message(FATAL_ERROR "git failed with ${GIT_SWITCH_RESULT}, could not set all submodules to master branch")
+   endif()
+
 endfunction()

@@ -32,7 +32,7 @@ function(set_application_icon PATH_TO_ICON)
       if(NOT EXISTS ${ASSET_CATALOG_PATH})
          file(MAKE_DIRECTORY ${ASSET_CATALOG_PATH})
       endif()
-      file(COPY ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/Contents.json DESTINATION ${ASSET_CATALOG_PATH}/AppIcon.appiconset)
+      file(COPY ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/resources/Contents.json DESTINATION ${ASSET_CATALOG_PATH}/AppIcon.appiconset)
       target_sources(${PROJECT_NAME} PRIVATE "${ASSET_CATALOG_PATH}")
       set_source_files_properties(${ASSET_CATALOG_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
       set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME AppIcon)
@@ -75,16 +75,16 @@ endfunction()
 function(auto_build_version)
    
    set(BUILD_VERSION_CACHE_FILE "${CMAKE_CURRENT_SOURCE_DIR}/AppVersionNumber.txt")
-   set(BUILD_VERSION_VERSION_SOURCE_FILE "${CMAKE_CURRENT_FUNCTION_LIST_DIR}/AppVersionNumber.h.in")
+   set(BUILD_VERSION_VERSION_SOURCE_FILE "${CMAKE_CURRENT_FUNCTION_LIST_DIR}/resources/AppVersionNumber.h.in")
 
-   include(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/set_build_timestamp.cmake) # initialize build number
+   include(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/scripts/set_build_timestamp.cmake) # initialize build number
    
    add_custom_target(
       BUILD_VERSION_INCREMENT
       COMMAND ${CMAKE_COMMAND}
       -DBUILD_VERSION_CACHE_FILE=${BUILD_VERSION_CACHE_FILE}
       -DBUILD_VERSION_VERSION_SOURCE_FILE=${BUILD_VERSION_VERSION_SOURCE_FILE}
-      -P "${CMAKE_CURRENT_FUNCTION_LIST_DIR}/set_build_timestamp.cmake"
+      -P "${CMAKE_CURRENT_FUNCTION_LIST_DIR}/scripts/set_build_timestamp.cmake"
    )
    add_dependencies(${PROJECT_NAME} BUILD_VERSION_INCREMENT)
    target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})

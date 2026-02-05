@@ -1,12 +1,12 @@
 set(WATOOLS_DIR ${CMAKE_CURRENT_LIST_DIR})
 
+option(WATOOLS_USE_AS_SUBDIRECTORY "Use WaTools as subdirectory" OFF)
+
 include(${CMAKE_CURRENT_LIST_DIR}/functions_compile.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/functions_deploy.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/functions_files.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/functions_git.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/functions_qt.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/functions_target.cmake)
-
-option(WATOOLS_USE_AS_SUBDIRECTORY "Use WaTools as subdirectory" OFF)
 
 if(IOS OR ANDROID)
    set(WATOOLS_USE_AS_SUBDIRECTORY ON)
@@ -14,7 +14,9 @@ endif()
 
 foreach(COMPONENT ${WaTools_FIND_COMPONENTS})
    #message(STATUS "NEED WaTools component: ${COMPONENT}")
-   if(WATOOLS_USE_AS_SUBDIRECTORY)
+   if(NOT WATOOLS_USE_AS_SUBDIRECTORY)
+      find_package(WaTools${COMPONENT} REQUIRED)
+   else()
       if(TARGET WaTools${COMPONENT})
          message(STATUS "REUSE TARGET WaTools${COMPONENT}")
          link_libraries(WaTools${COMPONENT})
@@ -26,6 +28,5 @@ foreach(COMPONENT ${WaTools_FIND_COMPONENTS})
          add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../WaTools${COMPONENT} WaTools${COMPONENT})
       endif()
    endif()
-   find_package(WaTools${COMPONENT} REQUIRED)
 endforeach()
 
