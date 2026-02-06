@@ -7,17 +7,12 @@ then
 fi
 
 PLATFORM=$(uname -ms)
-echo "Platform: $PLATFORM"
-
 PLATFORM_RASPI="Linux aarch64"
-echo "Platform: $PLATFORM_RASPI"
-
 
 if [ "$PLATFORM" == "$PLATFORM_RASPI" ]
 then
-   echo "Running on Raspberry Pi, skipping parallel build"
+   echo "Running on Raspberry Pi, do not use parallel build"
 fi
-exit 0
 
 HERE=$(dirname "$(readlink -f "$0")")
 
