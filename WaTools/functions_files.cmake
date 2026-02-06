@@ -56,7 +56,7 @@ function(set_application_icon PATH_TO_ICON)
 
       message(STATUS "APP_ICON: ${APP_ICON} @ ${ICON_RC_FILE}")
 
-      target_sources(${PROJECT_NAME} PRIVATE ${APP_ICON})   
+      target_sources(${PROJECT_NAME} PRIVATE ${ICON_RC_FILE})
    endif()
 endfunction()
 
