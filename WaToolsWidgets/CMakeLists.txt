@@ -29,7 +29,11 @@ add_os_files(src_os)
 qt_add_library(${PROJECT_NAME} ${WATOOLS_LIB_TYPE} ${HEADER_FILES} ${SOURCE_FILES})
 add_compile_definitions(EXTENSION_WATOOLSWIDGETS)
 
-add_qml_module_dir(Gui WaToolsQt)
+if(LINUX AND "aarch64" STREQUAL ${CMAKE_SYSTEM_PROCESSOR})
+   message(STATUS "SKIPPING WaTools QML")
+else()
+   add_qml_module_dir(Gui WaToolsQt)
+endif()
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets Qt6::Xml Qt6::QuickWidgets)
 
