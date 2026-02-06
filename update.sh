@@ -25,6 +25,7 @@ then
     cmake --build . --config Debug
 else
    cmake --build . --parallel --config Debug
+fi
 
 mkdir -p $HERE/build/cmd_line_release
 cd $HERE/build/cmd_line_release
@@ -35,5 +36,5 @@ then
     cmake --build . --config Release
 else
    cmake --build . --parallel --config Release
-
+fi
 
