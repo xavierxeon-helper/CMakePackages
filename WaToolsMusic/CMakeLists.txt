@@ -3,6 +3,7 @@ project(WaToolsMusic LANGUAGES CXX)
 
 if(LINUX AND "aarch64" STREQUAL ${CMAKE_SYSTEM_PROCESSOR})
    message(STATUS "SKIPPING ${PROJECT_NAME} on ARM64 Linux")
+   return()
 endif()
 
 set(CMAKE_CXX_STANDARD 20)
