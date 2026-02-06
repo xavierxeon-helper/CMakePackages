@@ -27,6 +27,7 @@ foreach(COMPONENT ${WaTools_FIND_COMPONENTS})
          endif()
          add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../WaTools${COMPONENT} WaTools${COMPONENT})
       endif()
+      find_package(WaTools${COMPONENT} REQUIRED)
    endif()
 endforeach()
 
