@@ -28,11 +28,11 @@ endfunction()
 # application icon
 function(set_application_icon PATH_TO_ICON)
    if(IOS)
-      set(ASSET_CATALOG_PATH "Icons/Assets.xcassets")
-      if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${ASSET_CATALOG_PATH})
-         file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${ASSET_CATALOG_PATH}/AppIcon.appiconset)
-         file(COPY ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/Contents.json DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/${ASSET_CATALOG_PATH}/AppIcon.appiconset)
+      set(ASSET_CATALOG_PATH "${PATH_TO_ICON}/Assets.xcassets")
+      if(NOT EXISTS ${ASSET_CATALOG_PATH})
+         file(MAKE_DIRECTORY ${ASSET_CATALOG_PATH})
       endif()
+      file(COPY ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/resources/Contents.json DESTINATION ${ASSET_CATALOG_PATH}/AppIcon.appiconset)
       target_sources(${PROJECT_NAME} PRIVATE "${ASSET_CATALOG_PATH}")
       set_source_files_properties(${ASSET_CATALOG_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
       set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME AppIcon)
@@ -48,13 +48,13 @@ function(set_application_icon PATH_TO_ICON)
    elseif(WIN32)
       set_target_properties(${PROJECT_NAME} PROPERTIES WIN32_EXECUTABLE TRUE)
       set(ICON_RC_FILE ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.rc)
+      set(APP_ICON ${PATH_TO_ICON}/${PROJECT_NAME}.ico)
 
-      if(NOT EXISTS ${ICON_RC_FILE})
-         file(WRITE ${ICON_RC_FILE} "#include \"winver.h\"\nIDI_ICON1 ICON \"${PATH_TO_ICON}/${PROJECT_NAME}.ico\"\n")
+      if(NOT EXISTS ${ICON_RC_FILE})         
+         file(WRITE ${ICON_RC_FILE} "#include \"winver.h\"\nIDI_ICON1 ICON \"${APP_ICON}\"\n")
       endif()
 
-      set(APP_ICON "${ICON_RC_FILE}")
-      message(STATUS "APP_ICON: ${APP_ICON}")
+      message(STATUS "APP_ICON: ${APP_ICON} @ ${ICON_RC_FILE}")
 
       target_sources(${PROJECT_NAME} PRIVATE ${APP_ICON})   
    endif()
@@ -62,26 +62,31 @@ endfunction()
 
 # application without icon
 function(set_application_no_icon)
-   if(APPLE)
+   if(IOS)
+   elseif(APPLE)
       set_target_properties(${PROJECT_NAME} PROPERTIES MACOSX_BUNDLE TRUE)
    elseif(WIN32)
       set_target_properties(${PROJECT_NAME} PROPERTIES WIN32_EXECUTABLE TRUE)
    endif()
 endfunction()
 
-# build number
-function(auto_build_number)
-   
-   set(BUILD_NUMBER_CACHE_FILE "${CMAKE_CURRENT_SOURCE_DIR}/AppVersionNumber.txt")
-   set(BUILD_NUMBER_VERSION_FILE "${CMAKE_CURRENT_FUNCTION_LIST_DIR}/AppVersionNumber.h.in")
 
-   include(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/increment_build_number.cmake) # initialize build number   
+# build version
+function(auto_build_version)
+   
+   set(BUILD_VERSION_CACHE_FILE "${CMAKE_CURRENT_SOURCE_DIR}/AppVersionNumber.txt")
+   set(BUILD_VERSION_VERSION_SOURCE_FILE "${CMAKE_CURRENT_FUNCTION_LIST_DIR}/resources/AppVersionNumber.h.in")
+
+   include(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/scripts/set_build_timestamp.cmake) # initialize build number
    
    add_custom_target(
-      BUILD_NUMBER_INCREMENT
-      COMMAND ${CMAKE_COMMAND} -DBUILD_NUMBER_CACHE_FILE=${BUILD_NUMBER_CACHE_FILE} -DBUILD_NUMBER_VERSION_FILE=${BUILD_NUMBER_VERSION_FILE} -P "${CMAKE_CURRENT_FUNCTION_LIST_DIR}/increment_build_number.cmake"
+      BUILD_VERSION_INCREMENT
+      COMMAND ${CMAKE_COMMAND}
+      -DBUILD_VERSION_CACHE_FILE=${BUILD_VERSION_CACHE_FILE}
+      -DBUILD_VERSION_VERSION_SOURCE_FILE=${BUILD_VERSION_VERSION_SOURCE_FILE}
+      -P "${CMAKE_CURRENT_FUNCTION_LIST_DIR}/scripts/set_build_timestamp.cmake"
    )
-   add_dependencies(${PROJECT_NAME} BUILD_NUMBER_INCREMENT)
+   add_dependencies(${PROJECT_NAME} BUILD_VERSION_INCREMENT)
    target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 
 endfunction()

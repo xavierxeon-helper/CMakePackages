@@ -1,7 +1,7 @@
 #ifndef RangeH
 #define RangeH
 
-#include "WaToolsGeneralExportDef.h"
+#include "WaToolsCppExportDef.h"
 
 #include <cstddef>
 #include <iterator> // For std::forward_iterator_tag
@@ -59,7 +59,7 @@ struct Range
       DataType maxValue;
    };
 
-   class WATOOLSGENERAL_DECLSPEC Mapper
+   class WATOOLSCPP_DECLSPEC Mapper
    {
    public:
       Mapper(const float& minInput, const float& maxInput, const float& minOutput, const float& maxOutput);

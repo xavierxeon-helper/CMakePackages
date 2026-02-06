@@ -11,6 +11,9 @@ struct WATOOLSWIDGETS_DECLSPEC Look
 
    static void setDockLabel(const QString& label);
    static void updateDockIcon(const QIcon& icon);
+
+   static void doNotShowMenuIcons();
+   static void forceAppMenuBar();
 };
 
 #endif // NOT LookH

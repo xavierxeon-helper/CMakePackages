@@ -54,8 +54,7 @@ function(add_sub_dirs_files) # args = list of directories
          ${DIR}/*.h
          ${DIR}/*.hpp
          ${DIR}/*.cpp
-         ${DIR}/*.ui
-         ${DIR}/*.qrc
+         ${DIR}/*.ui         
       )
       target_sources(${PROJECT_NAME} PRIVATE ${DIR_FILES})
 

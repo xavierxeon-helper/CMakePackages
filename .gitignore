@@ -1,5 +1,6 @@
-.vscode
-/build
+**/.vscode
+**/build
+**/.qtcreator
 **/CMakeLists.txt.user
 
 /documentation

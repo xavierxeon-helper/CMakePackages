@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(WaToolsGeneral LANGUAGES CXX)
+project(WaToolsCpp LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -21,4 +21,4 @@ file(GLOB_RECURSE SOURCE_FILES
 )
 
 qt_add_library(${PROJECT_NAME} ${WATOOLS_LIB_TYPE} ${HEADER_FILES} ${SOURCE_FILES})
-add_compile_definitions(EXTENSION_WATOOLSGENERAL)
+add_compile_definitions(EXTENSION_WATOOLSCPP)

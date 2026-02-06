@@ -6,11 +6,15 @@
 #include <QSettings>
 #include <QStandardPaths>
 
-QJsonObject FileTools::readJson(const QString& filePath)
+QJsonObject FileTools::readJson(const QString& filePath, bool verbose)
 {
    QFile file(filePath);
    if (!file.open(QIODevice::ReadOnly))
+   {
+      if (verbose)
+         qWarning() << __FUNCTION__ << "Failed to open JSON file:" << filePath;
       return QJsonObject();
+   }
 
    const QByteArray fileContent = file.readAll();
    file.close();
@@ -33,14 +37,22 @@ QJsonObject FileTools::parseBytes(const QByteArray& data)
    return object;
 }
 
-void FileTools::writeJson(const QJsonObject& data, const QString& filePath)
+void FileTools::writeJson(const QJsonObject& data, const QString& filePath, bool verbose)
 {
    if (data.isEmpty())
+   {
+      if (verbose)
+         qWarning() << __FUNCTION__ << "No data to write";
       return;
+   }
 
    QFile file(filePath);
    if (!file.open(QIODevice::WriteOnly))
+   {
+      if (verbose)
+         qWarning() << __FUNCTION__ << "Failed to open JSON file:" << filePath;
       return;
+   }
 
    QJsonDocument doc(data);
    file.write(doc.toJson(QJsonDocument::Indented));
@@ -103,12 +115,12 @@ QString FileTools::compileNextCloudPath(const QString& appName)
    return path;
 }
 
-QJsonObject FileTools::readApiKeys(const QString& appName)
+QJsonObject FileTools::readApiKeys(const QString& appName, bool verbose)
 {
    static const QStringList homePaths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
    const QString keyFileName = homePaths.first() + "/.ApiKeys/" + appName + ".json";
 
-   return readJson(keyFileName);
+   return readJson(keyFileName, verbose);
 }
 
 QStringList FileTools::compileResourceNames(const QStringList& ignoreList)

@@ -19,7 +19,7 @@ void DataStore::setPath(const QString& _path, const QString& anchor)
    }
    else
    {
-      const QString thisPath = QFileInfo(__FILE__).dir().absolutePath();
+      const QString thisPath = QFileInfo(anchor).dir().absolutePath();
       path = QDir(thisPath + "/" + _path).absolutePath();
    }
 

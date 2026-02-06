@@ -145,7 +145,12 @@ bool AuthProvider::OAuth::authorizeUser()
       loop.quit();
 
       if (useExceptions())
-         throw new RestApi::StatusException(500 + (int)error, oauthFlow->authorizationUrl());
+      {
+         if (QAbstractOAuth::Error::NetworkError == error)
+            throw new RestApi::UnreachableException(oauthFlow->authorizationUrl());
+         else
+            throw new RestApi::StatusException(500 + int(error), oauthFlow->authorizationUrl());
+      }
    };
 
    QObject::connect(oauthFlow, &QAbstractOAuth::requestFailed, onError);
@@ -193,7 +198,12 @@ bool AuthProvider::OAuth::update()
       loop.quit();
 
       if (useExceptions())
-         throw new RestApi::StatusException(500 + (int)error, oauthFlow->authorizationUrl());
+      {
+         if (QAbstractOAuth::Error::NetworkError == error)
+            throw new RestApi::UnreachableException(oauthFlow->authorizationUrl());
+         else
+            throw new RestApi::StatusException(500 + int(error), oauthFlow->authorizationUrl());
+      }
    };
 
    QObject::connect(oauthFlow, &QAbstractOAuth::requestFailed, onError);

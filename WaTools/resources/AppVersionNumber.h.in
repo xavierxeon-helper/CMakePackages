@@ -1,0 +1,25 @@
+#ifndef AppVersionVersionH
+#define AppVersionVersionH
+
+#include <string>
+
+struct AppVersionNumber
+{
+   // clang-format off
+   static constexpr int major = @APP_VERSION_MAJOR@;
+   static constexpr int minor = @APP_VERSION_MINOR@;   
+   static constexpr const char* timestamp = "@APP_VERSION_TIMESTAMP@";
+   // clang-format on
+
+   static std::string versionString(bool withTimeStamp = false);
+};
+
+inline std::string AppVersionNumber::versionString(bool withTimeStamp)
+{
+   std::string text = std::to_string(major) + "." + std::to_string(minor);
+   if (withTimeStamp)
+      text += " @ " + std::string(timestamp);
+   return text;
+}
+
+#endif // NOT AppVersionVersionH

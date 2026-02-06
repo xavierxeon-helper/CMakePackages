@@ -16,6 +16,10 @@ public:
 
 public:
    void setup(LoadFunction loadFunction, int maxEntries = 10);
+
+   template <typename TargetClass>
+   void setup(TargetClass* instance, void (TargetClass::*memberFunction)(const QString&), int maxEntries = 10);
+
    void clear();
    void add(const QString& fileName);
 
@@ -29,5 +33,9 @@ private:
    QStringList fileNameList;
    QMenu* menu;
 };
+
+#ifndef RecentFilesHPP
+#include "RecentFiles.hpp"
+#endif // NOT RecentFilesHPP
 
 #endif // NOT RecentFilesH
