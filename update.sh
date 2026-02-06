@@ -6,6 +6,13 @@ then
    exit 0
 fi
 
+PLATFORM=$(uname -ms)
+echo "Platform: $PLATFORM"
+
+PLATFORM_RASPI="armv7l GNU/Linux"
+echo "Platform: $PLATFORM_RASPI"
+exit 0
+
 HERE=$(dirname "$(readlink -f "$0")")
 
 mkdir -p $HERE/build/cmd_line_debug
