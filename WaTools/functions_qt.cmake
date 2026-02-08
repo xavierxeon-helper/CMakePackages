@@ -68,8 +68,7 @@ function(add_resource_dir SUBPATH)
    )
 
    message(STATUS "RESOURCE_FILES for ${PROJECT_NAME} found @ ${SUBPATH} = ${RESOURCE_FILES}")
-   message(STATUS " => rcname = ${RESOURCE_ARG_RCNAME}, prefix = ${RESOURCE_ARG_PREFIX}, filter = ${RESOURCE_ARG_FILTER}")
-
+   
    qt_add_resources(${PROJECT_NAME} ${RESOURCE_ARG_RCNAME}
       PREFIX ${RESOURCE_ARG_PREFIX}
       FILES ${RESOURCE_FILES}
