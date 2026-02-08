@@ -18,7 +18,7 @@ private:
 private:
    union
    {
-      DataType value = 0;
+      DataType value = DataType{};
       char bytes[sizeof(DataType)];
    };
 };
