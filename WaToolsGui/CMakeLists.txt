@@ -10,7 +10,7 @@ include(../CommonBuild.cmake)
 find_package(Qt6 REQUIRED COMPONENTS Gui Qml)
 set(CMAKE_AUTOMOC ON)
 
-find_package(WaTools REQUIRED COMPONENTS Cpp Log)
+find_package(WaTools REQUIRED COMPONENTS Core Log)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 file(GLOB HEADER_FILES
