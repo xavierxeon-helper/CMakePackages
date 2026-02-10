@@ -1,12 +1,12 @@
-set(WATOOLS_DIR ${CMAKE_CURRENT_LIST_DIR})
-
-option(WATOOLS_USE_AS_SUBDIRECTORY "Use WaTools as subdirectory" OFF)
-
 include(${CMAKE_CURRENT_LIST_DIR}/functions_compile.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/functions_deploy.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/functions_files.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/functions_git.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/functions_qt.cmake)
+
+get_filename_component(WATOOLS_LIB_DIR "${CMAKE_CURRENT_LIST_DIR}/../lib" ABSOLUTE)
+
+option(WATOOLS_USE_AS_SUBDIRECTORY "Use WaTools as subdirectory" OFF)
 
 if(IOS OR ANDROID)
    set(WATOOLS_USE_AS_SUBDIRECTORY ON)
