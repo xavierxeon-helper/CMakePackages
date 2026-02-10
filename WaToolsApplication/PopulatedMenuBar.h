@@ -1,14 +1,14 @@
 #ifndef PopulatedMenuBarH
 #define PopulatedMenuBarH
 
+#include "WaToolsApplicationExportDef.h"
 #include <QMenuBar>
 
 namespace Populated
 {
-   class MenuBar : public QMenuBar
+   class WATOOLSAPPLICATION_DECLSPEC MenuBar : public QMenuBar
    {
       Q_OBJECT
-
       Q_PROPERTY(QString menuName READ getMenuName WRITE setMenuName NOTIFY menuNameChanged)
 
    public:
@@ -17,7 +17,7 @@ namespace Populated
    signals:
       void menuNameChanged();
 
-   private:
+   public:
       const QString& getMenuName() const;
       void setMenuName(const QString& name);
 

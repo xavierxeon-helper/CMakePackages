@@ -4,6 +4,7 @@ Populated::ToolBar::ToolBar(QWidget* parent)
    : QToolBar(parent)
    , toolBarName()
 {
+   setIconSize(QSize(16, 16));
 }
 
 const QString& Populated::ToolBar::getToolBarName() const
@@ -19,5 +20,5 @@ void Populated::ToolBar::setToolBarName(const QString& name)
    toolBarName = name;
    emit toolBarNameChanged();
 
-   qDebug() << __FUNCTION__ << name;
+   setObjectName(name);
 }

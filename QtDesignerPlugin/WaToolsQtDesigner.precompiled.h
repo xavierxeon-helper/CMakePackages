@@ -1,3 +1,0 @@
-#pragma one
-
-#include <QDebug>

@@ -1,14 +1,14 @@
 #ifndef PopulatedToolBarH
 #define PopulatedToolBarH
 
+#include "WaToolsApplicationExportDef.h"
 #include <QToolBar>
 
 namespace Populated
 {
-   class ToolBar : public QToolBar
+   class WATOOLSAPPLICATION_DECLSPEC ToolBar : public QToolBar
    {
       Q_OBJECT
-
       Q_PROPERTY(QString toolBarName READ getToolBarName WRITE setToolBarName NOTIFY toolBarNameChanged)
 
    public:
@@ -17,7 +17,7 @@ namespace Populated
    signals:
       void toolBarNameChanged();
 
-   private:
+   public:
       const QString& getToolBarName() const;
       void setToolBarName(const QString& name);
 

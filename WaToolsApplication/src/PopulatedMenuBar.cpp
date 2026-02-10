@@ -19,5 +19,5 @@ void Populated::MenuBar::setMenuName(const QString& name)
    menuName = name;
    emit menuNameChanged();
 
-   qDebug() << __FUNCTION__ << name;
+   setObjectName(name);
 }

@@ -6,10 +6,6 @@ if(LINUX AND "aarch64" STREQUAL ${CMAKE_SYSTEM_PROCESSOR})
    return()
 endif()
 
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_COMPILE_WARNING_AS_ERROR ON)
-
 include(../CommonBuild.cmake)
 
 find_package(Qt6 REQUIRED COMPONENTS Core)

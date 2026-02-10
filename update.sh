@@ -29,7 +29,3 @@ cd $HERE/build/cmd_line_release
 cmake $HERE -DCMAKE_BUILD_TYPE=Release
 
 cmake --build . $PARALLEL_BUILD --config Release
-
-# install designer 
-cd $HERE/build/cmd_line_release/QtDesignerPlugin
-make install
