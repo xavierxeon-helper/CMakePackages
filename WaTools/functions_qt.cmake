@@ -15,6 +15,8 @@ function(add_qml_module_dir SUBPATH NAME)
       ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/*.js
    )
 
+   qt_policy(SET QTP0004 NEW)
+
    qt_add_qml_module(${PROJECT_NAME}_QML
       URI ${NAME}
       VERSION 1.0
@@ -27,6 +29,9 @@ function(add_qml_module_dir SUBPATH NAME)
 
    target_link_libraries(${PROJECT_NAME}_QML PUBLIC Qt6::Qml Qt6::Quick)
    target_link_libraries(${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_QMLplugin)
+
+   message(STATUS "MODULE DIR QML_FILES for ${PROJECT_NAME} found @ ${SUBPATH} = ${QML_FILES}")
+
 endfunction()
 
 function(add_qml_source_dir SUBPATH)
@@ -37,12 +42,12 @@ function(add_qml_source_dir SUBPATH)
       ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/*.js
    )
 
-   message(STATUS "QML_FILES for ${PROJECT_NAME} found @ ${SUBPATH} = ${QML_FILES}")
-
    qt_add_resources(${PROJECT_NAME} "${PROJECT_NAME}_${SUBPATH}"
        PREFIX "/"
        FILES ${QML_FILES}
    )
+
+   message(STATUS "QML_FILES for ${PROJECT_NAME} found @ ${SUBPATH} = ${QML_FILES}")
 endfunction()
 
 # all files
@@ -66,13 +71,13 @@ function(add_resource_dir SUBPATH)
       RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/
       ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/${RESOURCE_ARG_FILTER}
    )
-
-   message(STATUS "RESOURCE_FILES for ${PROJECT_NAME} found @ ${SUBPATH} = ${RESOURCE_FILES}")
    
    qt_add_resources(${PROJECT_NAME} ${RESOURCE_ARG_RCNAME}
       PREFIX ${RESOURCE_ARG_PREFIX}
       FILES ${RESOURCE_FILES}
    )
+
+   message(STATUS "RESOURCE_FILES for ${PROJECT_NAME} found @ ${SUBPATH} = ${RESOURCE_FILES}")
 endfunction()
 
 

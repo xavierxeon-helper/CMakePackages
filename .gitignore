@@ -1,7 +1,7 @@
 **/.vscode
-**/build
 **/.qtcreator
-**/CMakeLists.txt.user
+
+**/build
 
 /documentation
 /lib

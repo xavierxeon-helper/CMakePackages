@@ -6,6 +6,8 @@
 
 class WATOOLSWIDGETS_DECLSPEC QmlWidget : public QQuickWidget
 {
+   Q_OBJECT
+
 public:
    QmlWidget(QWidget* parent);
 
