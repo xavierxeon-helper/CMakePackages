@@ -33,7 +33,7 @@ QString XX::Settings::compileFileName()
    fileName += "/" + QCoreApplication::organizationDomain();
    fileName += "/" + QCoreApplication::applicationName() + ".json";
 #elif defined(Q_OS_WINDOWS)
-   QString fileName = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
+   QString fileName = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation);
    fileName += "/" + QCoreApplication::organizationName();
    fileName += "/" + QCoreApplication::applicationName() + ".json";
 #else
@@ -41,20 +41,6 @@ QString XX::Settings::compileFileName()
    fileName += "/" + QCoreApplication::organizationName();
    fileName += "/" + QCoreApplication::applicationName() + ".json";
 #endif
-
-   /*
-   qDebug() << "ConfigLocation" << QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
-   qDebug() << "GenericConfigLocation" << QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation);
-   qDebug() << "AppConfigLocation" << QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
-   qDebug() << QCoreApplication::applicationName();
-   qDebug() << QCoreApplication::organizationDomain();
-   qDebug() << QCoreApplication::organizationName();
-
-   QSettings::setDefaultFormat(QSettings::IniFormat);
-   QSettings test;
-   qDebug() << test.fileName();
-   qDebug() << fileName;
-   //*/
 
    return fileName;
 }

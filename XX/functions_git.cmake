@@ -4,6 +4,7 @@ function(init_all_git_submodules)
 
    if(WIN32)
       message(WARNING "GIT SUBMODULE: no test")
+      return()
    else()
       execute_process(COMMAND ${GIT_EXECUTABLE} submodule status
          COMMAND grep -v -c heads
