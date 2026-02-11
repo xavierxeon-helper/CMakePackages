@@ -1,4 +1,12 @@
-function(add_qml_module_dir SUBPATH NAME)
+function(add_qml_module_dir SUBPATH)
+
+   cmake_parse_arguments(PARSE_ARGV 1 QML_MODULE_ARG "" "NAME" "LINK")
+
+   if(QML_MODULE_ARG_NAME)
+      set(NAME ${QML_MODULE_ARG_NAME})
+   else()
+      set(NAME ${SUBPATH})
+   endif()
 
    find_package(Qt6 REQUIRED COMPONENTS Qml Quick)
    
@@ -29,6 +37,11 @@ function(add_qml_module_dir SUBPATH NAME)
 
    target_link_libraries(${PROJECT_NAME}_QML PUBLIC Qt6::Qml Qt6::Quick)
    target_link_libraries(${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_QMLplugin)
+
+   if(QML_MODULE_ARG_LINK)
+      message(STATUS "QML ${NAME} LINK = ${QML_MODULE_ARG_LINK}")
+      target_link_libraries(${PROJECT_NAME}_QML PUBLIC ${QML_MODULE_ARG_LINK})
+   endif()
 
    message(STATUS "MODULE DIR QML_FILES for ${PROJECT_NAME} found @ ${SUBPATH} = ${QML_FILES}")
 
