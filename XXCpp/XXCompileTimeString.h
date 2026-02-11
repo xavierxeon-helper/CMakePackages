@@ -16,7 +16,7 @@ namespace XX
 } // namespace XX
 
 #ifndef XXCompileTimeStringHPP
-#include "CompileTimeString.hpp"
+#include "XXCompileTimeString.hpp"
 #endif // NOT XXCompileTimeStringHPP
 
 #endif // NOT XXCompileTimeStringH
