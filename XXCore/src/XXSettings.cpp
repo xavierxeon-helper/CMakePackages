@@ -1,6 +1,7 @@
 #include "XXSettings.h"
 
 #include <QCoreApplication>
+#include <QDir>
 #include <QStandardPaths>
 
 #include <QSettings>
@@ -27,19 +28,33 @@ XX::Settings::~Settings()
 
 QString XX::Settings::compileFileName()
 {
+#if defined(Q_OS_MAC)
+   QString fileName = QDir::homePath() + "/.config";
+   fileName += "/" + QCoreApplication::organizationDomain();
+   fileName += "/" + QCoreApplication::applicationName() + ".json";
+#elif defined(Q_OS_WINDOWS)
    QString fileName = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
    fileName += "/" + QCoreApplication::organizationName();
    fileName += "/" + QCoreApplication::applicationName() + ".json";
+#else
+   QString fileName = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
+   fileName += "/" + QCoreApplication::organizationName();
+   fileName += "/" + QCoreApplication::applicationName() + ".json";
+#endif
 
-   qDebug() << QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
+   /*
+   qDebug() << "ConfigLocation" << QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
+   qDebug() << "GenericConfigLocation" << QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation);
+   qDebug() << "AppConfigLocation" << QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
    qDebug() << QCoreApplication::applicationName();
    qDebug() << QCoreApplication::organizationDomain();
    qDebug() << QCoreApplication::organizationName();
 
+   QSettings::setDefaultFormat(QSettings::IniFormat);
    QSettings test;
    qDebug() << test.fileName();
    qDebug() << fileName;
-
+   */
    return fileName;
 }
 

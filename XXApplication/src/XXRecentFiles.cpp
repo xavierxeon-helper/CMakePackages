@@ -1,7 +1,8 @@
 #include "XXRecentFiles.h"
 
 #include <QFileInfo>
-#include <QSettings>
+
+#include <XXSettings.h>
 
 XX::RecentFiles::RecentFiles(QWidget* parent, const QString& settingsKey, const QString& menuObjectName)
    : settingsKey(settingsKey)
@@ -10,7 +11,7 @@ XX::RecentFiles::RecentFiles(QWidget* parent, const QString& settingsKey, const 
    , fileNameList()
    , menu(nullptr)
 {
-   QSettings settings;
+   XX::Settings settings;
    fileNameList = settings.value(settingsKey).toStringList();
 
    menu = new QMenu(parent);
@@ -33,7 +34,7 @@ void XX::RecentFiles::clear()
 {
    fileNameList.clear();
 
-   QSettings settings;
+   XX::Settings settings;
    settings.setValue(settingsKey, fileNameList);
 }
 
@@ -47,7 +48,7 @@ void XX::RecentFiles::add(const QString& fileName)
    while (fileNameList.size() > maxEntries)
       fileNameList.takeFirst();
 
-   QSettings settings;
+   XX::Settings settings;
    settings.setValue(settingsKey, fileNameList);
 }
 
