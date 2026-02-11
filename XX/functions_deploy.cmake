@@ -45,16 +45,16 @@ function(run_qt_deploy)
    get_target_property(QMAKE_EXE Qt6::qmake IMPORTED_LOCATION)
    get_filename_component(QT_BIN_DIR "${QMAKE_EXE}" DIRECTORY)
 
-   set(QT_QML_DIR ${QT_BIN_DIR}/../qml)
+   get_filename_component(QT_QML_DIR "${QT_BIN_DIR}/../qml" ABSOLUTE)
 
    if(APPLE)
       find_program(MACDEPLOYQT_EXECUTABLE macdeployqt HINTS "${QT_BIN_DIR}")
-      message(STATUS "MACDEPLOY ${MACDEPLOYQT_EXECUTABLE}, QT_QML_DIR =  ${QT_QML_DIR}")
+      message(STATUS "MACDEPLOY ${MACDEPLOYQT_EXECUTABLE}, QT_QML_DIR = ${QT_QML_DIR}")
 
       add_custom_command(TARGET ${PROJECT_NAME}
          POST_BUILD
          COMMENT "Running macdeployqt..."
-         COMMAND "${MACDEPLOYQT_EXECUTABLE}"  $<TARGET_BUNDLE_DIR:${PROJECT_NAME}> -qmldir ${QT_QML_DIR}
+         COMMAND "${MACDEPLOYQT_EXECUTABLE}"  $<TARGET_BUNDLE_DIR:${PROJECT_NAME}> -qmldir=${QT_QML_DIR} -no-strip -verbose=2
       )
    elseif(WIN32)
       find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS " ${QT_BIN_DIR} ")

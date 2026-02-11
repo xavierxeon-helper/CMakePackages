@@ -54,7 +54,8 @@ QString XX::Settings::compileFileName()
    QSettings test;
    qDebug() << test.fileName();
    qDebug() << fileName;
-   */
+   //*/
+
    return fileName;
 }
 

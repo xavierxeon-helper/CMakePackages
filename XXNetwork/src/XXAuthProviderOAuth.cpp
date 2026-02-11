@@ -137,7 +137,6 @@ bool XX::AuthProvider::OAuth::authorizeUser()
       redirectHandler.setCallbackText(finalHTML);
 
    QEventLoop loop;
-   QObject::connect(oauthFlow, &QAbstractOAuth::granted, &loop, &QEventLoop::quit);
 
    auto onError = [&](const QAbstractOAuth::Error error)
    {
@@ -153,6 +152,7 @@ bool XX::AuthProvider::OAuth::authorizeUser()
       }
    };
 
+   QObject::connect(oauthFlow, &QAbstractOAuth::granted, &loop, &QEventLoop::quit);
    QObject::connect(oauthFlow, &QAbstractOAuth::requestFailed, onError);
 
    oauthFlow->setReplyHandler(&redirectHandler);
