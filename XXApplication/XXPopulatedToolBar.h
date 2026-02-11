@@ -1,5 +1,5 @@
-#ifndef PopulatedToolBarH
-#define PopulatedToolBarH
+#ifndef XXPopulatedToolBarH
+#define XXPopulatedToolBarH
 
 #include "XXApplicationExportDef.h"
 #include <QToolBar>
@@ -26,4 +26,4 @@ namespace Populated
    };
 } // namespace Populated
 
-#endif // NOT PopulatedToolBarH
+#endif // NOT XXPopulatedToolBarH

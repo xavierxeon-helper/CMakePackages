@@ -1,5 +1,5 @@
-#ifndef SpectrogramH
-#define SpectrogramH
+#ifndef XXSpectrogramH
+#define XXSpectrogramH
 
 #include "XXAudioExportDef.h"
 
@@ -27,4 +27,4 @@ private:
    Frames frames;
 };
 
-#endif // NOT SpectrogramH
+#endif // NOT XXSpectrogramH

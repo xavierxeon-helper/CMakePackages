@@ -1,5 +1,5 @@
-#ifndef PopulatedMenuBarH
-#define PopulatedMenuBarH
+#ifndef XXPopulatedMenuBarH
+#define XXPopulatedMenuBarH
 
 #include "XXApplicationExportDef.h"
 #include <QMenuBar>
@@ -26,4 +26,4 @@ namespace Populated
    };
 } // namespace Populated
 
-#endif // NOT PopulatedMenuBarH
+#endif // NOT XXPopulatedMenuBarH

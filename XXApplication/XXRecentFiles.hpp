@@ -1,5 +1,5 @@
-#ifndef RecentFilesHPP
-#define RecentFilesHPP
+#ifndef XXRecentFilesHPP
+#define XXRecentFilesHPP
 
 #include "XXRecentFiles.h"
 
@@ -10,4 +10,4 @@ void RecentFiles::setup(TargetClass* instance, void (TargetClass::*memberFunctio
    maxEntries = _maxEntries;
 }
 
-#endif // NOT RecentFilesHPP
+#endif // NOT XXRecentFilesHPP

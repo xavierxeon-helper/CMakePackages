@@ -1,9 +1,9 @@
-#ifndef PopulatedMainWidgetH
-#define PopulatedMainWidgetH
+#ifndef XXPopulatedMainWidgetH
+#define XXPopulatedMainWidgetH
 
+#include "XXApplicationExportDef.h"
 #include "XXPopulatedAbstract.h"
 #include "XXSingleton.h"
-#include "XXApplicationExportDef.h"
 #include <QWidget>
 
 #include <QMenuBar>
@@ -31,4 +31,4 @@ namespace Populated
    };
 } // namespace Populated
 
-#endif // NOT PopulatedMainWidgetH
+#endif // NOT XXPopulatedMainWidgetH

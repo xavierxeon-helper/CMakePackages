@@ -1,8 +1,8 @@
-#ifndef SampleOscilatorH
-#define SampleOscilatorH
+#ifndef XXSampleOscilatorH
+#define XXSampleOscilatorH
 
-#include "XXSampleWave.h"
 #include "XXAudioExportDef.h"
+#include "XXSampleWave.h"
 
 #include <QString>
 
@@ -32,4 +32,4 @@ namespace Sample
    };
 } // namespace Sample
 
-#endif // NOT SampleOscilatorH
+#endif // NOT XXSampleOscilatorH

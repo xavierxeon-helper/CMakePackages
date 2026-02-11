@@ -1,5 +1,5 @@
-#ifndef RecentFilesH
-#define RecentFilesH
+#ifndef XXRecentFilesH
+#define XXRecentFilesH
 
 #include "XXApplicationExportDef.h"
 
@@ -34,8 +34,8 @@ private:
    QMenu* menu;
 };
 
-#ifndef RecentFilesHPP
+#ifndef XXRecentFilesHPP
 #include "XXRecentFiles.hpp"
-#endif // NOT RecentFilesHPP
+#endif // NOT XXRecentFilesHPP
 
-#endif // NOT RecentFilesH
+#endif // NOT XXRecentFilesH

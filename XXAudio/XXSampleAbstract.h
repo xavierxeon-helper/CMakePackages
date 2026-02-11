@@ -1,5 +1,5 @@
-#ifndef SampleAbstractH
-#define SampleAbstractH
+#ifndef XXSampleAbstractH
+#define XXSampleAbstractH
 
 #include "XXAudioExportDef.h"
 
@@ -39,4 +39,4 @@ namespace Sample
    };
 } // namespace Sample
 
-#endif // NOT SampleAbstractH
+#endif // NOT XXSampleAbstractH

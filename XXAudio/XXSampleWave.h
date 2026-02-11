@@ -1,8 +1,8 @@
-#ifndef SampleWaveH
-#define SampleWaveH
+#ifndef XXSampleWaveH
+#define XXSampleWaveH
 
-#include "XXSampleAbstract.h"
 #include "XXAudioExportDef.h"
+#include "XXSampleAbstract.h"
 
 namespace Sample
 {
@@ -17,4 +17,4 @@ namespace Sample
    };
 } // namespace Sample
 
-#endif // NOT SampleWaveH
+#endif // NOT XXSampleWaveH

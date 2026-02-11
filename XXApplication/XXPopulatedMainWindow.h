@@ -1,9 +1,9 @@
-#ifndef PopulatedMainWindowH
-#define PopulatedMainWindowH
+#ifndef XXPopulatedMainWindowH
+#define XXPopulatedMainWindowH
 
+#include "XXApplicationExportDef.h"
 #include "XXPopulatedAbstract.h"
 #include "XXSingleton.h"
-#include "XXApplicationExportDef.h"
 #include <QMainWindow>
 
 namespace Populated
@@ -29,6 +29,4 @@ namespace Populated
    };
 } // namespace Populated
 
-
-
-#endif // NOT PopulatedMainWindowH
+#endif // NOT XXPopulatedMainWindowH

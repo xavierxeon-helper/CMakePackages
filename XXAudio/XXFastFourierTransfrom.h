@@ -1,5 +1,5 @@
-#ifndef FastFourierTransfromH
-#define FastFourierTransfromH
+#ifndef XXFastFourierTransfromH
+#define XXFastFourierTransfromH
 
 #include "XXAudioExportDef.h"
 
@@ -39,4 +39,4 @@ private:
    const size_t size;
 };
 
-#endif // NOT FastFourierTransfromH
+#endif // NOT XXFastFourierTransfromH

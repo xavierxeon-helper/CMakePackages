@@ -1,5 +1,5 @@
-#ifndef PopulatedAbstractH
-#define PopulatedAbstractH
+#ifndef XXPopulatedAbstractH
+#define XXPopulatedAbstractH
 
 #include "XXApplicationExportDef.h"
 
@@ -43,8 +43,8 @@ namespace Populated
    };
 } // namespace Populated
 
-#ifndef PopulatedAbstractHPP
+#ifndef XXPopulatedAbstractHPP
 #include "XXPopulatedAbstract.hpp"
-#endif // NOT PopulatedAbstractHPP
+#endif // NOT XXPopulatedAbstractHPP
 
-#endif // NOT PopulatedAbstractH
+#endif // NOT XXPopulatedAbstractH

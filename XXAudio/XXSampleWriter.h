@@ -1,8 +1,8 @@
-#ifndef SampleWriterH
-#define SampleWriterH
+#ifndef XXSampleWriterH
+#define XXSampleWriterH
 
-#include "XXSampleWave.h"
 #include "XXAudioExportDef.h"
+#include "XXSampleWave.h"
 
 namespace Sample
 {
@@ -22,4 +22,4 @@ namespace Sample
    };
 } // namespace Sample
 
-#endif // NOT SampleWriterH
+#endif // NOT XXSampleWriterH

@@ -1,5 +1,5 @@
-#ifndef PopulatedAbstractHPP
-#define PopulatedAbstractHPP
+#ifndef XXPopulatedAbstractHPP
+#define XXPopulatedAbstractHPP
 
 #include "XXPopulatedAbstract.h"
 
@@ -23,4 +23,4 @@ inline QAction* Populated::Abstract::addFunctorAction(QIcon icon, QString text, 
    return action;
 }
 
-#endif // NOT PopulatedAbstractHPP
+#endif // NOT XXPopulatedAbstractHPP
