@@ -3,7 +3,8 @@
 #include <QDir>
 #include <QLabel>
 #include <QMenu>
-#include <QSettings>
+
+#include <XXSettings.h>
 
 XX::Populated::Abstract::Abstract(QWidget* parentWidget)
    : parentWidget(parentWidget)
@@ -18,8 +19,8 @@ XX::Populated::Abstract::~Abstract()
 
 void XX::Populated::Abstract::printSettingsLocation()
 {
-   QSettings settings;
-   const QString fileName = QDir::toNativeSeparators(settings.fileName());
+   XX::Settings settings;
+   const QString fileName = QDir::toNativeSeparators(settings.compileFileName());
 
    qInfo() << "SETTINGS @" << qPrintable(fileName);
 }

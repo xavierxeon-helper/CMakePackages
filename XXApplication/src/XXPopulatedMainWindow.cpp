@@ -5,7 +5,8 @@
 #include <QDockWidget>
 #include <QMenu>
 #include <QMenuBar>
-#include <QSettings>
+
+#include <XXSettings.h>
 
 XX::Populated::MainWindow::MainWindow()
    : QMainWindow(nullptr)
@@ -16,7 +17,7 @@ XX::Populated::MainWindow::MainWindow()
    MenuCreationFunction menuCreationFunction = std::bind(&Populated::MainWindow::findOrCreateMenu, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
    setFunctions(toolBarCreationFunction, menuCreationFunction);
 
-   QSettings settings;
+   XX::Settings settings;
    restoreGeometry(settings.value("MainWindow/Geometry").toByteArray());
    restoreState(settings.value("MainWindow/State").toByteArray());
 }
@@ -50,7 +51,7 @@ QMenu* XX::Populated::MainWindow::createPopupMenu()
 
 void XX::Populated::MainWindow::saveWindowSettings()
 {
-   QSettings settings;
+   XX::Settings settings;
    settings.setValue("MainWindow/Geometry", saveGeometry());
    settings.setValue("MainWindow/State", saveState());
 }

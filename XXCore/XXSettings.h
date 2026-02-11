@@ -15,6 +15,8 @@ namespace XX
       ~Settings();
 
    public:
+      static QString compileFileName();
+
       void setValue(const QString& key, const QVariant& value);
       QVariant value(const QString& key, const QVariant& defaultValue = QVariant()) const;
       void clearValue(const QString& key);
@@ -27,7 +29,6 @@ namespace XX
       };
 
    private:
-      static QString compileFileName();
       PathKey compilePathKey(const QString& key) const;
 
       QJsonValue getPathValue(const PathKey& pathKey) const;

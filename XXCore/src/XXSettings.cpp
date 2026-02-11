@@ -25,6 +25,24 @@ XX::Settings::~Settings()
    FileTools::writeJson(data, fileName);
 }
 
+QString XX::Settings::compileFileName()
+{
+   QString fileName = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
+   fileName += "/" + QCoreApplication::organizationName();
+   fileName += "/" + QCoreApplication::applicationName() + ".json";
+
+   qDebug() << QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
+   qDebug() << QCoreApplication::applicationName();
+   qDebug() << QCoreApplication::organizationDomain();
+   qDebug() << QCoreApplication::organizationName();
+
+   QSettings test;
+   qDebug() << test.fileName();
+   qDebug() << fileName;
+
+   return fileName;
+}
+
 void XX::Settings::setValue(const QString& key, const QVariant& value)
 {
    const PathKey pathKey = compilePathKey(key);
@@ -74,24 +92,6 @@ void XX::Settings::clearValue(const QString& key)
 {
    const PathKey pathKey = compilePathKey(key);
    //internal.remove(key);
-}
-
-QString XX::Settings::compileFileName()
-{
-   QString fileName = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
-   fileName += "/" + QCoreApplication::organizationName();
-   fileName += "/" + QCoreApplication::applicationName() + ".json";
-
-   qDebug() << QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
-   qDebug() << QCoreApplication::applicationName();
-   qDebug() << QCoreApplication::organizationDomain();
-   qDebug() << QCoreApplication::organizationName();
-
-   QSettings test;
-   qDebug() << test.fileName();
-   qDebug() << fileName;
-
-   return fileName;
 }
 
 XX::Settings::PathKey XX::Settings::compilePathKey(const QString& key) const

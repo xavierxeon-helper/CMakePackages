@@ -2,7 +2,8 @@
 
 #include <QCloseEvent>
 #include <QMenu>
-#include <QSettings>
+
+#include <XXSettings.h>
 
 XX::Populated::MainWidget::MainWidget()
    : QWidget(nullptr)
@@ -19,13 +20,13 @@ XX::Populated::MainWidget::MainWidget()
 
 void XX::Populated::MainWidget::loadSettings()
 {
-   QSettings settings;
+   XX::Settings settings;
    restoreGeometry(settings.value("MainWidget/Geometry").toByteArray());
 }
 
 void XX::Populated::MainWidget::closeEvent(QCloseEvent* ce)
 {
-   QSettings settings;
+   XX::Settings settings;
    settings.setValue("MainWidget/Geometry", saveGeometry());
 
    ce->accept();
