@@ -1,5 +1,5 @@
-#ifndef RangeHPP
-#define RangeHPP
+#ifndef XXRangeHPP
+#define XXRangeHPP
 
 #include "XXRange.h"
 

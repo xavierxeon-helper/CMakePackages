@@ -1,5 +1,5 @@
-#ifndef MidiFileH
-#define MidiFileH
+#ifndef XXMidiFileH
+#define XXMidiFileH
 
 #include "XXMusicExportDef.h"
 
@@ -84,4 +84,4 @@ namespace Midi
    } // namespace File
 } // namespace Midi
 
-#endif // NOT MidiFileH
+#endif // NOT XXMidiFileH

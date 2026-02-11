@@ -1,5 +1,5 @@
-#ifndef MessageLabelH
-#define MessageLabelH
+#ifndef XXMessageLabelH
+#define XXMessageLabelH
 
 #include "XXWidgetsExportDef.h"
 #include <XXLogger.h>
@@ -29,4 +29,4 @@ private:
    QDateTime messageExpiration;
 };
 
-#endif // NOT MessageLabelH
+#endif // NOT XXMessageLabelH

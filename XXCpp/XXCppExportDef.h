@@ -1,5 +1,5 @@
-#ifndef WaToolCppExportDefH
-#define WaToolCppExportDefH
+#ifndef XXWaToolCppExportDefH
+#define XXWaToolCppExportDefH
 
 // clang-format off
 #if defined(__unix) || defined(__QNXNTO__) || defined(__APPLE__)
@@ -13,4 +13,4 @@
 #endif
 // clang-format on
 
-#endif // NOT WaToolCppExportDefH
+#endif // NOT XXWaToolCppExportDefH

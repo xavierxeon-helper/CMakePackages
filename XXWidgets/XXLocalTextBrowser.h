@@ -1,5 +1,5 @@
-#ifndef LocalTextBrowserH
-#define LocalTextBrowserH
+#ifndef XXLocalTextBrowserH
+#define XXLocalTextBrowserH
 
 #include "XXWidgetsExportDef.h"
 #include <QTextBrowser>
@@ -15,4 +15,4 @@ private:
    QVariant loadResource(int type, const QUrl& name) override;
 };
 
-#endif // NOT LocalTextBrowserH
+#endif // NOT XXLocalTextBrowserH

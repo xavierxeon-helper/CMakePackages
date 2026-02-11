@@ -1,5 +1,5 @@
-#ifndef MessageHandlerHPP
-#define MessageHandlerHPP
+#ifndef XXMessageHandlerHPP
+#define XXMessageHandlerHPP
 
 #include "XXMessageHandler.h"
 
@@ -28,4 +28,4 @@ void MessageHandler::disable(HandlerClass* instance)
    me->targetMap.remove(target);
 }
 
-#endif // NOT MessageHandlerHPP
+#endif // NOT XXMessageHandlerHPP

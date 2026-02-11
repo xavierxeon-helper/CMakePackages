@@ -1,5 +1,5 @@
-#ifndef SharedDataH
-#define SharedDataH
+#ifndef XXSharedDataH
+#define XXSharedDataH
 
 #include <QSharedMemory>
 
@@ -42,8 +42,8 @@ private:
    QString errorString;
 };
 
-#ifndef SharedDataHPP
+#ifndef XXSharedDataHPP
 #include "XXSharedData.hpp"
-#endif // NOT SharedDataHPP
+#endif // NOT XXSharedDataHPP
 
-#endif // NOT SharedDataH
+#endif // NOT XXSharedDataH

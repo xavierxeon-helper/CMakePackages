@@ -1,5 +1,5 @@
-#ifndef ScaleH
-#define ScaleH
+#ifndef XXScaleH
+#define XXScaleH
 
 #include "XXMusicExportDef.h"
 
@@ -60,4 +60,4 @@ private:
    Scale::List validScales;
 };
 
-#endif // NOT ScaleH
+#endif // NOT XXScaleH

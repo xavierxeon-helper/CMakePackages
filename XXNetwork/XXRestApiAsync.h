@@ -1,8 +1,8 @@
-#ifndef RestApiAsyncH
-#define RestApiAsyncH
+#ifndef XXRestApiAsyncH
+#define XXRestApiAsyncH
 
-#include "XXRestApiBlocking.h"
 #include "XXNetworkExportDef.h"
+#include "XXRestApiBlocking.h"
 
 namespace RestApi
 {
@@ -28,4 +28,4 @@ namespace RestApi
    };
 } // namespace RestApi
 
-#endif // NOT RestApiAsyncH
+#endif // NOT XXRestApiAsyncH

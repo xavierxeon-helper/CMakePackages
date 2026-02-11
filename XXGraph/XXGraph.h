@@ -1,5 +1,5 @@
-#ifndef DiscreteMathsGraphH
-#define DiscreteMathsGraphH
+#ifndef XXDiscreteMathsGraphH
+#define XXDiscreteMathsGraphH
 
 #include "XXGraphExportDef.h"
 
@@ -37,4 +37,4 @@ private:
    QList<Edge*> edgeList;
 };
 
-#endif // NOT GraphAbstractGraphH
+#endif // NOT XXDiscreteMathsGraphH

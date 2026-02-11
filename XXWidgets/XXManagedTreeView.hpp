@@ -1,5 +1,5 @@
-#ifndef ManagedTreeViewHPP
-#define ManagedTreeViewHPP
+#ifndef XXManagedTreeViewHPP
+#define XXManagedTreeViewHPP
 
 #include <XXManagedTreeView.h>
 
@@ -21,4 +21,4 @@ void Managed::TreeView::onContextMenu(TargetClass* instance, QMenu* (TargetClass
    contextMenuFunction = std::bind(memberFunction, instance, std::placeholders::_1);
 }
 
-#endif // NOT ManagedTreeViewHPP
+#endif // NOT XXManagedTreeViewHPP

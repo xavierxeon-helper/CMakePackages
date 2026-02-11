@@ -1,5 +1,5 @@
-#ifndef DiscreteMathsAlgorithmH
-#define DiscreteMathsAlgorithmH
+#ifndef XXDiscreteMathsAlgorithmH
+#define XXDiscreteMathsAlgorithmH
 
 #include "XXGraphExportDef.h"
 
@@ -83,4 +83,4 @@ private:
    EdgeData::Matrix edgeMatrix;
 };
 
-#endif // NOT GraphAbstractAlgorithmH
+#endif // NOT XXDiscreteMathsAlgorithmH

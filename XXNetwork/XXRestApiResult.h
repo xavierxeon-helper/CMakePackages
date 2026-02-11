@@ -1,5 +1,5 @@
-#ifndef RestApiResultH
-#define RestApiResultH
+#ifndef XXRestApiResultH
+#define XXRestApiResultH
 
 #include "XXNetworkExportDef.h"
 
@@ -22,4 +22,4 @@ namespace RestApi
    };
 } // namespace RestApi
 
-#endif // NOT RestApiResultH
+#endif // NOT XXRestApiResultH

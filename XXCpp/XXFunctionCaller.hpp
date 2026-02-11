@@ -1,5 +1,5 @@
-#ifndef FunctionCallerHPP
-#define FunctionCallerHPP
+#ifndef XXFunctionCallerHPP
+#define XXFunctionCallerHPP
 
 #include "XXFunctionCaller.h"
 
@@ -59,4 +59,4 @@ size_t Function::Caller<tag>::instanceCount()
    return instances.size();
 }
 
-#endif // NOT FunctionCallerHPP
+#endif // NOT XXFunctionCallerHPP

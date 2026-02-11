@@ -1,5 +1,5 @@
-#ifndef TabStackModelH
-#define TabStackModelH
+#ifndef XXTabStackModelH
+#define XXTabStackModelH
 
 #include "XXWidgetsExportDef.h"
 #include <QStandardItemModel>
@@ -37,4 +37,4 @@ namespace TabStack
    };
 } // namespace TabStack
 
-#endif // NOT TabStackModelH
+#endif // NOT XXTabStackModelH

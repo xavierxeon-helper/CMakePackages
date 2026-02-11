@@ -1,5 +1,5 @@
-#ifndef SecureNetworkServerInternalH
-#define SecureNetworkServerInternalH
+#ifndef XXSecureNetworkServerInternalH
+#define XXSecureNetworkServerInternalH
 
 #include <QTcpServer>
 
@@ -27,4 +27,4 @@ namespace SecureNetwork
    };
 } // namespace SecureNetwork
 
-#endif // NOT SecureNetworkServerInternalH
+#endif // NOT XXSecureNetworkServerInternalH

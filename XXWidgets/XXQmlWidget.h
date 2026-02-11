@@ -1,5 +1,5 @@
-#ifndef WorkFlowQmlWidgetH
-#define WorkFlowQmlWidgetH
+#ifndef XXWorkFlowQmlWidgetH
+#define XXWorkFlowQmlWidgetH
 
 #include "XXWidgetsExportDef.h"
 #include <QQuickWidget>
@@ -16,4 +16,4 @@ public:
    void setQuickProperty(const QString& name, const QVariant& value);
 };
 
-#endif // NOT WorkFlowQmlWidgetH
+#endif // NOT XXWorkFlowQmlWidgetH

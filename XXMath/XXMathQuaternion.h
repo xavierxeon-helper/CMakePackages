@@ -1,5 +1,5 @@
-#ifndef MathQuaternionH
-#define MathQuaternionH
+#ifndef XXMathQuaternionH
+#define XXMathQuaternionH
 
 #include "XXMathExportDef.h"
 
@@ -12,4 +12,4 @@ namespace Math
    };
 } // namespace Math
 
-#endif // NOT MathQuaternionH
+#endif // NOT XXMathQuaternionH

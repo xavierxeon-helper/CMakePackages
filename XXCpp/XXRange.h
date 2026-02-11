@@ -1,5 +1,5 @@
-#ifndef RangeH
-#define RangeH
+#ifndef XXRangeH
+#define XXRangeH
 
 #include "XXCppExportDef.h"
 
@@ -139,8 +139,8 @@ struct Range
    static const DataType& max(const DataType& value1, const DataType& value2);
 };
 
-#ifndef RangeHPP
+#ifndef XXRangeHPP
 #include "XXRange.hpp"
-#endif // NOT RangeHPP
+#endif // NOT XXRangeHPP
 
-#endif // NOT RangeH
+#endif // NOT XXRangeH

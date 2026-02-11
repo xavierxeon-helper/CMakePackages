@@ -1,5 +1,5 @@
-#ifndef LockerH
-#define LockerH
+#ifndef XXLockerH
+#define XXLockerH
 
 #include "XXCompileTimeString.h"
 
@@ -21,8 +21,8 @@ private:
    static bool lock;
 };
 
-#ifndef LockerHPP
+#ifndef XXLockerHPP
 #include "XXLocker.hpp"
-#endif // NOT LockerHPP
+#endif // NOT XXLockerHPP
 
-#endif // NOT LockerH
+#endif // NOT XXLockerH

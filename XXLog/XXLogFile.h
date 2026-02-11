@@ -1,5 +1,5 @@
-#ifndef LogFileH
-#define LogFileH
+#ifndef XXLogFileH
+#define XXLogFileH
 
 #include "XXLogExportDef.h"
 
@@ -29,8 +29,8 @@ private:
    static LogFile* me;
 };
 
-#ifndef LogFileHPP
+#ifndef XXLogFileHPP
 #include "XXLogFile.hpp"
-#endif // NOT LogFileHPP
+#endif // NOT XXLogFileHPP
 
 #endif // NOT LogFileH

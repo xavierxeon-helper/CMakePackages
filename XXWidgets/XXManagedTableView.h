@@ -1,5 +1,5 @@
-#ifndef ManagedTableViewH
-#define ManagedTableViewH
+#ifndef XXManagedTableViewH
+#define XXManagedTableViewH
 
 #include "XXWidgetsExportDef.h"
 #include <QTableView>
@@ -43,8 +43,8 @@ namespace Managed
    };
 } // namespace Managed
 
-#ifndef ManagedTableViewHPP
+#ifndef XXManagedTableViewHPP
 #include "XXManagedTableView.hpp"
-#endif // NOT ManagedTableViewHPP
+#endif // NOT XXManagedTableViewHPP
 
-#endif // NOT ManagedTableViewH
+#endif // NOT XXManagedTableViewH

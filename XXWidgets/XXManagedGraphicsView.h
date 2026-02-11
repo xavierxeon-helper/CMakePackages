@@ -1,5 +1,5 @@
-#ifndef ManagedGraphicsViewH
-#define ManagedGraphicsViewH
+#ifndef XXManagedGraphicsViewH
+#define XXManagedGraphicsViewH
 
 #include "XXWidgetsExportDef.h"
 #include <QGraphicsView>
@@ -30,8 +30,8 @@ namespace Managed
    };
 } // namespace Managed
 
-#ifndef ManagedGraphicsViewHPP
+#ifndef XXManagedGraphicsViewHPP
 #include "XXManagedGraphicsView.hpp"
-#endif // NOT ManagedGraphicsViewHPP
+#endif // NOT XXManagedGraphicsViewHPP
 
-#endif // NOT ManagedGraphicsViewH
+#endif // NOT XXManagedGraphicsViewH

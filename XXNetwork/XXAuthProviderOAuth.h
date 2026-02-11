@@ -1,9 +1,9 @@
-#ifndef AuthProviderOAuthH
-#define AuthProviderOAuthH
+#ifndef XXAuthProviderOAuthH
+#define XXAuthProviderOAuthH
 
 #include "XXAuthProviderToken.h"
-#include "XXNetworkSettings.h"
 #include "XXNetworkExportDef.h"
+#include "XXNetworkSettings.h"
 
 #include <QJsonObject>
 #include <QOAuth2AuthorizationCodeFlow>
@@ -71,4 +71,4 @@ namespace AuthProvider
    };
 } // namespace AuthProvider
 
-#endif // NOT AuthProviderOAuthH
+#endif // NOT XXAuthProviderOAuthH

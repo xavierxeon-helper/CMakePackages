@@ -1,5 +1,5 @@
-#ifndef DiscreteMathsVertexH
-#define DiscreteMathsVertexH
+#ifndef XXDiscreteMathsVertexH
+#define XXDiscreteMathsVertexH
 
 #include "XXGraphExportDef.h"
 
@@ -19,4 +19,4 @@ protected:
    QString name;
 };
 
-#endif // NOT GraphAbstractVertexH
+#endif // NOT XXDiscreteMathsVertexH

@@ -1,5 +1,5 @@
-#ifndef TabStackWidgetH
-#define TabStackWidgetH
+#ifndef XXTabStackWidgetH
+#define XXTabStackWidgetH
 
 #include "XXWidgetsExportDef.h"
 #include <QWidget>
@@ -57,4 +57,4 @@ namespace TabStack
    };
 } // namespace TabStack
 
-#endif // NOT TabStackWidgetH
+#endif // NOT XXTabStackWidgetH

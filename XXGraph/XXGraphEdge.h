@@ -1,5 +1,5 @@
-#ifndef DiscreteMathsEdgeH
-#define DiscreteMathsEdgeH
+#ifndef XXDiscreteMathsEdgeH
+#define XXDiscreteMathsEdgeH
 
 #include "XXGraphExportDef.h"
 
@@ -35,4 +35,4 @@ private:
    friend class Graph;
 };
 
-#endif // NOT GraphAbstractEdgeH
+#endif // NOT XXDiscreteMathsEdgeH

@@ -1,5 +1,5 @@
-#ifndef MidiParserHPP
-#define MidiParserHPP
+#ifndef XXMidiParserHPP
+#define XXMidiParserHPP
 
 #include "XXMidiParser.h"
 
@@ -45,4 +45,4 @@ void Midi::Parser::onSongPosition(ClassType* instance, void (ClassType::*functio
    songPositionFunctionList.push_back(songPositionFunction);
 }
 
-#endif // NOT MidiParserHPP
+#endif // NOT XXMidiParserHPP

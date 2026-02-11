@@ -1,5 +1,5 @@
-#ifndef CompileTimeStringHPP
-#define CompileTimeStringHPP
+#ifndef XXCompileTimeStringHPP
+#define XXCompileTimeStringHPP
 
 #include "XXCompileTimeString.h"
 
@@ -17,4 +17,4 @@ std::string CompileTimeString<N>::text() const
    return std::string(value);
 }
 
-#endif // NOT CompileTimeStringHPP
+#endif // NOT XXCompileTimeStringHPP

@@ -1,5 +1,5 @@
-#ifndef ColorSpaceH
-#define ColorSpaceH
+#ifndef XXColorSpaceH
+#define XXColorSpaceH
 
 #include "XXGuiExportDef.h"
 
@@ -20,4 +20,4 @@ public:
    static XYB toCIE(const QColor& color);
 };
 
-#endif // NOT ColorSpaceH
+#endif // NOT XXColorSpaceH

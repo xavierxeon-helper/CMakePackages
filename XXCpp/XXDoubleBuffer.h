@@ -1,5 +1,5 @@
-#ifndef DoubleBufferH
-#define DoubleBufferH
+#ifndef XXDoubleBufferH
+#define XXDoubleBufferH
 
 template <typename DataType>
 class DoubleBuffer
@@ -20,8 +20,8 @@ private:
    bool firstIsCurrent;
 };
 
-#ifndef DoubleBufferHPP
+#ifndef XXDoubleBufferHPP
 #include "XXDoubleBuffer.hpp"
-#endif // NOT DoubleBufferHPP
+#endif // NOT XXDoubleBufferHPP
 
-#endif // NOT DoubleBufferH
+#endif // NOT XXDoubleBufferH

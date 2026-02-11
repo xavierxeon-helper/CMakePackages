@@ -1,5 +1,5 @@
-#ifndef LogSymbolH
-#define LogSymbolH
+#ifndef XXLogSymbolH
+#define XXLogSymbolH
 
 #include "XXLogExportDef.h"
 
@@ -13,4 +13,4 @@ struct XXLOG_DECLSPEC LogSymbol
    static const QString Info;
 };
 
-#endif // NOT LogSymbolH
+#endif // NOT XXLogSymbolH

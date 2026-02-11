@@ -1,5 +1,5 @@
-#ifndef DoubleBufferHPP
-#define DoubleBufferHPP
+#ifndef XXDoubleBufferHPP
+#define XXDoubleBufferHPP
 
 #include "XXDoubleBuffer.h"
 
@@ -34,5 +34,4 @@ inline DataType& DoubleBuffer<DataType>::previous()
    return firstIsCurrent ? buffer[1] : buffer[0];
 }
 
-
-#endif // NOT DoubleBufferHPP
+#endif // NOT XXDoubleBufferHPP

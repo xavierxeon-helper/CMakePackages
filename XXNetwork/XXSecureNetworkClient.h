@@ -1,8 +1,8 @@
-#ifndef SecureNetworkClientH
-#define SecureNetworkClientH
+#ifndef XXSecureNetworkClientH
+#define XXSecureNetworkClientH
 
-#include "XXSecureNetworkSocket.h"
 #include "XXNetworkExportDef.h"
+#include "XXSecureNetworkSocket.h"
 
 #include <QSslConfiguration>
 
@@ -28,4 +28,4 @@ namespace SecureNetwork
    };
 } // namespace SecureNetwork
 
-#endif // NOT SecureNetworkClientH
+#endif // NOT XXSecureNetworkClientH

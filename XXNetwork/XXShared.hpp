@@ -1,5 +1,5 @@
-#ifndef SharedHPP
-#define SharedHPP
+#ifndef XXSharedHPP
+#define XXSharedHPP
 
 #include "XXShared.h"
 
@@ -76,4 +76,4 @@ void Shared<AppName>::startApplication()
    QThread::sleep(1);
 }
 
-#endif // NOT SharedHPP
+#endif // NOT XXSharedHPP

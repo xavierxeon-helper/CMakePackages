@@ -1,5 +1,5 @@
-#ifndef AuthProviderTokenH
-#define AuthProviderTokenH
+#ifndef XXAuthProviderTokenH
+#define XXAuthProviderTokenH
 
 #include "XXNetworkExportDef.h"
 #include <QObject>
@@ -30,4 +30,4 @@ namespace AuthProvider
    };
 } // namespace AuthProvider
 
-#endif // NOT AuthProviderTokenH
+#endif // NOT XXAuthProviderTokenH

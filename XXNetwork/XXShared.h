@@ -1,5 +1,5 @@
-#ifndef SharedH
-#define SharedH
+#ifndef XXSharedH
+#define XXSharedH
 
 #include "XXCompileTimeString.h"
 
@@ -21,8 +21,8 @@ struct Shared
    static void startApplication();
 };
 
-#ifndef SharedHPP
+#ifndef XXSharedHPP
 #include "XXShared.hpp"
-#endif // NOT SharedHPP
+#endif // NOT XXSharedHPP
 
-#endif // NOT SharedH
+#endif // NOT XXSharedH

@@ -1,5 +1,5 @@
-#ifndef BusyCursorH
-#define BusyCursorH
+#ifndef XXBusyCursorH
+#define XXBusyCursorH
 
 #include "XXGuiExportDef.h"
 
@@ -10,4 +10,4 @@ public:
    ~BusyCursor();
 };
 
-#endif // BusyCursorH
+#endif // XXBusyCursorH

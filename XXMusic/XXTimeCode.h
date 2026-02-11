@@ -1,5 +1,5 @@
-#ifndef TimeCodeH
-#define TimeCodeH
+#ifndef XXTimeCodeH
+#define XXTimeCodeH
 
 #include "XXMusicExportDef.h"
 
@@ -28,4 +28,4 @@ public:
    uchar tick;
 };
 
-#endif // NOT TimeCodeH
+#endif // NOT XXTimeCodeH

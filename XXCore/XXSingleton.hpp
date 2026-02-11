@@ -1,5 +1,5 @@
-#ifndef SingletonHPP
-#define SingletonHPP
+#ifndef XXSingletonHPP
+#define XXSingletonHPP
 
 #include "XXSingleton.h"
 
@@ -24,4 +24,4 @@ InstanceClass* Singleton<InstanceClass>::instance()
    return me;
 }
 
-#endif // NOT SingletonHPP
+#endif // NOT XXSingletonHPP

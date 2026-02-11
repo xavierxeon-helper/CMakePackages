@@ -1,5 +1,5 @@
-#ifndef XXLogExportDefH
-#define XXLogExportDefH
+#ifndef XXXXLogExportDefH
+#define XXXXLogExportDefH
 
 // clang-format off
 #if defined(__unix) || defined(__QNXNTO__) || defined(__APPLE__)
@@ -13,5 +13,4 @@
 #endif
 // clang-format on
 
-#endif // NOT XXLogExportDefH
-
+#endif // NOT XXXXLogExportDefH

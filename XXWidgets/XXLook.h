@@ -1,5 +1,5 @@
-#ifndef LookH
-#define LookH
+#ifndef XXLookH
+#define XXLookH
 
 #include "XXWidgetsExportDef.h"
 
@@ -16,4 +16,4 @@ struct XXWIDGETS_DECLSPEC Look
    static void forceAppMenuBar();
 };
 
-#endif // NOT LookH
+#endif // NOT XXLookH

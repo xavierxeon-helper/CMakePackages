@@ -1,5 +1,5 @@
-#ifndef SingletonH
-#define SingletonH
+#ifndef XXSingletonH
+#define XXSingletonH
 
 template <typename InstanceClass>
 class Singleton
@@ -15,8 +15,8 @@ private:
    static InstanceClass* me;
 };
 
-#ifndef SingletonHPP
+#ifndef XXSingletonHPP
 #include "XXSingleton.hpp"
-#endif // NOT SingletonHPP
+#endif // NOT XXSingletonHPP
 
-#endif // NOT SingletonH
+#endif // NOT XXSingletonH

@@ -1,5 +1,5 @@
-#ifndef MathQtStreamingH
-#define MathQtStreamingH
+#ifndef XXMathQtStreamingH
+#define XXMathQtStreamingH
 
 #include "XXMathExportDef.h"
 
@@ -14,4 +14,4 @@ XXMATH_DECLSPEC QDebug operator<<(QDebug stream, const Math::Spherical& data);
 XXMATH_DECLSPEC QTextStream& operator<<(QTextStream& stream, const Math::Vector3& data);
 XXMATH_DECLSPEC QTextStream& operator>>(QTextStream& stream, Math::Vector3& data);
 
-#endif // NOT MathQtStreamingH
+#endif // NOT XXMathQtStreamingH

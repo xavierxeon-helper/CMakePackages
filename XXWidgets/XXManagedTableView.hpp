@@ -1,5 +1,5 @@
-#ifndef ManagedTableViewHPP
-#define ManagedTableViewHPP
+#ifndef XXManagedTableViewHPP
+#define XXManagedTableViewHPP
 
 #include "XXManagedTableView.h"
 
@@ -21,4 +21,4 @@ void Managed::TableView::onContextMenu(TargetClass* instance, QMenu* (TargetClas
    contextMenuFunction = std::bind(memberFunction, instance, std::placeholders::_1);
 }
 
-#endif // NOT ManagedTableViewHPP
+#endif // NOT XXManagedTableViewHPP

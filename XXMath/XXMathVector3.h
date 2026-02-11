@@ -1,5 +1,5 @@
-#ifndef MathVector3H
-#define MathVector3H
+#ifndef XXMathVector3H
+#define XXMathVector3H
 
 #include "XXMathExportDef.h"
 
@@ -81,4 +81,4 @@ namespace Math
 
 } // namespace Math
 
-#endif // NOT LinalgH
+#endif // NOT XXMathVector3H

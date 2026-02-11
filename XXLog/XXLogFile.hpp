@@ -1,5 +1,5 @@
-#ifndef LogFileHPP
-#define LogFileHPP
+#ifndef XXLogFileHPP
+#define XXLogFileHPP
 
 #include "XXLogFile.h"
 
@@ -51,4 +51,4 @@ void LogFile<tag>::changeFileName(const QString& fileName)
    open(QIODevice::WriteOnly);
 }
 
-#endif // NOT LogFileHPP
+#endif // NOT XXLogFileHPP

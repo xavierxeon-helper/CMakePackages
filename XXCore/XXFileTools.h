@@ -1,5 +1,5 @@
-#ifndef FileToolsH
-#define FileToolsH
+#ifndef XXFileToolsH
+#define XXFileToolsH
 
 #include "XXCoreExportDef.h"
 
@@ -18,4 +18,4 @@ public:
    static QStringList compileResourceNames(const QStringList& ignoreList = {":/qt-project.org"});
 };
 
-#endif // NOT FileToolsH
+#endif // NOT XXFileToolsH

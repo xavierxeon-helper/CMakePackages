@@ -1,5 +1,5 @@
-#ifndef LoggerH
-#define LoggerH
+#ifndef XXLoggerH
+#define XXLoggerH
 
 #include "XXLogExportDef.h"
 
@@ -46,4 +46,4 @@ namespace Logger
    };
 } // namespace Logger
 
-#endif // NOT LoggerH
+#endif // NOT XXLoggerH

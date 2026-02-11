@@ -1,5 +1,5 @@
-#ifndef SizeH
-#define SizeH
+#ifndef XXSizeH
+#define XXSizeH
 
 #include "XXCppExportDef.h"
 
@@ -17,4 +17,4 @@ struct XXCPP_DECLSPEC Size
    bool isZero() const;
 };
 
-#endif // NOT SizeH
+#endif // NOT XXSizeH

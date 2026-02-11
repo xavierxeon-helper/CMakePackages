@@ -1,5 +1,5 @@
-#ifndef DeviceToolsH
-#define DeviceToolsH
+#ifndef XXDeviceToolsH
+#define XXDeviceToolsH
 
 #include "XXGuiExportDef.h"
 #include <QObject>
@@ -25,4 +25,4 @@ public:
    static void forceDisplayMode(bool light = true);
 };
 
-#endif // NOT DeviceToolsH
+#endif // NOT XXDeviceToolsH

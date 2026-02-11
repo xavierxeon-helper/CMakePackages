@@ -1,5 +1,5 @@
-#ifndef MidiInterfaceInputH
-#define MidiInterfaceInputH
+#ifndef XXMidiInterfaceInputH
+#define XXMidiInterfaceInputH
 
 #include "XXMidiParser.h"
 #include "XXMusicExportDef.h"
@@ -29,4 +29,4 @@ namespace Midi
    } // namespace Interface
 } // namespace Midi
 
-#endif // NOT MidiInterfaceInputH
+#endif // NOT XXMidiInterfaceInputH

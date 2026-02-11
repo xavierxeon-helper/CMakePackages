@@ -1,8 +1,7 @@
-#ifndef ConvertorHPP
-#define ConvertorHPP
+#ifndef XXConvertorHPP
+#define XXConvertorHPP
 
 #include "XXByteConversion.h"
-
 
 template <typename DataType>
 QByteArray ByteConversion<DataType>::toBytes(const DataType& value, bool swap)
@@ -48,7 +47,6 @@ QByteArray ByteConversion<DataType>::getBytes() const
    return output;
 }
 
-
 template <typename DataType>
 void ByteConversion<DataType>::swapBytes()
 {
@@ -61,4 +59,4 @@ void ByteConversion<DataType>::swapBytes()
    }
 }
 
-#endif // NOT ConvertorHPP
+#endif // NOT XXConvertorHPP

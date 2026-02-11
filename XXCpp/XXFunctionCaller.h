@@ -1,5 +1,5 @@
-#ifndef FunctionCallerH
-#define FunctionCallerH
+#ifndef XXFunctionCallerH
+#define XXFunctionCallerH
 
 #include "XXCompileTimeString.h"
 
@@ -42,8 +42,8 @@ namespace Function
    };
 } // namespace Function
 
-#ifndef FunctionCallerHPP
+#ifndef XXFunctionCallerHPP
 #include "XXFunctionCaller.hpp"
-#endif // NOT FunctionCallerHPP
+#endif // NOT XXFunctionCallerHPP
 
-#endif // NOT FunctionCallerH
+#endif // NOT XXFunctionCallerH

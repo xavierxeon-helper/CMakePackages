@@ -1,5 +1,5 @@
-#ifndef MathGeneralH
-#define MathGeneralH
+#ifndef XXMathGeneralH
+#define XXMathGeneralH
 
 #include "XXMathExportDef.h"
 
@@ -28,8 +28,8 @@ namespace Math
 
 } // namespace Math
 
-#ifndef MathGeneralHPP
+#ifndef XXMathGeneralHPP
 #include "XXMathGeneral.hpp"
-#endif // NOT MathGeneralHPP
+#endif // NOT XXMathGeneralHPP
 
-#endif // NOT MathGeneralH
+#endif // NOT XXMathGeneralH

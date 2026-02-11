@@ -1,5 +1,5 @@
-#ifndef ByteConversionH
-#define ByteConversionH
+#ifndef XXByteConversionH
+#define XXByteConversionH
 
 #include <QByteArray>
 
@@ -23,8 +23,8 @@ private:
    };
 };
 
-#ifndef BytesHPP
+#ifndef XXBytesHPP
 #include "XXByteConversion.hpp"
-#endif // NOT BytesHPP
+#endif // NOT XXBytesHPP
 
-#endif // NOT BytesH
+#endif // NOT XXByteConversionH

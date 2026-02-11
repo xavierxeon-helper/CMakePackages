@@ -1,5 +1,5 @@
-#ifndef NoteH
-#define NoteH
+#ifndef XXNoteH
+#define XXNoteH
 
 #include "XXMusicExportDef.h"
 #include <QObject>
@@ -75,4 +75,4 @@ private:
    Note(QString name, Value value, Octave octave, float frequency, float voltage, uchar midiValue);
 };
 
-#endif // NoteH
+#endif // XXNoteH

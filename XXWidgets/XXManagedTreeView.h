@@ -1,5 +1,5 @@
-#ifndef ManagedTreeViewH
-#define ManagedTreeViewH
+#ifndef XXManagedTreeViewH
+#define XXManagedTreeViewH
 
 #include "XXWidgetsExportDef.h"
 #include <QTreeView>
@@ -49,8 +49,8 @@ namespace Managed
    };
 } // namespace Managed
 
-#ifndef ManagedTreeViewHPP
+#ifndef XXManagedTreeViewHPP
 #include "XXManagedTreeView.hpp"
-#endif // NOT ManagedTreeViewHPP
+#endif // NOT XXManagedTreeViewHPP
 
-#endif // NOT ManagedTreeViewH
+#endif // NOT XXManagedTreeViewH

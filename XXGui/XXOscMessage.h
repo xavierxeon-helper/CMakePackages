@@ -1,5 +1,5 @@
-#ifndef OscMessageH
-#define OscMessageH
+#ifndef XXOscMessageH
+#define XXOscMessageH
 
 #include "XXGuiExportDef.h"
 
@@ -29,4 +29,4 @@ private:
    QVariantList values;
 };
 
-#endif // NOT OscMessageH
+#endif // NOT XXOscMessageH

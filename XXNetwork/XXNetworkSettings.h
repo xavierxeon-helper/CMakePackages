@@ -1,5 +1,5 @@
-#ifndef NetworkSettingsH
-#define NetworkSettingsH
+#ifndef XXNetworkSettingsH
+#define XXNetworkSettingsH
 
 #include "XXNetworkExportDef.h"
 
@@ -26,4 +26,4 @@ namespace Network
 
 } // namespace Network
 
-#endif // NOT NetworkSettingsH
+#endif // NOT XXNetworkSettingsH

@@ -1,5 +1,5 @@
-#ifndef CompileTimeStringH
-#define CompileTimeStringH
+#ifndef XXCompileTimeStringH
+#define XXCompileTimeStringH
 
 #include <string>
 
@@ -12,8 +12,8 @@ struct CompileTimeString
    std::string text() const;
 };
 
-#ifndef CompileTimeStringHPP
+#ifndef XXCompileTimeStringHPP
 #include "CompileTimeString.hpp"
-#endif // NOT CompileTimeStringHPP
+#endif // NOT XXCompileTimeStringHPP
 
-#endif // NOT CompileTimeStringH
+#endif // NOT XXCompileTimeStringH

@@ -1,5 +1,5 @@
-#ifndef MathGeneralHPP
-#define MathGeneralHPP
+#ifndef XXMathGeneralHPP
+#define XXMathGeneralHPP
 
 #include "XXMathGeneral.h"
 
@@ -29,4 +29,4 @@ std::complex<RealType> Math::polarToCartesian(const std::complex<RealType>& pola
    return result;
 }
 
-#endif // NOT MathGeneralHPP
+#endif // NOT XXMathGeneralHPP

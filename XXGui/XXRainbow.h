@@ -1,5 +1,5 @@
-#ifndef RainbowH
-#define RainbowH
+#ifndef XXRainbowH
+#define XXRainbowH
 
 #include "XXGuiExportDef.h"
 
@@ -34,4 +34,4 @@ private:
    quint64 currentIndex;
 };
 
-#endif // NOT RainbowH
+#endif // NOT XXRainbowH

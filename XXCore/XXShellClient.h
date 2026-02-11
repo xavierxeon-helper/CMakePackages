@@ -1,5 +1,5 @@
-#ifndef ShellClientH
-#define ShellClientH
+#ifndef XXShellClientH
+#define XXShellClientH
 
 #include "XXCoreExportDef.h"
 
@@ -15,4 +15,4 @@ private:
    static QByteArray execute(const QString& program, const QStringList& args, QByteArray* error);
 };
 
-#endif // NOT ShellClientH
+#endif // NOT XXShellClientH

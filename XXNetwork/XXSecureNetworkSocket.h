@@ -1,5 +1,5 @@
-#ifndef SecureNetworkSocketH
-#define SecureNetworkSocketH
+#ifndef XXSecureNetworkSocketH
+#define XXSecureNetworkSocketH
 
 #include "XXNetworkExportDef.h"
 #include <QObject>
@@ -57,4 +57,4 @@ namespace SecureNetwork
    };
 } // namespace SecureNetwork
 
-#endif // NOT SecureNetworkSocketH
+#endif // NOT XXSecureNetworkSocketH

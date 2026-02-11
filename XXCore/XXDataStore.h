@@ -1,5 +1,5 @@
-#ifndef DataStoreH
-#define DataStoreH
+#ifndef XXDataStoreH
+#define XXDataStoreH
 
 #include "XXCoreExportDef.h"
 
@@ -15,4 +15,4 @@ private:
    static QString path;
 };
 
-#endif // NOT DataStoreH
+#endif // NOT XXDataStoreH

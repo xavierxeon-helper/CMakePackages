@@ -1,5 +1,5 @@
-#ifndef MatrixH
-#define MatrixH
+#ifndef XXMatrixH
+#define XXMatrixH
 
 #include <vector>
 
@@ -21,8 +21,8 @@ private:
    Size size;
 };
 
-#ifndef MatrixHPP
+#ifndef XXMatrixHPP
 #include "Matrix.hpp"
-#endif // NOT MatrixHPP
+#endif // NOT XXMatrixHPP
 
-#endif // NOT MatrixH
+#endif // NOT XXMatrixH

@@ -1,5 +1,5 @@
-#ifndef MessageModelH
-#define MessageModelH
+#ifndef XXMessageModelH
+#define XXMessageModelH
 
 #include "XXGuiExportDef.h"
 #include <XXLogger.h>
@@ -19,4 +19,4 @@ private:
    void update(const Entry::Buffer& buffer) override;
 };
 
-#endif // NOT MessageModelH
+#endif // NOT XXMessageModelH

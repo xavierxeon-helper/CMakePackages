@@ -1,5 +1,5 @@
-#ifndef MessageHandlerH
-#define MessageHandlerH
+#ifndef XXMessageHandlerH
+#define XXMessageHandlerH
 
 #include "XXLogExportDef.h"
 #include <QObject>
@@ -38,8 +38,8 @@ private:
    TargetMap targetMap;
 };
 
-#ifndef MessageHandlerHPP
+#ifndef XXMessageHandlerHPP
 #include "XXMessageHandler.hpp"
-#endif // NOT MessageHandlerHPP
+#endif // NOT XXMessageHandlerHPP
 
 #endif // NOT MessageHandlerH

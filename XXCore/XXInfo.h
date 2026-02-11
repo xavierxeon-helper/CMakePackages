@@ -1,5 +1,5 @@
-#ifndef InfoH
-#define InfoH
+#ifndef XXInfoH
+#define XXInfoH
 
 #include "XXCoreExportDef.h"
 
@@ -11,4 +11,4 @@ struct XXCORE_DECLSPEC Info
    static QString whatCppStandard();
 };
 
-#endif // NOT InfoH
+#endif // NOT XXInfoH

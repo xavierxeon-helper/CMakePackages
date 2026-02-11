@@ -1,5 +1,5 @@
-#ifndef RestApiExceptionH
-#define RestApiExceptionH
+#ifndef XXRestApiExceptionH
+#define XXRestApiExceptionH
 
 #include "XXNetworkExportDef.h"
 #include <QException>
@@ -47,4 +47,4 @@ namespace RestApi
    };
 } // namespace RestApi
 
-#endif // NOT RestApiExceptionH
+#endif // NOT XXRestApiExceptionH

@@ -1,5 +1,5 @@
-#ifndef SharedDataHPP
-#define SharedDataHPP
+#ifndef XXSharedDataHPP
+#define XXSharedDataHPP
 
 #include "XXSharedData.h"
 
@@ -70,4 +70,4 @@ const QString& SharedData<DataBlock>::getErrorString() const
    return errorString;
 }
 
-#endif // NOT SharedDataHPP
+#endif // NOT XXSharedDataHPP

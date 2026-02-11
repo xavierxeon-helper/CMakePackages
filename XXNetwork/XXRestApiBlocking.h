@@ -1,8 +1,8 @@
-#ifndef RestApiBlockingH
-#define RestApiBlockingH
+#ifndef XXRestApiBlockingH
+#define XXRestApiBlockingH
 
-#include "XXNetworkSettings.h"
 #include "XXNetworkExportDef.h"
+#include "XXNetworkSettings.h"
 #include <QObject>
 
 #include <QJsonObject>
@@ -61,4 +61,4 @@ namespace RestApi
    };
 } // namespace RestApi
 
-#endif // NOT RestApiBlockingH
+#endif // NOT XXRestApiBlockingH

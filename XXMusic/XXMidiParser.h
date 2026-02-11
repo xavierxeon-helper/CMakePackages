@@ -1,5 +1,5 @@
-#ifndef MidiParserH
-#define MidiParserH
+#ifndef XXMidiParserH
+#define XXMidiParserH
 
 #include "XXMusicExportDef.h"
 
@@ -64,8 +64,8 @@ namespace Midi
    };
 } // namespace Midi
 
-#ifndef MidiParserHPP
+#ifndef XXMidiParserHPP
 #include "XXMidiParser.hpp"
-#endif // NOT MidiParserHPP
+#endif // NOT XXMidiParserHPP
 
-#endif // NOT MidiParserH
+#endif // NOT XXMidiParserH

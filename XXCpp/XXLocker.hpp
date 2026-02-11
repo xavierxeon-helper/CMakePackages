@@ -1,5 +1,5 @@
-#ifndef LockerHPP
-#define LockerHPP
+#ifndef XXLockerHPP
+#define XXLockerHPP
 
 #include "XXLocker.h"
 
@@ -36,4 +36,4 @@ bool Locker<tag>::doOnce()
    return false;
 }
 
-#endif // NOT LockerHPP
+#endif // NOT XXLockerHPP

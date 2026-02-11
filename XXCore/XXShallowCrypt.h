@@ -1,5 +1,5 @@
-#ifndef ShallowCryptH
-#define ShallowCryptH
+#ifndef XXShallowCryptH
+#define XXShallowCryptH
 
 #include "XXCoreExportDef.h"
 
@@ -37,4 +37,4 @@ private:
    int checkLength;
 };
 
-#endif // NOT ShallowCryptH
+#endif // NOT XXShallowCryptH

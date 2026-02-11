@@ -1,5 +1,5 @@
-#ifndef NetworkToolsH
-#define NetworkToolsH
+#ifndef XXNetworkToolsH
+#define XXNetworkToolsH
 
 #include "XXNetworkExportDef.h"
 
@@ -15,4 +15,4 @@ namespace Network
    };
 } // namespace Network
 
-#endif // NOT NetworkToolsH
+#endif // NOT XXNetworkToolsH
