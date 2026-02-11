@@ -10,14 +10,14 @@
 #include <QThread>
 
 template <CompileTimeString AppName>
-QString Shared<AppName>::appName()
+QString XX::Shared<AppName>::appName()
 {
    static const QString name = QString::fromStdString(AppName.text());
    return name;
 }
 
 template <CompileTimeString AppName>
-QString Shared<AppName>::compileSharedFileName(const QString& suffix, const QStandardPaths::StandardLocation& location)
+QString XX::Shared<AppName>::compileSharedFileName(const QString& suffix, const QStandardPaths::StandardLocation& location)
 {
    const QString path = QStandardPaths::writableLocation(location);
 
@@ -26,7 +26,7 @@ QString Shared<AppName>::compileSharedFileName(const QString& suffix, const QSta
 }
 
 template <CompileTimeString AppName>
-QString Shared<AppName>::socketName()
+QString XX::Shared<AppName>::socketName()
 {
 #if defined(Q_OS_WIN)
    const QString socketPath = "\\\\.\\pipe\\";
@@ -38,7 +38,7 @@ QString Shared<AppName>::socketName()
 }
 
 template <CompileTimeString AppName>
-bool Shared<AppName>::isServerActive()
+bool XX::Shared<AppName>::isServerActive()
 {
    const QString socketName = Shared<AppName>::socketName();
    if (!QFile::exists(socketName))
@@ -59,7 +59,7 @@ bool Shared<AppName>::isServerActive()
 }
 
 template <CompileTimeString AppName>
-void Shared<AppName>::startApplication()
+void XX::Shared<AppName>::startApplication()
 {
 #if defined(__APPLE__)
    QProcess::startDetached("open", {"-a", Shared<AppName>::appName()});

@@ -1,6 +1,6 @@
 #include "XXSampleReader.h"
 
-Sample::Reader::Reader(const QString& fileName)
+XX::Sample::Reader::Reader(const QString& fileName)
    : Sample::Wave()
    , playhead(0)
    , channels()
@@ -10,45 +10,45 @@ Sample::Reader::Reader(const QString& fileName)
    channels = deinterlace(interlacedContent, meta.noOfChannels);
 }
 
-const Sample::Meta& Sample::Reader::getMeta() const
+const XX::Sample::Meta& XX::Sample::Reader::getMeta() const
 {
    return meta;
 }
 
-Sample::Data Sample::Reader::getChannel(const uint8_t& channel) const
+XX::Sample::Data XX::Sample::Reader::getChannel(const uint8_t& channel) const
 {
    const Data& target = channels[channel];
    return target;
 }
 
-Sample::Data Sample::Reader::get(const size_t& position, const size_t& numberOfSamples, const uint8_t& channel) const
+XX::Sample::Data XX::Sample::Reader::get(const size_t& position, const size_t& numberOfSamples, const uint8_t& channel) const
 {
    const Data& target = channels[channel];
    const Data chunk = target.mid(position, numberOfSamples);
    return chunk;
 }
 
-size_t Sample::Reader::getPlayhead() const
+size_t XX::Sample::Reader::getPlayhead() const
 {
    return playhead;
 }
 
-void Sample::Reader::resetPlayhead()
+void XX::Sample::Reader::resetPlayhead()
 {
    playhead = 0;
 }
 
-bool Sample::Reader::atEnd() const
+bool XX::Sample::Reader::atEnd() const
 {
    return false;
 }
 
-void Sample::Reader::advancePlayhead()
+void XX::Sample::Reader::advancePlayhead()
 {
    playhead++;
 }
 
-float Sample::Reader::getSound(const uint8_t& channel) const
+float XX::Sample::Reader::getSound(const uint8_t& channel) const
 {
    return get(playhead, 1, channel).front();
 }

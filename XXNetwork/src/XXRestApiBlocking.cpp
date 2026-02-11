@@ -8,7 +8,7 @@
 #include "XXAuthProviderToken.h"
 #include "XXRestApiException.h"
 
-RestApi::Blocking::Blocking(QObject* parent, const QString& baseUrl)
+XX::RestApi::Blocking::Blocking(QObject* parent, const QString& baseUrl)
    : QObject(parent)
    , Network::Settings()
    , manager(nullptr)
@@ -23,7 +23,7 @@ RestApi::Blocking::Blocking(QObject* parent, const QString& baseUrl)
    unauthorizedStatusCodes.append(401);
 }
 
-RestApi::Result RestApi::Blocking::get(const QString& endpoint, const QUrlQuery& params) const
+XX::RestApi::Result XX::RestApi::Blocking::get(const QString& endpoint, const QUrlQuery& params) const
 {
    QNetworkRequest request = createRequest(endpoint, params);
 
@@ -31,7 +31,7 @@ RestApi::Result RestApi::Blocking::get(const QString& endpoint, const QUrlQuery&
    return handleReply(request, replyGenerator);
 }
 
-RestApi::ResultRaw RestApi::Blocking::getRaw(const QString& endpoint, const QUrlQuery& params) const
+XX::RestApi::ResultRaw XX::RestApi::Blocking::getRaw(const QString& endpoint, const QUrlQuery& params) const
 {
    QNetworkRequest request = createRequest(endpoint, params);
 
@@ -39,7 +39,7 @@ RestApi::ResultRaw RestApi::Blocking::getRaw(const QString& endpoint, const QUrl
    return handleReplyRaw(request, replyGenerator);
 }
 
-RestApi::Result RestApi::Blocking::post(const QString& endpoint, const QJsonObject& payload, const QUrlQuery& params) const
+XX::RestApi::Result XX::RestApi::Blocking::post(const QString& endpoint, const QJsonObject& payload, const QUrlQuery& params) const
 {
    QNetworkRequest request = createRequest(endpoint, params);
    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -50,7 +50,7 @@ RestApi::Result RestApi::Blocking::post(const QString& endpoint, const QJsonObje
    return handleReply(request, replyGenerator);
 }
 
-RestApi::Result RestApi::Blocking::put(const QString& endpoint, const QJsonObject& payload, const QUrlQuery& params) const
+XX::RestApi::Result XX::RestApi::Blocking::put(const QString& endpoint, const QJsonObject& payload, const QUrlQuery& params) const
 {
    QNetworkRequest request = createRequest(endpoint, params);
    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -61,12 +61,12 @@ RestApi::Result RestApi::Blocking::put(const QString& endpoint, const QJsonObjec
    return handleReply(request, replyGenerator);
 }
 
-const QString& RestApi::Blocking::getBaseUrl() const
+const QString& XX::RestApi::Blocking::getBaseUrl() const
 {
    return baseUrl;
 }
 
-void RestApi::Blocking::setAuthProvider(AuthProvider::Token* newProvider)
+void XX::RestApi::Blocking::setAuthProvider(XX::AuthProvider::Token* newProvider)
 {
    if (provider)
       delete provider;
@@ -74,12 +74,12 @@ void RestApi::Blocking::setAuthProvider(AuthProvider::Token* newProvider)
    provider = newProvider;
 }
 
-void RestApi::Blocking::setBaseUrl(const QString& url)
+void XX::RestApi::Blocking::setBaseUrl(const QString& url)
 {
    baseUrl = url;
 }
 
-void RestApi::Blocking::addUnauthorizedStatusCode(int code)
+void XX::RestApi::Blocking::addUnauthorizedStatusCode(int code)
 {
    if (unauthorizedStatusCodes.contains(code))
       return;
@@ -87,7 +87,7 @@ void RestApi::Blocking::addUnauthorizedStatusCode(int code)
    unauthorizedStatusCodes.append(code);
 }
 
-QNetworkRequest RestApi::Blocking::createRequest(const QString& endpoint, const QUrlQuery& params) const
+QNetworkRequest XX::RestApi::Blocking::createRequest(const QString& endpoint, const QUrlQuery& params) const
 {
    QUrl url(baseUrl + endpoint);
    url.setQuery(params);
@@ -101,7 +101,7 @@ QNetworkRequest RestApi::Blocking::createRequest(const QString& endpoint, const 
    return request;
 }
 
-RestApi::Result RestApi::Blocking::handleReply(QNetworkRequest request, ReplyGeneratorFunction replyGenerator) const
+XX::RestApi::Result XX::RestApi::Blocking::handleReply(QNetworkRequest request, ReplyGeneratorFunction replyGenerator) const
 {
    auto updateToken = [&]() -> bool
    {
@@ -170,7 +170,7 @@ RestApi::Result RestApi::Blocking::handleReply(QNetworkRequest request, ReplyGen
    return result;
 }
 
-RestApi::ResultRaw RestApi::Blocking::handleReplyRaw(QNetworkRequest request, ReplyGeneratorFunction replyGenerator) const
+XX::RestApi::ResultRaw XX::RestApi::Blocking::handleReplyRaw(QNetworkRequest request, ReplyGeneratorFunction replyGenerator) const
 {
    auto updateToken = [&]() -> bool
    {

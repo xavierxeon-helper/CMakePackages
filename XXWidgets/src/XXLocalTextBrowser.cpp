@@ -4,12 +4,12 @@
 #include <QImage>
 #include <QUrlQuery>
 
-LocalTextBrowser::LocalTextBrowser(QWidget* parent)
+XX::LocalTextBrowser::LocalTextBrowser(QWidget* parent)
    : QTextBrowser(parent)
 {
 }
 
-QVariant LocalTextBrowser::loadResource(int type, const QUrl& name)
+QVariant XX::LocalTextBrowser::loadResource(int type, const QUrl& name)
 {
    if (QTextDocument::ImageResource != type)
       return QTextBrowser::loadResource(type, name);

@@ -6,12 +6,12 @@
 
 #include <XXMathGeneral.h>
 
-FastFourierTransfrom::FastFourierTransfrom(const size_t size)
+XX::FastFourierTransfrom::FastFourierTransfrom(const size_t size)
    : size(Math::getNearestPowerOfTwo(size))
 {
 }
 
-FastFourierTransfrom::ComplexData FastFourierTransfrom::fill(const Sample::Data& data)
+XX::FastFourierTransfrom::ComplexData XX::FastFourierTransfrom::fill(const Sample::Data& data)
 {
    ComplexData result;
 
@@ -21,7 +21,7 @@ FastFourierTransfrom::ComplexData FastFourierTransfrom::fill(const Sample::Data&
    return result;
 }
 
-Sample::Data FastFourierTransfrom::strip(const ComplexData& data)
+XX::Sample::Data XX::FastFourierTransfrom::strip(const ComplexData& data)
 {
    Sample::Data result;
 
@@ -31,12 +31,12 @@ Sample::Data FastFourierTransfrom::strip(const ComplexData& data)
    return result;
 }
 
-const size_t& FastFourierTransfrom::getSize() const
+const size_t& XX::FastFourierTransfrom::getSize() const
 {
    return size;
 }
 
-FastFourierTransfrom::ComplexData FastFourierTransfrom::forward(const ComplexData& input)
+XX::FastFourierTransfrom::ComplexData XX::FastFourierTransfrom::forward(const ComplexData& input)
 {
    if (size != input.size())
       return ComplexData();
@@ -47,7 +47,7 @@ FastFourierTransfrom::ComplexData FastFourierTransfrom::forward(const ComplexDat
    return data;
 }
 
-FastFourierTransfrom::ComplexData FastFourierTransfrom::inverse(const ComplexData& input)
+XX::FastFourierTransfrom::ComplexData XX::FastFourierTransfrom::inverse(const ComplexData& input)
 {
    if (size != input.size())
       return ComplexData();
@@ -64,7 +64,7 @@ FastFourierTransfrom::ComplexData FastFourierTransfrom::inverse(const ComplexDat
 
 // see https://cp-algorithms.com/algebra/fft.html
 
-void FastFourierTransfrom::bitReverse(ComplexData& data) const
+void XX::FastFourierTransfrom::bitReverse(ComplexData& data) const
 {
    auto swap = [&](const size_t& indexFrom, const size_t& indexTo)
    {
@@ -108,7 +108,7 @@ algorithm iterative-fft is
 
     return A
 */
-void FastFourierTransfrom::transformB(ComplexData& data, bool forward) const
+void XX::FastFourierTransfrom::transformB(ComplexData& data, bool forward) const
 {
    bitReverse(data);
 
@@ -141,7 +141,7 @@ void FastFourierTransfrom::transformB(ComplexData& data, bool forward) const
    }
 }
 
-void FastFourierTransfrom::transform(ComplexData& data, bool forward) const
+void XX::FastFourierTransfrom::transform(ComplexData& data, bool forward) const
 {
    bitReverse(data);
 

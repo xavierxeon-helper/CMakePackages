@@ -3,29 +3,29 @@
 
 #include "XXLocker.h"
 
-template <CompileTimeString tag>
-bool Locker<tag>::lock = false;
+template <XX::CompileTimeString tag>
+bool XX::Locker<tag>::lock = false;
 
-template <CompileTimeString tag>
-Locker<tag>::Locker()
+template <XX::CompileTimeString tag>
+XX::Locker<tag>::Locker()
 {
    lock = true;
 }
 
-template <CompileTimeString tag>
-Locker<tag>::~Locker()
+template <XX::CompileTimeString tag>
+XX::Locker<tag>::~Locker()
 {
    lock = false;
 }
 
-template <CompileTimeString tag>
-bool Locker<tag>::engaged()
+template <XX::CompileTimeString tag>
+bool XX::Locker<tag>::engaged()
 {
    return lock;
 }
 
-template <CompileTimeString tag>
-bool Locker<tag>::doOnce()
+template <XX::CompileTimeString tag>
+bool XX::Locker<tag>::doOnce()
 {
    static bool done = false;
    if (!done)

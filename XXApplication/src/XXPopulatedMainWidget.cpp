@@ -4,7 +4,7 @@
 #include <QMenu>
 #include <QSettings>
 
-Populated::MainWidget::MainWidget()
+XX::Populated::MainWidget::MainWidget()
    : QWidget(nullptr)
    , Abstract(this)
    , Singleton<MainWidget>()
@@ -17,13 +17,13 @@ Populated::MainWidget::MainWidget()
    loadSettings();
 }
 
-void Populated::MainWidget::loadSettings()
+void XX::Populated::MainWidget::loadSettings()
 {
    QSettings settings;
    restoreGeometry(settings.value("MainWidget/Geometry").toByteArray());
 }
 
-void Populated::MainWidget::closeEvent(QCloseEvent* ce)
+void XX::Populated::MainWidget::closeEvent(QCloseEvent* ce)
 {
    QSettings settings;
    settings.setValue("MainWidget/Geometry", saveGeometry());
@@ -31,19 +31,19 @@ void Populated::MainWidget::closeEvent(QCloseEvent* ce)
    ce->accept();
 }
 
-void Populated::MainWidget::placeMenuBar(QMenuBar* menuBar)
+void XX::Populated::MainWidget::placeMenuBar(QMenuBar* menuBar)
 {
    Q_UNUSED(menuBar);
    qFatal() << "You must override Populated::MainWidget::placeMenuBar to place the menu bar in your main widget.";
 }
 
-QToolBar* Populated::MainWidget::findOrCreateToolBar(const QString& objectName)
+QToolBar* XX::Populated::MainWidget::findOrCreateToolBar(const QString& objectName)
 {
    QToolBar* toolBar = findChild<QToolBar*>(objectName, Qt::FindChildrenRecursively);
    return toolBar;
 }
 
-QMenu* Populated::MainWidget::findOrCreateMenu(const QString& objectName, const QString& text, QMenu* parentMenu)
+QMenu* XX::Populated::MainWidget::findOrCreateMenu(const QString& objectName, const QString& text, QMenu* parentMenu)
 {
    QMenu* menu = findChild<QMenu*>(objectName, Qt::FindChildrenRecursively);
    if (menu)

@@ -5,26 +5,29 @@
 
 #include <QSslConfiguration>
 
-namespace SecureNetwork
+namespace XX
 {
-   class Socket;
-   class Server;
-
-   class ServerInternal : public QTcpServer
+   namespace SecureNetwork
    {
-      Q_OBJECT
-   public:
-      ServerInternal(Server* server);
+      class Socket;
+      class Server;
 
-   private slots:
-      void slotEncryptedConnection();
+      class ServerInternal : public QTcpServer
+      {
+         Q_OBJECT
+      public:
+         ServerInternal(Server* server);
 
-   private:
-      void incomingConnection(qintptr socketDescriptor) override;
+      private slots:
+         void slotEncryptedConnection();
 
-   private:
-      Server* server;
-   };
-} // namespace SecureNetwork
+      private:
+         void incomingConnection(qintptr socketDescriptor) override;
+
+      private:
+         Server* server;
+      };
+   } // namespace SecureNetwork
+} // namespace XX
 
 #endif // NOT XXSecureNetworkServerInternalH

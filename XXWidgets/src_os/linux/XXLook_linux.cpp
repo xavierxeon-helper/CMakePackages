@@ -1,9 +1,9 @@
 #include "XXLook.h"
 
-void Look::setDockLabel(const QString& label)
+void XX::Look::setDockLabel(const QString& label)
 {
 }
 
-void Look::updateDockIcon(const QIcon& icon)
+void XX::Look::updateDockIcon(const QIcon& icon)
 {
 }

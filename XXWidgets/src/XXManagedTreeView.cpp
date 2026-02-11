@@ -5,7 +5,7 @@
 #include <QSortFilterProxyModel>
 #include <QStandardItemModel>
 
-Managed::TreeView::TreeView(QWidget* parent)
+XX::Managed::TreeView::TreeView(QWidget* parent)
    : QTreeView(parent)
    , selectConnetion()
    , selectedFunction()
@@ -16,7 +16,7 @@ Managed::TreeView::TreeView(QWidget* parent)
    connect(this, &QTreeView::customContextMenuRequested, this, &TreeView::contextMenuRequested);
 }
 
-void Managed::TreeView::setModel(QAbstractItemModel* model)
+void XX::Managed::TreeView::setModel(QAbstractItemModel* model)
 {
    QTreeView::setModel(model);
 
@@ -26,7 +26,7 @@ void Managed::TreeView::setModel(QAbstractItemModel* model)
    selectConnetion = connect(selectionModel(), &QItemSelectionModel::currentChanged, this, &TreeView::selected);
 }
 
-QModelIndex Managed::TreeView::currentSourceIndex() const
+QModelIndex XX::Managed::TreeView::currentSourceIndex() const
 {
    if (model()->inherits("QSortFilterProxyModel"))
    {
@@ -39,13 +39,13 @@ QModelIndex Managed::TreeView::currentSourceIndex() const
    return currentIndex();
 }
 
-QStandardItem* Managed::TreeView::getCurrentItem() const
+QStandardItem* XX::Managed::TreeView::getCurrentItem() const
 {
    QModelIndex index = currentSourceIndex();
    return getItemFromIndex(index);
 }
 
-void Managed::TreeView::selected(const QModelIndex& index)
+void XX::Managed::TreeView::selected(const QModelIndex& index)
 {
    if (!selectedFunction)
       return;
@@ -57,7 +57,7 @@ void Managed::TreeView::selected(const QModelIndex& index)
    selectedFunction(item);
 }
 
-void Managed::TreeView::mouseDoubleClickEvent(QMouseEvent* event)
+void XX::Managed::TreeView::mouseDoubleClickEvent(QMouseEvent* event)
 {
    if (!doubleClickFunction)
       return QTreeView::mouseDoubleClickEvent(event);
@@ -67,7 +67,7 @@ void Managed::TreeView::mouseDoubleClickEvent(QMouseEvent* event)
       QTreeView::mouseDoubleClickEvent(event);
 }
 
-void Managed::TreeView::contextMenuRequested(const QPoint& point)
+void XX::Managed::TreeView::contextMenuRequested(const QPoint& point)
 {
    if (!contextMenuFunction)
       return;
@@ -80,7 +80,7 @@ void Managed::TreeView::contextMenuRequested(const QPoint& point)
    menu->exec(mapToGlobal(point));
 }
 
-QStandardItem* Managed::TreeView::getItemFromIndex(const QModelIndex& index) const
+QStandardItem* XX::Managed::TreeView::getItemFromIndex(const QModelIndex& index) const
 {
    if (!index.isValid())
       return nullptr;
@@ -93,7 +93,7 @@ QStandardItem* Managed::TreeView::getItemFromIndex(const QModelIndex& index) con
    return item;
 }
 
-QStandardItem* Managed::TreeView::getItemAtPoint(const QPoint& point) const
+QStandardItem* XX::Managed::TreeView::getItemAtPoint(const QPoint& point) const
 {
    QModelIndex index = indexAt(point);
    return getItemFromIndex(index);

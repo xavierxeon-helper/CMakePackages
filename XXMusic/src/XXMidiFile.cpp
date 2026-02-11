@@ -5,14 +5,14 @@
 
 // sequence
 
-Midi::Sequence::Sequence()
+XX::Midi::Sequence::Sequence()
    : ticksPer16(1)
    , uSecsPerQuarter(500000) // 120 bpm
    , trackList()
 {
 }
 
-Midi::Sequence::Info Midi::Sequence::compileInfo() const
+XX::Midi::Sequence::Info XX::Midi::Sequence::compileInfo() const
 {
    Info info;
 
@@ -35,12 +35,12 @@ Midi::Sequence::Info Midi::Sequence::compileInfo() const
    return info;
 }
 
-const Midi::Sequence::Track::List& Midi::Sequence::getTrackList() const
+const XX::Midi::Sequence::Track::List& XX::Midi::Sequence::getTrackList() const
 {
    return trackList;
 }
 
-uint64_t Midi::Sequence::compileBarCounter(uint64_t trackIndex) const
+uint64_t XX::Midi::Sequence::compileBarCounter(uint64_t trackIndex) const
 {
    const Track& track = trackList.at(trackIndex);
    const uint64_t barCounter = track.maxTick / (16 * ticksPer16);
@@ -48,13 +48,13 @@ uint64_t Midi::Sequence::compileBarCounter(uint64_t trackIndex) const
    return barCounter;
 }
 
-TimeCode::Duration Midi::Sequence::fromTick(const Tick& tick)
+XX::TimeCode::Duration XX::Midi::Sequence::fromTick(const Tick& tick)
 {
    TimeCode::Duration duration = tick / ticksPer16;
    return duration;
 }
 
-Midi::Sequence::Tick Midi::Sequence::toTick(const TimeCode::Duration& duration, const double& precentageToNextBeat)
+XX::Midi::Sequence::Tick XX::Midi::Sequence::toTick(const XX::TimeCode::Duration& duration, const double& precentageToNextBeat)
 {
    const float fDuration = static_cast<float>(duration) + precentageToNextBeat;
    const float fTicks = fDuration * ticksPer16;
@@ -65,8 +65,8 @@ Midi::Sequence::Tick Midi::Sequence::toTick(const TimeCode::Duration& duration, 
 
 // file reader
 
-Midi::File::Reader::Reader(const Bytes& content)
-   : Sequence()
+XX::Midi::File::Reader::Reader(const XX::Bytes& content)
+   : XX::Midi::Sequence()
 {
    Chunk::List chunkList;
    uint64_t cursor = 0;
@@ -109,7 +109,7 @@ Midi::File::Reader::Reader(const Bytes& content)
    }
 }
 
-void Midi::File::Reader::readHeader(const Chunk& headerChunk)
+void XX::Midi::File::Reader::readHeader(const Chunk& headerChunk)
 {
    if ("MThd" != headerChunk.id || 6 != headerChunk.data.size())
       return;
@@ -132,7 +132,7 @@ void Midi::File::Reader::readHeader(const Chunk& headerChunk)
    }
 }
 
-void Midi::File::Reader::readTrack(const Chunk& trackChunk)
+void XX::Midi::File::Reader::readTrack(const Chunk& trackChunk)
 {
    if ("MTrk" != trackChunk.id)
       return;
@@ -194,7 +194,7 @@ void Midi::File::Reader::readTrack(const Chunk& trackChunk)
    }
 }
 
-Midi::MetaEvent Midi::File::Reader::readMetaEventAndAdvanceCursor(const Bytes& trackChunkData, uint64_t& cursor, Track* track)
+XX::Midi::MetaEvent XX::Midi::File::Reader::readMetaEventAndAdvanceCursor(const XX::Bytes& trackChunkData, uint64_t& cursor, Track* track)
 {
    // clang-format off
    static const QMap<uchar, uchar> messageStaticLengthMap =
@@ -286,7 +286,7 @@ Midi::MetaEvent Midi::File::Reader::readMetaEventAndAdvanceCursor(const Bytes& t
    return MetaEvent::MetaUnkown;
 }
 
-uchar Midi::File::Reader::compileMidiEventLength(const uchar marker) const
+uchar XX::Midi::File::Reader::compileMidiEventLength(const uchar marker) const
 {
    // clang-format off
    static const QMap<uchar, uchar> messageStaticLengthMap =
@@ -321,7 +321,7 @@ uchar Midi::File::Reader::compileMidiEventLength(const uchar marker) const
 }
 
 // see https://en.wikipedia.org/wiki/Variable-length_quantity
-uint64_t Midi::File::Reader::variableLength(const Bytes& data, uint64_t& cursor) const
+uint64_t XX::Midi::File::Reader::variableLength(const XX::Bytes& data, uint64_t& cursor) const
 {
    uint64_t length = 0;
    while (true)

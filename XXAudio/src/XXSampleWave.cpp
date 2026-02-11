@@ -7,7 +7,7 @@
 
 #include <XXByteConversion.h>
 
-const float Sample::Wave::maxValue = static_cast<float>(std::numeric_limits<int16_t>::max());
+const float XX::Sample::Wave::maxValue = static_cast<float>(std::numeric_limits<int16_t>::max());
 
 // 16 bit PCM wav files
 // see http://soundfile.sapp.org/doc/WaveFormat/
@@ -52,7 +52,7 @@ struct WaveFmtHeader
    uint16_t bitsPerSample = 16; // Number of bits per sample
 };
 
-bool Sample::Wave::load(const QString& fileName)
+bool XX::Sample::Wave::load(const QString& fileName)
 {
    meta = Meta();
    interlacedContent = Data();
@@ -125,7 +125,7 @@ bool Sample::Wave::load(const QString& fileName)
    return true;
 }
 
-bool Sample::Wave::save(const QString& fileName)
+bool XX::Sample::Wave::save(const QString& fileName)
 {
    QFile file(fileName);
    if (!file.open(QIODevice::WriteOnly))

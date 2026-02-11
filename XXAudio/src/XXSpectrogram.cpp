@@ -4,7 +4,7 @@
 
 #include <QDebug>
 
-Spectrogram::Spectrogram(const uint16_t& frameSize, const uint16_t& hopFactor)
+XX::Spectrogram::Spectrogram(const uint16_t& frameSize, const uint16_t& hopFactor)
    : fft(frameSize)
    , windowOffset(Math::getNearestPowerOfTwo(frameSize / hopFactor))
    , windowData(frameSize, 0)
@@ -30,7 +30,7 @@ Spectrogram::Spectrogram(const uint16_t& frameSize, const uint16_t& hopFactor)
 }
 
 // see https://www.nti-audio.com/en/support/know-how/fast-fourier-transform-fft
-void Spectrogram::load(const Sample::Data& data)
+void XX::Spectrogram::load(const Sample::Data& data)
 {
    frames.clear();
 
@@ -76,17 +76,17 @@ void Spectrogram::load(const Sample::Data& data)
    }
 }
 
-size_t Spectrogram::getFrameSize() const
+size_t XX::Spectrogram::getFrameSize() const
 {
    return fft.getSize();
 }
 
-size_t Spectrogram::getFrameCount() const
+size_t XX::Spectrogram::getFrameCount() const
 {
    return frames.size();
 }
 
-const Sample::Data& Spectrogram::getFrame(const size_t index) const
+const XX::Sample::Data& XX::Spectrogram::getFrame(const size_t index) const
 {
    return frames.at(index);
 }

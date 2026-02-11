@@ -4,7 +4,7 @@
 
 #include <QSysInfo>
 
-QString Info::getHostName()
+QString XX::Info::getHostName()
 {
    static const QString hostName = []()
    {
@@ -20,7 +20,7 @@ QString Info::getHostName()
    return hostName;
 }
 
-QString Info::whatCppStandard()
+QString XX::Info::whatCppStandard()
 {
    static const QMap<long, QString> versionMap =
       {

@@ -4,7 +4,7 @@
 #include "XXSharedData.h"
 
 template <typename DataBlock>
-SharedData<DataBlock>::List::~List()
+XX::SharedData<DataBlock>::List::~List()
 {
    for (SharedData* data : *this)
       delete data;
@@ -13,20 +13,20 @@ SharedData<DataBlock>::List::~List()
 }
 
 template <typename DataBlock>
-SharedData<DataBlock>::Guard::Guard(SharedData* instance)
+XX::SharedData<DataBlock>::Guard::Guard(SharedData* instance)
    : instance(instance)
 {
    instance->sharedMemory.lock();
 }
 
 template <typename DataBlock>
-SharedData<DataBlock>::Guard::~Guard()
+XX::SharedData<DataBlock>::Guard::~Guard()
 {
    instance->sharedMemory.unlock();
 }
 
 template <typename DataBlock>
-SharedData<DataBlock>::SharedData(const QString& uniqueName, bool readOnly)
+XX::SharedData<DataBlock>::SharedData(const QString& uniqueName, bool readOnly)
    : dataBlock(nullptr)
    , readOnly(readOnly)
    , sharedMemory(uniqueName)
@@ -54,7 +54,7 @@ SharedData<DataBlock>::SharedData(const QString& uniqueName, bool readOnly)
 }
 
 template <typename DataBlock>
-SharedData<DataBlock>::~SharedData()
+XX::SharedData<DataBlock>::~SharedData()
 {
    {
       Guard guard(this);
@@ -65,7 +65,7 @@ SharedData<DataBlock>::~SharedData()
 }
 
 template <typename DataBlock>
-const QString& SharedData<DataBlock>::getErrorString() const
+const QString& XX::SharedData<DataBlock>::getErrorString() const
 {
    return errorString;
 }

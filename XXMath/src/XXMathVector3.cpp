@@ -2,14 +2,14 @@
 
 #include "XXMathGeneral.h"
 
-Math::Spherical::Spherical(const double& az, const double& el, const double& radius)
+XX::Math::Spherical::Spherical(const double& az, const double& el, const double& radius)
    : az(az)
    , el(el)
    , radius(radius)
 {
 }
 
-bool Math::Spherical::operator<(const Spherical& other) const
+bool XX::Math::Spherical::operator<(const Spherical& other) const
 {
    if (az < other.az)
       return true;
@@ -21,14 +21,14 @@ bool Math::Spherical::operator<(const Spherical& other) const
 
 //
 
-Math::Vector3::Vector3(const double& x, const double& y, const double& z)
+XX::Math::Vector3::Vector3(const double& x, const double& y, const double& z)
    : x(x)
    , y(y)
    , z(z)
 {
 }
 
-bool Math::Vector3::operator==(const Vector3& other) const
+bool XX::Math::Vector3::operator==(const Vector3& other) const
 {
    if (x != other.x)
       return false;
@@ -40,7 +40,7 @@ bool Math::Vector3::operator==(const Vector3& other) const
    return true;
 }
 
-bool Math::Vector3::operator<(const Vector3& other) const
+bool XX::Math::Vector3::operator<(const Vector3& other) const
 {
    if (x < other.x)
       return true;
@@ -54,7 +54,7 @@ bool Math::Vector3::operator<(const Vector3& other) const
       return (z < other.z);
 }
 
-Math::Vector3 Math::Vector3::operator+(const Vector3& other) const
+XX::Math::Vector3 XX::Math::Vector3::operator+(const Vector3& other) const
 {
    const double nx = x + other.x;
    const double ny = y + other.y;
@@ -63,7 +63,7 @@ Math::Vector3 Math::Vector3::operator+(const Vector3& other) const
    return Vector3(nx, ny, nz);
 }
 
-Math::Vector3& Math::Vector3::operator+=(const Vector3& other)
+XX::Math::Vector3& XX::Math::Vector3::operator+=(const Vector3& other)
 {
    x += other.x;
    y += other.y;
@@ -72,33 +72,32 @@ Math::Vector3& Math::Vector3::operator+=(const Vector3& other)
    return *this;
 }
 
-const double& Math::Vector3::operator[](const int index) const
+const double& XX::Math::Vector3::operator[](const int index) const
 {
    return data[index];
 }
 
-double& Math::Vector3::operator[](const int index)
+double& XX::Math::Vector3::operator[](const int index)
 {
    return data[index];
 }
 
-const double& Math::Vector3::getX() const
+const double& XX::Math::Vector3::getX() const
 {
    return x;
 }
 
-const double& Math::Vector3::getY() const
+const double& XX::Math::Vector3::getY() const
 {
    return y;
 }
 
-const double& Math::Vector3::getZ() const
+const double& XX::Math::Vector3::getZ() const
 {
    return z;
 }
 
-Math::Vector3 Math::Vector3::fromSpherical(const Spherical& spherical, const bool fromDegree)
-
+XX::Math::Vector3 XX::Math::Vector3::fromSpherical(const Spherical& spherical, const bool fromDegree)
 {
    double az = spherical.az;
    double el = spherical.el;
@@ -116,7 +115,7 @@ Math::Vector3 Math::Vector3::fromSpherical(const Spherical& spherical, const boo
    return Vector3(x, y, z);
 }
 
-Math::Spherical Math::Vector3::toSpherical(const bool toDegree) const
+XX::Math::Spherical XX::Math::Vector3::toSpherical(const bool toDegree) const
 {
    const double radius = length();
    if (0.0 == radius)
@@ -138,13 +137,13 @@ Math::Spherical Math::Vector3::toSpherical(const bool toDegree) const
    return Spherical(az, el, radius);
 }
 
-double Math::Vector3::length() const
+double XX::Math::Vector3::length() const
 {
    const double selfDot = dot(*this);
    return std::sqrt(selfDot);
 }
 
-Math::Vector3 Math::Vector3::norm() const
+XX::Math::Vector3 XX::Math::Vector3::norm() const
 {
    const double l = length();
    if (0.0 == l)
@@ -157,12 +156,12 @@ Math::Vector3 Math::Vector3::norm() const
    return Vector3(nx, ny, nz);
 }
 
-double Math::Vector3::dot(const Vector3& other) const
+double XX::Math::Vector3::dot(const Vector3& other) const
 {
    return (x * other.x) + (y * other.y) + (z * other.z);
 }
 
-double Math::Vector3::dotAngle(const Vector3& other, const bool toDegree) const
+double XX::Math::Vector3::dotAngle(const Vector3& other, const bool toDegree) const
 {
    const double d = dot(other);
    const double l = length() * other.length();
@@ -174,7 +173,7 @@ double Math::Vector3::dotAngle(const Vector3& other, const bool toDegree) const
    return angle;
 }
 
-Math::Vector3 Math::Vector3::cross(const Vector3& other) const
+XX::Math::Vector3 XX::Math::Vector3::cross(const Vector3& other) const
 {
    const double x = (y * other.z) - (z * other.y);
    const double y = (z * other.x) - (x * other.z);
@@ -183,7 +182,7 @@ Math::Vector3 Math::Vector3::cross(const Vector3& other) const
    return Vector3(x, y, z);
 }
 
-double Math::Vector3::crossAngle(const Vector3& other, const bool toDegree) const
+double XX::Math::Vector3::crossAngle(const Vector3& other, const bool toDegree) const
 {
    const double c = cross(other).length();
    const double l = length() * other.length();
@@ -197,13 +196,13 @@ double Math::Vector3::crossAngle(const Vector3& other, const bool toDegree) cons
 
 //
 
-std::ostream& Math::operator<<(std::ostream& out, const Math::Spherical& value)
+std::ostream& XX::Math::operator<<(std::ostream& out, const Math::Spherical& value)
 {
    out << "sperical[" << value.az << ", " << value.el << ", " << value.radius << "]";
    return out;
 }
 
-std::ostream& Math::operator<<(std::ostream& out, const Math::Vector3& value)
+std::ostream& XX::Math::operator<<(std::ostream& out, const Math::Vector3& value)
 {
    out << "[" << value.x << ", " << value.y << ", " << value.z << "]";
    return out;

@@ -3,7 +3,7 @@
 #include <QGridLayout>
 #include <QToolButton>
 
-TabStack::Widget::Widget(QWidget* parent)
+XX::TabStack::Widget::Widget(QWidget* parent)
    : QWidget(parent)
    , tabBar(nullptr)
    , stack(nullptr)
@@ -29,7 +29,7 @@ TabStack::Widget::Widget(QWidget* parent)
       depthOrder.append(TabBarInfo{});
 }
 
-void TabStack::Widget::clearTabs()
+void XX::TabStack::Widget::clearTabs()
 {
    while (stack->count() > 0)
    {
@@ -48,7 +48,7 @@ void TabStack::Widget::clearTabs()
    }
 }
 
-void TabStack::Widget::addTab(QWidget* widget, const QString& label, int depth)
+void XX::TabStack::Widget::addTab(QWidget* widget, const QString& label, int depth)
 {
    stack->addWidget(widget);
 
@@ -61,13 +61,13 @@ void TabStack::Widget::addTab(QWidget* widget, const QString& label, int depth)
    depthOrder[depth].tabOrder.append(info);
 }
 
-void TabStack::Widget::setCornerWidget(QWidget* widget, bool right)
+void XX::TabStack::Widget::setCornerWidget(QWidget* widget, bool right)
 {
    QGridLayout* masterLayout = qobject_cast<QGridLayout*>(layout());
    masterLayout->addWidget(widget, 0, right ? 2 : 0);
 }
 
-QStringList TabStack::Widget::getAllTabLabels() const
+QStringList XX::TabStack::Widget::getAllTabLabels() const
 {
    QStringList labels;
 
@@ -77,12 +77,12 @@ QStringList TabStack::Widget::getAllTabLabels() const
    return labels;
 }
 
-int TabStack::Widget::depthCount() const
+int XX::TabStack::Widget::depthCount() const
 {
    return depthOrder.size();
 }
 
-void TabStack::Widget::setActiveDepth(int depth)
+void XX::TabStack::Widget::setActiveDepth(int depth)
 {
    depthIndex = depth;
    while (tabBar->count() > 0)
@@ -112,7 +112,7 @@ void TabStack::Widget::setActiveDepth(int depth)
    }
 }
 
-QStringList TabStack::Widget::getTabOrder(int depth) const
+QStringList XX::TabStack::Widget::getTabOrder(int depth) const
 {
    if (depth > depthOrder.size() || depth < 0)
       return QStringList();
@@ -126,7 +126,7 @@ QStringList TabStack::Widget::getTabOrder(int depth) const
    return labels;
 }
 
-void TabStack::Widget::setTabOrder(int depth, const QStringList& labels)
+void XX::TabStack::Widget::setTabOrder(int depth, const QStringList& labels)
 {
    if (depth < 0)
       return;
@@ -161,7 +161,7 @@ void TabStack::Widget::setTabOrder(int depth, const QStringList& labels)
    }
 }
 
-void TabStack::Widget::tabSelected(int index)
+void XX::TabStack::Widget::tabSelected(int index)
 {
    TabBarInfo& barInfo = depthOrder[depthIndex];
 

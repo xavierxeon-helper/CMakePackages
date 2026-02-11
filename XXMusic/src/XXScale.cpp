@@ -1,6 +1,6 @@
 #include "XXScale.h"
 
-const Scale::Map Scale::availableScales = []()
+const XX::Scale::Map XX::Scale::availableScales = []()
 {
    Map map;
 
@@ -43,12 +43,12 @@ const Scale::Map Scale::availableScales = []()
    return map;
 }();
 
-Scale::List Scale::getList()
+XX::Scale::List XX::Scale::getList()
 {
    return availableScales.values();
 }
 
-Scale Scale::getScaleByName(const QString& name, bool isMajor)
+XX::Scale XX::Scale::getScaleByName(const QString& name, bool isMajor)
 {
    for (const Scale& scale : availableScales)
    {
@@ -60,32 +60,32 @@ Scale Scale::getScaleByName(const QString& name, bool isMajor)
    return availableScales.value(0, Scale());
 }
 
-Scale::KeyList Scale::emptyKeyList()
+XX::Scale::KeyList XX::Scale::emptyKeyList()
 {
    return KeyList(12, false);
 }
 
-const QString Scale::getOffset() const
+const QString XX::Scale::getOffset() const
 {
    return QString::number(offset);
 }
 
-const QString& Scale::getMajorName() const
+const QString& XX::Scale::getMajorName() const
 {
    return majorName;
 }
 
-const QString& Scale::getMinorName() const
+const QString& XX::Scale::getMinorName() const
 {
    return minorName;
 }
 
-const Scale::KeyList& Scale::getActiveKeys() const
+const XX::Scale::KeyList& XX::Scale::getActiveKeys() const
 {
    return active;
 }
 
-bool Scale::isActive(const int index) const
+bool XX::Scale::isActive(const int index) const
 {
    if (index < 0 || index >= 12)
       return false;
@@ -93,7 +93,7 @@ bool Scale::isActive(const int index) const
    return active[index];
 }
 
-Note Scale::quantize(const Note& input) const
+XX::Note XX::Scale::quantize(const XX::Note& input) const
 {
    if (noteInScale(input))
       return input;
@@ -101,12 +101,12 @@ Note Scale::quantize(const Note& input) const
    return input.up();
 }
 
-bool Scale::noteInScale(const Note& note) const
+bool XX::Scale::noteInScale(const XX::Note& note) const
 {
    return isActive(note.getValue());
 }
 
-Scale::Scale()
+XX::Scale::Scale()
    : offset()
    , majorName()
    , minorName()
@@ -116,12 +116,12 @@ Scale::Scale()
 
 // Finder
 
-Scale::Finder::Finder()
-   : validScales(Scale::getList())
+XX::Scale::Finder::Finder()
+   : validScales(XX::Scale::getList())
 {
 }
 
-void Scale::Finder::addNote(const Note& note)
+void XX::Scale::Finder::addNote(const XX::Note& note)
 {
    Scale::List filteredScales;
    for (const Scale& scale : validScales)
@@ -133,7 +133,7 @@ void Scale::Finder::addNote(const Note& note)
    validScales = filteredScales;
 }
 
-const Scale::List& Scale::Finder::getScales() const
+const XX::Scale::List& XX::Scale::Finder::getScales() const
 {
    return validScales;
 }

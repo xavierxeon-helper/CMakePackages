@@ -4,12 +4,12 @@
 
 #include <QMap>
 
-const QString Note::sharpSymbol = QString::fromUtf8("\u266F");
-const QString Note::flatSymbol = QString::fromUtf8("\u266D");
+const QString XX::Note::sharpSymbol = QString::fromUtf8("\u266F");
+const QString XX::Note::flatSymbol = QString::fromUtf8("\u266D");
 
-const Note Note::zeroNote = Note();
+const XX::Note XX::Note::zeroNote = XX::Note();
 
-const Note::List Note::availableNotes = []()
+const XX::Note::List XX::Note::availableNotes = []()
 {
    Note::List noteList;
    noteList.push_back(zeroNote);
@@ -74,11 +74,11 @@ const Note::List Note::availableNotes = []()
    return noteList;
 }();
 
-const uchar Note::maxNoteIndex = availableNotes.size() - 1;
+const uchar XX::Note::maxNoteIndex = availableNotes.size() - 1;
 
 // note
 
-Note::Note()
+XX::Note::Note()
    : name("Z0")
    , value(Note::Invalid)
    , octave(0)
@@ -88,17 +88,17 @@ Note::Note()
 {
 }
 
-bool Note::operator==(const Note& other) const
+bool XX::Note::operator==(const Note& other) const
 {
    return name == other.name;
 }
 
-bool Note::operator!=(const Note& other) const
+bool XX::Note::operator!=(const Note& other) const
 {
    return name != other.name;
 }
 
-bool Note::operator<(const Note& other) const
+bool XX::Note::operator<(const Note& other) const
 {
    const int indexThis = availableNotes.indexOf(*this);
    const int indexOther = availableNotes.indexOf(other);
@@ -106,7 +106,7 @@ bool Note::operator<(const Note& other) const
    return indexThis < indexOther;
 }
 
-const Note& Note::fromVoltage(float voltage)
+const XX::Note& XX::Note::fromVoltage(float voltage)
 {
    if (0.0f > voltage)
       return zeroNote;
@@ -119,7 +119,7 @@ const Note& Note::fromVoltage(float voltage)
       return availableNotes[index];
 }
 
-const Note& Note::fromMidi(uchar midi)
+const XX::Note& XX::Note::fromMidi(uchar midi)
 {
    if (0 == midi)
       return zeroNote;
@@ -131,7 +131,7 @@ const Note& Note::fromMidi(uchar midi)
       return availableNotes[index];
 }
 
-const Note& Note::fromFrequency(float frequency)
+const XX::Note& XX::Note::fromFrequency(float frequency)
 {
    static const float minFrequency = availableNotes[1].frequency;
    static const float maxFrequency = availableNotes[maxNoteIndex].frequency;
@@ -147,7 +147,7 @@ const Note& Note::fromFrequency(float frequency)
    return note;
 }
 
-Note Note::up() const
+XX::Note XX::Note::up() const
 {
    const int index = availableNotes.indexOf(*this);
    if (index < maxNoteIndex)
@@ -156,7 +156,7 @@ Note Note::up() const
    return zeroNote;
 }
 
-Note Note::down() const
+XX::Note XX::Note::down() const
 {
    const int index = availableNotes.indexOf(*this);
    if (index > 0)
@@ -165,49 +165,49 @@ Note Note::down() const
    return zeroNote;
 }
 
-bool Note::isWhiteKey() const
+bool XX::Note::isWhiteKey() const
 {
    static const QList<Note::Value> whiteKeys = {C, D, E, F, G, A, B};
    return whiteKeys.contains(value);
 }
 
-bool Note::isBlackKey() const
+bool XX::Note::isBlackKey() const
 {
    static const QList<Note::Value> blackKeys = {Cs, Ds, Fs, Gs, As};
    return blackKeys.contains(value);
 }
 
-bool Note::isValid() const
+bool XX::Note::isValid() const
 {
    return (*this != zeroNote);
 }
 
-const QString& Note::getName() const
+const QString& XX::Note::getName() const
 {
    return name;
 }
-const Note::Value& Note::getValue() const
+const XX::Note::Value& XX::Note::getValue() const
 {
    return value;
 }
-const Note::Octave& Note::getOctave() const
+const XX::Note::Octave& XX::Note::getOctave() const
 {
    return octave;
 }
-const float& Note::getFrequency() const
+const float& XX::Note::getFrequency() const
 {
    return frequency;
 }
-const float& Note::getVoltage() const
+const float& XX::Note::getVoltage() const
 {
    return voltage;
 }
-const uchar& Note::getMidiValue() const
+const uchar& XX::Note::getMidiValue() const
 {
    return midiValue;
 }
 
-Note::Note(QString name, Value value, Octave octave, float frequency, float voltage, uchar midiValue)
+XX::Note::Note(QString name, Value value, Octave octave, float frequency, float voltage, uchar midiValue)
    : name(name)
    , value(value)
    , octave(octave)

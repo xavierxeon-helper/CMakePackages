@@ -4,7 +4,7 @@
 #include "XXMessageHandler.h"
 
 template <typename HandlerClass>
-bool MessageHandler::enable(HandlerClass* instance, void (HandlerClass::*hanlderFunction)(QtMsgType, const QMessageLogContext&, const QString&))
+bool XX::MessageHandler::enable(HandlerClass* instance, void (HandlerClass::*hanlderFunction)(QtMsgType, const QMessageLogContext&, const QString&))
 {
    if (!me)
       new MessageHandler();
@@ -19,7 +19,7 @@ bool MessageHandler::enable(HandlerClass* instance, void (HandlerClass::*hanlder
 }
 
 template <typename HandlerClass>
-void MessageHandler::disable(HandlerClass* instance)
+void XX::MessageHandler::disable(HandlerClass* instance)
 {
    if (!me)
       return;

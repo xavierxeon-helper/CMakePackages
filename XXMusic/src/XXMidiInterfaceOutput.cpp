@@ -1,30 +1,30 @@
 #include "XXMidiInterfaceOutput.h"
 
-Midi::Interface::Output::Output()
+XX::Midi::Interface::Output::Output()
 {
 }
 
-Midi::Interface::Output::~Output()
-{
-   // do nothing
-}
-
-void Midi::Interface::Output::open()
+XX::Midi::Interface::Output::~Output()
 {
    // do nothing
 }
 
-void Midi::Interface::Output::close()
+void XX::Midi::Interface::Output::open()
 {
    // do nothing
 }
 
-bool Midi::Interface::Output::isOpen() const
+void XX::Midi::Interface::Output::close()
+{
+   // do nothing
+}
+
+bool XX::Midi::Interface::Output::isOpen() const
 {
    return false;
 }
 
-void Midi::Interface::Output::sendNoteOn(const Channel& channel, const Note& note, const Velocity& velocity)
+void XX::Midi::Interface::Output::sendNoteOn(const Channel& channel, const Note& note, const Velocity& velocity)
 {
    //qDebug() << "NOTE ON" << QString::fromStdString(note.name);
 
@@ -37,7 +37,7 @@ void Midi::Interface::Output::sendNoteOn(const Channel& channel, const Note& not
    sendBuffer(buffer);
 }
 
-void Midi::Interface::Output::sendNoteOff(const Channel& channel, const Note& note)
+void XX::Midi::Interface::Output::sendNoteOff(const Channel& channel, const Note& note)
 {
    //qDebug() << "NOTE OFF" << QString::fromStdString(note.name);
 
@@ -50,7 +50,7 @@ void Midi::Interface::Output::sendNoteOff(const Channel& channel, const Note& no
    sendBuffer(buffer);
 }
 
-void Midi::Interface::Output::sendControllerChange(const Channel& channel, const ControllerMessage& cotrollerMessage, const uchar& value)
+void XX::Midi::Interface::Output::sendControllerChange(const Channel& channel, const ControllerMessage& cotrollerMessage, const uchar& value)
 {
    Bytes buffer;
 

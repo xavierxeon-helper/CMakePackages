@@ -4,7 +4,7 @@
 
 // proxy
 
-class Logger::Target::StreamProxy : public QIODevice
+class XX::Logger::Target::StreamProxy : public QIODevice
 {
 public:
    StreamProxy(const QColor& color);
@@ -17,14 +17,14 @@ private:
    const QColor color;
 };
 
-Logger::Target::StreamProxy::StreamProxy(const QColor& color)
+XX::Logger::Target::StreamProxy::StreamProxy(const QColor& color)
    : QIODevice()
    , color(color)
 {
    open(QIODevice::WriteOnly);
 }
 
-qint64 Logger::Target::StreamProxy::readData(char* data, qint64 maxSize)
+qint64 XX::Logger::Target::StreamProxy::readData(char* data, qint64 maxSize)
 {
    Q_UNUSED(data)
    Q_UNUSED(maxSize)
@@ -32,7 +32,7 @@ qint64 Logger::Target::StreamProxy::readData(char* data, qint64 maxSize)
    return 0;
 }
 
-qint64 Logger::Target::StreamProxy::writeData(const char* data, qint64 maxSize)
+qint64 XX::Logger::Target::StreamProxy::writeData(const char* data, qint64 maxSize)
 {
    if (!master)
       return maxSize;
@@ -45,7 +45,7 @@ qint64 Logger::Target::StreamProxy::writeData(const char* data, qint64 maxSize)
 
 // stream
 
-QTextStream Logger::stream(const Qt::GlobalColor& color)
+QTextStream XX::Logger::stream(const Qt::GlobalColor& color)
 {
    using ProxyMap = QMap<Qt::GlobalColor, Target::StreamProxy*>;
    static ProxyMap proxyMap;
@@ -61,9 +61,9 @@ QTextStream Logger::stream(const Qt::GlobalColor& color)
 
 // target
 
-Logger::Target* Logger::Target::master = nullptr;
+XX::Logger::Target* XX::Logger::Target::master = nullptr;
 
-Logger::Target::Target(int stackSize)
+XX::Logger::Target::Target(int stackSize)
    : others()
    , stackSize(stackSize)
    , buffer()
@@ -74,7 +74,7 @@ Logger::Target::Target(int stackSize)
       master = this;
 }
 
-Logger::Target::~Target()
+XX::Logger::Target::~Target()
 {
    if (master == this)
    {
@@ -89,7 +89,7 @@ Logger::Target::~Target()
    }
 }
 
-void Logger::Target::clear()
+void XX::Logger::Target::clear()
 {
    master->buffer.clear();
 
@@ -98,7 +98,7 @@ void Logger::Target::clear()
       target->update(buffer);
 }
 
-void Logger::Target::print(const QString& text, const QColor& color)
+void XX::Logger::Target::print(const QString& text, const QColor& color)
 {
    buffer.append({QDateTime::currentDateTime(), text, color});
 

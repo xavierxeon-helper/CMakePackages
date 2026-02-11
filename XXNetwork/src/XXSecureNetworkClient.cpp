@@ -4,14 +4,14 @@
 #include <QSslCertificate>
 #include <QSslKey>
 
-SecureNetwork::Client::Client(QObject* parent, bool directAccess)
+XX::SecureNetwork::Client::Client(QObject* parent, bool directAccess)
    : Socket(parent, nullptr, directAccess)
    , sslConfiguration()
 
 {
 }
 
-void SecureNetwork::Client::connectToHost(const QString& hostName, const quint16& port)
+void XX::SecureNetwork::Client::connectToHost(const QString& hostName, const quint16& port)
 {
    if (sslConfiguration.isNull())
       return;
@@ -20,13 +20,13 @@ void SecureNetwork::Client::connectToHost(const QString& hostName, const quint16
    sslSocket->connectToHostEncrypted(hostName, port, QIODevice::ReadWrite);
 }
 
-void SecureNetwork::Client::disconnectFromHost()
+void XX::SecureNetwork::Client::disconnectFromHost()
 {
    if (sslSocket->isOpen())
       sslSocket->disconnectFromHost();
 }
 
-bool SecureNetwork::Client::setEncryptionWithPasswordFile(const QString& p12FileName, const QString& passwordFileName)
+bool XX::SecureNetwork::Client::setEncryptionWithPasswordFile(const QString& p12FileName, const QString& passwordFileName)
 {
    const QByteArray password = readPassword(passwordFileName);
    if (password.isEmpty())
@@ -38,7 +38,7 @@ bool SecureNetwork::Client::setEncryptionWithPasswordFile(const QString& p12File
    return setEncryption(p12FileName, password);
 }
 
-bool SecureNetwork::Client::setEncryption(const QString& p12FileName, const QByteArray& password)
+bool XX::SecureNetwork::Client::setEncryption(const QString& p12FileName, const QByteArray& password)
 {
    sslConfiguration = QSslConfiguration::defaultConfiguration();
 
@@ -74,12 +74,12 @@ bool SecureNetwork::Client::setEncryption(const QString& p12FileName, const QByt
    return true;
 }
 
-void SecureNetwork::Client::setConfiguration(const QSslConfiguration& newSslConfiguration)
+void XX::SecureNetwork::Client::setConfiguration(const QSslConfiguration& newSslConfiguration)
 {
    sslConfiguration = newSslConfiguration;
 }
 
-QByteArray SecureNetwork::Client::readPassword(const QString& passwordFileName)
+QByteArray XX::SecureNetwork::Client::readPassword(const QString& passwordFileName)
 {
    QFile file(passwordFileName);
    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -94,7 +94,7 @@ QByteArray SecureNetwork::Client::readPassword(const QString& passwordFileName)
    return password;
 }
 
-const QSslConfiguration& SecureNetwork::Client::getConfiguration() const
+const QSslConfiguration& XX::SecureNetwork::Client::getConfiguration() const
 {
    return sslConfiguration;
 }

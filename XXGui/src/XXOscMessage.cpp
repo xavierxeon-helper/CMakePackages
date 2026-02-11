@@ -7,20 +7,20 @@
 
 // see https://hangar.org/wp-content/uploads/2012/01/The-Open-Sound-Control-1.0-Specification-opensoundcontrol.org_.pdf
 
-const char OscMessage::paddingChar = 0x00;
+const char XX::OscMessage::paddingChar = 0x00;
 
-OscMessage::OscMessage(const QString& path, const QVariantList& values)
+XX::OscMessage::OscMessage(const QString& path, const QVariantList& values)
    : path(path)
    , values(values)
 {
 }
 
-OscMessage::OscMessage(const QString& path, const QVariant& value)
+XX::OscMessage::OscMessage(const QString& path, const QVariant& value)
    : OscMessage(path, QVariantList{value})
 {
 }
 
-OscMessage::OscMessage(const QByteArray& data)
+XX::OscMessage::OscMessage(const QByteArray& data)
    : path()
    , values()
 {
@@ -83,7 +83,7 @@ OscMessage::OscMessage(const QByteArray& data)
    }
 }
 
-QByteArray OscMessage::pack()
+QByteArray XX::OscMessage::pack()
 {
    QByteArray packet = path.toUtf8();
    const int padSizeKey = 4 - packet.size() % 4;
@@ -184,23 +184,23 @@ QByteArray OscMessage::pack()
    return packet;
 }
 
-const QString& OscMessage::getPath() const
+const QString& XX::OscMessage::getPath() const
 {
    return path;
 }
 
-const QVariantList& OscMessage::getValues() const
+const QVariantList& XX::OscMessage::getValues() const
 {
    return values;
 }
 
-void OscMessage::addPad(QByteArray& packet)
+void XX::OscMessage::addPad(QByteArray& packet)
 {
    const int extraSize = packet.size() % 4;
    packet += QByteArray(4 - extraSize, 0x00);
 }
 
-QByteArray OscMessage::unpad(QByteArray packet)
+QByteArray XX::OscMessage::unpad(QByteArray packet)
 {
    while (packet.endsWith(paddingChar))
    {

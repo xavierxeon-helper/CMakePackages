@@ -5,18 +5,18 @@
 #include <QMenu>
 #include <QSettings>
 
-Populated::Abstract::Abstract(QWidget* parentWidget)
+XX::Populated::Abstract::Abstract(QWidget* parentWidget)
    : parentWidget(parentWidget)
    , toolBarCreationFunction(nullptr)
    , menuCreationFunction(nullptr)
 {
 }
 
-Populated::Abstract::~Abstract()
+XX::Populated::Abstract::~Abstract()
 {
 }
 
-void Populated::Abstract::printSettingsLocation()
+void XX::Populated::Abstract::printSettingsLocation()
 {
    QSettings settings;
    const QString fileName = QDir::toNativeSeparators(settings.fileName());
@@ -24,7 +24,7 @@ void Populated::Abstract::printSettingsLocation()
    qInfo() << "SETTINGS @" << qPrintable(fileName);
 }
 
-void Populated::Abstract::setActionIcon(QObject* parent, QString objectName, QIcon icon)
+void XX::Populated::Abstract::setActionIcon(QObject* parent, QString objectName, QIcon icon)
 {
    QAction* action = parent->findChild<QAction*>(objectName, Qt::FindChildrenRecursively);
    if (action)
@@ -33,7 +33,7 @@ void Populated::Abstract::setActionIcon(QObject* parent, QString objectName, QIc
       qWarning() << __FUNCTION__ << "action not found" << objectName;
 }
 
-void Populated::Abstract::setActionShortcut(QObject* parent, QString objectName, QKeySequence shortcut)
+void XX::Populated::Abstract::setActionShortcut(QObject* parent, QString objectName, QKeySequence shortcut)
 {
    QAction* action = parent->findChild<QAction*>(objectName, Qt::FindChildrenRecursively);
    if (action)
@@ -42,7 +42,7 @@ void Populated::Abstract::setActionShortcut(QObject* parent, QString objectName,
       qWarning() << __FUNCTION__ << "action not found" << objectName;
 }
 
-QString Populated::Abstract::writeExampleResource(const QString& xmlResource)
+QString XX::Populated::Abstract::writeExampleResource(const QString& xmlResource)
 {
    QDomDocument doc;
    QDomElement rootElement = doc.createElement("MenuAndToolBar");
@@ -104,7 +104,7 @@ QString Populated::Abstract::writeExampleResource(const QString& xmlResource)
    return info.absoluteFilePath();
 }
 
-void Populated::Abstract::populateMenuAndToolBar(const QString& xmlResource)
+void XX::Populated::Abstract::populateMenuAndToolBar(const QString& xmlResource)
 {
    QFile file(xmlResource);
    if (!file.open(QIODevice::ReadOnly))
@@ -132,13 +132,13 @@ void Populated::Abstract::populateMenuAndToolBar(const QString& xmlResource)
    }
 }
 
-void Populated::Abstract::setFunctions(ToolBarCreationFunction _toolBarCreationFunction, MenuCreationFunction _menuCreationFunction)
+void XX::Populated::Abstract::setFunctions(ToolBarCreationFunction _toolBarCreationFunction, MenuCreationFunction _menuCreationFunction)
 {
    toolBarCreationFunction = _toolBarCreationFunction;
    menuCreationFunction = _menuCreationFunction;
 }
 
-void Populated::Abstract::createToolBar(QDomElement thingElement)
+void XX::Populated::Abstract::createToolBar(QDomElement thingElement)
 {
    if (!toolBarCreationFunction)
       return;
@@ -204,7 +204,7 @@ void Populated::Abstract::createToolBar(QDomElement thingElement)
    }
 }
 
-void Populated::Abstract::createMenu(QDomElement thingElement, QMenu* parentMenu)
+void XX::Populated::Abstract::createMenu(QDomElement thingElement, QMenu* parentMenu)
 {
    if (!menuCreationFunction)
       return;

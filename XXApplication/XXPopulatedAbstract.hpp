@@ -5,7 +5,7 @@
 
 // needs to be inline for auto to work
 
-inline QAction* Populated::Abstract::addAction(QIcon icon, QString text, QString objectName, QObject* instance, auto slotFunction)
+inline QAction* XX::Populated::Abstract::addAction(QIcon icon, QString text, QString objectName, QObject* instance, auto slotFunction)
 {
    QAction* action = new QAction(icon, text, instance);
    action->setObjectName(objectName);
@@ -14,7 +14,7 @@ inline QAction* Populated::Abstract::addAction(QIcon icon, QString text, QString
    return action;
 }
 
-inline QAction* Populated::Abstract::addFunctorAction(QIcon icon, QString text, QString objectName, QObject* parent, auto functor)
+inline QAction* XX::Populated::Abstract::addFunctorAction(QIcon icon, QString text, QString objectName, QObject* parent, auto functor)
 {
    QAction* action = new QAction(icon, text, parent);
    action->setObjectName(objectName);

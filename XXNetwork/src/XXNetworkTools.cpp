@@ -2,7 +2,7 @@
 
 #include <QNetworkInterface>
 
-bool Network::Tools::isInSubnet(const QString& ipAddress, int netmask)
+bool XX::Network::Tools::isInSubnet(const QString& ipAddress, int netmask)
 {
    const QHostAddress network(ipAddress);
    for (const QHostAddress& address : QNetworkInterface::allAddresses())

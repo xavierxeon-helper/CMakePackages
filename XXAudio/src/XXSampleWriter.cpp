@@ -2,7 +2,7 @@
 
 #include <QDebug>
 
-Sample::Writer::Writer(const uint8_t& numerOfChannels)
+XX::Sample::Writer::Writer(const uint8_t& numerOfChannels)
    : Wave()
    , numerOfChannels(numerOfChannels)
    , buffer()
@@ -10,12 +10,12 @@ Sample::Writer::Writer(const uint8_t& numerOfChannels)
    clear();
 }
 
-void Sample::Writer::clear()
+void XX::Sample::Writer::clear()
 {
    buffer = Sample::Channels(numerOfChannels, Sample::Data());
 }
 
-void Sample::Writer::append(const Channels& channels)
+void XX::Sample::Writer::append(const Channels& channels)
 {
    if (channels.size() != buffer.size())
    {
@@ -40,7 +40,7 @@ void Sample::Writer::append(const Channels& channels)
    }
 }
 
-void Sample::Writer::save(const QString& fileName, const uint16_t sampleRate)
+void XX::Sample::Writer::save(const QString& fileName, const uint16_t sampleRate)
 {
    meta.sampleRate = sampleRate;
    meta.noOfChannels = numerOfChannels;

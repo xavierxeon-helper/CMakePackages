@@ -2,7 +2,7 @@
 
 #include <QtMath>
 
-QColor ColorSpace::fromCIE(const XYB& xyb)
+QColor XX::ColorSpace::fromCIE(const XYB& xyb)
 {
    const double z = 1.0 - xyb.x - xyb.y;
    const double Y = xyb.brightness;
@@ -43,7 +43,7 @@ QColor ColorSpace::fromCIE(const XYB& xyb)
    return color;
 }
 
-ColorSpace::XYB ColorSpace::toCIE(const QColor& color)
+XX::ColorSpace::XYB XX::ColorSpace::toCIE(const QColor& color)
 {
    double red = color.red() / 255.0;
    double green = color.green() / 255.0;

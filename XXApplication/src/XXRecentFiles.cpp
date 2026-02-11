@@ -3,7 +3,7 @@
 #include <QFileInfo>
 #include <QSettings>
 
-RecentFiles::RecentFiles(QWidget* parent, const QString& settingsKey, const QString& menuObjectName)
+XX::RecentFiles::RecentFiles(QWidget* parent, const QString& settingsKey, const QString& menuObjectName)
    : settingsKey(settingsKey)
    , loadFunction()
    , maxEntries(10)
@@ -23,13 +23,13 @@ RecentFiles::RecentFiles(QWidget* parent, const QString& settingsKey, const QStr
    QObject::connect(menu, &QMenu::aboutToShow, prepareFunction);
 }
 
-void RecentFiles::setup(LoadFunction _loadFunction, int _maxEntries)
+void XX::RecentFiles::setup(LoadFunction _loadFunction, int _maxEntries)
 {
    loadFunction = _loadFunction;
    maxEntries = _maxEntries;
 }
 
-void RecentFiles::clear()
+void XX::RecentFiles::clear()
 {
    fileNameList.clear();
 
@@ -37,7 +37,7 @@ void RecentFiles::clear()
    settings.setValue(settingsKey, fileNameList);
 }
 
-void RecentFiles::add(const QString& fileName)
+void XX::RecentFiles::add(const QString& fileName)
 {
    if (fileNameList.contains(fileName))
       return;
@@ -51,7 +51,7 @@ void RecentFiles::add(const QString& fileName)
    settings.setValue(settingsKey, fileNameList);
 }
 
-void RecentFiles::prepareMenu()
+void XX::RecentFiles::prepareMenu()
 {
    menu->clear();
 

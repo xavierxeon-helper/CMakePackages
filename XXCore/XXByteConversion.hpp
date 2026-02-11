@@ -4,7 +4,7 @@
 #include "XXByteConversion.h"
 
 template <typename DataType>
-QByteArray ByteConversion<DataType>::toBytes(const DataType& value, bool swap)
+QByteArray XX::ByteConversion<DataType>::toBytes(const DataType& value, bool swap)
 {
    ByteConversion<DataType> convertor;
    convertor.value = value;
@@ -16,7 +16,7 @@ QByteArray ByteConversion<DataType>::toBytes(const DataType& value, bool swap)
 }
 
 template <typename DataType>
-DataType ByteConversion<DataType>::fromBytes(const QByteArray& data, bool swap)
+DataType XX::ByteConversion<DataType>::fromBytes(const QByteArray& data, bool swap)
 {
    ByteConversion<DataType> convertor;
    convertor.setBytes(data);
@@ -28,7 +28,7 @@ DataType ByteConversion<DataType>::fromBytes(const QByteArray& data, bool swap)
 }
 
 template <typename DataType>
-void ByteConversion<DataType>::setBytes(const QByteArray& input)
+void XX::ByteConversion<DataType>::setBytes(const QByteArray& input)
 {
    if (input.size() != sizeof(DataType))
       return;
@@ -38,7 +38,7 @@ void ByteConversion<DataType>::setBytes(const QByteArray& input)
 }
 
 template <typename DataType>
-QByteArray ByteConversion<DataType>::getBytes() const
+QByteArray XX::ByteConversion<DataType>::getBytes() const
 {
    QByteArray output;
    for (int index = 0; index < sizeof(DataType); index++)
@@ -48,7 +48,7 @@ QByteArray ByteConversion<DataType>::getBytes() const
 }
 
 template <typename DataType>
-void ByteConversion<DataType>::swapBytes()
+void XX::ByteConversion<DataType>::swapBytes()
 {
    for (int i = 0; i < sizeof(DataType) / 2; i++)
    {

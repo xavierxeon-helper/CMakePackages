@@ -8,7 +8,7 @@
 
 #include "XXLogSymbol.h"
 
-MessageLabel::MessageLabel(QWidget* parent, int stackSize)
+XX::MessageLabel::MessageLabel(QWidget* parent, int stackSize)
    : QLabel(parent)
    , Logger::Target(stackSize)
    , showToolTip(true)
@@ -24,12 +24,12 @@ MessageLabel::MessageLabel(QWidget* parent, int stackSize)
    messageTimer->start();
 }
 
-void MessageLabel::setShowToolTip(bool newShowToolTip)
+void XX::MessageLabel::setShowToolTip(bool newShowToolTip)
 {
    showToolTip = newShowToolTip;
 }
 
-void MessageLabel::slotUpdateTimeout()
+void XX::MessageLabel::slotUpdateTimeout()
 {
    if (messageExpiration.isNull())
       return;
@@ -41,7 +41,7 @@ void MessageLabel::slotUpdateTimeout()
    setText("");
 }
 
-void MessageLabel::update(const Entry::Buffer& buffer)
+void XX::MessageLabel::update(const Entry::Buffer& buffer)
 {
    static const QColor neutral(Qt::black);
 
@@ -63,7 +63,7 @@ void MessageLabel::update(const Entry::Buffer& buffer)
       setToolTip(toolTip);
 }
 
-void MessageLabel::mouseDoubleClickEvent(QMouseEvent* event)
+void XX::MessageLabel::mouseDoubleClickEvent(QMouseEvent* event)
 {
    setText("");
 }

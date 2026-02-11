@@ -2,7 +2,7 @@
 
 #include <XXFileTools.h>
 
-void RestApi::Result::parseJson()
+void XX::RestApi::Result::parseJson()
 {
    if (raw.isEmpty())
       json = QJsonObject{};

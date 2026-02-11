@@ -1,20 +1,20 @@
 #include "XXManagedGraphicsView.h"
 #include <QMouseEvent>
 
-Managed::GraphicsView::GraphicsView(QWidget* parent)
+XX::Managed::GraphicsView::GraphicsView(QWidget* parent)
    : QGraphicsView(parent)
    , mousePressFunction()
 {
    setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
 }
 
-void Managed::GraphicsView::deactivateFrame()
+void XX::Managed::GraphicsView::deactivateFrame()
 {
    setFrameShadow(QFrame::Plain);
    setFrameShape(QFrame::NoFrame);
 }
 
-void Managed::GraphicsView::mousePressEvent(QMouseEvent* event)
+void XX::Managed::GraphicsView::mousePressEvent(QMouseEvent* event)
 {
    if (!mousePressFunction)
       return QGraphicsView::mousePressEvent(event);

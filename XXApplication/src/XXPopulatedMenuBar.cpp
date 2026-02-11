@@ -1,17 +1,17 @@
 #include "XXPopulatedMenuBar.h"
 
-Populated::MenuBar::MenuBar(QWidget* parent)
+XX::Populated::MenuBar::MenuBar(QWidget* parent)
    : QMenuBar(parent)
    , menuName()
 {
 }
 
-const QString& Populated::MenuBar::getMenuName() const
+const QString& XX::Populated::MenuBar::getMenuName() const
 {
    return menuName;
 }
 
-void Populated::MenuBar::setMenuName(const QString& name)
+void XX::Populated::MenuBar::setMenuName(const QString& name)
 {
    if (menuName == name)
       return;

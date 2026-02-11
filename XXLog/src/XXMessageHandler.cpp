@@ -3,9 +3,9 @@
 
 #include <QThread>
 
-MessageHandler* MessageHandler::me = nullptr;
+XX::MessageHandler* XX::MessageHandler::me = nullptr;
 
-MessageHandler::MessageHandler()
+XX::MessageHandler::MessageHandler()
    : QObject(nullptr)
    , systemHandler()
    , targetMap()
@@ -14,13 +14,13 @@ MessageHandler::MessageHandler()
    systemHandler = qInstallMessageHandler(&MessageHandler::output);
 }
 
-MessageHandler::~MessageHandler()
+XX::MessageHandler::~MessageHandler()
 {
    qInstallMessageHandler(systemHandler);
    me = nullptr;
 }
 
-void MessageHandler::outputInternal(QtMsgType type, const QMessageLogContext& context, const QString& msg)
+void XX::MessageHandler::outputInternal(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
    for (Function function : targetMap.values())
       function(type, context, msg);
@@ -28,7 +28,7 @@ void MessageHandler::outputInternal(QtMsgType type, const QMessageLogContext& co
    systemHandler(type, context, msg);
 }
 
-void MessageHandler::output(QtMsgType type, const QMessageLogContext& context, const QString& msg)
+void XX::MessageHandler::output(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
    if (!me)
       return;

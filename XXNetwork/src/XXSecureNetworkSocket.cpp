@@ -1,8 +1,8 @@
 #include "XXSecureNetworkSocket.h"
 
-bool SecureNetwork::Socket::verbose = false;
+bool XX::SecureNetwork::Socket::verbose = false;
 
-SecureNetwork::Socket::Socket(QObject* parent, QSslSocket* externalSocket, bool directAccess_)
+XX::SecureNetwork::Socket::Socket(QObject* parent, QSslSocket* externalSocket, bool directAccess_)
    : QObject(parent)
    , sslSocket(externalSocket)
    , directAccess(directAccess_)
@@ -31,7 +31,7 @@ SecureNetwork::Socket::Socket(QObject* parent, QSslSocket* externalSocket, bool 
    connect(sslSocket, &QSslSocket::encrypted, this, &Socket::slotEncypted);
 }
 
-SecureNetwork::Socket::~Socket()
+XX::SecureNetwork::Socket::~Socket()
 {
    if (sslSocket.isNull())
       return;
@@ -51,7 +51,7 @@ SecureNetwork::Socket::~Socket()
    // qDebug() << __FUNCTION__ << this;
 }
 
-void SecureNetwork::Socket::sendData(const QByteArray& data)
+void XX::SecureNetwork::Socket::sendData(const QByteArray& data)
 {
    if (sslSocket.isNull())
       return;
@@ -59,17 +59,17 @@ void SecureNetwork::Socket::sendData(const QByteArray& data)
    sslSocket->write(data);
 }
 
-QSslCertificate SecureNetwork::Socket::getPeerCertificate() const
+QSslCertificate XX::SecureNetwork::Socket::getPeerCertificate() const
 {
    return sslSocket->peerCertificate();
 }
 
-SecureNetwork::Socket::operator QSslSocket*() const
+XX::SecureNetwork::Socket::operator QSslSocket*() const
 {
    return sslSocket.data();
 }
 
-void SecureNetwork::Socket::slotReadyRead()
+void XX::SecureNetwork::Socket::slotReadyRead()
 {
    if (sslSocket.isNull())
       return;
@@ -77,7 +77,7 @@ void SecureNetwork::Socket::slotReadyRead()
    emit signalDataReceived(this, sslSocket->readAll());
 }
 
-void SecureNetwork::Socket::slotConnected()
+void XX::SecureNetwork::Socket::slotConnected()
 {
    if (sslSocket.isNull())
       return;
@@ -88,7 +88,7 @@ void SecureNetwork::Socket::slotConnected()
    emit signalConnected(this);
 }
 
-void SecureNetwork::Socket::slotDisconnected()
+void XX::SecureNetwork::Socket::slotDisconnected()
 {
    if (sslSocket.isNull())
       return;
@@ -99,7 +99,7 @@ void SecureNetwork::Socket::slotDisconnected()
    emit signalDisconnected(this);
 }
 
-void SecureNetwork::Socket::slotEncypted()
+void XX::SecureNetwork::Socket::slotEncypted()
 {
    if (sslSocket.isNull())
       return;
@@ -110,7 +110,7 @@ void SecureNetwork::Socket::slotEncypted()
    emit signalEncrypted(this);
 }
 
-void SecureNetwork::Socket::slotErrorOccurred(QAbstractSocket::SocketError socketError)
+void XX::SecureNetwork::Socket::slotErrorOccurred(QAbstractSocket::SocketError socketError)
 {
    switch (socketError)
    {
@@ -124,18 +124,18 @@ void SecureNetwork::Socket::slotErrorOccurred(QAbstractSocket::SocketError socke
    qDebug() << __FUNCTION__ << this << socketError;
 }
 
-void SecureNetwork::Socket::slotStateChanged(QAbstractSocket::SocketState socketState)
+void XX::SecureNetwork::Socket::slotStateChanged(QAbstractSocket::SocketState socketState)
 {
    if (verbose)
       qDebug() << __FUNCTION__ << this << socketState;
 }
 
-void SecureNetwork::Socket::slotSslErrors(const QList<QSslError>& errors)
+void XX::SecureNetwork::Socket::slotSslErrors(const QList<QSslError>& errors)
 {
    qWarning() << __FUNCTION__ << this << errors;
 }
 
-void SecureNetwork::Socket::slotPeerVerifyError(const QSslError& error)
+void XX::SecureNetwork::Socket::slotPeerVerifyError(const QSslError& error)
 {
    qWarning() << __FUNCTION__ << this << error;
 }

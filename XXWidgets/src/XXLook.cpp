@@ -3,7 +3,7 @@
 #include <QApplication>
 #include <QFile>
 
-void Look::applyStlyeSheet(const QString& fileName, QWidget* widget)
+void XX::Look::applyStlyeSheet(const QString& fileName, QWidget* widget)
 {
    QFile file(fileName);
    if (!file.open(QIODevice::ReadOnly))
@@ -15,7 +15,7 @@ void Look::applyStlyeSheet(const QString& fileName, QWidget* widget)
    widget->setStyleSheet(styleSheet);
 }
 
-void Look::doNotShowMenuIcons()
+void XX::Look::doNotShowMenuIcons()
 {
    if (!QApplication::instance())
    {
@@ -25,7 +25,7 @@ void Look::doNotShowMenuIcons()
    QApplication::setAttribute(Qt::AA_DontShowIconsInMenus, true);
 }
 
-void Look::forceAppMenuBar()
+void XX::Look::forceAppMenuBar()
 {
    QApplication::setAttribute(Qt::AA_DontUseNativeMenuBar, true);
 }

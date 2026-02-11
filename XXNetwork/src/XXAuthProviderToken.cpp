@@ -1,32 +1,32 @@
 #include "XXAuthProviderToken.h"
 
-AuthProvider::Token::Token(QObject* parent)
+XX::AuthProvider::Token::Token(QObject* parent)
    : QObject(parent)
    , bearerToken()
 {
 }
 
-const QByteArray& AuthProvider::Token::getBearerToken() const
+const QByteArray& XX::AuthProvider::Token::getBearerToken() const
 {
    return bearerToken;
 }
 
-bool AuthProvider::Token::isNull() const
+bool XX::AuthProvider::Token::isNull() const
 {
    return bearerToken.isEmpty();
 }
 
-void AuthProvider::Token::setBearerToken(const QByteArray& token)
+void XX::AuthProvider::Token::setBearerToken(const QByteArray& token)
 {
    bearerToken = token;
 }
 
-bool AuthProvider::Token::update()
+bool XX::AuthProvider::Token::update()
 {
    return true;
 }
 
-void AuthProvider::Token::setAuthorization(QNetworkRequest& request) const
+void XX::AuthProvider::Token::setAuthorization(QNetworkRequest& request) const
 {
    request.setRawHeader("Authorization", "Bearer " + bearerToken);
 }

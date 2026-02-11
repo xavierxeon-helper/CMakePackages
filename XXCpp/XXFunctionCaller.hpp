@@ -7,11 +7,11 @@
 
 #include "XXLocker.h"
 
-template <CompileTimeString tag>
-QList<Function::Caller<tag>*> Function::Caller<tag>::instances;
+template <XX::CompileTimeString tag>
+QList<XX::Function::Caller<tag>*> XX::Function::Caller<tag>::instances;
 
-template <CompileTimeString tag>
-Function::Caller<tag>::Caller()
+template <XX::CompileTimeString tag>
+XX::Function::Caller<tag>::Caller()
    : AbstractCaller()
 {
    if (Locker<tag>::engaged())
@@ -20,8 +20,8 @@ Function::Caller<tag>::Caller()
       instances.append(this);
 }
 
-template <CompileTimeString tag>
-Function::Caller<tag>::~Caller()
+template <XX::CompileTimeString tag>
+XX::Function::Caller<tag>::~Caller()
 {
    if (Locker<tag>::engaged())
       std::cerr << "LOCKED: Function::Caller<" << tag.text() << "> " << this << " will not be unregistered." << std::endl;
@@ -29,9 +29,9 @@ Function::Caller<tag>::~Caller()
       instances.removeAll(this);
 }
 
-template <CompileTimeString tag>
-template <Function::CallerClass TargetClass, typename... Args>
-void Function::Caller<tag>::callOnAll(void (TargetClass::*function)(Args...), Args... values)
+template <XX::CompileTimeString tag>
+template <XX::Function::CallerClass TargetClass, typename... Args>
+void XX::Function::Caller<tag>::callOnAll(void (TargetClass::*function)(Args...), Args... values)
 {
    Locker<tag> locker; // prevent removal or additions of instances while iterating
    for (Caller* instance : std::as_const(instances))
@@ -41,9 +41,9 @@ void Function::Caller<tag>::callOnAll(void (TargetClass::*function)(Args...), Ar
    }
 }
 
-template <CompileTimeString tag>
-template <Function::CallerClass TargetClass>
-void Function::Caller<tag>::callOnAll(void (TargetClass::*function)())
+template <XX::CompileTimeString tag>
+template <XX::Function::CallerClass TargetClass>
+void XX::Function::Caller<tag>::callOnAll(void (TargetClass::*function)())
 {
    Locker<tag> locker; // prevent removal or additions of instances while iterating
    for (Caller* instance : std::as_const(instances))
@@ -53,8 +53,8 @@ void Function::Caller<tag>::callOnAll(void (TargetClass::*function)())
    }
 }
 
-template <CompileTimeString tag>
-size_t Function::Caller<tag>::instanceCount()
+template <XX::CompileTimeString tag>
+size_t XX::Function::Caller<tag>::instanceCount()
 {
    return instances.size();
 }

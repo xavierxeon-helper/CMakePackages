@@ -6,13 +6,13 @@
 #include <algorithm>
 
 template <size_t N>
-constexpr CompileTimeString<N>::CompileTimeString(const char (&str)[N])
+constexpr XX::CompileTimeString<N>::CompileTimeString(const char (&str)[N])
 {
    std::copy_n(str, N, value);
 }
 
 template <size_t N>
-std::string CompileTimeString<N>::text() const
+std::string XX::CompileTimeString<N>::text() const
 {
    return std::string(value);
 }

@@ -1,32 +1,32 @@
 #include "XXMidiInterfaceInput.h"
 
-Midi::Interface::Input::Input()
+XX::Midi::Interface::Input::Input()
    : Parser()
    , passthroughList()
 {
 }
 
-Midi::Interface::Input::~Input()
+XX::Midi::Interface::Input::~Input()
 {
    // do nothing
 }
 
-void Midi::Interface::Input::open()
+void XX::Midi::Interface::Input::open()
 {
    // do nothing
 }
 
-void Midi::Interface::Input::close()
+void XX::Midi::Interface::Input::close()
 {
    // do nothing
 }
 
-bool Midi::Interface::Input::isOpen() const
+bool XX::Midi::Interface::Input::isOpen() const
 {
    return false;
 }
 
-void Midi::Interface::Input::addPassThroughInterface(Interface::Output* passthrough)
+void XX::Midi::Interface::Input::addPassThroughInterface(XX::Midi::Interface::Output* passthrough)
 {
    passthroughList.push_back(passthrough);
 }

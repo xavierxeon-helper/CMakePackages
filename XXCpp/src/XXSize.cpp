@@ -1,12 +1,12 @@
 #include "XXSize.h"
 
-Size::Size(const uint16_t& width, const uint16_t height)
+XX::Size::Size(const uint16_t& width, const uint16_t height)
    : width(width)
    , height(height)
 {
 }
 
-Size& Size::operator=(const Size& other)
+XX::Size& XX::Size::operator=(const XX::Size& other)
 {
    width = other.width;
    height = other.height;
@@ -14,7 +14,7 @@ Size& Size::operator=(const Size& other)
    return *this;
 }
 
-bool Size::isZero() const
+bool XX::Size::isZero() const
 {
    return (0 == width) || (0 == height);
 }

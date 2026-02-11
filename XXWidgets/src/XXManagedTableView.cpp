@@ -4,7 +4,7 @@
 #include <QMouseEvent>
 #include <QSortFilterProxyModel>
 
-Managed::TableView::TableView(QWidget* parent)
+XX::Managed::TableView::TableView(QWidget* parent)
    : QTableView(parent)
    , selectConnetion()
    , selectedFunction()
@@ -17,7 +17,7 @@ Managed::TableView::TableView(QWidget* parent)
    connect(this, &QTableView::customContextMenuRequested, this, &TableView::contextMenuRequested);
 }
 
-void Managed::TableView::setModel(QAbstractItemModel* model)
+void XX::Managed::TableView::setModel(QAbstractItemModel* model)
 {
    QTableView::setModel(model);
 
@@ -27,7 +27,7 @@ void Managed::TableView::setModel(QAbstractItemModel* model)
    selectConnetion = connect(selectionModel(), &QItemSelectionModel::currentChanged, this, &TableView::selected);
 }
 
-QModelIndex Managed::TableView::currentSourceIndex() const
+QModelIndex XX::Managed::TableView::currentSourceIndex() const
 {
    if (model()->inherits("QSortFilterProxyModel"))
    {
@@ -40,7 +40,7 @@ QModelIndex Managed::TableView::currentSourceIndex() const
    return currentIndex();
 }
 
-void Managed::TableView::selected(const QModelIndex& index)
+void XX::Managed::TableView::selected(const QModelIndex& index)
 {
    if (!selectedFunction)
       return;
@@ -48,7 +48,7 @@ void Managed::TableView::selected(const QModelIndex& index)
    selectedFunction(index);
 }
 
-void Managed::TableView::mouseDoubleClickEvent(QMouseEvent* event)
+void XX::Managed::TableView::mouseDoubleClickEvent(QMouseEvent* event)
 {
    if (!doubleClickFunction)
       return QTableView::mouseDoubleClickEvent(event);
@@ -59,7 +59,7 @@ void Managed::TableView::mouseDoubleClickEvent(QMouseEvent* event)
       QTableView::mouseDoubleClickEvent(event);
 }
 
-void Managed::TableView::contextMenuRequested(const QPoint& point)
+void XX::Managed::TableView::contextMenuRequested(const QPoint& point)
 {
    if (!contextMenuFunction)
       return;

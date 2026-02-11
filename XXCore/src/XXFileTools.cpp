@@ -6,7 +6,7 @@
 #include <QSettings>
 #include <QStandardPaths>
 
-QJsonObject FileTools::readJson(const QString& filePath, bool verbose)
+QJsonObject XX::FileTools::readJson(const QString& filePath, bool verbose)
 {
    QFile file(filePath);
    if (!file.open(QIODevice::ReadOnly))
@@ -22,7 +22,7 @@ QJsonObject FileTools::readJson(const QString& filePath, bool verbose)
    return parseBytes(fileContent);
 }
 
-QJsonObject FileTools::parseBytes(const QByteArray& data)
+QJsonObject XX::FileTools::parseBytes(const QByteArray& data)
 {
    QJsonParseError parseError;
    QJsonDocument doc = QJsonDocument::fromJson(data, &parseError);
@@ -37,7 +37,7 @@ QJsonObject FileTools::parseBytes(const QByteArray& data)
    return object;
 }
 
-void FileTools::writeJson(const QJsonObject& data, const QString& filePath, bool verbose)
+void XX::FileTools::writeJson(const QJsonObject& data, const QString& filePath, bool verbose)
 {
    if (data.isEmpty())
    {
@@ -59,7 +59,7 @@ void FileTools::writeJson(const QJsonObject& data, const QString& filePath, bool
    file.close();
 }
 
-QString FileTools::compileDropboxPath(const QString& appName)
+QString XX::FileTools::compileDropboxPath(const QString& appName)
 {
 #if defined(Q_OS_WIN32)
    QString homePath = QDir::homePath();
@@ -90,7 +90,7 @@ QString FileTools::compileDropboxPath(const QString& appName)
    return path;
 }
 
-QString FileTools::compileNextCloudPath(const QString& appName)
+QString XX::FileTools::compileNextCloudPath(const QString& appName)
 {
 #if defined(Q_OS_WIN32)
    QString appPath = QStandardPaths ::writableLocation(QStandardPaths::AppDataLocation);
@@ -115,7 +115,7 @@ QString FileTools::compileNextCloudPath(const QString& appName)
    return path;
 }
 
-QJsonObject FileTools::readApiKeys(const QString& appName, bool verbose)
+QJsonObject XX::FileTools::readApiKeys(const QString& appName, bool verbose)
 {
    static const QStringList homePaths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
    const QString keyFileName = homePaths.first() + "/.ApiKeys/" + appName + ".json";
@@ -123,7 +123,7 @@ QJsonObject FileTools::readApiKeys(const QString& appName, bool verbose)
    return readJson(keyFileName, verbose);
 }
 
-QStringList FileTools::compileResourceNames(const QStringList& ignoreList)
+QStringList XX::FileTools::compileResourceNames(const QStringList& ignoreList)
 {
    auto ignoreName = [&](const QString& name)
    {

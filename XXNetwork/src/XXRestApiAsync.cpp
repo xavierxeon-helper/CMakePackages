@@ -4,12 +4,12 @@
 
 #include "XXAuthProviderToken.h"
 
-RestApi::Async::Async(QObject* parent, const QString& baseUrl)
+XX::RestApi::Async::Async(QObject* parent, const QString& baseUrl)
    : Blocking(parent, baseUrl)
 {
 }
 
-void RestApi::Async::getAsync(CallbackFunction callback, const QString& endpoint, const QUrlQuery& params)
+void XX::RestApi::Async::getAsync(CallbackFunction callback, const QString& endpoint, const QUrlQuery& params)
 {
    QNetworkRequest request = createRequest(endpoint, params);
 
@@ -17,7 +17,7 @@ void RestApi::Async::getAsync(CallbackFunction callback, const QString& endpoint
    handleReplyAsync(callback, request, replyGenerator);
 }
 
-void RestApi::Async::postAsync(CallbackFunction callback, const QString& endpoint, const QJsonObject& payload, const QUrlQuery& params)
+void XX::RestApi::Async::postAsync(CallbackFunction callback, const QString& endpoint, const QJsonObject& payload, const QUrlQuery& params)
 {
    QNetworkRequest request = createRequest(endpoint, params);
    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -28,7 +28,7 @@ void RestApi::Async::postAsync(CallbackFunction callback, const QString& endpoin
    handleReplyAsync(callback, request, replyGenerator);
 }
 
-void RestApi::Async::putAsync(CallbackFunction callback, const QString& endpoint, const QJsonObject& payload, const QUrlQuery& params)
+void XX::RestApi::Async::putAsync(CallbackFunction callback, const QString& endpoint, const QJsonObject& payload, const QUrlQuery& params)
 {
    QNetworkRequest request = createRequest(endpoint, params);
    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -39,7 +39,7 @@ void RestApi::Async::putAsync(CallbackFunction callback, const QString& endpoint
    handleReplyAsync(callback, request, replyGenerator);
 }
 
-void RestApi::Async::handleReplyAsync(CallbackFunction callback, QNetworkRequest request, ReplyGeneratorFunction replyGenerator)
+void XX::RestApi::Async::handleReplyAsync(CallbackFunction callback, QNetworkRequest request, ReplyGeneratorFunction replyGenerator)
 {
    if (provider->isNull() && provider->update())
    {

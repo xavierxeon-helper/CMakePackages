@@ -1,6 +1,6 @@
 #include "XXRainbow.h"
 
-Rainbow::Rainbow(quint64 maxIndex, quint16 shade)
+XX::Rainbow::Rainbow(quint64 maxIndex, quint16 shade)
    : maxIndex(maxIndex)
    , colorMap()
    , currentIndex(0)
@@ -43,12 +43,12 @@ Rainbow::Rainbow(quint64 maxIndex, quint16 shade)
    }
 }
 
-QColor Rainbow::getColor()
+QColor XX::Rainbow::getColor()
 {
    return colorMap.value(currentIndex);
 }
 
-QColor Rainbow::advanceColor()
+QColor XX::Rainbow::advanceColor()
 {
    currentIndex++;
    if (currentIndex >= maxIndex)
@@ -57,7 +57,7 @@ QColor Rainbow::advanceColor()
    return colorMap.value(currentIndex);
 }
 
-QColor Rainbow::lookup(quint64 value, bool wrap)
+QColor XX::Rainbow::lookup(quint64 value, bool wrap)
 {
    quint64 index = wrap ? value % maxIndex : value;
    if (index >= maxIndex)

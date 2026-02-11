@@ -8,7 +8,7 @@
 // Mapper
 
 template <typename DataType>
-Range::Finder<DataType>::Finder()
+XX::Range::Finder<DataType>::Finder()
    : minValue()
    , maxValue()
 {
@@ -16,30 +16,30 @@ Range::Finder<DataType>::Finder()
 }
 
 template <typename DataType>
-template <typename TestType, isSigned<TestType>>
-void Range::Finder<DataType>::reset()
+template <typename TestType, XX::isSigned<TestType>>
+void XX::Range::Finder<DataType>::reset()
 {
    minValue = std::numeric_limits<DataType>::max();
    maxValue = -std::numeric_limits<DataType>::max();
 }
 
 template <typename DataType>
-template <typename TestType, isUnsigned<TestType>>
-void Range::Finder<DataType>::reset()
+template <typename TestType, XX::isUnsigned<TestType>>
+void XX::Range::Finder<DataType>::reset()
 {
    minValue = std::numeric_limits<DataType>::max();
    maxValue = DataType(0);
 }
 
 template <typename DataType>
-void Range::Finder<DataType>::init(const DataType& value)
+void XX::Range::Finder<DataType>::init(const DataType& value)
 {
    minValue = value;
    maxValue = value;
 }
 
 template <typename DataType>
-void Range::Finder<DataType>::observe(const DataType& value)
+void XX::Range::Finder<DataType>::observe(const DataType& value)
 {
    if (value < minValue)
       minValue = value;
@@ -48,33 +48,33 @@ void Range::Finder<DataType>::observe(const DataType& value)
 }
 
 template <typename DataType>
-const DataType& Range::Finder<DataType>::min() const
+const DataType& XX::Range::Finder<DataType>::min() const
 {
    return minValue;
 }
 
 template <typename DataType>
-const DataType& Range::Finder<DataType>::max() const
+const DataType& XX::Range::Finder<DataType>::max() const
 {
    return maxValue;
 }
 
 template <typename DataType>
-DataType Range::Finder<DataType>::diff() const
+DataType XX::Range::Finder<DataType>::diff() const
 {
    return maxValue - minValue;
 }
 
 template <typename DataType>
-template <typename TestType, isIntegerType<TestType>>
-size_t Range::Finder<DataType>::length() const
+template <typename TestType, XX::isIntegerType<TestType>>
+size_t XX::Range::Finder<DataType>::length() const
 {
    return 1 + (maxValue - minValue);
 }
 
 template <typename DataType>
-template <typename TestType, isIntegerType<TestType>>
-DataType Range::Finder<DataType>::value(const size_t index) const
+template <typename TestType, XX::isIntegerType<TestType>>
+DataType XX::Range::Finder<DataType>::value(const size_t index) const
 {
    if (index >= length())
       return maxValue;
@@ -85,7 +85,7 @@ DataType Range::Finder<DataType>::value(const size_t index) const
 // Other
 
 template <typename DataType>
-const DataType& Range::clamp(const DataType& value, const DataType& min, const DataType& max)
+const DataType& XX::Range::clamp(const DataType& value, const DataType& min, const DataType& max)
 {
    if (value < min)
       return min;
@@ -96,7 +96,7 @@ const DataType& Range::clamp(const DataType& value, const DataType& min, const D
 }
 
 template <typename DataType>
-const DataType& Range::min(const DataType& value1, const DataType& value2)
+const DataType& XX::Range::min(const DataType& value1, const DataType& value2)
 {
    if (value1 < value2)
       return value1;
@@ -105,7 +105,7 @@ const DataType& Range::min(const DataType& value1, const DataType& value2)
 }
 
 template <typename DataType>
-const DataType& Range::max(const DataType& value1, const DataType& value2)
+const DataType& XX::Range::max(const DataType& value1, const DataType& value2)
 {
    if (value1 < value2)
       return value2;
@@ -113,4 +113,4 @@ const DataType& Range::max(const DataType& value1, const DataType& value2)
    return value1;
 }
 
-#endif // RangeHPP
+#endif // NOT XXRangeHPP

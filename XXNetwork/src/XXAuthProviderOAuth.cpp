@@ -14,7 +14,7 @@
 
 // block
 
-AuthProvider::OAuth::BlockState::BlockState(OAuth* auth)
+XX::AuthProvider::OAuth::BlockState::BlockState(OAuth* auth)
    : auth(auth)
    , previousState(auth->state)
 {
@@ -24,14 +24,14 @@ AuthProvider::OAuth::BlockState::BlockState(OAuth* auth)
    }
 }
 
-AuthProvider::OAuth::BlockState::~BlockState()
+XX::AuthProvider::OAuth::BlockState::~BlockState()
 {
    auth->state = previousState;
 }
 
 // oauth
 
-AuthProvider::OAuth::OAuth(QObject* parent)
+XX::AuthProvider::OAuth::OAuth(QObject* parent)
    : AuthProvider::Token(parent)
    , Network::Settings()
    , oauthFlow(nullptr)
@@ -42,7 +42,7 @@ AuthProvider::OAuth::OAuth(QObject* parent)
 {
 }
 
-QJsonObject AuthProvider::OAuth::getTokenInfo(QByteArray token) const
+QJsonObject XX::AuthProvider::OAuth::getTokenInfo(QByteArray token) const
 {
    if (token.isEmpty())
       token = getBearerToken();
@@ -88,12 +88,12 @@ QJsonObject AuthProvider::OAuth::getTokenInfo(QByteArray token) const
    return content;
 }
 
-void AuthProvider::OAuth::setTokenInfoUrl(const QString url)
+void XX::AuthProvider::OAuth::setTokenInfoUrl(const QString url)
 {
    tokenInfoUrl = url;
 }
 
-void AuthProvider::OAuth::setStandardFlow(const QString& baseAuthUrl, const QString& clientId, const QString& clientSecret)
+void XX::AuthProvider::OAuth::setStandardFlow(const QString& baseAuthUrl, const QString& clientId, const QString& clientSecret)
 {
    oauthFlow = new QOAuth2AuthorizationCodeFlow(this);
 
@@ -107,28 +107,28 @@ void AuthProvider::OAuth::setStandardFlow(const QString& baseAuthUrl, const QStr
    initFlow();
 }
 
-void AuthProvider::OAuth::setCustomFlow(QOAuth2AuthorizationCodeFlow* _oauthFlow)
+void XX::AuthProvider::OAuth::setCustomFlow(QOAuth2AuthorizationCodeFlow* _oauthFlow)
 {
    oauthFlow = _oauthFlow;
    initFlow();
 }
 
-void AuthProvider::OAuth::setFinalRedirect(const QString& url)
+void XX::AuthProvider::OAuth::setFinalRedirect(const QString& url)
 {
    finalHTML = "<html><head><meta http-equiv=\"refresh\" content=\"0; url=" + url + "\"></head></html>";
 }
 
-void AuthProvider::OAuth::setFinalHTML(const QString& html)
+void XX::AuthProvider::OAuth::setFinalHTML(const QString& html)
 {
    finalHTML = html;
 }
 
-QOAuth2AuthorizationCodeFlow* AuthProvider::OAuth::getFlow() const
+QOAuth2AuthorizationCodeFlow* XX::AuthProvider::OAuth::getFlow() const
 {
    return oauthFlow;
 }
 
-bool AuthProvider::OAuth::authorizeUser()
+bool XX::AuthProvider::OAuth::authorizeUser()
 {
    state = State::AuthUser;
    QOAuthHttpServerReplyHandler redirectHandler(1234, nullptr);
@@ -171,7 +171,7 @@ bool AuthProvider::OAuth::authorizeUser()
    return true;
 }
 
-bool AuthProvider::OAuth::update()
+bool XX::AuthProvider::OAuth::update()
 {
    if (!oauthFlow)
    {
@@ -220,18 +220,18 @@ bool AuthProvider::OAuth::update()
    return true;
 }
 
-void AuthProvider::OAuth::saveRefreshToken(const QString& refreshToken)
+void XX::AuthProvider::OAuth::saveRefreshToken(const QString& refreshToken)
 {
    // do nothing
    Q_UNUSED(refreshToken);
 }
 
-QString AuthProvider::OAuth::loadRefreshToken()
+QString XX::AuthProvider::OAuth::loadRefreshToken()
 {
    return QString();
 }
 
-void AuthProvider::OAuth::initFlow()
+void XX::AuthProvider::OAuth::initFlow()
 {
    QObject::disconnect(grantConnection);
    grantConnection = QObject::connect(oauthFlow, &QAbstractOAuth::authorizeWithBrowser, &QDesktopServices::openUrl);

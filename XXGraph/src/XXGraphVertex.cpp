@@ -1,11 +1,11 @@
 #include "XXGraphVertex.h"
 
-Graph::Vertex::Vertex(const QString& name)
+XX::Graph::Vertex::Vertex(const QString& name)
    : name(name)
 {
 }
 
-const QString& Graph::Vertex::getName() const
+const QString& XX::Graph::Vertex::getName() const
 {
    return name;
 }

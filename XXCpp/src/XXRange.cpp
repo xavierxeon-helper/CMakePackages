@@ -2,7 +2,7 @@
 
 #include <limits>
 
-Range::Mapper::Mapper(const float& minInput, const float& maxInput, const float& minOutput, const float& maxOutput)
+XX::Range::Mapper::Mapper(const float& minInput, const float& maxInput, const float& minOutput, const float& maxOutput)
    : minInput(minInput)
    , maxInput(maxInput)
    , minOutput(minOutput)
@@ -11,7 +11,7 @@ Range::Mapper::Mapper(const float& minInput, const float& maxInput, const float&
    updateScale();
 }
 
-void Range::Mapper::setMinInput(const float& value)
+void XX::Range::Mapper::setMinInput(const float& value)
 {
    if (value < maxInput)
    {
@@ -20,7 +20,7 @@ void Range::Mapper::setMinInput(const float& value)
    }
 }
 
-void Range::Mapper::setMaxInput(const float& value)
+void XX::Range::Mapper::setMaxInput(const float& value)
 {
    if (value > minInput)
    {
@@ -29,19 +29,19 @@ void Range::Mapper::setMaxInput(const float& value)
    }
 }
 
-void Range::Mapper::setMinOutput(const float& value)
+void XX::Range::Mapper::setMinOutput(const float& value)
 {
    minOutput = value;
    updateScale();
 }
 
-void Range::Mapper::setMaxOutput(const float& value)
+void XX::Range::Mapper::setMaxOutput(const float& value)
 {
    maxOutput = value;
    updateScale();
 }
 
-void Range::Mapper::updateScale()
+void XX::Range::Mapper::updateScale()
 {
    const float diffOutput = maxOutput - minOutput;
    const float diffInput = maxInput - minInput;
@@ -56,7 +56,7 @@ void Range::Mapper::updateScale()
    }
 }
 
-float Range::Mapper::operator()(const float& input) const
+float XX::Range::Mapper::operator()(const float& input) const
 {
    if (input <= minInput)
       return minOutput;
@@ -71,32 +71,32 @@ float Range::Mapper::operator()(const float& input) const
 
 // spread iterator
 
-Range::Spread::Iterator::Iterator(int startValue, int step)
+XX::Range::Spread::Iterator::Iterator(int startValue, int step)
    : number(startValue)
    , step(step)
    , isEnd(false)
 {
 }
 
-Range::Spread::Iterator::Iterator(int endValue)
+XX::Range::Spread::Iterator::Iterator(int endValue)
    : number(endValue)
    , step(0)
    , isEnd(true)
 {
 }
 
-int Range::Spread::Iterator::operator*() const
+int XX::Range::Spread::Iterator::operator*() const
 {
    return number;
 }
 
-Range::Spread::Iterator& Range::Spread::Iterator::operator++()
+XX::Range::Spread::Iterator& XX::Range::Spread::Iterator::operator++()
 {
    number += step;
    return *this;
 }
 
-bool Range::Spread::Iterator::operator==(const Iterator& other) const
+bool XX::Range::Spread::Iterator::operator==(const Iterator& other) const
 {
    if (other.isEnd && number > other.number)
       return true;
@@ -104,31 +104,31 @@ bool Range::Spread::Iterator::operator==(const Iterator& other) const
    return (number == other.number);
 }
 
-bool Range::Spread::Iterator::operator!=(const Iterator& other) const
+bool XX::Range::Spread::Iterator::operator!=(const Iterator& other) const
 {
    return !operator==(other);
 }
 
 // spread
 
-Range::Spread::Spread(int max)
+XX::Range::Spread::Spread(int max)
    : Spread(0, max, 1)
 {
 }
 
-Range::Spread::Spread(int min, int max, int step)
+XX::Range::Spread::Spread(int min, int max, int step)
    : min(min)
    , max(max)
    , step(step)
 {
 }
 
-Range::Spread::Iterator Range::Spread::begin()
+XX::Range::Spread::Iterator XX::Range::Spread::begin()
 {
    return Iterator(min, step);
 }
 
-Range::Spread::Iterator Range::Spread::end()
+XX::Range::Spread::Iterator XX::Range::Spread::end()
 {
    return Iterator(max);
 }

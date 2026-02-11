@@ -3,21 +3,21 @@
 
 #include "XXTimeCode.h"
 
-TimeCode::TimeCode()
+XX::TimeCode::TimeCode()
    : bar(0)
    , quarter(0)
    , tick(0)
 {
 }
 
-TimeCode::TimeCode(uint16_t bar, uchar quarter, uchar tick)
+XX::TimeCode::TimeCode(uint16_t bar, uchar quarter, uchar tick)
    : bar(bar)
    , quarter(quarter)
    , tick(tick)
 {
 }
 
-TimeCode::TimeCode(const Duration& duration)
+XX::TimeCode::TimeCode(const Duration& duration)
    : TimeCode()
 {
    tick = duration % 4;
@@ -28,7 +28,7 @@ TimeCode::TimeCode(const Duration& duration)
    bar = barTicks / 16;
 }
 
-QString TimeCode::text() const
+QString XX::TimeCode::text() const
 {
    const QString frontText = QString::number(bar + 1);
    const QString midText = QString::number(quarter + 1);
@@ -38,7 +38,7 @@ QString TimeCode::text() const
    return durationText;
 }
 
-TimeCode::Duration TimeCode::toDuration() const
+XX::TimeCode::Duration XX::TimeCode::toDuration() const
 {
    const Duration duration = (16 * bar) + (4 * quarter) + tick;
    return duration;

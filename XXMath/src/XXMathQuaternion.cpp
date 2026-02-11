@@ -1,5 +1,5 @@
 #include "XXMathQuaternion.h"
 
-Math::Quaternion::Quaternion()
+XX::Math::Quaternion::Quaternion()
 {
 }

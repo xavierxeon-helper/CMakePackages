@@ -3,7 +3,7 @@
 #include <QGuiApplication>
 #include <QStyleHints>
 
-QSize DeviceTools::getSize(const DeviceIdentifier& deviceId)
+QSize XX::DeviceTools::getSize(const DeviceIdentifier& deviceId)
 {
    switch (deviceId)
    {
@@ -14,7 +14,7 @@ QSize DeviceTools::getSize(const DeviceIdentifier& deviceId)
    }
 }
 
-void DeviceTools::fixSize(QQmlApplicationEngine* engine, const DeviceIdentifier& deviceId)
+void XX::DeviceTools::fixSize(QQmlApplicationEngine* engine, const DeviceIdentifier& deviceId)
 {
    QObject* mainWindow = engine->rootObjects().first();
 
@@ -27,7 +27,7 @@ void DeviceTools::fixSize(QQmlApplicationEngine* engine, const DeviceIdentifier&
    mainWindow->setProperty("maximumHeight", size.height());
 }
 
-void DeviceTools::forceDisplayMode(bool light)
+void XX::DeviceTools::forceDisplayMode(bool light)
 {
    const Qt::ColorScheme scheme = light ? Qt::ColorScheme::Light : Qt::ColorScheme::Dark;
    QGuiApplication::styleHints()->setColorScheme(scheme);

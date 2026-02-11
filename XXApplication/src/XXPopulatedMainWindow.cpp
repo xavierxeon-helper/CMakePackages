@@ -7,7 +7,7 @@
 #include <QMenuBar>
 #include <QSettings>
 
-Populated::MainWindow::MainWindow()
+XX::Populated::MainWindow::MainWindow()
    : QMainWindow(nullptr)
    , Abstract(this)
    , Singleton<MainWindow>()
@@ -21,7 +21,7 @@ Populated::MainWindow::MainWindow()
    restoreState(settings.value("MainWindow/State").toByteArray());
 }
 
-QDockWidget* Populated::MainWindow::addDockWidget(QWidget* widget, const Qt::DockWidgetArea& area)
+QDockWidget* XX::Populated::MainWindow::addDockWidget(QWidget* widget, const Qt::DockWidgetArea& area)
 {
    QDockWidget* dockWidget = new QDockWidget(this);
    dockWidget->setFeatures(QDockWidget::NoDockWidgetFeatures);
@@ -37,25 +37,25 @@ QDockWidget* Populated::MainWindow::addDockWidget(QWidget* widget, const Qt::Doc
    return dockWidget;
 }
 
-void Populated::MainWindow::closeEvent(QCloseEvent* ce)
+void XX::Populated::MainWindow::closeEvent(QCloseEvent* ce)
 {
    saveWindowSettings();
    ce->accept();
 }
 
-QMenu* Populated::MainWindow::createPopupMenu()
+QMenu* XX::Populated::MainWindow::createPopupMenu()
 {
    return nullptr;
 }
 
-void Populated::MainWindow::saveWindowSettings()
+void XX::Populated::MainWindow::saveWindowSettings()
 {
    QSettings settings;
    settings.setValue("MainWindow/Geometry", saveGeometry());
    settings.setValue("MainWindow/State", saveState());
 }
 
-QToolBar* Populated::MainWindow::findOrCreateToolBar(const QString& objectName)
+QToolBar* XX::Populated::MainWindow::findOrCreateToolBar(const QString& objectName)
 {
    QToolBar* toolBar = findChild<QToolBar*>(objectName, Qt::FindChildrenRecursively);
    if (toolBar)
@@ -69,7 +69,7 @@ QToolBar* Populated::MainWindow::findOrCreateToolBar(const QString& objectName)
    return toolBar;
 }
 
-QMenu* Populated::MainWindow::findOrCreateMenu(const QString& objectName, const QString& text, QMenu* parentMenu)
+QMenu* XX::Populated::MainWindow::findOrCreateMenu(const QString& objectName, const QString& text, QMenu* parentMenu)
 {
    QMenu* menu = findChild<QMenu*>(objectName, Qt::FindChildrenRecursively);
    if (menu)

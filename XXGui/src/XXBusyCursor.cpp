@@ -3,13 +3,13 @@
 #include <QCursor>
 #include <QGuiApplication>
 
-BusyCursor::BusyCursor()
+XX::BusyCursor::BusyCursor()
 {
    QGuiApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
    QGuiApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 }
 
-BusyCursor::~BusyCursor()
+XX::BusyCursor::~BusyCursor()
 {
    QGuiApplication::restoreOverrideCursor();
 }

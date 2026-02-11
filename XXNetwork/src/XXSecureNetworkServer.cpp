@@ -8,7 +8,7 @@
 #include "XXSecureNetworkServerInternal.h"
 #include "XXSecureNetworkSocket.h"
 
-SecureNetwork::Server::Server(QObject* parent)
+XX::SecureNetwork::Server::Server(QObject* parent)
    : QObject(parent)
    , internal(nullptr)
    , sslConfiguration()
@@ -19,7 +19,7 @@ SecureNetwork::Server::Server(QObject* parent)
    internal = new ServerInternal(this);
 }
 
-SecureNetwork::Server::~Server()
+XX::SecureNetwork::Server::~Server()
 {
    for (Socket::Pointer& socketPointer : socketList)
    {
@@ -31,7 +31,7 @@ SecureNetwork::Server::~Server()
    socketList.clear();
 }
 
-void SecureNetwork::Server::listen(const quint16& port)
+void XX::SecureNetwork::Server::listen(const quint16& port)
 {
    if (sslConfiguration.isNull())
       return;
@@ -39,7 +39,7 @@ void SecureNetwork::Server::listen(const quint16& port)
    internal->listen(QHostAddress::Any, port);
 }
 
-bool SecureNetwork::Server::setEncryption(const QString& caCertFileName, const QString& serverCertFileName, const QString& serverKeyFileName)
+bool XX::SecureNetwork::Server::setEncryption(const QString& caCertFileName, const QString& serverCertFileName, const QString& serverKeyFileName)
 {
    sslConfiguration = QSslConfiguration::defaultConfiguration();
 
@@ -88,12 +88,12 @@ bool SecureNetwork::Server::setEncryption(const QString& caCertFileName, const Q
    return true;
 }
 
-void SecureNetwork::Server::setConfiguration(const QSslConfiguration& newSslConfiguration)
+void XX::SecureNetwork::Server::setConfiguration(const QSslConfiguration& newSslConfiguration)
 {
    sslConfiguration = newSslConfiguration;
 }
 
-bool SecureNetwork::Server::setPeerCommmonNameList(const QString& authUserFileName)
+bool XX::SecureNetwork::Server::setPeerCommmonNameList(const QString& authUserFileName)
 {
    QFile userAuthFile(authUserFileName);
    if (!userAuthFile.open(QIODevice::ReadOnly))
@@ -116,12 +116,12 @@ bool SecureNetwork::Server::setPeerCommmonNameList(const QString& authUserFileNa
    return true;
 }
 
-const QList<SecureNetwork::Socket::Pointer>& SecureNetwork::Server::getSocketList() const
+const QList<XX::SecureNetwork::Socket::Pointer>& XX::SecureNetwork::Server::getSocketList() const
 {
    return socketList;
 }
 
-void SecureNetwork::Server::newConnection(Socket* socket)
+void XX::SecureNetwork::Server::newConnection(XX::SecureNetwork::Socket* socket)
 {
    QSslSocket* sslSocket = socket->sslSocket; // server internal has made sure this socket is encrypted
 
@@ -138,7 +138,7 @@ void SecureNetwork::Server::newConnection(Socket* socket)
    emit signalNewEncryptedConnection(socket);
 }
 
-void SecureNetwork::Server::removeSocket(Socket* socket)
+void XX::SecureNetwork::Server::removeSocket(XX::SecureNetwork::Socket* socket)
 {
    socketList.removeAll(socket);
 
@@ -147,7 +147,7 @@ void SecureNetwork::Server::removeSocket(Socket* socket)
    sslSocket->deleteLater();
 }
 
-const QSslConfiguration& SecureNetwork::Server::getConfiguration() const
+const QSslConfiguration& XX::SecureNetwork::Server::getConfiguration() const
 {
    return sslConfiguration;
 }

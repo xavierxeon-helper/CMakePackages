@@ -2,25 +2,25 @@
 
 // meta
 
-size_t Sample::Meta::noOfSamplesPerChannel() const
+size_t XX::Sample::Meta::noOfSamplesPerChannel() const
 {
    return numberOfSamples / noOfChannels;
 }
 
-double Sample::Meta::totalLength() const
+double XX::Sample::Meta::totalLength() const
 {
    return static_cast<double>(numberOfSamples / noOfChannels) / static_cast<double>(sampleRate);
 }
 
 // abstract
 
-Sample::Abstract::Abstract()
+XX::Sample::Abstract::Abstract()
    : interlacedContent()
    , meta()
 {
 }
 
-Sample::Data Sample::Abstract::interlace(const Channels& input)
+XX::Sample::Data XX::Sample::Abstract::interlace(const Channels& input)
 {
    const uint8_t numberOfChannels = input.size();
    const size_t numberOfSamples = input.at(0).size();
@@ -38,7 +38,7 @@ Sample::Data Sample::Abstract::interlace(const Channels& input)
    return output;
 }
 
-Sample::Channels Sample::Abstract::deinterlace(const Data& input, const uint8_t numberOfChannels)
+XX::Sample::Channels XX::Sample::Abstract::deinterlace(const Data& input, const uint8_t numberOfChannels)
 {
    Channels output(numberOfChannels, Data());
    if (0 != input.size() % numberOfChannels)

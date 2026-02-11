@@ -3,13 +3,13 @@
 #include "XXGraphEdge.h"
 #include "XXGraphVertex.h"
 
-Graph::Graph()
+XX::Graph::Graph()
    : vertexList()
    , edgeList()
 {
 }
 
-int Graph::addVertex(Vertex* vertex)
+int XX::Graph::addVertex(Vertex* vertex)
 {
    if (vertexList.contains(vertex))
       return -1;
@@ -18,7 +18,7 @@ int Graph::addVertex(Vertex* vertex)
    return vertexList.count() - 1;
 }
 
-bool Graph::removeVertex(Vertex* vertex, bool deleteVertex)
+bool XX::Graph::removeVertex(Vertex* vertex, bool deleteVertex)
 {
    if (!vertexList.contains(vertex))
       return false;
@@ -42,7 +42,7 @@ bool Graph::removeVertex(Vertex* vertex, bool deleteVertex)
    return true;
 }
 
-int Graph::vertexIndex(const Vertex* constVertex) const
+int XX::Graph::vertexIndex(const Vertex* constVertex) const
 {
    Vertex* vertex = const_cast<Vertex*>(constVertex);
 
@@ -52,12 +52,12 @@ int Graph::vertexIndex(const Vertex* constVertex) const
    return vertexList.indexOf(vertex);
 }
 
-int Graph::vertexCount() const
+int XX::Graph::vertexCount() const
 {
    return vertexList.count();
 }
 
-Graph::Vertex* Graph::getVertex(int vertexIndex) const
+XX::Graph::Vertex* XX::Graph::getVertex(int vertexIndex) const
 {
    if (vertexIndex < 0 || vertexIndex >= vertexList.count())
       return nullptr;
@@ -65,7 +65,7 @@ Graph::Vertex* Graph::getVertex(int vertexIndex) const
    return vertexList.at(vertexIndex);
 }
 
-Graph::Vertex* Graph::findVertexByName(const QString& name) const
+XX::Graph::Vertex* XX::Graph::findVertexByName(const QString& name) const
 {
    for (Vertex* vertex : vertexList)
    {
@@ -76,7 +76,7 @@ Graph::Vertex* Graph::findVertexByName(const QString& name) const
    return nullptr;
 }
 
-int Graph::addEdge(Edge* edge)
+int XX::Graph::addEdge(Edge* edge)
 {
    if (edgeList.contains(edge))
       return -1;
@@ -85,7 +85,7 @@ int Graph::addEdge(Edge* edge)
    return edgeList.count() - 1;
 }
 
-bool Graph::removeEdge(Edge* edge, bool deleteEdge)
+bool XX::Graph::removeEdge(Edge* edge, bool deleteEdge)
 {
    if (!edgeList.contains(edge))
       return false;
@@ -98,7 +98,7 @@ bool Graph::removeEdge(Edge* edge, bool deleteEdge)
    return true;
 }
 
-int Graph::edgeIndex(const Edge* constEdge) const
+int XX::Graph::edgeIndex(const Edge* constEdge) const
 {
    Edge* edge = const_cast<Edge*>(constEdge);
 
@@ -108,12 +108,12 @@ int Graph::edgeIndex(const Edge* constEdge) const
    return edgeList.indexOf(edge);
 }
 
-int Graph::edgeCount() const
+int XX::Graph::edgeCount() const
 {
    return edgeList.count();
 }
 
-Graph::Edge* Graph::getEdge(int edgeIndex) const
+XX::Graph::Edge* XX::Graph::getEdge(int edgeIndex) const
 {
    if (edgeIndex < 0 || edgeIndex >= edgeList.count())
       return nullptr;
@@ -121,7 +121,7 @@ Graph::Edge* Graph::getEdge(int edgeIndex) const
    return edgeList.at(edgeIndex);
 }
 
-int Graph::findEdgeIndex(const Vertex* vertexA, const Vertex* vertexB) const
+int XX::Graph::findEdgeIndex(const Vertex* vertexA, const Vertex* vertexB) const
 {
    for (int edgeIndex = 0; edgeIndex < edgeList.count(); edgeIndex++)
    {
@@ -133,7 +133,7 @@ int Graph::findEdgeIndex(const Vertex* vertexA, const Vertex* vertexB) const
    return -1;
 }
 
-void Graph::clear(bool deleteAll)
+void XX::Graph::clear(bool deleteAll)
 {
    if (deleteAll)
    {

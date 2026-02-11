@@ -8,13 +8,10 @@
 
 #include "XXMathVector3.h"
 
-namespace XX
-{
-   XXMATH_DECLSPEC QDebug operator<<(QDebug stream, const Math::Vector3& data);
-   XXMATH_DECLSPEC QDebug operator<<(QDebug stream, const Math::Spherical& data);
+XXMATH_DECLSPEC QDebug operator<<(QDebug stream, const XX::Math::Vector3& data);
+XXMATH_DECLSPEC QDebug operator<<(QDebug stream, const XX::Math::Spherical& data);
 
-   XXMATH_DECLSPEC QTextStream& operator<<(QTextStream& stream, const Math::Vector3& data);
-   XXMATH_DECLSPEC QTextStream& operator>>(QTextStream& stream, Math::Vector3& data);
-} // namespace XX
+XXMATH_DECLSPEC QTextStream& operator<<(QTextStream& stream, const XX::Math::Vector3& data);
+XXMATH_DECLSPEC QTextStream& operator>>(QTextStream& stream, XX::Math::Vector3& data);
 
 #endif // NOT XXMathQtStreamingH

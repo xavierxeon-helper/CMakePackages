@@ -1,12 +1,12 @@
 #include "XXMessageModel.h"
 
-MessageModel::MessageModel(QObject* parent, int stackSize)
+XX::MessageModel::MessageModel(QObject* parent, int stackSize)
    : QStandardItemModel(parent)
    , Logger::Target(stackSize)
 {
 }
 
-void MessageModel::update(const Entry::Buffer& buffer)
+void XX::MessageModel::update(const Entry::Buffer& buffer)
 {
    QStandardItemModel::clear();
    setHorizontalHeaderLabels({"TimeStamp", "Message"});

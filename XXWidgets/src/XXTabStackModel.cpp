@@ -2,7 +2,7 @@
 
 #include "XXTabStackWidget.h"
 
-TabStack::Model::Model(QObject* parent)
+XX::TabStack::Model::Model(QObject* parent)
    : QStandardItemModel(parent)
    , maxRows(0)
    , maxDepth(0)
@@ -10,7 +10,7 @@ TabStack::Model::Model(QObject* parent)
 {
 }
 
-void TabStack::Model::init(Widget* tabStack)
+void XX::TabStack::Model::init(Widget* tabStack)
 {
    QStringList allLabels = tabStack->getAllTabLabels();
    maxRows = allLabels.size();
@@ -58,9 +58,9 @@ void TabStack::Model::init(Widget* tabStack)
    updateLabels();
 }
 
-void TabStack::Model::apply(Widget* tabStack)
+void XX::TabStack::Model::apply(Widget* tabStack)
 {
-   for (int depth = 0; depth < maxDepth ; depth++)
+   for (int depth = 0; depth < maxDepth; depth++)
    {
       const QStringList& labels = labelMatrix[depth];
       tabStack->setTabOrder(depth, labels);
@@ -69,7 +69,7 @@ void TabStack::Model::apply(Widget* tabStack)
    tabStack->setActiveDepth(0);
 }
 
-void TabStack::Model::reOrder(int sourceRow, int sourceColumn, int targetRow, int targetColumn)
+void XX::TabStack::Model::reOrder(int sourceRow, int sourceColumn, int targetRow, int targetColumn)
 {
    QStringList& sourceLabels = labelMatrix[sourceColumn];
    QStringList& targetLabels = labelMatrix[targetColumn];
@@ -88,7 +88,7 @@ void TabStack::Model::reOrder(int sourceRow, int sourceColumn, int targetRow, in
    updateLabels();
 }
 
-void TabStack::Model::updateLabels()
+void XX::TabStack::Model::updateLabels()
 {
    beginResetModel();
 
@@ -107,7 +107,7 @@ void TabStack::Model::updateLabels()
    endResetModel();
 }
 
-QHash<int, QByteArray> TabStack::Model::roleNames() const
+QHash<int, QByteArray> XX::TabStack::Model::roleNames() const
 {
    QHash<int, QByteArray> data;
    data[RoleName] = "name";

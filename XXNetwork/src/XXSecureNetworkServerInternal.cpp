@@ -3,13 +3,13 @@
 #include "../XXSecureNetworkServer.h"
 #include "../XXSecureNetworkSocket.h"
 
-SecureNetwork::ServerInternal::ServerInternal(Server* server)
+XX::SecureNetwork::ServerInternal::ServerInternal(Server* server)
    : QTcpServer(server)
    , server(server)
 {
 }
 
-void SecureNetwork::ServerInternal::slotEncryptedConnection()
+void XX::SecureNetwork::ServerInternal::slotEncryptedConnection()
 {
    QSslSocket* sslSocket = qobject_cast<QSslSocket*>(sender());
    if (!sslSocket)
@@ -21,7 +21,7 @@ void SecureNetwork::ServerInternal::slotEncryptedConnection()
    server->newConnection(socket);
 }
 
-void SecureNetwork::ServerInternal::incomingConnection(qintptr socketDescriptor)
+void XX::SecureNetwork::ServerInternal::incomingConnection(qintptr socketDescriptor)
 {
    QSslSocket* sslSocket = new QSslSocket(this);
    connect(sslSocket, &QSslSocket::encrypted, this, &ServerInternal::slotEncryptedConnection);

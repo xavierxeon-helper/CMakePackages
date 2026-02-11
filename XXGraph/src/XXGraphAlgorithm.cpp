@@ -6,11 +6,11 @@
 
 // path
 
-const double Graph::Algorithm::Path::invalidDistance = std::numeric_limits<double>::max();
+const double XX::Graph::Algorithm::Path::invalidDistance = std::numeric_limits<double>::max();
 
 // tree
 
-Graph::Algorithm::Tree::VertexData Graph::Algorithm::Tree::findData(const int vertexIndex) const
+XX::Graph::Algorithm::Tree::VertexData XX::Graph::Algorithm::Tree::findData(const int vertexIndex) const
 {
    for (const VertexData& data : verticies)
    {
@@ -21,7 +21,7 @@ Graph::Algorithm::Tree::VertexData Graph::Algorithm::Tree::findData(const int ve
    return VertexData{};
 }
 
-Graph::Algorithm::Path Graph::Algorithm::Tree::compilePath(const int vertexIndex) const
+XX::Graph::Algorithm::Path XX::Graph::Algorithm::Tree::compilePath(const int vertexIndex) const
 {
    Path path;
 
@@ -39,14 +39,14 @@ Graph::Algorithm::Path Graph::Algorithm::Tree::compilePath(const int vertexIndex
    return path;
 }
 
-int Graph::Algorithm::Tree::compileDepth(const int vertexIndex) const
+int XX::Graph::Algorithm::Tree::compileDepth(const int vertexIndex) const
 {
    return findData(vertexIndex).depth;
 }
 
 // algorithm
 
-Graph::Algorithm::Algorithm(const Graph* graph)
+XX::Graph::Algorithm::Algorithm(const Graph* graph)
    : graph(graph)
    , edgeMatrix()
 {
@@ -68,7 +68,7 @@ Graph::Algorithm::Algorithm(const Graph* graph)
    }
 }
 
-Graph::Algorithm::Tree Graph::Algorithm::depthFirst(const Vertex* vertexStart) const
+XX::Graph::Algorithm::Tree XX::Graph::Algorithm::depthFirst(const Vertex* vertexStart) const
 {
    const int startIndex = graph->vertexIndex(vertexStart);
    QVector<bool> visited(graph->vertexCount(), false);
@@ -98,7 +98,7 @@ Graph::Algorithm::Tree Graph::Algorithm::depthFirst(const Vertex* vertexStart) c
    return tree;
 }
 
-Graph::Algorithm::Tree Graph::Algorithm::breadthFirst(const Vertex* vertexStart) const
+XX::Graph::Algorithm::Tree XX::Graph::Algorithm::breadthFirst(const Vertex* vertexStart) const
 {
    const int startIndex = graph->vertexIndex(vertexStart);
    QVector<bool> visited(graph->vertexCount(), false);
@@ -136,7 +136,7 @@ Graph::Algorithm::Tree Graph::Algorithm::breadthFirst(const Vertex* vertexStart)
    return tree;
 }
 
-Graph::Algorithm::Path::Map Graph::Algorithm::pathDijkstra(const Vertex* vertexStart) const
+XX::Graph::Algorithm::Path::Map XX::Graph::Algorithm::pathDijkstra(const Vertex* vertexStart) const
 {
    QVector<double> distances(graph->vertexCount(), Path::invalidDistance);
    const int startIndex = graph->vertexIndex(vertexStart);
@@ -201,7 +201,7 @@ Graph::Algorithm::Path::Map Graph::Algorithm::pathDijkstra(const Vertex* vertexS
    return pathMap;
 }
 
-Graph::Algorithm::TreeEdges Graph::Algorithm::compileTreeEdges(const Tree& tree) const
+XX::Graph::Algorithm::TreeEdges XX::Graph::Algorithm::compileTreeEdges(const Tree& tree) const
 {
    TreeEdges treeEdges;
 
@@ -217,7 +217,7 @@ Graph::Algorithm::TreeEdges Graph::Algorithm::compileTreeEdges(const Tree& tree)
    return treeEdges;
 }
 
-Graph::Algorithm::IndexList Graph::Algorithm::topologicalSort() const
+XX::Graph::Algorithm::IndexList XX::Graph::Algorithm::topologicalSort() const
 {
    QVector<int> in_degree(graph->vertexCount(), 0);
    QQueue<int> startNodes;
@@ -261,7 +261,7 @@ Graph::Algorithm::IndexList Graph::Algorithm::topologicalSort() const
    return list;
 }
 
-int Graph::Algorithm::findEdgeIndex(const int vertexIndexA, const int vertexIndexB) const
+int XX::Graph::Algorithm::findEdgeIndex(const int vertexIndexA, const int vertexIndexB) const
 {
    if (-1 == vertexIndexA || -1 == vertexIndexB)
       return -1;
@@ -272,7 +272,7 @@ int Graph::Algorithm::findEdgeIndex(const int vertexIndexA, const int vertexInde
    return graph->findEdgeIndex(vertexA, vertexB);
 }
 
-Graph::Algorithm::IndexList Graph::Algorithm::compileAdjacencyList(const int vertexIndex) const
+XX::Graph::Algorithm::IndexList XX::Graph::Algorithm::compileAdjacencyList(const int vertexIndex) const
 {
    IndexList indexList;
 
