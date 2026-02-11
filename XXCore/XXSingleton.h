@@ -1,19 +1,22 @@
 #ifndef XXSingletonH
 #define XXSingletonH
 
-template <typename InstanceClass>
-class Singleton
+namespace XX
 {
-public:
-   Singleton();
-   virtual ~Singleton();
+   template <typename InstanceClass>
+   class Singleton
+   {
+   public:
+      Singleton();
+      virtual ~Singleton();
 
-public:
-   static InstanceClass* instance();
+   public:
+      static InstanceClass* instance();
 
-private:
-   static InstanceClass* me;
-};
+   private:
+      static InstanceClass* me;
+   };
+} // namespace XX
 
 #ifndef XXSingletonHPP
 #include "XXSingleton.hpp"

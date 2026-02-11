@@ -4,29 +4,32 @@
 #include "XXMidiParser.h"
 #include "XXMusicExportDef.h"
 
-namespace Midi
+namespace XX
 {
-   namespace Interface
+   namespace Midi
    {
-      class Output;
-
-      class XXMUSIC_DECLSPEC Input : public Parser
+      namespace Interface
       {
-      public:
-         Input();
-         virtual ~Input();
+         class Output;
 
-      public:
-         virtual void open();
-         virtual void close();
-         virtual bool isOpen() const;
+         class XXMUSIC_DECLSPEC Input : public Parser
+         {
+         public:
+            Input();
+            virtual ~Input();
 
-         void addPassThroughInterface(Interface::Output* passthrough);
+         public:
+            virtual void open();
+            virtual void close();
+            virtual bool isOpen() const;
 
-      protected:
-         QList<Interface::Output*> passthroughList;
-      };
-   } // namespace Interface
-} // namespace Midi
+            void addPassThroughInterface(Interface::Output* passthrough);
+
+         protected:
+            QList<Interface::Output*> passthroughList;
+         };
+      } // namespace Interface
+   } // namespace Midi
+} // namespace XX
 
 #endif // NOT XXMidiInterfaceInputH

@@ -10,33 +10,36 @@
 #include "XXSampleAbstract.h"
 
 // may throw Exception
-class XXAUDIO_DECLSPEC FastFourierTransfrom
+namespace XX
 {
-public:
-   using ComplexType = std::complex<float>;
-   using ComplexData = QList<ComplexType>;
+   class XXAUDIO_DECLSPEC FastFourierTransfrom
+   {
+   public:
+      using ComplexType = std::complex<float>;
+      using ComplexData = QList<ComplexType>;
 
-public:
-   FastFourierTransfrom(const size_t size);
+   public:
+      FastFourierTransfrom(const size_t size);
 
-public:
-   static ComplexData fill(const Sample::Data& data);
-   static Sample::Data strip(const ComplexData& data);
+   public:
+      static ComplexData fill(const Sample::Data& data);
+      static Sample::Data strip(const ComplexData& data);
 
-   ComplexData forward(const ComplexData& input);
-   ComplexData inverse(const ComplexData& input);
+      ComplexData forward(const ComplexData& input);
+      ComplexData inverse(const ComplexData& input);
 
-   const size_t& getSize() const;
+      const size_t& getSize() const;
 
-private:
-   void bitReverse(ComplexData& data) const;
-   void transform(ComplexData& data, bool forward) const;
+   private:
+      void bitReverse(ComplexData& data) const;
+      void transform(ComplexData& data, bool forward) const;
 
-   void bitReverseB(ComplexData& data) const;
-   void transformB(ComplexData& data, bool forward) const;
+      void bitReverseB(ComplexData& data) const;
+      void transformB(ComplexData& data, bool forward) const;
 
-private:
-   const size_t size;
-};
+   private:
+      const size_t size;
+   };
+} // namespace XX
 
 #endif // NOT XXFastFourierTransfromH

@@ -4,26 +4,29 @@
 #include "XXApplicationExportDef.h"
 #include <QMenuBar>
 
-namespace Populated
+namespace XX
 {
-   class XXAPPLICATION_DECLSPEC MenuBar : public QMenuBar
+   namespace Populated
    {
-      Q_OBJECT
-      Q_PROPERTY(QString menuName READ getMenuName WRITE setMenuName NOTIFY menuNameChanged)
+      class XXAPPLICATION_DECLSPEC MenuBar : public QMenuBar
+      {
+         Q_OBJECT
+         Q_PROPERTY(QString menuName READ getMenuName WRITE setMenuName NOTIFY menuNameChanged)
 
-   public:
-      explicit MenuBar(QWidget* parent = nullptr);
+      public:
+         explicit MenuBar(QWidget* parent = nullptr);
 
-   signals:
-      void menuNameChanged();
+      signals:
+         void menuNameChanged();
 
-   public:
-      const QString& getMenuName() const;
-      void setMenuName(const QString& name);
+      public:
+         const QString& getMenuName() const;
+         void setMenuName(const QString& name);
 
-   private:
-      QString menuName;
-   };
-} // namespace Populated
+      private:
+         QString menuName;
+      };
+   } // namespace Populated
+} // namespace XX
 
 #endif // NOT XXPopulatedMenuBarH

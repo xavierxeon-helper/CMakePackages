@@ -6,27 +6,30 @@
 #include "XXSingleton.h"
 #include <QMainWindow>
 
-namespace Populated
+namespace XX
 {
-   class XXAPPLICATION_DECLSPEC MainWindow : public QMainWindow, public Abstract, public Singleton<MainWindow>
+   namespace Populated
    {
-      Q_OBJECT
+      class XXAPPLICATION_DECLSPEC MainWindow : public QMainWindow, public Abstract, public Singleton<MainWindow>
+      {
+         Q_OBJECT
 
-   public:
-      MainWindow();
+      public:
+         MainWindow();
 
-   protected:
-      QDockWidget* addDockWidget(QWidget* widget, const Qt::DockWidgetArea& area);
+      protected:
+         QDockWidget* addDockWidget(QWidget* widget, const Qt::DockWidgetArea& area);
 
-      virtual void closeEvent(QCloseEvent* ce) override;
-      virtual QMenu* createPopupMenu() override;
+         virtual void closeEvent(QCloseEvent* ce) override;
+         virtual QMenu* createPopupMenu() override;
 
-      void saveWindowSettings();
+         void saveWindowSettings();
 
-   private:
-      QToolBar* findOrCreateToolBar(const QString& objectName);
-      QMenu* findOrCreateMenu(const QString& objectName, const QString& text, QMenu* parentMenu);
-   };
-} // namespace Populated
+      private:
+         QToolBar* findOrCreateToolBar(const QString& objectName);
+         QMenu* findOrCreateMenu(const QString& objectName, const QString& text, QMenu* parentMenu);
+      };
+   } // namespace Populated
+} // namespace XX
 
 #endif // NOT XXPopulatedMainWindowH

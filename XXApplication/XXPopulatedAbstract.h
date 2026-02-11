@@ -7,41 +7,44 @@
 #include <QToolBar>
 #include <QWidget>
 
-namespace Populated
+namespace XX
 {
-   class XXAPPLICATION_DECLSPEC Abstract
+   namespace Populated
    {
-   public:
-      using ToolBarCreationFunction = std::function<QToolBar*(const QString& objectName)>;
-      using MenuCreationFunction = std::function<QMenu*(const QString& objectName, const QString& text, QMenu* parentMenu)>;
+      class XXAPPLICATION_DECLSPEC Abstract
+      {
+      public:
+         using ToolBarCreationFunction = std::function<QToolBar*(const QString& objectName)>;
+         using MenuCreationFunction = std::function<QMenu*(const QString& objectName, const QString& text, QMenu* parentMenu)>;
 
-   public:
-      Abstract(QWidget* parentWidget);
-      virtual ~Abstract();
+      public:
+         Abstract(QWidget* parentWidget);
+         virtual ~Abstract();
 
-   public:
-      static void printSettingsLocation();
-      static QAction* addAction(QIcon icon, QString text, QString objectName, QObject* instance, auto slotFunction);
-      static QAction* addFunctorAction(QIcon icon, QString text, QString objectName, QObject* parent, auto functor);
-      static void setActionIcon(QObject* parent, QString objectName, QIcon icon);
-      static void setActionShortcut(QObject* parent, QString objectName, QKeySequence shortcut);
+      public:
+         static void printSettingsLocation();
+         static QAction* addAction(QIcon icon, QString text, QString objectName, QObject* instance, auto slotFunction);
+         static QAction* addFunctorAction(QIcon icon, QString text, QString objectName, QObject* parent, auto functor);
+         static void setActionIcon(QObject* parent, QString objectName, QIcon icon);
+         static void setActionShortcut(QObject* parent, QString objectName, QKeySequence shortcut);
 
-      static QString writeExampleResource(const QString& xmlResource);
-      void populateMenuAndToolBar(const QString& xmlResource);
+         static QString writeExampleResource(const QString& xmlResource);
+         void populateMenuAndToolBar(const QString& xmlResource);
 
-   protected:
-      void setFunctions(ToolBarCreationFunction toolBarCreationFunction, MenuCreationFunction menuCreationFunction);
+      protected:
+         void setFunctions(ToolBarCreationFunction toolBarCreationFunction, MenuCreationFunction menuCreationFunction);
 
-   private:
-      void createToolBar(QDomElement thingElement);
-      void createMenu(QDomElement thingElement, QMenu* parentMenu);
+      private:
+         void createToolBar(QDomElement thingElement);
+         void createMenu(QDomElement thingElement, QMenu* parentMenu);
 
-   private:
-      QWidget* parentWidget;
-      ToolBarCreationFunction toolBarCreationFunction;
-      MenuCreationFunction menuCreationFunction;
-   };
-} // namespace Populated
+      private:
+         QWidget* parentWidget;
+         ToolBarCreationFunction toolBarCreationFunction;
+         MenuCreationFunction menuCreationFunction;
+      };
+   } // namespace Populated
+} // namespace XX
 
 #ifndef XXPopulatedAbstractHPP
 #include "XXPopulatedAbstract.hpp"

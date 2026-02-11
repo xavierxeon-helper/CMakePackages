@@ -9,78 +9,81 @@
 #include "XXGraphEdge.h"
 #include "XXGraphVertex.h"
 
-class XXGRAPH_DECLSPEC Graph::Algorithm
+namespace XX
 {
-public:
-   using IndexList = QList<int>;
-
-   struct Path
+   class XXGRAPH_DECLSPEC Graph::Algorithm
    {
-      static const double invalidDistance;
+   public:
+      using IndexList = QList<int>;
 
-      double distance = invalidDistance;
-      IndexList verticies;
-
-      using Map = QMap<int, Path>; // end vertex index vs path
-   };
-
-   struct XXGRAPH_DECLSPEC Tree
-   {
-      struct VertexData
+      struct Path
       {
-         int vertexIndex = -1;
-         int parentVertexIndex = -1;
-         int depth = 0;
+         static const double invalidDistance;
 
-         using List = QList<VertexData>;
+         double distance = invalidDistance;
+         IndexList verticies;
+
+         using Map = QMap<int, Path>; // end vertex index vs path
       };
 
-      VertexData::List verticies; // visited in order
+      struct XXGRAPH_DECLSPEC Tree
+      {
+         struct VertexData
+         {
+            int vertexIndex = -1;
+            int parentVertexIndex = -1;
+            int depth = 0;
 
-      Path compilePath(const int vertexIndex) const;
-      int compileDepth(const int vertexIndex) const;
+            using List = QList<VertexData>;
+         };
 
-      VertexData findData(const int vertexIndex) const;
+         VertexData::List verticies; // visited in order
+
+         Path compilePath(const int vertexIndex) const;
+         int compileDepth(const int vertexIndex) const;
+
+         VertexData findData(const int vertexIndex) const;
+      };
+
+      struct TreeEdges
+      {
+         IndexList treeEdges;    // edges used for visit
+         IndexList forwardEdges; // unvisited, in order
+         IndexList backEdges;    // unvisted, against order
+      };
+
+   public:
+      Algorithm(const Graph* graph);
+
+   public:
+      Tree depthFirst(const Vertex* vertexStart) const;
+      Tree breadthFirst(const Vertex* vertexStart) const;
+
+      Path::Map pathDijkstra(const Vertex* vertexStart) const;
+      TreeEdges compileTreeEdges(const Tree& tree) const;
+
+      IndexList topologicalSort() const;
+
+   private:
+      struct EdgeData
+      {
+         double weight = Edge::invalidWeight;
+         int index = -1;
+         bool forward = true;
+
+         using Row = QVector<EdgeData>;
+         using Matrix = QVector<Row>;
+      };
+
+   private:
+      int findEdgeIndex(const int vertexIndexA, const int vertexIndexB) const;
+
+      IndexList compileAdjacencyList(const int vertexIndex) const;
+
+   private:
+      const Graph* graph;
+      EdgeData::Matrix edgeMatrix;
    };
-
-   struct TreeEdges
-   {
-      IndexList treeEdges;    // edges used for visit
-      IndexList forwardEdges; // unvisited, in order
-      IndexList backEdges;    // unvisted, against order
-   };
-
-public:
-   Algorithm(const Graph* graph);
-
-public:
-   Tree depthFirst(const Vertex* vertexStart) const;
-   Tree breadthFirst(const Vertex* vertexStart) const;
-
-   Path::Map pathDijkstra(const Vertex* vertexStart) const;
-   TreeEdges compileTreeEdges(const Tree& tree) const;
-
-   IndexList topologicalSort() const;
-
-private:
-   struct EdgeData
-   {
-      double weight = Edge::invalidWeight;
-      int index = -1;
-      bool forward = true;
-
-      using Row = QVector<EdgeData>;
-      using Matrix = QVector<Row>;
-   };
-
-private:
-   int findEdgeIndex(const int vertexIndexA, const int vertexIndexB) const;
-
-   IndexList compileAdjacencyList(const int vertexIndex) const;
-
-private:
-   const Graph* graph;
-   EdgeData::Matrix edgeMatrix;
-};
+} // namespace XX
 
 #endif // NOT XXDiscreteMathsAlgorithmH

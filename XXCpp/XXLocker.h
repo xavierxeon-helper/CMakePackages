@@ -3,23 +3,26 @@
 
 #include "XXCompileTimeString.h"
 
-template <CompileTimeString tag>
-class Locker
+namespace XX
 {
-public:
-   /// @brief set the locker active
-   Locker();
-   ~Locker();
+   template <CompileTimeString tag>
+   class Locker
+   {
+   public:
+      /// @brief set the locker active
+      Locker();
+      ~Locker();
 
-public:
-   /// @brief check if some instance of a locker is active
-   static bool engaged();
-   /// @brief gives the ability to do something once
-   static bool doOnce();
+   public:
+      /// @brief check if some instance of a locker is active
+      static bool engaged();
+      /// @brief gives the ability to do something once
+      static bool doOnce();
 
-private:
-   static bool lock;
-};
+   private:
+      static bool lock;
+   };
+} // namespace XX
 
 #ifndef XXLockerHPP
 #include "XXLocker.hpp"

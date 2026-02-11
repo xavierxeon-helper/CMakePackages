@@ -8,43 +8,46 @@
 
 #include <QJsonObject>
 
-namespace RestApi
+namespace XX
 {
-   /// @brief Exception class for network-related errors
-
-   class XXNETWORK_DECLSPEC StatusException : public QException
+   namespace RestApi
    {
-   public:
-      StatusException(const Result& result, const QUrl sourceUrl);
-      StatusException(int statusCode, const QUrl sourceUrl, const QJsonObject& json = QJsonObject());
+      /// @brief Exception class for network-related errors
 
-   public:
-      operator QString() const;
+      class XXNETWORK_DECLSPEC StatusException : public QException
+      {
+      public:
+         StatusException(const Result& result, const QUrl sourceUrl);
+         StatusException(int statusCode, const QUrl sourceUrl, const QJsonObject& json = QJsonObject());
 
-   public:
-      int getStatusCode() const;
-      const QJsonObject& getContent() const;
-      const QUrl& getSourceUrl() const;
+      public:
+         operator QString() const;
 
-   private:
-      Result result;
-      const QUrl sourceUrl;
-   };
+      public:
+         int getStatusCode() const;
+         const QJsonObject& getContent() const;
+         const QUrl& getSourceUrl() const;
 
-   class XXNETWORK_DECLSPEC UnreachableException : public QException
-   {
-   public:
-      UnreachableException(const QUrl& sourceUrl);
+      private:
+         Result result;
+         const QUrl sourceUrl;
+      };
 
-   public:
-      operator QString() const;
+      class XXNETWORK_DECLSPEC UnreachableException : public QException
+      {
+      public:
+         UnreachableException(const QUrl& sourceUrl);
 
-   public:
-      const QUrl& getSourceUrl() const;
+      public:
+         operator QString() const;
 
-   private:
-      const QUrl sourceUrl;
-   };
-} // namespace RestApi
+      public:
+         const QUrl& getSourceUrl() const;
+
+      private:
+         const QUrl sourceUrl;
+      };
+   } // namespace RestApi
+} // namespace XX
 
 #endif // NOT XXRestApiExceptionH

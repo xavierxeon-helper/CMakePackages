@@ -6,29 +6,32 @@
 #include "XXMidiCommon.h"
 #include "XXNote.h"
 
-namespace Midi
+namespace XX
 {
-   namespace Interface
+   namespace Midi
    {
-      class XXMUSIC_DECLSPEC Output
+      namespace Interface
       {
-      public:
-         Output();
-         virtual ~Output();
+         class XXMUSIC_DECLSPEC Output
+         {
+         public:
+            Output();
+            virtual ~Output();
 
-      public:
-         virtual void open();
-         virtual void close();
-         virtual bool isOpen() const;
+         public:
+            virtual void open();
+            virtual void close();
+            virtual bool isOpen() const;
 
-         void sendNoteOn(const Midi::Channel& channel, const Note& note, const Midi::Velocity& velocity);
-         void sendNoteOff(const Midi::Channel& channel, const Note& note);
-         void sendControllerChange(const Midi::Channel& channel, const Midi::ControllerMessage& controllerMessage, const uchar& value);
+            void sendNoteOn(const Midi::Channel& channel, const Note& note, const Midi::Velocity& velocity);
+            void sendNoteOff(const Midi::Channel& channel, const Note& note);
+            void sendControllerChange(const Midi::Channel& channel, const Midi::ControllerMessage& controllerMessage, const uchar& value);
 
-         virtual void sendBuffer(const Bytes& message) = 0;
-      };
+            virtual void sendBuffer(const Bytes& message) = 0;
+         };
 
-   } // namespace Interface
-} // namespace Midi
+      } // namespace Interface
+   } // namespace Midi
+} // namespace XX
 
 #endif // NOT XXMidiInterfaceOutputH

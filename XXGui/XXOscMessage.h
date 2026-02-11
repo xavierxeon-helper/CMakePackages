@@ -5,28 +5,31 @@
 
 #include <QVariant>
 
-class XXGUI_DECLSPEC OscMessage
+namespace XX
 {
-public:
-   OscMessage() = delete;
-   OscMessage(const QString& path, const QVariant& value);
-   OscMessage(const QString& path, const QVariantList& values);
-   OscMessage(const QByteArray& data); // from received data
+   class XXGUI_DECLSPEC OscMessage
+   {
+   public:
+      OscMessage() = delete;
+      OscMessage(const QString& path, const QVariant& value);
+      OscMessage(const QString& path, const QVariantList& values);
+      OscMessage(const QByteArray& data); // from received data
 
-public:
-   QByteArray pack(); // to send data
+   public:
+      QByteArray pack(); // to send data
 
-   const QString& getPath() const;
-   const QVariantList& getValues() const;
+      const QString& getPath() const;
+      const QVariantList& getValues() const;
 
-private:
-   void addPad(QByteArray& packet);
-   QByteArray unpad(QByteArray packet);
+   private:
+      void addPad(QByteArray& packet);
+      QByteArray unpad(QByteArray packet);
 
-private:
-   static const char paddingChar;
-   QString path;
-   QVariantList values;
-};
+   private:
+      static const char paddingChar;
+      QString path;
+      QVariantList values;
+   };
+} // namespace XX
 
 #endif // NOT XXOscMessageH

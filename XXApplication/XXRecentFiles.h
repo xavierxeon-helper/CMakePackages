@@ -6,33 +6,36 @@
 #include <QMenu>
 #include <QWidget>
 
-class XXAPPLICATION_DECLSPEC RecentFiles
+namespace XX
 {
-public:
-   using LoadFunction = std::function<void(const QString& fileName)>;
+   class XXAPPLICATION_DECLSPEC RecentFiles
+   {
+   public:
+      using LoadFunction = std::function<void(const QString& fileName)>;
 
-public:
-   RecentFiles(QWidget* parent, const QString& settingsKey, const QString& menuObjectName);
+   public:
+      RecentFiles(QWidget* parent, const QString& settingsKey, const QString& menuObjectName);
 
-public:
-   void setup(LoadFunction loadFunction, int maxEntries = 10);
+   public:
+      void setup(LoadFunction loadFunction, int maxEntries = 10);
 
-   template <typename TargetClass>
-   void setup(TargetClass* instance, void (TargetClass::*memberFunction)(const QString&), int maxEntries = 10);
+      template <typename TargetClass>
+      void setup(TargetClass* instance, void (TargetClass::*memberFunction)(const QString&), int maxEntries = 10);
 
-   void clear();
-   void add(const QString& fileName);
+      void clear();
+      void add(const QString& fileName);
 
-private:
-   void prepareMenu();
+   private:
+      void prepareMenu();
 
-private:
-   const QString settingsKey;
-   LoadFunction loadFunction;
-   int maxEntries;
-   QStringList fileNameList;
-   QMenu* menu;
-};
+   private:
+      const QString settingsKey;
+      LoadFunction loadFunction;
+      int maxEntries;
+      QStringList fileNameList;
+      QMenu* menu;
+   };
+} // namespace XX
 
 #ifndef XXRecentFilesHPP
 #include "XXRecentFiles.hpp"

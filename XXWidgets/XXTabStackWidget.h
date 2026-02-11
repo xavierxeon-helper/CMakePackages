@@ -8,53 +8,56 @@
 #include <QTabBar>
 #include <QToolButton>
 
-namespace TabStack
+namespace XX
 {
-   class XXWIDGETS_DECLSPEC Widget : public QWidget
+   namespace TabStack
    {
-      Q_OBJECT
-
-   public:
-      Widget(QWidget* parent);
-
-   public:
-      void clearTabs();
-      void addTab(QWidget* widget, const QString& label, int depth = 0);
-      void setCornerWidget(QWidget* widget, bool right = true);
-
-      QStringList getAllTabLabels() const;
-
-      int depthCount() const;
-      void setActiveDepth(int depth);
-      QStringList getTabOrder(int depth) const;
-      void setTabOrder(int depth, const QStringList& labels);
-
-   private:
-      struct TabInfo
+      class XXWIDGETS_DECLSPEC Widget : public QWidget
       {
-         QWidget* widget = nullptr;
-         const QString label;
+         Q_OBJECT
 
-         using List = QList<TabInfo*>;
+      public:
+         Widget(QWidget* parent);
+
+      public:
+         void clearTabs();
+         void addTab(QWidget* widget, const QString& label, int depth = 0);
+         void setCornerWidget(QWidget* widget, bool right = true);
+
+         QStringList getAllTabLabels() const;
+
+         int depthCount() const;
+         void setActiveDepth(int depth);
+         QStringList getTabOrder(int depth) const;
+         void setTabOrder(int depth, const QStringList& labels);
+
+      private:
+         struct TabInfo
+         {
+            QWidget* widget = nullptr;
+            const QString label;
+
+            using List = QList<TabInfo*>;
+         };
+
+         struct TabBarInfo
+         {
+            TabInfo::List tabOrder;
+            QWidget* activeWidget = nullptr;
+         };
+         using DepthOrder = QList<TabBarInfo>;
+
+      private:
+         void tabSelected(int index);
+
+      private:
+         QTabBar* tabBar;
+         QStackedWidget* stack;
+         TabInfo::List infoList;
+         DepthOrder depthOrder;
+         int depthIndex;
       };
-
-      struct TabBarInfo
-      {
-         TabInfo::List tabOrder;
-         QWidget* activeWidget = nullptr;
-      };
-      using DepthOrder = QList<TabBarInfo>;
-
-   private:
-      void tabSelected(int index);
-
-   private:
-      QTabBar* tabBar;
-      QStackedWidget* stack;
-      TabInfo::List infoList;
-      DepthOrder depthOrder;
-      int depthIndex;
-   };
-} // namespace TabStack
+   } // namespace TabStack
+} // namespace XX
 
 #endif // NOT XXTabStackWidgetH

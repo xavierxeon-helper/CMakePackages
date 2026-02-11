@@ -5,42 +5,45 @@
 
 #include <QList>
 
-template <typename DataBlock>
-class SharedData
+namespace XX
 {
-public:
-   class List : public QList<SharedData*>
+   template <typename DataBlock>
+   class SharedData
    {
    public:
-      List() = default;
-      ~List();
-   };
+      class List : public QList<SharedData*>
+      {
+      public:
+         List() = default;
+         ~List();
+      };
 
-   class Guard
-   {
+      class Guard
+      {
+      public:
+         Guard(SharedData* instance);
+         ~Guard();
+
+      private:
+         SharedData* instance;
+      };
+
    public:
-      Guard(SharedData* instance);
-      ~Guard();
+      SharedData(const QString& uniqueName, bool readOnly);
+      virtual ~SharedData();
+
+   public:
+      const QString& getErrorString() const;
+
+   protected:
+      DataBlock* dataBlock;
+      bool readOnly;
 
    private:
-      SharedData* instance;
+      QSharedMemory sharedMemory;
+      QString errorString;
    };
-
-public:
-   SharedData(const QString& uniqueName, bool readOnly);
-   virtual ~SharedData();
-
-public:
-   const QString& getErrorString() const;
-
-protected:
-   DataBlock* dataBlock;
-   bool readOnly;
-
-private:
-   QSharedMemory sharedMemory;
-   QString errorString;
-};
+} // namespace XX
 
 #ifndef XXSharedDataHPP
 #include "XXSharedData.hpp"

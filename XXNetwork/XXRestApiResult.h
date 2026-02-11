@@ -6,20 +6,23 @@
 #include <QByteArray>
 #include <QJsonObject>
 
-namespace RestApi
+namespace XX
 {
-   struct XXNETWORK_DECLSPEC ResultRaw
+   namespace RestApi
    {
-      QByteArray raw;
-      int statusCode = 0;
-   };
+      struct XXNETWORK_DECLSPEC ResultRaw
+      {
+         QByteArray raw;
+         int statusCode = 0;
+      };
 
-   struct XXNETWORK_DECLSPEC Result : ResultRaw
-   {
-      QJsonObject json;
+      struct XXNETWORK_DECLSPEC Result : ResultRaw
+      {
+         QJsonObject json;
 
-      void parseJson();
-   };
-} // namespace RestApi
+         void parseJson();
+      };
+   } // namespace RestApi
+} // namespace XX
 
 #endif // NOT XXRestApiResultH

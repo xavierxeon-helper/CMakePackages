@@ -5,42 +5,45 @@
 
 #include <QList>
 
-namespace Function
+namespace XX
 {
-   class AbstractCaller
+   namespace Function
    {
-   protected:
-      AbstractCaller() = default;
-   };
+      class AbstractCaller
+      {
+      protected:
+         AbstractCaller() = default;
+      };
 
-   template <typename T>
-   concept CallerClass = requires(T instance) //
-   {
-      std::is_base_of<AbstractCaller, T>::value;
-   };
+      template <typename T>
+      concept CallerClass = requires(T instance) //
+      {
+         std::is_base_of<AbstractCaller, T>::value;
+      };
 
-   /// @brief allows an instance of derived class to call functions on all other instance (ncluding itself)
+      /// @brief allows an instance of derived class to call functions on all other instance (ncluding itself)
 
-   template <CompileTimeString tag>
-   class Caller : public AbstractCaller
-   {
-   public:
-      Caller();
-      virtual ~Caller() = 0;
+      template <CompileTimeString tag>
+      class Caller : public AbstractCaller
+      {
+      public:
+         Caller();
+         virtual ~Caller() = 0;
 
-   protected:
-      template <CallerClass TargetClass, typename... Args>
-      static void callOnAll(void (TargetClass::*function)(Args...), Args... values);
+      protected:
+         template <CallerClass TargetClass, typename... Args>
+         static void callOnAll(void (TargetClass::*function)(Args...), Args... values);
 
-      template <CallerClass TargetClass>
-      static void callOnAll(void (TargetClass::*function)());
+         template <CallerClass TargetClass>
+         static void callOnAll(void (TargetClass::*function)());
 
-      static size_t instanceCount();
+         static size_t instanceCount();
 
-   private:
-      static QList<Caller*> instances;
-   };
-} // namespace Function
+      private:
+         static QList<Caller*> instances;
+      };
+   } // namespace Function
+} // namespace XX
 
 #ifndef XXFunctionCallerHPP
 #include "XXFunctionCaller.hpp"

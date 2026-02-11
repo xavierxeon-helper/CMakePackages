@@ -7,57 +7,60 @@
 
 #include "XXNote.h"
 
-class XXMUSIC_DECLSPEC Scale
+namespace XX
 {
-public:
-   using List = QList<Scale>;
-   using KeyList = QList<bool>;
+   class XXMUSIC_DECLSPEC Scale
+   {
+   public:
+      using List = QList<Scale>;
+      using KeyList = QList<bool>;
 
-   class Finder;
+      class Finder;
 
-public:
-   static List getList();
-   static KeyList emptyKeyList();
-   static Scale getScaleByName(const QString& name, bool isMajor = true);
+   public:
+      static List getList();
+      static KeyList emptyKeyList();
+      static Scale getScaleByName(const QString& name, bool isMajor = true);
 
-public:
-   const QString getOffset() const;
-   const QString& getMajorName() const;
-   const QString& getMinorName() const;
+   public:
+      const QString getOffset() const;
+      const QString& getMajorName() const;
+      const QString& getMinorName() const;
 
-   const KeyList& getActiveKeys() const;
-   bool isActive(const int index) const;
+      const KeyList& getActiveKeys() const;
+      bool isActive(const int index) const;
 
-   Note quantize(const Note& input) const;
-   bool noteInScale(const Note& note) const;
+      Note quantize(const Note& input) const;
+      bool noteInScale(const Note& note) const;
 
-private:
-   using Map = QMap<int, Scale>;
+   private:
+      using Map = QMap<int, Scale>;
 
-private:
-   Scale();
+   private:
+      Scale();
 
-private:
-   int offset;
-   QString majorName;
-   QString minorName;
+   private:
+      int offset;
+      QString majorName;
+      QString minorName;
 
-   KeyList active;
+      KeyList active;
 
-   static const Map availableScales;
-};
+      static const Map availableScales;
+   };
 
-class XXMUSIC_DECLSPEC Scale::Finder
-{
-public:
-   Finder();
+   class XXMUSIC_DECLSPEC Scale::Finder
+   {
+   public:
+      Finder();
 
-public:
-   void addNote(const Note& note);
-   const Scale::List& getScales() const;
+   public:
+      void addNote(const Note& note);
+      const Scale::List& getScales() const;
 
-private:
-   Scale::List validScales;
-};
+   private:
+      Scale::List validScales;
+   };
+} // namespace XX
 
 #endif // NOT XXScaleH

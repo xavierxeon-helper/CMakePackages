@@ -7,43 +7,46 @@
 #include <QDateTime>
 #include <QTextStream>
 
-/// provide streams for logging messages and warnings
-namespace Logger
+namespace XX
 {
-   XXLOG_DECLSPEC QTextStream stream(const Qt::GlobalColor& color = Qt::black);
-
-   class XXLOG_DECLSPEC Target
+   /// provide streams for logging messages and warnings
+   namespace Logger
    {
-   public:
-      class StreamProxy;
+      XXLOG_DECLSPEC QTextStream stream(const Qt::GlobalColor& color = Qt::black);
 
-   public:
-      Target(int stackSize);
-      ~Target();
-
-   protected:
-      struct Entry
+      class XXLOG_DECLSPEC Target
       {
-         QDateTime timeStamp;
-         QString text;
-         QColor color;
+      public:
+         class StreamProxy;
 
-         using Buffer = QList<Entry>;
+      public:
+         Target(int stackSize);
+         ~Target();
+
+      protected:
+         struct Entry
+         {
+            QDateTime timeStamp;
+            QString text;
+            QColor color;
+
+            using Buffer = QList<Entry>;
+         };
+
+      protected:
+         virtual void update(const Entry::Buffer& buffer) = 0;
+         void clear();
+
+      private:
+         void print(const QString& text, const QColor& color);
+
+      private:
+         static Target* master;
+         QList<Target*> others;
+         int stackSize;
+         Entry::Buffer buffer;
       };
-
-   protected:
-      virtual void update(const Entry::Buffer& buffer) = 0;
-      void clear();
-
-   private:
-      void print(const QString& text, const QColor& color);
-
-   private:
-      static Target* master;
-      QList<Target*> others;
-      int stackSize;
-      Entry::Buffer buffer;
-   };
-} // namespace Logger
+   } // namespace Logger
+} // namespace XX
 
 #endif // NOT XXLoggerH

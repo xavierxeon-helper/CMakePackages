@@ -4,22 +4,25 @@
 #include "XXAudioExportDef.h"
 #include "XXSampleWave.h"
 
-namespace Sample
+namespace XX
 {
-   class XXAUDIO_DECLSPEC Writer : public Wave
+   namespace Sample
    {
-   public:
-      Writer(const uint8_t& numerOfChannels);
+      class XXAUDIO_DECLSPEC Writer : public Wave
+      {
+      public:
+         Writer(const uint8_t& numerOfChannels);
 
-   public:
-      void clear();
-      void append(const Channels& channels);
-      void save(const QString& fileName, const uint16_t sampleRate = 48000);
+      public:
+         void clear();
+         void append(const Channels& channels);
+         void save(const QString& fileName, const uint16_t sampleRate = 48000);
 
-   private:
-      const uint8_t numerOfChannels;
-      Channels buffer;
-   };
-} // namespace Sample
+      private:
+         const uint8_t numerOfChannels;
+         Channels buffer;
+      };
+   } // namespace Sample
+} // namespace XX
 
 #endif // NOT XXSampleWriterH

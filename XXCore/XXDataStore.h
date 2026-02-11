@@ -5,14 +5,17 @@
 
 #include <QString>
 
-class XXCORE_DECLSPEC DataStore
+namespace XX
 {
-public:
-   static QString getPath();
-   static void setPath(const QString& path, const QString& anchor = QString());
+   class XXCORE_DECLSPEC DataStore
+   {
+   public:
+      static QString getPath();
+      static void setPath(const QString& path, const QString& anchor = QString());
 
-private:
-   static QString path;
-};
+   private:
+      static QString path;
+   };
+} // namespace XX
 
 #endif // NOT XXDataStoreH

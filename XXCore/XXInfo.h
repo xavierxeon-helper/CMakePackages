@@ -5,10 +5,13 @@
 
 #include <QString>
 
-struct XXCORE_DECLSPEC Info
+namespace XX
 {
-   static QString getHostName();
-   static QString whatCppStandard();
-};
+   struct XXCORE_DECLSPEC Info
+   {
+      static QString getHostName();
+      static QString whatCppStandard();
+   };
+} // namespace XX
 
 #endif // NOT XXInfoH

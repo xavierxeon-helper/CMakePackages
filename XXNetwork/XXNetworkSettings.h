@@ -3,27 +3,29 @@
 
 #include "XXNetworkExportDef.h"
 
-namespace Network
+namespace XX
 {
-   /// @brief Network settings class
-
-   class XXNETWORK_DECLSPEC Settings
+   namespace Network
    {
-   public:
-      Settings();
+      /// @brief Network settings class
 
-   public:
-      static void setUseExceptions(bool enabled);
-      static bool useExceptions();
+      class XXNETWORK_DECLSPEC Settings
+      {
+      public:
+         Settings();
 
-      void setVerbose(bool enabled);
-      bool verbose() const;
+      public:
+         static void setUseExceptions(bool enabled);
+         static bool useExceptions();
 
-   private:
-      static bool shallUseExceptions;
-      bool isVerbose;
-   };
+         void setVerbose(bool enabled);
+         bool verbose() const;
 
-} // namespace Network
+      private:
+         static bool shallUseExceptions;
+         bool isVerbose;
+      };
+   } // namespace Network
+} // namespace XX
 
 #endif // NOT XXNetworkSettingsH

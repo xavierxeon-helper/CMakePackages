@@ -4,15 +4,18 @@
 #include "XXWidgetsExportDef.h"
 #include <QTextBrowser>
 
-class XXWIDGETS_DECLSPEC LocalTextBrowser : public QTextBrowser
+namespace XX
 {
-   Q_OBJECT
+   class XXWIDGETS_DECLSPEC LocalTextBrowser : public QTextBrowser
+   {
+      Q_OBJECT
 
-public:
-   LocalTextBrowser(QWidget* parent);
+   public:
+      LocalTextBrowser(QWidget* parent);
 
-private:
-   QVariant loadResource(int type, const QUrl& name) override;
-};
+   private:
+      QVariant loadResource(int type, const QUrl& name) override;
+   };
+} // namespace XX
 
 #endif // NOT XXLocalTextBrowserH

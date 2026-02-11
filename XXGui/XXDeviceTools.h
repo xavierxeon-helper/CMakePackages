@@ -7,22 +7,25 @@
 #include <QQmlApplicationEngine>
 #include <QSize>
 
-class XXGUI_DECLSPEC DeviceTools
+namespace XX
 {
-   Q_GADGET
-
-public:
-   enum DeviceIdentifier
+   class XXGUI_DECLSPEC DeviceTools
    {
-      iPadMini
+      Q_GADGET
+
+   public:
+      enum DeviceIdentifier
+      {
+         iPadMini
+      };
+      Q_ENUM(DeviceIdentifier)
+
+   public:
+      static QSize getSize(const DeviceIdentifier& deviceId);
+      static void fixSize(QQmlApplicationEngine* engine, const DeviceIdentifier& deviceId);
+
+      static void forceDisplayMode(bool light = true);
    };
-   Q_ENUM(DeviceIdentifier)
-
-public:
-   static QSize getSize(const DeviceIdentifier& deviceId);
-   static void fixSize(QQmlApplicationEngine* engine, const DeviceIdentifier& deviceId);
-
-   static void forceDisplayMode(bool light = true);
-};
+} // namespace XX
 
 #endif // NOT XXDeviceToolsH

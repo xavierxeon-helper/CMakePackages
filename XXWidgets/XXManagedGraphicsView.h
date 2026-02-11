@@ -4,31 +4,34 @@
 #include "XXWidgetsExportDef.h"
 #include <QGraphicsView>
 
-namespace Managed
+namespace XX
 {
-   class XXWIDGETS_DECLSPEC GraphicsView : public QGraphicsView
+   namespace Managed
    {
-      Q_OBJECT
+      class XXWIDGETS_DECLSPEC GraphicsView : public QGraphicsView
+      {
+         Q_OBJECT
 
-   public:
-      GraphicsView(QWidget* parent);
+      public:
+         GraphicsView(QWidget* parent);
 
-   public:
-      template <typename TargetClass>
-      void onClicked(TargetClass* instance, bool (TargetClass::*memberFunction)(const QPointF&, QGraphicsItem*));
+      public:
+         template <typename TargetClass>
+         void onClicked(TargetClass* instance, bool (TargetClass::*memberFunction)(const QPointF&, QGraphicsItem*));
 
-      void deactivateFrame();
+         void deactivateFrame();
 
-   private:
-      using ClickFunction = std::function<bool(const QPointF&, QGraphicsItem*)>;
+      private:
+         using ClickFunction = std::function<bool(const QPointF&, QGraphicsItem*)>;
 
-   private:
-      void mousePressEvent(QMouseEvent* event) override;
+      private:
+         void mousePressEvent(QMouseEvent* event) override;
 
-   private:
-      ClickFunction mousePressFunction;
-   };
-} // namespace Managed
+      private:
+         ClickFunction mousePressFunction;
+      };
+   } // namespace Managed
+} // namespace XX
 
 #ifndef XXManagedGraphicsViewHPP
 #include "XXManagedGraphicsView.hpp"

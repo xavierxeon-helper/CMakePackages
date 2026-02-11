@@ -5,14 +5,17 @@
 
 #include <QObject>
 
-class XXCORE_DECLSPEC ShellClient
+namespace XX
 {
-public:
-   static QByteArray executeLocal(const QString& command, QByteArray* error = nullptr);
-   static QByteArray executeRemote(const QString& host, const QString& command, QByteArray* error = nullptr);
+   class XXCORE_DECLSPEC ShellClient
+   {
+   public:
+      static QByteArray executeLocal(const QString& command, QByteArray* error = nullptr);
+      static QByteArray executeRemote(const QString& host, const QString& command, QByteArray* error = nullptr);
 
-private:
-   static QByteArray execute(const QString& program, const QStringList& args, QByteArray* error);
-};
+   private:
+      static QByteArray execute(const QString& program, const QStringList& args, QByteArray* error);
+   };
+} // namespace XX
 
 #endif // NOT XXShellClientH

@@ -8,26 +8,29 @@
 
 #include <QDateTime>
 
-struct XXLOG_DECLSPEC LogFileBase
+namespace XX
 {
-   static QString appendTimeStampToFileName(const QString& fileName, const QDateTime& timestamp = QDateTime::currentDateTime());
-};
+   struct XXLOG_DECLSPEC LogFileBase
+   {
+      static QString appendTimeStampToFileName(const QString& fileName, const QDateTime& timestamp = QDateTime::currentDateTime());
+   };
 
-/// tag is used to create a unique instance of LogFile and provides a static text stream
-template <CompileTimeString tag>
-class LogFile : public QFile
-{
-public:
-   LogFile(const QString& fileName);
-   ~LogFile();
+   /// tag is used to create a unique instance of LogFile and provides a static text stream
+   template <CompileTimeString tag>
+   class LogFile : public QFile
+   {
+   public:
+      LogFile(const QString& fileName);
+      ~LogFile();
 
-public:
-   static QTextStream stream();
-   void changeFileName(const QString& fileName); /// closes file and opens it with a new filename
+   public:
+      static QTextStream stream();
+      void changeFileName(const QString& fileName); /// closes file and opens it with a new filename
 
-private:
-   static LogFile* me;
-};
+   private:
+      static LogFile* me;
+   };
+} // namespace XX
 
 #ifndef XXLogFileHPP
 #include "XXLogFile.hpp"

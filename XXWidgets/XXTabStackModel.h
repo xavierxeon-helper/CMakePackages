@@ -4,37 +4,40 @@
 #include "XXWidgetsExportDef.h"
 #include <QStandardItemModel>
 
-namespace TabStack
+namespace XX
 {
-   class Widget;
-
-   class XXWIDGETS_DECLSPEC Model : public QStandardItemModel
+   namespace TabStack
    {
-      Q_OBJECT
+      class Widget;
 
-   public:
-      Model(QObject* parent);
-
-   private:
-      enum Roles
+      class XXWIDGETS_DECLSPEC Model : public QStandardItemModel
       {
-         RoleName = Qt::UserRole + 1
+         Q_OBJECT
+
+      public:
+         Model(QObject* parent);
+
+      private:
+         enum Roles
+         {
+            RoleName = Qt::UserRole + 1
+         };
+
+      public:
+         void init(Widget* tabStack);
+         void apply(Widget* tabStack);
+         Q_INVOKABLE void reOrder(int sourceRow, int sourceColumn, int targetRow, int targetColumn);
+
+      private:
+         void updateLabels();
+         QHash<int, QByteArray> roleNames() const override;
+
+      private:
+         int maxRows;
+         int maxDepth;
+         QList<QStringList> labelMatrix;
       };
-
-   public:
-      void init(Widget* tabStack);
-      void apply(Widget* tabStack);
-      Q_INVOKABLE void reOrder(int sourceRow, int sourceColumn, int targetRow, int targetColumn);
-
-   private:
-      void updateLabels();
-      QHash<int, QByteArray> roleNames() const override;
-
-   private:
-      int maxRows;
-      int maxDepth;
-      QList<QStringList> labelMatrix;
-   };
-} // namespace TabStack
+   } // namespace TabStack
+} // namespace XX
 
 #endif // NOT XXTabStackModelH

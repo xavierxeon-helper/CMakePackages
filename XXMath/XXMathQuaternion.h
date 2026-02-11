@@ -3,13 +3,16 @@
 
 #include "XXMathExportDef.h"
 
-namespace Math
+namespace XX
 {
-   class XXMATH_DECLSPEC Quaternion
+   namespace Math
    {
-   public:
-      Quaternion();
-   };
-} // namespace Math
+      class XXMATH_DECLSPEC Quaternion
+      {
+      public:
+         Quaternion();
+      };
+   } // namespace Math
+} // namespace XX
 
 #endif // NOT XXMathQuaternionH

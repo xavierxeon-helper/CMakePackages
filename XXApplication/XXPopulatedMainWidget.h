@@ -8,27 +8,30 @@
 
 #include <QMenuBar>
 
-namespace Populated
+namespace XX
 {
-   class XXAPPLICATION_DECLSPEC MainWidget : public QWidget, public Abstract, public Singleton<MainWidget>
+   namespace Populated
    {
-      Q_OBJECT
+      class XXAPPLICATION_DECLSPEC MainWidget : public QWidget, public Abstract, public Singleton<MainWidget>
+      {
+         Q_OBJECT
 
-   public:
-      MainWidget();
+      public:
+         MainWidget();
 
-   protected:
-      void loadSettings();
-      virtual void closeEvent(QCloseEvent* ce) override;
-      virtual void placeMenuBar(QMenuBar* menuBar);
+      protected:
+         void loadSettings();
+         virtual void closeEvent(QCloseEvent* ce) override;
+         virtual void placeMenuBar(QMenuBar* menuBar);
 
-   private:
-      QToolBar* findOrCreateToolBar(const QString& objectName);
-      QMenu* findOrCreateMenu(const QString& objectName, const QString& text, QMenu* parentMenu);
+      private:
+         QToolBar* findOrCreateToolBar(const QString& objectName);
+         QMenu* findOrCreateMenu(const QString& objectName, const QString& text, QMenu* parentMenu);
 
-   private:
-      QMenuBar* menuBar;
-   };
-} // namespace Populated
+      private:
+         QMenuBar* menuBar;
+      };
+   } // namespace Populated
+} // namespace XX
 
 #endif // NOT XXPopulatedMainWidgetH

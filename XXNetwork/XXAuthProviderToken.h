@@ -6,28 +6,31 @@
 
 #include <QNetworkRequest>
 
-namespace AuthProvider
+namespace XX
 {
-   /// @brief Token-based authentication provider
-
-   class XXNETWORK_DECLSPEC Token : public QObject
+   namespace AuthProvider
    {
-      Q_OBJECT
+      /// @brief Token-based authentication provider
 
-   public:
-      Token(QObject* parent);
+      class XXNETWORK_DECLSPEC Token : public QObject
+      {
+         Q_OBJECT
 
-   public:
-      const QByteArray& getBearerToken() const;
-      bool isNull() const;
+      public:
+         Token(QObject* parent);
 
-      void setBearerToken(const QByteArray& token);
-      virtual bool update();
-      virtual void setAuthorization(QNetworkRequest& request) const;
+      public:
+         const QByteArray& getBearerToken() const;
+         bool isNull() const;
 
-   protected:
-      QByteArray bearerToken;
-   };
-} // namespace AuthProvider
+         void setBearerToken(const QByteArray& token);
+         virtual bool update();
+         virtual void setAuthorization(QNetworkRequest& request) const;
+
+      protected:
+         QByteArray bearerToken;
+      };
+   } // namespace AuthProvider
+} // namespace XX
 
 #endif // NOT XXAuthProviderTokenH

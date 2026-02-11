@@ -8,44 +8,46 @@
 
 #include "XXSecureNetworkSocket.h"
 
-namespace SecureNetwork
+namespace XX
 {
-   class Socket;
-   class ServerInternal;
-
-   class XXNETWORK_DECLSPEC Server : public QObject
+   namespace SecureNetwork
    {
-      Q_OBJECT
-   public:
-      Server(QObject* parent);
-      ~Server();
+      class Socket;
+      class ServerInternal;
 
-   signals:
-      void signalNewEncryptedConnection(Socket* socket);
+      class XXNETWORK_DECLSPEC Server : public QObject
+      {
+         Q_OBJECT
+      public:
+         Server(QObject* parent);
+         ~Server();
 
-   public:
-      void listen(const quint16& port);
-      bool setEncryption(const QString& caCertFileName, const QString& serverCertFileName, const QString& serverKeyFileName);
-      void setConfiguration(const QSslConfiguration& newSslConfiguration);
-      bool setPeerCommmonNameList(const QString& authUserFileName);
-      const QList<Socket::Pointer>& getSocketList() const;
-      void removeSocket(Socket* socket);
-      const QSslConfiguration& getConfiguration() const;
+      signals:
+         void signalNewEncryptedConnection(Socket* socket);
 
-   private:
-      friend class ServerInternal;
+      public:
+         void listen(const quint16& port);
+         bool setEncryption(const QString& caCertFileName, const QString& serverCertFileName, const QString& serverKeyFileName);
+         void setConfiguration(const QSslConfiguration& newSslConfiguration);
+         bool setPeerCommmonNameList(const QString& authUserFileName);
+         const QList<Socket::Pointer>& getSocketList() const;
+         void removeSocket(Socket* socket);
+         const QSslConfiguration& getConfiguration() const;
 
-   private:
-      void newConnection(Socket* socket);
+      private:
+         friend class ServerInternal;
 
-   private:
-      ServerInternal* internal;
-      QSslConfiguration sslConfiguration;
-      QList<Socket::Pointer> socketList;
-      QString issuerName;
-      QStringList peerCommonNameList;
-   };
+      private:
+         void newConnection(Socket* socket);
 
-} // namespace SecureNetwork
+      private:
+         ServerInternal* internal;
+         QSslConfiguration sslConfiguration;
+         QList<Socket::Pointer> socketList;
+         QString issuerName;
+         QStringList peerCommonNameList;
+      };
+   } // namespace SecureNetwork
+} // namespace XX
 
 #endif // NOT XXSecureNetworkServerH

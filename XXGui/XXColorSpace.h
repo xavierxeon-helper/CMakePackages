@@ -5,19 +5,22 @@
 
 #include <QColor>
 
-class XXGUI_DECLSPEC ColorSpace
+namespace XX
 {
-public:
-   struct XYB
+   class XXGUI_DECLSPEC ColorSpace
    {
-      double x = 0.0;
-      double y = 0.0;
-      double brightness = 0.0;
-   };
+   public:
+      struct XYB
+      {
+         double x = 0.0;
+         double y = 0.0;
+         double brightness = 0.0;
+      };
 
-public:
-   static QColor fromCIE(const XYB& xyb);
-   static XYB toCIE(const QColor& color);
-};
+   public:
+      static QColor fromCIE(const XYB& xyb);
+      static XYB toCIE(const QColor& color);
+   };
+} // namespace XX
 
 #endif // NOT XXColorSpaceH

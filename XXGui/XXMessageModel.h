@@ -5,18 +5,21 @@
 #include <XXLogger.h>
 #include <QStandardItemModel>
 
-class XXGUI_DECLSPEC MessageModel : public QStandardItemModel, private Logger::Target
+namespace XX
 {
-   Q_OBJECT
+   class XXGUI_DECLSPEC MessageModel : public QStandardItemModel, private Logger::Target
+   {
+      Q_OBJECT
 
-public:
-   MessageModel(QObject* parent, int stackSize);
+   public:
+      MessageModel(QObject* parent, int stackSize);
 
-signals:
-   void contentUpdated();
+   signals:
+      void contentUpdated();
 
-private:
-   void update(const Entry::Buffer& buffer) override;
-};
+   private:
+      void update(const Entry::Buffer& buffer) override;
+   };
+} // namespace XX
 
 #endif // NOT XXMessageModelH

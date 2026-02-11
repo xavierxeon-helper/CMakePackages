@@ -4,16 +4,19 @@
 #include "XXWidgetsExportDef.h"
 #include <QQuickWidget>
 
-class XXWIDGETS_DECLSPEC QmlWidget : public QQuickWidget
+namespace XX
 {
-   Q_OBJECT
+   class XXWIDGETS_DECLSPEC QmlWidget : public QQuickWidget
+   {
+      Q_OBJECT
 
-public:
-   QmlWidget(QWidget* parent);
+   public:
+      QmlWidget(QWidget* parent);
 
-public:
-   void setQuickProperty(const QString& name, QObject* object);
-   void setQuickProperty(const QString& name, const QVariant& value);
-};
+   public:
+      void setQuickProperty(const QString& name, QObject* object);
+      void setQuickProperty(const QString& name, const QVariant& value);
+   };
+} // namespace XX
 
 #endif // NOT XXWorkFlowQmlWidgetH

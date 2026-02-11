@@ -3,25 +3,28 @@
 
 #include <QByteArray>
 
-template <typename DataType>
-class ByteConversion
+namespace XX
 {
-public:
-   static QByteArray toBytes(const DataType& value, bool swap);
-   static DataType fromBytes(const QByteArray& data, bool swap);
-
-private:
-   void setBytes(const QByteArray& input);
-   QByteArray getBytes() const;
-   void swapBytes();
-
-private:
-   union
+   template <typename DataType>
+   class ByteConversion
    {
-      DataType value = DataType{};
-      char bytes[sizeof(DataType)];
+   public:
+      static QByteArray toBytes(const DataType& value, bool swap);
+      static DataType fromBytes(const QByteArray& data, bool swap);
+
+   private:
+      void setBytes(const QByteArray& input);
+      QByteArray getBytes() const;
+      void swapBytes();
+
+   private:
+      union
+      {
+         DataType value = DataType{};
+         char bytes[sizeof(DataType)];
+      };
    };
-};
+} // namespace XX
 
 #ifndef XXBytesHPP
 #include "XXByteConversion.hpp"

@@ -5,21 +5,24 @@
 
 #include "XXSize.h"
 
-/// @brief a 2d array
-template <typename DataType>
-class Matrix : public std::vector<std::vector<DataType>>
+namespace XX
 {
-public:
-   Matrix(const Size& size, const DataType& initialValue = DataType());
+   /// @brief a 2d array
+   template <typename DataType>
+   class Matrix : public std::vector<std::vector<DataType>>
+   {
+   public:
+      Matrix(const Size& size, const DataType& initialValue = DataType());
 
-public:
-   const Size& getSize() const;
-   void appendRow(const DataType& initialValue = DataType());
-   void removeRow(const uint16_t row);
+   public:
+      const Size& getSize() const;
+      void appendRow(const DataType& initialValue = DataType());
+      void removeRow(const uint16_t row);
 
-private:
-   Size size;
-};
+   private:
+      Size size;
+   };
+} // namespace XX
 
 #ifndef XXMatrixHPP
 #include "Matrix.hpp"

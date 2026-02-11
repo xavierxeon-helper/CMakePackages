@@ -7,16 +7,19 @@
 
 #include "XXGraph.h"
 
-class XXGRAPH_DECLSPEC Graph::Vertex
+namespace XX
 {
-public:
-   Vertex(const QString& name = QString());
+   class XXGRAPH_DECLSPEC Graph::Vertex
+   {
+   public:
+      Vertex(const QString& name = QString());
 
-public:
-   const QString& getName() const;
+   public:
+      const QString& getName() const;
 
-protected:
-   QString name;
-};
+   protected:
+      QString name;
+   };
+} // namespace XX
 
 #endif // NOT XXDiscreteMathsVertexH

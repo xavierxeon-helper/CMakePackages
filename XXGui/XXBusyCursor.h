@@ -3,11 +3,14 @@
 
 #include "XXGuiExportDef.h"
 
-class XXGUI_DECLSPEC BusyCursor
+namespace XX
 {
-public:
-   BusyCursor();
-   ~BusyCursor();
-};
+   class XXGUI_DECLSPEC BusyCursor
+   {
+   public:
+      BusyCursor();
+      ~BusyCursor();
+   };
+} // namespace XX
 
 #endif // XXBusyCursorH

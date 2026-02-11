@@ -6,37 +6,40 @@
 #include <QList>
 #include <QString>
 
-namespace Sample
+namespace XX
 {
-   using Data = QList<float>;
-   using Channels = QList<Data>;
-
-   struct XXAUDIO_DECLSPEC Meta
+   namespace Sample
    {
-      uint8_t noOfChannels = 1;
-      uint16_t sampleRate = 1;
-      size_t numberOfSamples = 0;
+      using Data = QList<float>;
+      using Channels = QList<Data>;
 
-      size_t noOfSamplesPerChannel() const;
-      double totalLength() const;
-   };
+      struct XXAUDIO_DECLSPEC Meta
+      {
+         uint8_t noOfChannels = 1;
+         uint16_t sampleRate = 1;
+         size_t numberOfSamples = 0;
 
-   class XXAUDIO_DECLSPEC Abstract
-   {
-   public:
-      Abstract();
+         size_t noOfSamplesPerChannel() const;
+         double totalLength() const;
+      };
 
-   protected:
-      virtual bool load(const QString& fileName) = 0;
-      virtual bool save(const QString& fileName) = 0;
+      class XXAUDIO_DECLSPEC Abstract
+      {
+      public:
+         Abstract();
 
-      static Data interlace(const Channels& input);
-      static Channels deinterlace(const Data& input, const uint8_t numberOfChannels = 2);
+      protected:
+         virtual bool load(const QString& fileName) = 0;
+         virtual bool save(const QString& fileName) = 0;
 
-   protected:
-      Data interlacedContent;
-      Meta meta;
-   };
-} // namespace Sample
+         static Data interlace(const Channels& input);
+         static Channels deinterlace(const Data& input, const uint8_t numberOfChannels = 2);
+
+      protected:
+         Data interlacedContent;
+         Meta meta;
+      };
+   } // namespace Sample
+} // namespace XX
 
 #endif // NOT XXSampleAbstractH

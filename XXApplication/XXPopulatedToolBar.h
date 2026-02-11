@@ -4,26 +4,29 @@
 #include "XXApplicationExportDef.h"
 #include <QToolBar>
 
-namespace Populated
+namespace XX
 {
-   class XXAPPLICATION_DECLSPEC ToolBar : public QToolBar
+   namespace Populated
    {
-      Q_OBJECT
-      Q_PROPERTY(QString toolBarName READ getToolBarName WRITE setToolBarName NOTIFY toolBarNameChanged)
+      class XXAPPLICATION_DECLSPEC ToolBar : public QToolBar
+      {
+         Q_OBJECT
+         Q_PROPERTY(QString toolBarName READ getToolBarName WRITE setToolBarName NOTIFY toolBarNameChanged)
 
-   public:
-      explicit ToolBar(QWidget* parent = nullptr);
+      public:
+         explicit ToolBar(QWidget* parent = nullptr);
 
-   signals:
-      void toolBarNameChanged();
+      signals:
+         void toolBarNameChanged();
 
-   public:
-      const QString& getToolBarName() const;
-      void setToolBarName(const QString& name);
+      public:
+         const QString& getToolBarName() const;
+         void setToolBarName(const QString& name);
 
-   private:
-      QString toolBarName;
-   };
-} // namespace Populated
+      private:
+         QString toolBarName;
+      };
+   } // namespace Populated
+} // namespace XX
 
 #endif // NOT XXPopulatedToolBarH
