@@ -11,8 +11,8 @@ then
 fi
 
 cd $HERE
-export WATOOLS_DOC_PATH=$ROOT_DIR/xavierxeon.github.io/WaTools
-doxygen WaTools.doxy
+export XX_DOC_PATH=$ROOT_DIR/xavierxeon.github.io/XX
+doxygen XX.doxy
 
 cd $ROOT_DIR/xavierxeon.github.io
 git add *

@@ -1,0 +1,18 @@
+#ifndef DataStoreH
+#define DataStoreH
+
+#include "XXCoreExportDef.h"
+
+#include <QString>
+
+class XXCORE_DECLSPEC DataStore
+{
+public:
+   static QString getPath();
+   static void setPath(const QString& path, const QString& anchor = QString());
+
+private:
+   static QString path;
+};
+
+#endif // NOT DataStoreH

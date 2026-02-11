@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(WaTools LANGUAGES CXX)
+project(XX LANGUAGES CXX)
 
 set(CMAKE_SUPPRESS_DEVELOPER_WARNINGS TRUE)
 

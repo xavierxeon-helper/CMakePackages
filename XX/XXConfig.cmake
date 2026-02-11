@@ -1,0 +1,33 @@
+include(${CMAKE_CURRENT_LIST_DIR}/functions_compile.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/functions_deploy.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/functions_files.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/functions_git.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/functions_qt.cmake)
+
+get_filename_component(XX_LIB_DIR "${CMAKE_CURRENT_LIST_DIR}/../lib" ABSOLUTE)
+
+option(XX_USE_AS_SUBDIRECTORY "Use XX as subdirectory" OFF)
+
+if(IOS OR ANDROID)
+   set(XX_USE_AS_SUBDIRECTORY ON)
+endif()
+
+foreach(COMPONENT ${XX_FIND_COMPONENTS})
+   #message(STATUS "NEED XX component: ${COMPONENT}")
+   if(NOT XX_USE_AS_SUBDIRECTORY)
+      find_package(XX${COMPONENT} REQUIRED)
+   else()
+      if(TARGET XX${COMPONENT})
+         message(STATUS "REUSE TARGET XX${COMPONENT}")
+         link_libraries(XX${COMPONENT})
+      else()
+         message(STATUS "ADD XX${COMPONENT} as subdirectory")
+         if(IOS)
+            set(CMAKE_XCODE_ATTRIBUTE_EXCLUDED_ARCHS[sdk=iphonesimulator*] "arm64")      
+         endif()
+         add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../XX${COMPONENT} XX${COMPONENT})
+      endif()
+      find_package(XX${COMPONENT} REQUIRED)
+   endif()
+endforeach()
+

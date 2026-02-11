@@ -1,0 +1,42 @@
+#ifndef FastFourierTransfromH
+#define FastFourierTransfromH
+
+#include "XXAudioExportDef.h"
+
+#include <QException>
+
+#include <complex>
+
+#include "XXSampleAbstract.h"
+
+// may throw Exception
+class XXAUDIO_DECLSPEC FastFourierTransfrom
+{
+public:
+   using ComplexType = std::complex<float>;
+   using ComplexData = QList<ComplexType>;
+
+public:
+   FastFourierTransfrom(const size_t size);
+
+public:
+   static ComplexData fill(const Sample::Data& data);
+   static Sample::Data strip(const ComplexData& data);
+
+   ComplexData forward(const ComplexData& input);
+   ComplexData inverse(const ComplexData& input);
+
+   const size_t& getSize() const;
+
+private:
+   void bitReverse(ComplexData& data) const;
+   void transform(ComplexData& data, bool forward) const;
+
+   void bitReverseB(ComplexData& data) const;
+   void transformB(ComplexData& data, bool forward) const;
+
+private:
+   const size_t size;
+};
+
+#endif // NOT FastFourierTransfromH

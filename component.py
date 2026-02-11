@@ -122,9 +122,9 @@ def createComponent(name, useQt=True):
       line()
 
       if useQt:
-         line('qt_add_library(${PROJECT_NAME} ${WATOOLS_LIB_TYPE} ${HEADER_FILES} ${SOURCE_FILES})')
+         line('qt_add_library(${PROJECT_NAME} ${XX_LIB_TYPE} ${HEADER_FILES} ${SOURCE_FILES})')
       else:
-         line('add_library(${PROJECT_NAME} ${WATOOLS_LIB_TYPE} ${HEADER_FILES} ${SOURCE_FILES})')
+         line('add_library(${PROJECT_NAME} ${XX_LIB_TYPE} ${HEADER_FILES} ${SOURCE_FILES})')
       line(f'add_compile_definitions(EXTENSION_{macroName})')
 
       if useQt:
@@ -147,7 +147,7 @@ def main():
 
    for name in args.names:
       name = name[0].upper() + name[1:]
-      createComponent(f'WaTools{name}')
+      createComponent(f'XX{name}')
 
 
 if __name__ == "__main__":
