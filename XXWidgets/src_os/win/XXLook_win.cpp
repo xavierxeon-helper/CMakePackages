@@ -1,4 +1,4 @@
-#include "Look.h"
+#include "XXLook.h"
 
 void Look::setDockLabel(const QString& label)
 {

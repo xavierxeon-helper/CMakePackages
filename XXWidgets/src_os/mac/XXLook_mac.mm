@@ -1,4 +1,4 @@
-#include "Look.h"
+#include "XXLook.h"
 
 #include <AppKit/NSApplication.h>
 #include <AppKit/NSDockTile.h>
