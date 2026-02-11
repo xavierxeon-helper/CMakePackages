@@ -12,7 +12,7 @@ inline XX::Matrix<DataType>::Matrix(const Size& size, const DataType& initialVal
 }
 
 template <typename DataType>
-const XX::Matrix<DataType>::Size& XX::Matrix<DataType>::getSize() const
+const XX::Size& XX::Matrix<DataType>::getSize() const
 {
    return size;
 }

@@ -25,7 +25,7 @@ namespace XX
 } // namespace XX
 
 #ifndef XXMatrixHPP
-#include "Matrix.hpp"
+#include "XXMatrix.hpp"
 #endif // NOT XXMatrixHPP
 
 #endif // NOT XXMatrixH
