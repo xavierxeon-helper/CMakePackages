@@ -21,6 +21,9 @@ namespace XX
       QVariant value(const QString& key, const QVariant& defaultValue = QVariant()) const;
       void clearValue(const QString& key);
 
+      void setJsonValue(const QString& key, const QJsonValue& value);
+      QJsonValue jsonValue(const QString& key) const;
+
    private:
       struct PathKey
       {
@@ -33,7 +36,6 @@ namespace XX
 
       QJsonValue getPathValue(const PathKey& pathKey) const;
       void setPathValue(const PathKey& pathKey, const QJsonValue& value);
-
       void clearPath(const PathKey& pathKey);
 
    private:

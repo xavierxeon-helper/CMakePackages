@@ -74,6 +74,8 @@ QVariant XX::Settings::value(const QString& key, const QVariant& defaultValue) c
 {
    const PathKey pathKey = compilePathKey(key);
    const QJsonValue value = getPathValue(pathKey);
+   if (value.isNull())
+      return defaultValue;
 
    switch (value.type())
    {
@@ -99,6 +101,20 @@ void XX::Settings::clearValue(const QString& key)
 {
    const PathKey pathKey = compilePathKey(key);
    clearPath(pathKey);
+}
+
+void XX::Settings::setJsonValue(const QString& key, const QJsonValue& value)
+{
+   const PathKey pathKey = compilePathKey(key);
+   setPathValue(pathKey, value);
+}
+
+QJsonValue XX::Settings::jsonValue(const QString& key) const
+{
+   const PathKey pathKey = compilePathKey(key);
+   const QJsonValue value = getPathValue(pathKey);
+
+   return value;
 }
 
 XX::Settings::PathKey XX::Settings::compilePathKey(const QString& key) const
