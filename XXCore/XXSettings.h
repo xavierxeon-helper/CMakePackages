@@ -34,9 +34,14 @@ namespace XX
       QJsonValue getPathValue(const PathKey& pathKey) const;
       void setPathValue(const PathKey& pathKey, const QJsonValue& value);
 
+      void clearPath(const PathKey& pathKey);
+
    private:
       static QString fileName;
-      QJsonObject data;
+      static int instanceCount;
+      static QJsonObject data;
+
+      static const QString ByteArrayMarker;
    };
 } // namespace XX
 

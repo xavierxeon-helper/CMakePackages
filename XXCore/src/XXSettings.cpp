@@ -8,22 +8,27 @@
 
 #include <XXFileTools.h>
 
-static const QString ByteArrayMarker = "@ByteArray=";
-
 QString XX::Settings::fileName;
+QJsonObject XX::Settings::data;
+int XX::Settings::instanceCount = 0;
+
+const QString XX::Settings::ByteArrayMarker = "@ByteArray=";
 
 XX::Settings::Settings()
-   : data()
 {
    if (fileName.isEmpty())
       fileName = compileFileName();
 
-   data = FileTools::readJson(fileName);
+   if (0 == instanceCount)
+      data = FileTools::readJson(fileName);
+   instanceCount++;
 }
 
 XX::Settings::~Settings()
 {
-   FileTools::writeJson(data, fileName);
+   instanceCount--;
+   if (0 == instanceCount)
+      FileTools::writeJson(data, fileName);
 }
 
 QString XX::Settings::compileFileName()
@@ -93,7 +98,7 @@ QVariant XX::Settings::value(const QString& key, const QVariant& defaultValue) c
 void XX::Settings::clearValue(const QString& key)
 {
    const PathKey pathKey = compilePathKey(key);
-   //internal.remove(key);
+   clearPath(pathKey);
 }
 
 XX::Settings::PathKey XX::Settings::compilePathKey(const QString& key) const
@@ -112,7 +117,6 @@ XX::Settings::PathKey XX::Settings::compilePathKey(const QString& key) const
 QJsonValue XX::Settings::getPathValue(const PathKey& pathKey) const
 {
    using InternalFunction = std::function<QJsonValue(const QJsonObject&, QStringList)>;
-
    InternalFunction getInternal = [&](const QJsonObject& parent, QStringList path)
    {
       if (path.isEmpty())
@@ -135,7 +139,6 @@ QJsonValue XX::Settings::getPathValue(const PathKey& pathKey) const
 void XX::Settings::setPathValue(const PathKey& pathKey, const QJsonValue& value)
 {
    using InternalFunction = std::function<void(QJsonObject&, QStringList)>;
-
    InternalFunction setInternal = [&](QJsonObject& parent, QStringList path)
    {
       if (path.isEmpty())
@@ -153,4 +156,26 @@ void XX::Settings::setPathValue(const PathKey& pathKey, const QJsonValue& value)
    };
 
    setInternal(data, pathKey.path);
+}
+
+void XX::Settings::clearPath(const PathKey& pathKey)
+{
+   using InternalFunction = std::function<void(QJsonObject&, QStringList)>;
+   InternalFunction clearInternal = [&](QJsonObject& parent, QStringList path)
+   {
+      if (path.isEmpty())
+      {
+         parent.remove(pathKey.key);
+      }
+      else
+      {
+         const QString key = path.takeFirst();
+         QJsonObject content = parent[key].toObject();
+
+         clearInternal(content, path);
+         parent[key] = content;
+      }
+   };
+
+   clearInternal(data, pathKey.path);
 }
