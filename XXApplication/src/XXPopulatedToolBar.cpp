@@ -4,7 +4,10 @@ XX::Populated::ToolBar::ToolBar(QWidget* parent)
    : QToolBar(parent)
    , toolBarName()
 {
-   setIconSize(QSize(16, 16));
+   // default values
+   setIconSize(QSize(24, 24));
+   setMovable(false);
+   setFloatable(false);
 }
 
 const QString& XX::Populated::ToolBar::getToolBarName() const
