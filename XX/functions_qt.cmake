@@ -98,7 +98,7 @@ endfunction()
 function(add_markdown_dir SUBPATH)
 
    cmake_parse_arguments(PARSE_ARGV 1 MARKDOWN_ARG "" "RCNAME;PREFIX" "")
-   add_resource_dir(${SUBPATH} RCNAME ${MARKDOWN_ARG_RCNAME} PREFIX ${MARKDOWN_ARG_PREFIX FILTER "*.md")
+   add_resource_dir(${SUBPATH} RCNAME ${MARKDOWN_ARG_RCNAME} PREFIX ${MARKDOWN_ARG_PREFIX} FILTER "*.md")
 
 endfunction()
 
