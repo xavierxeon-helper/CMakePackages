@@ -2,22 +2,25 @@
 
 XX::Populated::MenuBar::MenuBar(QWidget* parent)
    : QMenuBar(parent)
-   , menuName()
+   , menuBarName()
 {
 }
 
-const QString& XX::Populated::MenuBar::getMenuName() const
+const QString& XX::Populated::MenuBar::getMenuBarName() const
 {
-   return menuName;
+   return menuBarName;
 }
 
-void XX::Populated::MenuBar::setMenuName(const QString& name)
+void XX::Populated::MenuBar::setMenuBarName(const QString& name)
 {
-   if (menuName == name)
+   if (menuBarName == name)
       return;
 
-   menuName = name;
-   emit menuNameChanged();
+   menuBarName = name;
+   emit menuBarNameChanged();
+}
 
-   setObjectName(name);
+void XX::Populated::MenuBar::init()
+{
+   setObjectName(menuBarName);
 }

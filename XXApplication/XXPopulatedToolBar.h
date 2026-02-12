@@ -22,6 +22,7 @@ namespace XX
       public:
          const QString& getToolBarName() const;
          void setToolBarName(const QString& name);
+         void init();
 
       private:
          QString toolBarName;

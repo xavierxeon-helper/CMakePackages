@@ -6,6 +6,9 @@
 
 #include <XXSettings.h>
 
+#include "XXPopulatedMenuBar.h"
+#include "XXPopulatedToolBar.h"
+
 XX::Populated::Abstract::Abstract(QWidget* parentWidget)
    : parentWidget(parentWidget)
    , toolBarCreationFunction(nullptr)
@@ -107,6 +110,14 @@ QString XX::Populated::Abstract::writeExampleResource(const QString& xmlResource
 
 void XX::Populated::Abstract::populateMenuAndToolBar(const QString& xmlResource)
 {
+   const QList<ToolBar*> toolBarList = parentWidget->findChildren<ToolBar*>(Qt::FindChildrenRecursively);
+   for (ToolBar* toolBar : toolBarList)
+      toolBar->init();
+
+   const QList<MenuBar*> menuBarList = parentWidget->findChildren<MenuBar*>(Qt::FindChildrenRecursively);
+   for (MenuBar* menuBar : menuBarList)
+      menuBar->init();
+
    QFile file(xmlResource);
    if (!file.open(QIODevice::ReadOnly))
       return;

@@ -22,6 +22,9 @@ void XX::Populated::ToolBar::setToolBarName(const QString& name)
 
    toolBarName = name;
    emit toolBarNameChanged();
+}
 
-   setObjectName(name);
+void XX::Populated::ToolBar::init()
+{
+   setObjectName(toolBarName);
 }
