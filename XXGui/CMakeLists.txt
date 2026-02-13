@@ -3,7 +3,7 @@ project(XXGui LANGUAGES CXX)
 
 include(../CommonBuild.cmake)
 
-find_package(Qt6 REQUIRED COMPONENTS Gui Qml)
+find_package(Qt6 REQUIRED COMPONENTS Gui Qml Quick)
 set(CMAKE_AUTOMOC ON)
 
 find_package(XX REQUIRED COMPONENTS Core Log)
@@ -23,5 +23,5 @@ file(GLOB_RECURSE SOURCE_FILES
 qt_add_library(${PROJECT_NAME} ${XX_LIB_TYPE} ${HEADER_FILES} ${SOURCE_FILES})
 add_compile_definitions(EXTENSION_XXGUI)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Gui Qt6::Qml)
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Gui Qt6::Qml Qt6::Quick)
 

@@ -6,7 +6,6 @@
 XX::QmlWidget::QmlWidget(QWidget* parent)
    : QQuickWidget(parent)
 {
-   setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
    setResizeMode(SizeRootObjectToView);
 }
 
