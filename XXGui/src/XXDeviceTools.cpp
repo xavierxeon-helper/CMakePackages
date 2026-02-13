@@ -9,6 +9,8 @@ QSize XX::DeviceTools::getSize(const DeviceIdentifier& deviceId)
    {
       case iPadMini:
          return QSize(1133, 695);
+      case iPadPro13:
+         return QSize(1376, 975);
       default:
          return QSize(0, 0);
    }

@@ -95,10 +95,6 @@ def createComponent(name, useQt=True):
       line('cmake_minimum_required(VERSION 3.20)')
       line(f'project({name} LANGUAGES CXX)')
       line()
-      line('set(CMAKE_CXX_STANDARD 20)')
-      line('set(CMAKE_CXX_STANDARD_REQUIRED ON)')
-      line('set(CMAKE_COMPILE_WARNING_AS_ERROR ON)')
-      line()
       line('include(../CommonBuild.cmake)')
       line()
 

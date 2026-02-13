@@ -16,7 +16,8 @@ namespace XX
    public:
       enum DeviceIdentifier
       {
-         iPadMini
+         iPadMini,
+         iPadPro13
       };
       Q_ENUM(DeviceIdentifier)
 
