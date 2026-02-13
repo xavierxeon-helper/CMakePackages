@@ -11,6 +11,7 @@
 QString XX::Settings::fileName;
 QJsonObject XX::Settings::data;
 int XX::Settings::instanceCount = 0;
+bool XX::Settings::modified = false;
 
 const QString XX::Settings::ByteArrayMarker = "@ByteArray=";
 
@@ -27,8 +28,11 @@ XX::Settings::Settings()
 XX::Settings::~Settings()
 {
    instanceCount--;
-   if (0 == instanceCount)
+   if (0 == instanceCount && modified)
+   {
       FileTools::writeJson(data, fileName);
+      modified = false;
+   }
 }
 
 QString XX::Settings::compileFileName()
@@ -172,6 +176,7 @@ void XX::Settings::setPathValue(const PathKey& pathKey, const QJsonValue& value)
    };
 
    setInternal(data, pathKey.path);
+   modified = true;
 }
 
 void XX::Settings::clearPath(const PathKey& pathKey)
@@ -194,4 +199,5 @@ void XX::Settings::clearPath(const PathKey& pathKey)
    };
 
    clearInternal(data, pathKey.path);
+   modified = true;
 }

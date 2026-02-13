@@ -6,6 +6,7 @@
 
 #include <QQmlApplicationEngine>
 #include <QSize>
+#include <QWindow>
 
 namespace XX
 {
@@ -24,6 +25,7 @@ namespace XX
    public:
       static QSize getSize(const DeviceIdentifier& deviceId);
       static void fixSize(QQmlApplicationEngine* engine, const DeviceIdentifier& deviceId);
+      static void fixSize(QWindow* window, const DeviceIdentifier& deviceId);
 
       static void forceDisplayMode(bool light = true);
    };

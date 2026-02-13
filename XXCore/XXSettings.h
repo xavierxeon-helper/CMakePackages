@@ -42,6 +42,7 @@ namespace XX
       static QString fileName;
       static int instanceCount;
       static QJsonObject data;
+      static bool modified;
 
       static const QString ByteArrayMarker;
    };

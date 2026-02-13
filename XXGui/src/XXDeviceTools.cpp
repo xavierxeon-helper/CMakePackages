@@ -18,7 +18,11 @@ QSize XX::DeviceTools::getSize(const DeviceIdentifier& deviceId)
 
 void XX::DeviceTools::fixSize(QQmlApplicationEngine* engine, const DeviceIdentifier& deviceId)
 {
-   QObject* mainWindow = engine->rootObjects().first();
+   const QList<QObject*> objectList = engine->rootObjects();
+   if (objectList.isEmpty())
+      return;
+
+   QObject* mainWindow = objectList.first();
 
    const QSize size = getSize(deviceId);
 
@@ -27,6 +31,14 @@ void XX::DeviceTools::fixSize(QQmlApplicationEngine* engine, const DeviceIdentif
 
    mainWindow->setProperty("minimumHeight", size.height());
    mainWindow->setProperty("maximumHeight", size.height());
+}
+
+void XX::DeviceTools::fixSize(QWindow* window, const DeviceIdentifier& deviceId)
+{
+   const QSize size = getSize(deviceId);
+
+   window->setMinimumSize(size);
+   window->setMaximumSize(size);
 }
 
 void XX::DeviceTools::forceDisplayMode(bool light)
