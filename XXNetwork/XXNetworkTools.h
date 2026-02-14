@@ -9,7 +9,7 @@ namespace XX
 {
    namespace Network
    {
-      /// @brief Network utility functions
+      //! @brief Network utility functions
 
       struct XXNETWORK_DECLSPEC Tools
       {

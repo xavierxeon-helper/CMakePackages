@@ -21,7 +21,7 @@ namespace XX
 
    namespace RestApi
    {
-      /// @brief Blocking REST API client
+      //! @brief Blocking REST API client
 
       class XXNETWORK_DECLSPEC Blocking : public QObject, public Network::Settings
       {

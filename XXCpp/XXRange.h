@@ -31,18 +31,18 @@ namespace XX
          Finder();
 
       public:
-         /// min to datatype max and max to datatype min
+         //! min to datatype max and max to datatype min
          template <typename TestType = DataType, isSigned<TestType> = true>
          void reset();
 
-         /// min to zero and max to datatype min
+         //! min to zero and max to datatype min
          template <typename TestType = DataType, isUnsigned<TestType> = true>
          void reset();
 
-         /// min and max to value
+         //! min and max to value
          void init(const DataType& value);
 
-         /// test value and update min / mix
+         //! test value and update min / mix
          void observe(const DataType& value);
 
          const DataType& min() const;

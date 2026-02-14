@@ -5,18 +5,21 @@
 
 namespace XX
 {
+   //! @brief a locker class to prevent executions of code
+   //! @ingroup XXCpp
+
    template <CompileTimeString tag>
    class Locker
    {
    public:
-      /// @brief set the locker active
+      //! @brief set the locker active
       Locker();
       ~Locker();
 
    public:
-      /// @brief check if some instance of a locker is active
+      //! @brief check if some instance of a locker is active
       static bool engaged();
-      /// @brief gives the ability to do something once
+      //! @brief gives the ability to do something once
       static bool doOnce();
 
    private:

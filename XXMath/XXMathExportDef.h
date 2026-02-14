@@ -1,6 +1,8 @@
 #ifndef XXMathExportDefH
 #define XXMathExportDefH
 
+//! @addtogroup XXMath
+
 // clang-format off
 #if defined(__unix) || defined(__QNXNTO__) || defined(__APPLE__)
    #define XXMATH_DECLSPEC
@@ -14,4 +16,3 @@
 // clang-format on
 
 #endif // NOT XXMathExportDefH
-

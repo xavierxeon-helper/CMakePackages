@@ -1,6 +1,4 @@
-# CMakePackage
-cmake package
-
+# XX CMake Package
 [Documentation](https://xavierxeon.github.io/XX/html/index.html)
 
 ## install

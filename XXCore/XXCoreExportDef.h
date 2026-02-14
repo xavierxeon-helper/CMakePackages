@@ -1,6 +1,8 @@
 #ifndef XXCoreExportDefH
 #define XXCoreExportDefH
 
+//! @addtogroup XXCore
+
 // clang-format off
 #if defined(__unix) || defined(__QNXNTO__) || defined(__APPLE__)
    #define XXCORE_DECLSPEC
@@ -14,4 +16,3 @@
 // clang-format on
 
 #endif // NOT XXCoreExportDefH
-

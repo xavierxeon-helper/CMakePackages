@@ -1,6 +1,8 @@
 #ifndef XXXXLogExportDefH
 #define XXXXLogExportDefH
 
+//! @addtogroup XXLog
+
 // clang-format off
 #if defined(__unix) || defined(__QNXNTO__) || defined(__APPLE__)
    #define XXLOG_DECLSPEC

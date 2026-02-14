@@ -7,7 +7,7 @@ namespace XX
 {
    namespace Network
    {
-      /// @brief Network settings class
+      //! @brief Network settings class
 
       class XXNETWORK_DECLSPEC Settings
       {

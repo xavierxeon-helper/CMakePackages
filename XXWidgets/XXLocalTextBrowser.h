@@ -6,6 +6,9 @@
 
 namespace XX
 {
+   /*! @addtogroup XXWidgets
+      @{
+   */
    class XXWIDGETS_DECLSPEC LocalTextBrowser : public QTextBrowser
    {
       Q_OBJECT
@@ -16,6 +19,8 @@ namespace XX
    private:
       QVariant loadResource(int type, const QUrl& name) override;
    };
+
+   //! @}
 } // namespace XX
 
 #endif // NOT XXLocalTextBrowserH

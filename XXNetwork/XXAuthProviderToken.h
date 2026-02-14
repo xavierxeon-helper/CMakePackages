@@ -10,7 +10,7 @@ namespace XX
 {
    namespace AuthProvider
    {
-      /// @brief Token-based authentication provider
+      //! @brief Token-based authentication provider
 
       class XXNETWORK_DECLSPEC Token : public QObject
       {

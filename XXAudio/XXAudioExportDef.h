@@ -1,6 +1,8 @@
 #ifndef XXAudioExportDefH
 #define XXAudioExportDefH
 
+//! @addtogroup XXAudio
+
 // clang-format off
 #if defined(__unix) || defined(__QNXNTO__) || defined(__APPLE__)
    #define XXAUDIO_DECLSPEC
@@ -14,4 +16,3 @@
 // clang-format on
 
 #endif // NOT XXAudioExportDefH
-

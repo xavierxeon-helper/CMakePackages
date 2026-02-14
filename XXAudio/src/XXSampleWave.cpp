@@ -12,45 +12,50 @@ const float XX::Sample::Wave::maxValue = static_cast<float>(std::numeric_limits<
 // 16 bit PCM wav files
 // see http://soundfile.sapp.org/doc/WaveFormat/
 
-struct WaveHeader
+namespace XX
 {
-   // RIFF Chunk Descriptor
-   uint8_t RIFF[4] = {'R', 'I', 'F', 'F'}; // RIFF Header Magic header
-   uint32_t chunkSize = 0;                 // RIFF Chunk Size
-   uint8_t WAVE[4] = {'W', 'A', 'V', 'E'}; // WAVE Header
-};
-
-struct WaveChunkHeader
-{
-   // "data" sub-chunk
-   uint8_t id[4] = {'d', 'a', 't', 'a'}; // "data"  string
-   uint32_t dataSize = 0;                // Sampled data length
-
-   QString idName()
+   /// \internal
+   struct WaveHeader
    {
-      QString text;
-      text += QByteArray(1, (char)id[0]);
-      text += QByteArray(1, (char)id[1]);
-      text += QByteArray(1, (char)id[2]);
-      text += QByteArray(1, (char)id[3]);
+      // RIFF Chunk Descriptor
+      uint8_t RIFF[4] = {'R', 'I', 'F', 'F'}; // RIFF Header Magic header
+      uint32_t chunkSize = 0;                 // RIFF Chunk Size
+      uint8_t WAVE[4] = {'W', 'A', 'V', 'E'}; // WAVE Header
+   };
 
-      return text;
-   }
-};
+   struct WaveChunkHeader
+   {
+      // "data" sub-chunk
+      uint8_t id[4] = {'d', 'a', 't', 'a'}; // "data"  string
+      uint32_t dataSize = 0;                // Sampled data length
 
-struct WaveFmtHeader
-{
-   // "fmt" sub-chunk
-   uint8_t fmt[4] = {'f', 'm', 't', ' '}; // FMT header
-   uint32_t dataSize = 16;                // Size of the fmt chunk
+      QString idName()
+      {
+         QString text;
+         text += QByteArray(1, (char)id[0]);
+         text += QByteArray(1, (char)id[1]);
+         text += QByteArray(1, (char)id[2]);
+         text += QByteArray(1, (char)id[3]);
 
-   uint16_t audioFormat = 1;    // Audio format 1=PCM,6=mulaw,7=alaw, 257=IBM Mu-Law, 258=IBM A-Law, 259=ADPCM
-   uint16_t numChannels = 2;    // Number of channels 1=Mono 2=Stereo
-   uint32_t sampleRate = 41000; // Sampling Frequency in Hz
-   uint32_t bytesPerSec = 0;    // bytes per second
-   uint16_t blockAlign = 0;     // 2=16-bit mono, 4=16-bit stereo
-   uint16_t bitsPerSample = 16; // Number of bits per sample
-};
+         return text;
+      }
+   };
+
+   struct WaveFmtHeader
+   {
+      // "fmt" sub-chunk
+      uint8_t fmt[4] = {'f', 'm', 't', ' '}; // FMT header
+      uint32_t dataSize = 16;                // Size of the fmt chunk
+
+      uint16_t audioFormat = 1;    // Audio format 1=PCM,6=mulaw,7=alaw, 257=IBM Mu-Law, 258=IBM A-Law, 259=ADPCM
+      uint16_t numChannels = 2;    // Number of channels 1=Mono 2=Stereo
+      uint32_t sampleRate = 41000; // Sampling Frequency in Hz
+      uint32_t bytesPerSec = 0;    // bytes per second
+      uint16_t blockAlign = 0;     // 2=16-bit mono, 4=16-bit stereo
+      uint16_t bitsPerSample = 16; // Number of bits per sample
+   };
+   /// \endinternal
+} // namespace XX
 
 bool XX::Sample::Wave::load(const QString& fileName)
 {

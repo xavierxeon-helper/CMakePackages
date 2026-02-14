@@ -1,6 +1,8 @@
 #ifndef XXGuiExportDefH
 #define XXGuiExportDefH
 
+//! @addtogroup XXGui
+
 // clang-format off
 #if defined(__unix) || defined(__QNXNTO__) || defined(__APPLE__)
    #define XXGUI_DECLSPEC
@@ -14,4 +16,3 @@
 // clang-format on
 
 #endif // NOT XXGuiExportDefH
-

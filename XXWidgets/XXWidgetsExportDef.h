@@ -14,4 +14,3 @@
 // clang-format on
 
 #endif // NOT XXWidgetsExportDefH
-

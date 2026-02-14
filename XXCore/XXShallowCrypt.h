@@ -7,18 +7,18 @@
 #include <QString>
 #include <QSysInfo>
 
-/**  
-uses a simple XOR cipher + some additional obfuscations
-see https://en.wikipedia.org/wiki/XOR_cipher
-THIS IS NOT A SAFE ENCRYPTION!
-*/
-
 namespace XX
 {
+   /*!  
+   @brief uses a simple XOR cipher + some additional obfuscations
+   see https://en.wikipedia.org/wiki/XOR_cipher
+   THIS IS NOT A SAFE ENCRYPTION!
+   */
+
    class XXCORE_DECLSPEC ShallowCrypt
    {
    public:
-      /// no key => no encryption!
+      //! no key => no encryption!
       ShallowCrypt(QByteArray key = QSysInfo::machineUniqueId(), QCryptographicHash::Algorithm algorithm = QCryptographicHash::Sha1);
 
    public:

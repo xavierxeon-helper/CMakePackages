@@ -7,7 +7,7 @@
 
 namespace XX
 {
-   /// @brief simple size structure, to be used where QSize is not available
+   //! @brief simple size structure, to be used where QSize is not available
    struct XXCPP_DECLSPEC Size
    {
       uint16_t width;

@@ -9,7 +9,8 @@
 
 namespace XX
 {
-   /// provide streams for logging messages and warnings
+   //! @brief provide streams for logging messages and warnings
+
    namespace Logger
    {
       XXLOG_DECLSPEC QTextStream stream(const Qt::GlobalColor& color = Qt::black);
