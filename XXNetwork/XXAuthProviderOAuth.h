@@ -13,7 +13,7 @@ namespace XX
    namespace AuthProvider
    {
       //! @brief OAuth2 authentication provider
-      //! rediirct url is http://127.0.0.1:1234
+      //! @details redirect url is http://127.0.0.1:1234/
 
       class XXNETWORK_DECLSPEC OAuth : public Token, public Network::Settings
       {

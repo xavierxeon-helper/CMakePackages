@@ -11,11 +11,16 @@
 
 namespace XX
 {
+   //! @brief graph algorithms
+   //! @ingroup XXGraph
+
    class XXGRAPH_DECLSPEC Graph::Algorithm
    {
    public:
+      //! @brief list of vertex or edge indexes
       using IndexList = QList<int>;
 
+      //! @brief path from one vertex to another
       struct Path
       {
          static const double invalidDistance;
@@ -26,6 +31,7 @@ namespace XX
          using Map = QMap<int, Path>; // end vertex index vs path
       };
 
+      //! @brief result tree of graph traversal
       struct XXGRAPH_DECLSPEC Tree
       {
          struct VertexData
@@ -45,6 +51,7 @@ namespace XX
          VertexData findData(const int vertexIndex) const;
       };
 
+      //! @brief graph algorithms
       struct TreeEdges
       {
          IndexList treeEdges;    // edges used for visit

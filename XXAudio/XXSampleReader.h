@@ -11,7 +11,7 @@ namespace XX
    namespace Sample
    {
       //! @brief reader for audio samples
-      //! wav file only!
+      //! @details wav file only!
       //! @ingroup XXAudio
 
       class XXAUDIO_DECLSPEC Reader : public Wave

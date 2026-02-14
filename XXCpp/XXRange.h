@@ -15,7 +15,7 @@ namespace XX
       @{
       @ingroup XXCpp
       @brief template test functions
-      to test if a type is an integer, float, signed or unsigned type
+      @details test if a type is an integer, float, signed or unsigned type
    */
 
    template <typename TestType>
@@ -44,18 +44,18 @@ namespace XX
          Finder();
 
       public:
-         //! min to datatype max and max to datatype min
+         //! @brief min to datatype max and max to datatype min
          template <typename TestType = DataType, isSigned<TestType> = true>
          void reset();
 
-         //! min to zero and max to datatype min
+         //! @brief min to zero and max to datatype min
          template <typename TestType = DataType, isUnsigned<TestType> = true>
          void reset();
 
-         //! min and max to value
+         //! @brief min and max to value
          void init(const DataType& value);
 
-         //! test value and update min / mix
+         //! @brief test value and update min / max
          void observe(const DataType& value);
 
          const DataType& min() const;

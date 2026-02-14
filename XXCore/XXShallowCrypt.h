@@ -10,14 +10,17 @@
 namespace XX
 {
    //! @brief uses a simple XOR cipher + some additional obfuscations
-   //! see https://en.wikipedia.org/wiki/XOR_cipher
-   //! THIS IS NOT A SAFE ENCRYPTION!
+   /*! 
+      @details __THIS IS NOT A SAFE ENCRYPTION!__
+      
+      see https://en.wikipedia.org/wiki/XOR_cipher      
+   */
    //! @ingroup XXCore
 
    class XXCORE_DECLSPEC ShallowCrypt
    {
    public:
-      //! no key => no encryption!
+      //! @brief no key => no encryption!
       ShallowCrypt(QByteArray key = QSysInfo::machineUniqueId(), QCryptographicHash::Algorithm algorithm = QCryptographicHash::Sha1);
 
    public:

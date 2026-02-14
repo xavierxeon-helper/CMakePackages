@@ -7,6 +7,12 @@
 
 namespace XX
 {
+   //! @brief graph structure
+   /*!
+      @details fill with \ref Vertex "vertices" and  \ref Edge "edges", then use \ref Algorithm "algorithms" to process the graph data
+   */
+   //! @ingroup XXGraph
+
    class XXGRAPH_DECLSPEC Graph
    {
    public:

@@ -15,7 +15,8 @@ namespace XX
       static QString appendTimeStampToFileName(const QString& fileName, const QDateTime& timestamp = QDateTime::currentDateTime());
    };
 
-   //! tag is used to create a unique instance of LogFile and provides a static text stream
+   //! @brief a log file
+   //! @details tag is used to create a unique instance of LogFile and provides a static text stream
    template <CompileTimeString tag>
    class LogFile : public QFile
    {
@@ -25,7 +26,7 @@ namespace XX
 
    public:
       static QTextStream stream();
-      //! closes file and opens it with a new filename
+      //! @brief closes file and opens it with a new filename
       void changeFileName(const QString& fileName);
 
    private:

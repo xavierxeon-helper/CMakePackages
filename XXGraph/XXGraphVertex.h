@@ -9,6 +9,9 @@
 
 namespace XX
 {
+   //! @brief a vertex in a graph
+   //! @ingroup XXGraph
+
    class XXGRAPH_DECLSPEC Graph::Vertex
    {
    public:

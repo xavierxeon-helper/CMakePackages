@@ -9,6 +9,10 @@ class Vertex;
 
 namespace XX
 {
+   //! @brief an edge in a graph
+   //! @details an edge can be directed or undirected, depending on the weights
+   //! @ingroup XXGraph
+
    class XXGRAPH_DECLSPEC Graph::Edge
    {
    public:
