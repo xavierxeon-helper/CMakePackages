@@ -10,7 +10,10 @@ namespace XX
 {
    namespace Sample
    {
-      // wav file only!
+      //! @brief reader for audio samples
+      //! wav file only!
+      //! @ingroup XXAudio
+
       class XXAUDIO_DECLSPEC Reader : public Wave
       {
       public:

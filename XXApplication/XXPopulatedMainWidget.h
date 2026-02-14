@@ -12,6 +12,9 @@ namespace XX
 {
    namespace Populated
    {
+      //! @brief main widget that can be populated with menu and tool bars based on XML resources
+      //! @ingroup XXApplication
+
       class XXAPPLICATION_DECLSPEC MainWidget : public QWidget, public Abstract, public Singleton<MainWidget>
       {
          Q_OBJECT

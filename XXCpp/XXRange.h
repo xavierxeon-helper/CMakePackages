@@ -150,23 +150,28 @@ namespace XX
          const int step;
       };
 
+      /*! @addtogroup Functions
+         @{
+         @ingroup XXCpp
+         @brief template test functions
+      */
+
       //! @brief clamp a value to a range defined by a min and max value
-      //! @ingroup XXCpp
 
       template <typename DataType>
       static const DataType& clamp(const DataType& value, const DataType& min, const DataType& max);
 
       //! @brief return the minimum of two values
-      //! @ingroup XXCpp
 
       template <typename DataType>
       static const DataType& min(const DataType& value1, const DataType& value2);
 
       //! @brief return the maximum of two values
-      //! @ingroup XXCpp
 
       template <typename DataType>
       static const DataType& max(const DataType& value1, const DataType& value2);
+
+      //! @}
    };
 } // namespace XX
 

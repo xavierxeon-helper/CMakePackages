@@ -10,6 +10,9 @@ namespace XX
 {
    namespace Populated
    {
+      //! @brief main window that can be populated with menu and tool bars based on XML resources
+      //! @ingroup XXApplication
+
       class XXAPPLICATION_DECLSPEC MainWindow : public QMainWindow, public Abstract, public Singleton<MainWindow>
       {
          Q_OBJECT

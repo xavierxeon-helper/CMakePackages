@@ -10,8 +10,12 @@ namespace XX
 {
    namespace Sample
    {
+      //! @ingroup XXAudio
       using Data = QList<float>;
       using Channels = QList<Data>;
+
+      //! @brief meta data of audio sample
+      //! @ingroup XXAudio
 
       struct XXAUDIO_DECLSPEC Meta
       {
@@ -22,6 +26,9 @@ namespace XX
          size_t noOfSamplesPerChannel() const;
          double totalLength() const;
       };
+
+      //! @brief abstract base class for audio samples
+      //! @ingroup XXAudio
 
       class XXAUDIO_DECLSPEC Abstract
       {

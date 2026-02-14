@@ -12,6 +12,9 @@
 // may throw Exception
 namespace XX
 {
+   //! @brief fast fourier transform
+   //! @ingroup XXAudio
+
    class XXAUDIO_DECLSPEC FastFourierTransfrom
    {
    public:

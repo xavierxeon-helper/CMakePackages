@@ -8,6 +8,10 @@ namespace XX
 {
    namespace Sample
    {
+      //! @brief writer for audio samples
+      //! wav file only!
+      //! @ingroup XXAudio
+
       class XXAUDIO_DECLSPEC Writer : public Wave
       {
       public:

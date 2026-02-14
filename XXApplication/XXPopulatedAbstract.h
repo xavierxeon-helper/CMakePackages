@@ -11,6 +11,9 @@ namespace XX
 {
    namespace Populated
    {
+      //! @brief abstract base class for populated UI elements
+      //! @ingroup XXApplication
+
       class XXAPPLICATION_DECLSPEC Abstract
       {
       public:

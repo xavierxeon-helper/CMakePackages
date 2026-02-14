@@ -8,6 +8,9 @@
 
 namespace XX
 {
+   //! @brief create spectrogram from audio sample data
+   //! @ingroup XXAudio
+
    class XXAUDIO_DECLSPEC Spectrogram
    {
    public:

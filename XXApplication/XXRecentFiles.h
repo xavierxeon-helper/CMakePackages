@@ -8,6 +8,9 @@
 
 namespace XX
 {
+   //! @brief manages a list of recently used files and provides a menu to access them
+   //! @ingroup XXApplication
+
    class XXAPPLICATION_DECLSPEC RecentFiles
    {
    public:

@@ -8,6 +8,10 @@ namespace XX
 {
    namespace Sample
    {
+      //! @brief wave audio sample
+      //! baseclass for Reader and Writer
+      //! @ingroup XXAudio
+
       class XXAUDIO_DECLSPEC Wave : public Abstract
       {
       protected:

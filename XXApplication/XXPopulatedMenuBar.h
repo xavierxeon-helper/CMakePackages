@@ -8,6 +8,9 @@ namespace XX
 {
    namespace Populated
    {
+      //! @brief menu bar that can be populated with menu items based on XML resources
+      //! @ingroup XXApplication
+
       class XXAPPLICATION_DECLSPEC MenuBar : public QMenuBar
       {
          Q_OBJECT
