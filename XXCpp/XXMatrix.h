@@ -8,6 +8,8 @@
 namespace XX
 {
    //! @brief a 2d array
+   //! @ingroup XXCpp
+
    template <typename DataType>
    class Matrix : public std::vector<std::vector<DataType>>
    {

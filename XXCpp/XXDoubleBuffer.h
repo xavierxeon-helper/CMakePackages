@@ -3,6 +3,9 @@
 
 namespace XX
 {
+   //! @brief swap data beteween two buffers
+   //! @ingroup XXCpp
+
    template <typename DataType>
    class DoubleBuffer
    {

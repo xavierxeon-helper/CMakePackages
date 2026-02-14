@@ -1,4 +1,5 @@
-/** 
-\defgroup XXCpp XX C++ Component
+/*!
+\defgroup XXCpp XXCpp component
 \includedoc{doc} XXCpp/README.md
-*/ 
+*/
+

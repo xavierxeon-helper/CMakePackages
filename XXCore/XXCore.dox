@@ -1,3 +1,5 @@
-/** \page XXCore XX Core Component
+/*!
+\defgroup XXCore XXCore component
 \includedoc{doc} XXCore/README.md
-*/ 
+*/
+

@@ -8,6 +8,9 @@
 
 namespace XX
 {
+   //! @brief manage application settings
+   //! @ingroup XXCore
+
    class XXCORE_DECLSPEC Settings
    {
    public:

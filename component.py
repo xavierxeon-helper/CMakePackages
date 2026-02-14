@@ -4,8 +4,6 @@ import argparse
 import os
 import pathlib
 
-from cv2 import line
-
 script_path = pathlib.Path(__file__).parent.resolve()
 script_path = str(script_path)
 
@@ -135,10 +133,10 @@ def createComponent(name, useQt=True):
 
    with FileWriter(f'{name}.dox') as line:
 
-      line(f'# {name}')
-      line(f'/** \defgroup {name} {name} component')
-      line(f'\includedoc{{doc}} {name}/README.md')
-      line(f'*/')
+      line('/*!')
+      line(f'\\defgroup {name} {name} component')
+      line(f'\\includedoc{{doc}} {name}/README.md')
+      line('*/')
       line()
 
 def main():
@@ -150,7 +148,9 @@ def main():
 
    for name in args.names:
       name = name[0].upper() + name[1:]
-      createComponent(f'XX{name}')
+      if not name.startswith('XX'):
+          name = 'XX' + name
+      createComponent(name)
 
 
 if __name__ == "__main__":

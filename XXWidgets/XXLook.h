@@ -7,9 +7,6 @@
 
 namespace XX
 {
-   /*! @addtogroup XXWidgets
-      @{
-   */
    struct XXWIDGETS_DECLSPEC Look
    {
       static void applyStlyeSheet(const QString& fileName, QWidget* widget);
@@ -20,7 +17,6 @@ namespace XX
       static void doNotShowMenuIcons();
       static void forceAppMenuBar();
    };
-   //! @}
 } // namespace XX
 
 #endif // NOT XXLookH

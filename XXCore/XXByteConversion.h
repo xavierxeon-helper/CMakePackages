@@ -5,6 +5,9 @@
 
 namespace XX
 {
+   //! @brief convert data types to and from byte arrays
+   //! @ingroup XXCore
+
    template <typename DataType>
    class ByteConversion
    {

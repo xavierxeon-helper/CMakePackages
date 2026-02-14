@@ -7,6 +7,9 @@
 
 namespace XX
 {
+   //! @brief  manage data storage paths
+   //! @ingroup XXCore
+
    class XXCORE_DECLSPEC DataStore
    {
    public:

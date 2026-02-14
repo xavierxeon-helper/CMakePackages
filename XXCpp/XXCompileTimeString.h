@@ -5,6 +5,9 @@
 
 namespace XX
 {
+   //! @brief use a string as a template arguemnt
+   //! @ingroup XXCpp
+
    template <size_t N>
    struct CompileTimeString
    {

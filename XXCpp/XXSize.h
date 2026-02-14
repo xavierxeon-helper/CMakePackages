@@ -8,6 +8,8 @@
 namespace XX
 {
    //! @brief simple size structure, to be used where QSize is not available
+   //! @ingroup XXCpp
+
    struct XXCPP_DECLSPEC Size
    {
       uint16_t width;

@@ -1,2 +1,2 @@
-# XXGraph
+a simple graph
 

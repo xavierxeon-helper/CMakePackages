@@ -30,12 +30,12 @@ then
    if [ "$OPEN_BROWSER" == "y" ] 
    then
       echo ""
-      echo "open docu.html in default browser"
+      echo "open docu in default browser"
       if [ $(uname) == "Darwin" ]
       then
-         open "https://xavierxeon.github.io/XX/html/index.html"
+         open "$XX_DOC_PATH/html/index.html"
       else
-         xdg-open "https://xavierxeon.github.io/XX/html/index.html"
+         xdg-open "$XX_DOC_PATH/html/index.html"
       fi
    fi
 else

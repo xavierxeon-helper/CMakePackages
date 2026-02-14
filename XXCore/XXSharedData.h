@@ -7,6 +7,9 @@
 
 namespace XX
 {
+   //! @brief manage shared data across processes
+   //! @ingroup XXCore
+
    template <typename DataBlock>
    class SharedData
    {

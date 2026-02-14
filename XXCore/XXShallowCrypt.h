@@ -9,11 +9,10 @@
 
 namespace XX
 {
-   /*!  
-   @brief uses a simple XOR cipher + some additional obfuscations
-   see https://en.wikipedia.org/wiki/XOR_cipher
-   THIS IS NOT A SAFE ENCRYPTION!
-   */
+   //! @brief uses a simple XOR cipher + some additional obfuscations
+   //! see https://en.wikipedia.org/wiki/XOR_cipher
+   //! THIS IS NOT A SAFE ENCRYPTION!
+   //! @ingroup XXCore
 
    class XXCORE_DECLSPEC ShallowCrypt
    {

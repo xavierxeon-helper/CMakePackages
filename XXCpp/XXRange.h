@@ -10,6 +10,14 @@
 namespace XX
 {
    // optional compiler tests
+
+   /*! @addtogroup CompilerTests
+      @{
+      @ingroup XXCpp
+      @brief template test functions
+      to test if a type is an integer, float, signed or unsigned type
+   */
+
    template <typename TestType>
    using isIntegerType = typename std::enable_if<std::is_integral<TestType>::value, bool>::type;
 
@@ -22,8 +30,13 @@ namespace XX
    template <typename TestType>
    using isUnsigned = typename std::enable_if<!std::is_signed<TestType>::value, bool>::type;
 
+   //! @}
+
    struct Range
    {
+      //! @brief find min and max values in a set of data
+      //! @ingroup XXCpp
+
       template <typename DataType>
       class Finder
       {
@@ -61,6 +74,9 @@ namespace XX
          DataType maxValue;
       };
 
+      //! @brief map a value from one range to another
+      //! @ingroup XXCpp
+
       class XXCPP_DECLSPEC Mapper
       {
       public:
@@ -84,6 +100,9 @@ namespace XX
          float maxOutput;
          float scale;
       };
+
+      //! @brief generate a iterateable sequence of numbers with a start, end and step
+      //! @ingroup XXCpp
 
       class Spread
       {
@@ -131,11 +150,20 @@ namespace XX
          const int step;
       };
 
+      //! @brief clamp a value to a range defined by a min and max value
+      //! @ingroup XXCpp
+
       template <typename DataType>
       static const DataType& clamp(const DataType& value, const DataType& min, const DataType& max);
 
+      //! @brief return the minimum of two values
+      //! @ingroup XXCpp
+
       template <typename DataType>
       static const DataType& min(const DataType& value1, const DataType& value2);
+
+      //! @brief return the maximum of two values
+      //! @ingroup XXCpp
 
       template <typename DataType>
       static const DataType& max(const DataType& value1, const DataType& value2);

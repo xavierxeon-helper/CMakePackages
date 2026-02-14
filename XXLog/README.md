@@ -1,2 +1,2 @@
-# XXLog
+log things to file
 

@@ -1,3 +1,1 @@
-# XXGui
-
-some text
+this module depends on Qt6 Gui

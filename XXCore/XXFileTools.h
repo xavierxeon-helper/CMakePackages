@@ -8,6 +8,9 @@
 
 namespace XX
 {
+   //! @brief file-related utilities
+   //! @ingroup XXCore
+
    class XXCORE_DECLSPEC FileTools
    {
    public:

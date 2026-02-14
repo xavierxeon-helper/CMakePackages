@@ -15,6 +15,9 @@ namespace XX
          AbstractCaller() = default;
       };
 
+      //! @brief concept of a function caller class
+      //! @ingroup XXCpp
+
       template <typename T>
       concept CallerClass = requires(T instance) //
       {
@@ -22,6 +25,7 @@ namespace XX
       };
 
       //! @brief allows an instance of derived class to call functions on all other instance (ncluding itself)
+      //! @ingroup XXCpp
 
       template <CompileTimeString tag>
       class Caller : public AbstractCaller

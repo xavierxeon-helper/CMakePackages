@@ -1,8 +1,6 @@
 #ifndef XXGraphExportDefH
 #define XXGraphExportDefH
 
-//! @addtogroup XXGraph
-
 // clang-format off
 #if defined(__unix) || defined(__QNXNTO__) || defined(__APPLE__)
    #define XXGRAPH_DECLSPEC

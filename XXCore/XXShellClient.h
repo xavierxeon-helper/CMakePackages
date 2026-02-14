@@ -7,6 +7,9 @@
 
 namespace XX
 {
+   //! @brief execute shell commands locally or remotely via SSH
+   //! @ingroup XXCore
+
    class XXCORE_DECLSPEC ShellClient
    {
    public:

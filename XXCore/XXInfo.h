@@ -7,6 +7,9 @@
 
 namespace XX
 {
+   //! @brief provide system and environment information
+   //! @ingroup XXCore
+
    struct XXCORE_DECLSPEC Info
    {
       static QString getHostName();

@@ -1,3 +1,1 @@
-# XXWidgets
-
-classes that use QtWidgets
+this module depends on Qt6 Widgets

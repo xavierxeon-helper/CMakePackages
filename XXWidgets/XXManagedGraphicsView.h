@@ -6,13 +6,8 @@
 
 namespace XX
 {
-
    namespace Managed
    {
-      /*! @addtogroup XXWidgets
-         @{
-      */
-
       class XXWIDGETS_DECLSPEC GraphicsView : public QGraphicsView
       {
          Q_OBJECT
@@ -35,7 +30,6 @@ namespace XX
       private:
          ClickFunction mousePressFunction;
       };
-      //! @}
    } // namespace Managed
 } // namespace XX
 

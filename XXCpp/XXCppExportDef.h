@@ -1,8 +1,6 @@
 #ifndef XXWaToolCppExportDefH
 #define XXWaToolCppExportDefH
 
-//! @addtogroup XXCpp
-
 // clang-format off
 #if defined(__unix) || defined(__QNXNTO__) || defined(__APPLE__)
    #define XXCPP_DECLSPEC

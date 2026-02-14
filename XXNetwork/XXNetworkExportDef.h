@@ -1,8 +1,6 @@
 #ifndef XXNetworkExportDefH
 #define XXNetworkExportDefH
 
-//! @addtogroup XXNetwork
-
 // clang-format off
 #if defined(__unix) || defined(__QNXNTO__) || defined(__APPLE__)
    #define XXNETWORK_DECLSPEC

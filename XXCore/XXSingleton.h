@@ -3,6 +3,9 @@
 
 namespace XX
 {
+   //! @brief base class for singleton pattern implementation
+   //! @ingroup XXCore
+
    template <typename InstanceClass>
    class Singleton
    {
