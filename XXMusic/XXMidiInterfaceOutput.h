@@ -12,6 +12,9 @@ namespace XX
    {
       namespace Interface
       {
+         //! @brief midi output
+         //! @ingroup XXMusic
+
          class XXMUSIC_DECLSPEC Output
          {
          public:

@@ -9,6 +9,9 @@
 
 namespace XX
 {
+   //! @brief time code
+   //! @ingroup XXMusic
+
    class XXMUSIC_DECLSPEC TimeCode
    {
    public:

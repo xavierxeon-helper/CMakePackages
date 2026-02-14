@@ -197,7 +197,7 @@
          <typedefs visible="yes" title=""/>
          <sequences visible="yes" title=""/>
          <dictionaries visible="yes" title=""/>
-         <enums visible="yes" title=""/>
+         <enums visible="false" title=""/>
          <enumvalues visible="yes" title=""/>
          <functions visible="yes" title=""/>
          <variables visible="yes" title=""/>

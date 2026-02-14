@@ -12,6 +12,8 @@ namespace XX
    {
       //! @ingroup XXAudio
       using Data = QList<float>;
+
+      //! @ingroup XXAudio
       using Channels = QList<Data>;
 
       //! @brief meta data of audio sample

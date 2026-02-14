@@ -13,6 +13,9 @@ namespace XX
 {
    namespace Midi
    {
+      //! @brief midi event sequence
+      //! @ingroup XXMusic
+
       class XXMUSIC_DECLSPEC Sequence
       {
       public:
@@ -59,6 +62,9 @@ namespace XX
       namespace File
       {
          // see http://www.music.mcgill.ca/~ich/classes/mumt306/StandardMIDIfileformat.html
+
+         //! @brief midi file reader
+         //! @ingroup XXMusic
 
          class XXMUSIC_DECLSPEC Reader : public Sequence
          {

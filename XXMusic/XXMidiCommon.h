@@ -7,15 +7,28 @@
 
 namespace XX
 {
+   //! @ingroup XXMusic
    using Bytes = QList<uchar>;
+
+   //! @ingroup Functions XXMusic
    Bytes& operator<<(Bytes& data, const uchar& byte);
 
    namespace Midi
    {
+      //! @ingroup XXMusic
       using Channel = uchar; // channels from 1 to 16
+
+      //! @ingroup XXMusic
       using Velocity = uchar;
+
+      //! @ingroup XXMusic
       using SongPosition = uint16_t;
+
+      //! @ingroup XXMusic
       using MessageList = QList<Bytes>;
+
+      //! @brief midi events
+      //! @ingroup XXMusic
 
       enum Event : uchar
       {
@@ -48,10 +61,16 @@ namespace XX
 
       };
 
+      //! @brief midi manufacturer codes
+      //! @ingroup XXMusic
+
       struct XXMUSIC_DECLSPEC Manufacturer
       {
          static constexpr uchar EducationalUse = 0x7D;
       };
+
+      //! @brief midi meta events
+      //! @ingroup XXMusic
 
       enum MetaEvent : uchar // for midi files
       {
@@ -72,6 +91,9 @@ namespace XX
          TimeSignature = 0x58,
          KeySignature = 0x59
       };
+
+      //! @brief midi control messages
+      //! @ingroup XXMusic
 
       enum ControllerMessage : uchar //
       {
@@ -130,6 +152,8 @@ namespace XX
          AllNotesOff = 0x78
       };
 
+      //! @brief midi playback states
+      //! @ingroup XXMusic
       enum class Playback : uchar
       {
          Start,
@@ -139,6 +163,8 @@ namespace XX
 
       struct Device
       {
+         //! @brief midi channels for supported devices
+         //! @ingroup XXMusic
          enum Channel : uchar
          {
             DopeferQuad1 = 1,
@@ -166,6 +192,9 @@ namespace XX
          };
       };
 
+      //! @brief common variables and functions for midi handling
+      //! @ingroup XXMusic
+
       struct XXMUSIC_DECLSPEC Variables
       {
          // see https://ccrma.stanford.edu/~gary/controllers/midi.html
@@ -173,8 +202,14 @@ namespace XX
       };
 
       // utilities
+
+      //! @ingroup Functions XXMusic
       XXMUSIC_DECLSPEC bool isEvent(const uchar value, const Midi::Event mask);
+
+      //! @ingroup Functions XXMusic
       XXMUSIC_DECLSPEC bool hasFirstBit(const uchar value);
+
+      //! @ingroup Functions XXMusic
       XXMUSIC_DECLSPEC uchar removeFirstBit(const uchar value);
 
    } // namespace Midi

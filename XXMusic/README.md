@@ -1,1 +1,1 @@
-music related classes
+@brief music related classes

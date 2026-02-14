@@ -8,6 +8,9 @@
 
 namespace XX
 {
+   //! @brief musical note
+   //! @ingroup XXMusic
+
    class XXMUSIC_DECLSPEC Note
    {
       Q_GADGET

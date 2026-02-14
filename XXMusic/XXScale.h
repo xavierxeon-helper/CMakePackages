@@ -9,6 +9,9 @@
 
 namespace XX
 {
+   //! @brief musical scale
+   //! @ingroup XXMusic
+
    class XXMUSIC_DECLSPEC Scale
    {
    public:

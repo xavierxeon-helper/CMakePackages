@@ -12,6 +12,9 @@ namespace XX
 {
    namespace Midi
    {
+      //! @brief midi event parser
+      //! @ingroup XXMusic
+
       class XXMUSIC_DECLSPEC Parser
       {
       public:
