@@ -2,10 +2,6 @@
 
 HERE=$(dirname "$(readlink -f "$0")")
 
-export XX_DOC_PATH=$HERE/documentation
-doxygen XX.doxy
-exit 0
-
 TMP_DIR=~/tmp/
 if [ ! -d $TMP_DIR ]
 then
@@ -21,7 +17,7 @@ fi
 
 cd $HERE
 export XX_DOC_PATH=$TMP_DIR/xavierxeon.github.io/XX
-doxygen XX.doxy
+doxygen Doxyfile
 
 cd $TMP_DIR/xavierxeon.github.io
 git add *

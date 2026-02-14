@@ -133,6 +133,13 @@ def createComponent(name, useQt=True):
       line(f'# {name}')
       line()
 
+   with FileWriter(f'{name}.dox') as line:
+
+      line(f'# {name}')
+      line(f'/** \defgroup {name} {name} component')
+      line(f'\includedoc{{doc}} {name}/README.md')
+      line(f'*/')
+      line()
 
 def main():
 
