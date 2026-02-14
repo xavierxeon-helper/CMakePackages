@@ -9,6 +9,7 @@ namespace XX
    namespace RestApi
    {
       //! @brief Asynchronous REST API client
+      //! @ingroup XXNetwork
 
       class XXNETWORK_DECLSPEC Async : public Blocking
       {

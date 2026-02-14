@@ -13,6 +13,9 @@ namespace XX
 {
    namespace SecureNetwork
    {
+      //! @brief secure network socket
+      //! @ingroup XXNetwork
+
       class XXNETWORK_DECLSPEC Socket : public QObject
       {
          Q_OBJECT

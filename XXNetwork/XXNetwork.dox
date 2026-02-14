@@ -1,5 +1,5 @@
 /*!
-@defgroup XXNetwork XXNetwork component
+@defgroup XXNetwork Network
 @includedoc{doc} XXNetwork/README.md
 */
 

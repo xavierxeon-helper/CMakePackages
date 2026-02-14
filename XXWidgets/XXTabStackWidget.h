@@ -12,6 +12,10 @@ namespace XX
 {
    namespace TabStack
    {
+      //! @brief a widget that can display multiple tabs in a stack
+      //! @details tabs can be organized in multiple depths
+      //! @ingroup XXWidgets
+
       class XXWIDGETS_DECLSPEC Widget : public QWidget
       {
          Q_OBJECT

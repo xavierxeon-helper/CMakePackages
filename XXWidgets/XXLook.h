@@ -7,6 +7,9 @@
 
 namespace XX
 {
+   //! @brief helper functions for look and feel of widgets
+   //! @ingroup XXWidgets
+
    struct XXWIDGETS_DECLSPEC Look
    {
       static void applyStlyeSheet(const QString& fileName, QWidget* widget);

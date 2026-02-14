@@ -11,6 +11,7 @@ namespace XX
    namespace AuthProvider
    {
       //! @brief Token-based authentication provider
+      //! @ingroup XXNetwork
 
       class XXNETWORK_DECLSPEC Token : public QObject
       {

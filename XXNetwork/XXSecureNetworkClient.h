@@ -10,6 +10,9 @@ namespace XX
 {
    namespace SecureNetwork
    {
+      //! @brief secure network client
+      //! @ingroup XXNetwork
+
       class XXNETWORK_DECLSPEC Client : public Socket
       {
          Q_OBJECT

@@ -9,6 +9,10 @@
 
 namespace XX
 {
+   //! @brief a QLabel that can display log messages
+   //! @details can display log messages from a Logger
+   //! @ingroup XXWidgets
+
    class XXWIDGETS_DECLSPEC MessageLabel : public QLabel, public Logger::Target
    {
       Q_OBJECT

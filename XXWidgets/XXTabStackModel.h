@@ -10,6 +10,9 @@ namespace XX
    {
       class Widget;
 
+      //! @brief a model for the tab stack widget
+      //! @ingroup XXWidgets
+
       class XXWIDGETS_DECLSPEC Model : public QStandardItemModel
       {
          Q_OBJECT

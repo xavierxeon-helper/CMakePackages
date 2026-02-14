@@ -8,6 +8,10 @@ namespace XX
 {
    namespace Managed
    {
+      //! @brief managed QTableView
+      //! @details can manage events on its items
+      //! @ingroup XXWidgets
+
       class XXWIDGETS_DECLSPEC TableView : public QTableView
       {
          Q_OBJECT

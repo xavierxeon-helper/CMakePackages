@@ -8,6 +8,10 @@ namespace XX
 {
    namespace Managed
    {
+      //! @brief managed QGraphicsView
+      //! @details can manage events on its items
+      //! @ingroup XXWidgets
+
       class XXWIDGETS_DECLSPEC GraphicsView : public QGraphicsView
       {
          Q_OBJECT

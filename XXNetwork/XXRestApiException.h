@@ -13,6 +13,7 @@ namespace XX
    namespace RestApi
    {
       //! @brief Exception class for network-related errors
+      //! @ingroup XXNetwork
 
       class XXNETWORK_DECLSPEC StatusException : public QException
       {

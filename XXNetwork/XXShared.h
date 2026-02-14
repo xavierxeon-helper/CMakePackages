@@ -8,6 +8,8 @@
 namespace XX
 {
    //! @brief tools for shared application
+   //! @ingroup XXNetwork
+
    template <CompileTimeString AppName>
    struct Shared
    {

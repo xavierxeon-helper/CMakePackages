@@ -6,6 +6,9 @@
 
 namespace XX
 {
+   //! @brief a wrapper for QQuickWidget
+   //! @ingroup XXWidgets
+
    class XXWIDGETS_DECLSPEC QmlWidget : public QQuickWidget
    {
       Q_OBJECT

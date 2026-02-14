@@ -10,6 +10,10 @@ namespace XX
 {
    namespace Managed
    {
+      //! @brief managed QTreeView
+      //! @details can manage events on its items
+      //! @ingroup XXWidgets
+
       class XXWIDGETS_DECLSPEC TreeView : public QTreeView
       {
          Q_OBJECT

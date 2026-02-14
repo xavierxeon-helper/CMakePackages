@@ -8,6 +8,7 @@ namespace XX
    namespace Network
    {
       //! @brief Network settings class
+      //! @ingroup XXNetwork
 
       class XXNETWORK_DECLSPEC Settings
       {

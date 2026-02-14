@@ -15,6 +15,9 @@ namespace XX
       class Socket;
       class ServerInternal;
 
+      //! @brief secure network server
+      //! @ingroup XXNetwork
+
       class XXNETWORK_DECLSPEC Server : public QObject
       {
          Q_OBJECT

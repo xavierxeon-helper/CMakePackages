@@ -10,6 +10,7 @@ namespace XX
    namespace Network
    {
       //! @brief Network utility functions
+      //! @ingroup XXNetwork
 
       struct XXNETWORK_DECLSPEC Tools
       {

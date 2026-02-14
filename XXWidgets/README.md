@@ -1,1 +1,1 @@
-this module depends on Qt6 Widgets
+@brief helpers for Qt6 Widgets applications

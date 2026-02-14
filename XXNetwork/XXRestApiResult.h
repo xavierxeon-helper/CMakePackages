@@ -10,11 +10,18 @@ namespace XX
 {
    namespace RestApi
    {
+      //! @brief  REST API results
+      //! @ingroup XXNetwork
+
       struct XXNETWORK_DECLSPEC ResultRaw
       {
          QByteArray raw;
          int statusCode = 0;
       };
+
+      //! @brief  REST API with json content
+      //! @details json content is only parsed when parseJson() is called
+      //! @ingroup XXNetwork
 
       struct XXNETWORK_DECLSPEC Result : ResultRaw
       {
