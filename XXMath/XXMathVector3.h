@@ -9,6 +9,9 @@ namespace XX
 {
    namespace Math
    {
+      //! @brief Spherical coordinates, used to represent points in 3D space.
+      //! @ingroup XXMath
+
       class XXMATH_DECLSPEC Spherical
       {
       public:
@@ -23,6 +26,9 @@ namespace XX
          double el = 0.0;
          double radius = 0.0;
       };
+
+      //! @brief 3D vector, used to represent points or directions in 3D space.
+      //! @ingroup XXMath
 
       class XXMATH_DECLSPEC Vector3
       {
@@ -78,8 +84,16 @@ namespace XX
          };
       };
 
+      /*!
+         @addtogroup Streaming
+         @{
+         @ingroup XXMath
+         @brief streaming operators for math types
+      */
       std::ostream& operator<<(std::ostream& out, const Spherical& value);
       std::ostream& operator<<(std::ostream& out, const Vector3& value);
+
+      //! @}
 
    } // namespace Math
 } // namespace XX

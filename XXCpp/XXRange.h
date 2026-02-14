@@ -11,7 +11,8 @@ namespace XX
 {
    // optional compiler tests
 
-   /*! @addtogroup CompilerTests
+   /*! 
+      @addtogroup CompilerTests
       @{
       @ingroup XXCpp
       @brief template test functions
@@ -150,7 +151,8 @@ namespace XX
          const int step;
       };
 
-      /*! @addtogroup Functions
+      /*! 
+         @addtogroup Functions
          @{
          @ingroup XXCpp
          @brief template test functions

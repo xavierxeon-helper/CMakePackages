@@ -1,5 +1,5 @@
 /*!
-\defgroup XXGraph Graph component
-\includedoc{doc} XXGraph/README.md
+@defgroup XXGraph Graph 
+@includedoc{doc} XXGraph/README.md
 */
 

@@ -2,7 +2,7 @@
 #define XXGraphExportDefH
 
 // clang-format off
-#if defined(__unix) || defined(__QNXNTO__) || defined(__APPLE__)
+#if defined(__unix) || defined(__APPLE__) || defined(DOXYGEN)
    #define XXGRAPH_DECLSPEC
 #else
    #ifdef EXTENSION_XXGRAPH

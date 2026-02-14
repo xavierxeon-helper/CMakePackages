@@ -1,2 +1,2 @@
-a simple graph
+@brief a simple graph
 

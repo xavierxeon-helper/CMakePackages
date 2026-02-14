@@ -1,3 +1,3 @@
-math helpers
+@brief math helpers
 
 using Qt6 Core

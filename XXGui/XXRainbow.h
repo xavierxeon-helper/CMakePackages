@@ -8,6 +8,9 @@
 
 namespace XX
 {
+   //! @brief generate a rainbow of colors
+   //! @ingroup XXGui
+
    class XXGUI_DECLSPEC Rainbow
    {
    public:

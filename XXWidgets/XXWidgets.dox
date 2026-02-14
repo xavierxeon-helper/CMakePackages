@@ -1,5 +1,5 @@
 /*!
-\defgroup XXWidgets XXWidgets component
-\includedoc{doc} XXWidgets/README.md
+@defgroup XXWidgets XXWidgets component
+@includedoc{doc} XXWidgets/README.md
 */
 

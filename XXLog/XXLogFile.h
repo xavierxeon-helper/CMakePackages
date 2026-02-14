@@ -10,6 +10,9 @@
 
 namespace XX
 {
+   //! @brief log file base
+   //! @ingroup XXLog
+
    struct XXLOG_DECLSPEC LogFileBase
    {
       static QString appendTimeStampToFileName(const QString& fileName, const QDateTime& timestamp = QDateTime::currentDateTime());
@@ -17,6 +20,8 @@ namespace XX
 
    //! @brief a log file
    //! @details tag is used to create a unique instance of LogFile and provides a static text stream
+   //! @ingroup XXLog
+
    template <CompileTimeString tag>
    class LogFile : public QFile
    {

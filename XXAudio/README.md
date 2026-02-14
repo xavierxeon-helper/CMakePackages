@@ -1,2 +1,2 @@
-audio related classes
+@brief audio related classes
 

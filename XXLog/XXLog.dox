@@ -1,5 +1,5 @@
 /*!
-\defgroup XXLog XXLog component
-\includedoc{doc} XXLog/README.md
+@defgroup XXLog Log 
+@includedoc{doc} XXLog/README.md
 */
 

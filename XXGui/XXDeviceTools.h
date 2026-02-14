@@ -10,6 +10,9 @@
 
 namespace XX
 {
+   //! @brief tools for device specific features
+   //! @ingroup XXGui
+
    class XXGUI_DECLSPEC DeviceTools
    {
       Q_GADGET

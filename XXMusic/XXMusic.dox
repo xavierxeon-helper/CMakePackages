@@ -1,5 +1,5 @@
 /*!
-\defgroup XXMusic XXMusic component
-\includedoc{doc} XXMusic/README.md
+@defgroup XXMusic XXMusic component
+@includedoc{doc} XXMusic/README.md
 */
 

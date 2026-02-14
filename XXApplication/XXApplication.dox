@@ -1,5 +1,5 @@
 /*!
-\defgroup XXApplication Application component
-\includedoc{doc} XXApplication/README.md
+@defgroup XXApplication Application 
+@includedoc{doc} XXApplication/README.md
 */
 

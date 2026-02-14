@@ -1,2 +1,2 @@
-a frame work for a QWidget based application
+@brief a framework for a QWidget based application
 

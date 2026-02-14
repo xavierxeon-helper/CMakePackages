@@ -7,6 +7,9 @@
 
 namespace XX
 {
+   //! @brief symbols for log messages
+   //! @ingroup XXLog
+
    struct XXLOG_DECLSPEC LogSymbol
    {
       static const QString Warning;

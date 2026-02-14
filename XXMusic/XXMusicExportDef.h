@@ -2,7 +2,7 @@
 #define XXMusicExportDefH
 
 // clang-format off
-#if defined(__unix) || defined(__QNXNTO__) || defined(__APPLE__)
+#if defined(__unix) || defined(__APPLE__) || defined(DOXYGEN)
    #define XXMUSIC_DECLSPEC
 #else
    #ifdef EXTENSION_XXMUSIC

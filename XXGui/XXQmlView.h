@@ -6,6 +6,9 @@
 
 namespace XX
 {
+   //! @brief a wrapper for QQuickView
+   //! @ingroup XXGui
+
    class XXGUI_DECLSPEC QmlView : public QQuickView
    {
       Q_OBJECT

@@ -1,5 +1,5 @@
 /*!
-\defgroup XXAudio Audio component
-\includedoc{doc} XXAudio/README.md
+@defgroup XXAudio Audio 
+@includedoc{doc} XXAudio/README.md
 */
 

@@ -2,7 +2,7 @@
 #define XXApplicationExportDefH
 
 // clang-format off
-#if defined(__unix) || defined(__QNXNTO__) || defined(__APPLE__)
+#if defined(__unix) || defined(__APPLE__) || defined(DOXYGEN)
    #define XXAPPLICATION_DECLSPEC
 #else
    #ifdef EXTENSION_XXAPPLICATION
@@ -14,4 +14,3 @@
 // clang-format on
 
 #endif // NOT XXApplicationExportDefH
-

@@ -7,9 +7,17 @@
 
 namespace XX
 {
+   //! @brief color space conversions
+   //! @ingroup XXGui
+
    class XXGUI_DECLSPEC ColorSpace
    {
    public:
+      //! @brief CIE 1931 color space coordinates with brightness
+      /*!
+         @details see https://en.wikipedia.org/wiki/CIE_1931_color_space
+      */
+
       struct XYB
       {
          double x = 0.0;

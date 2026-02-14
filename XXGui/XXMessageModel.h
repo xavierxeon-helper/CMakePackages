@@ -7,6 +7,9 @@
 
 namespace XX
 {
+   //! @brief expose a logger as a QStandardItemModel
+   //! @ingroup XXGui
+
    class XXGUI_DECLSPEC MessageModel : public QStandardItemModel, private Logger::Target
    {
       Q_OBJECT

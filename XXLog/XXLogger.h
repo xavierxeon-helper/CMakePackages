@@ -9,7 +9,8 @@
 
 namespace XX
 {
-   //! @brief provide streams for logging messages and warnings
+   //! @brief provide streams for logging
+   //! @ingroup XXLog
 
    namespace Logger
    {

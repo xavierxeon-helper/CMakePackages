@@ -2,7 +2,7 @@
 #define XXNetworkExportDefH
 
 // clang-format off
-#if defined(__unix) || defined(__QNXNTO__) || defined(__APPLE__)
+#if defined(__unix) || defined(__APPLE__) || defined(DOXYGEN)
    #define XXNETWORK_DECLSPEC
 #else
    #ifdef EXTENSION_XXNETWORK

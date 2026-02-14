@@ -1,2 +1,2 @@
-log things to file
+@brief log things to file
 

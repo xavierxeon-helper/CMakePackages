@@ -1,1 +1,1 @@
-this module depends on Qt6 Gui
+@brief helpers for Qt6 Gui applications

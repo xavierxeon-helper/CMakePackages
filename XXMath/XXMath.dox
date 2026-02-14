@@ -1,5 +1,5 @@
 /*!
-\defgroup XXMath XXMath component
-\includedoc{doc} XXMath/README.md
+@defgroup XXMath Math
+@includedoc{doc} XXMath/README.md
 */
 

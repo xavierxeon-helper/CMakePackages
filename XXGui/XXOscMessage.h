@@ -7,6 +7,9 @@
 
 namespace XX
 {
+   //! @brief OSC message
+   //! @ingroup XXGui
+
    class XXGUI_DECLSPEC OscMessage
    {
    public:

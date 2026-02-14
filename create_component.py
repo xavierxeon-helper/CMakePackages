@@ -62,7 +62,7 @@ def createComponent(name, useQt=True):
       line(f'#define {name}ExportDefH')
       line()
       line('// clang-format off')
-      line('#if defined(__unix) || defined(__QNXNTO__) || defined(__APPLE__)')
+      line('#if defined(__unix) || defined(__APPLE__) || defined(DOXYGEN)')
       line(f'   #define {macroName}_DECLSPEC')
       line('#else')
       line(f'   #ifdef EXTENSION_{macroName}')
@@ -134,8 +134,8 @@ def createComponent(name, useQt=True):
    with FileWriter(f'{name}.dox') as line:
 
       line('/*!')
-      line(f'\\defgroup {name} {name} component')
-      line(f'\\includedoc{{doc}} {name}/README.md')
+      line(f'@defgroup {name} {name} component')
+      line(f'@includedoc{{doc}} {name}/README.md')
       line('*/')
       line()
 
