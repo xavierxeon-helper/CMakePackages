@@ -22,7 +22,7 @@ sys.exit(1)
 EOF
 )
 
-if ! /usr/bin/env python3 -c "$VERSION_TEST" #> /dev/null
+if ! /usr/bin/env python3 -c "$VERSION_TEST" > /dev/null
 then
    echo "Doxygen version $DOXYGEN_VERSION not supported, requires $TARGET_VERSION or higher"
    exit 1
