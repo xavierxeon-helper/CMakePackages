@@ -1,6 +1,11 @@
 #ifndef XXXXLogExportDefH
 #define XXXXLogExportDefH
 
+/*!
+@defgroup XXLog Log 
+@includedoc{doc} XXLog/XXLog.md
+*/
+
 // clang-format off
 #if defined(__unix) || defined(__APPLE__) || defined(DOXYGEN)
    #define XXLOG_DECLSPEC
