@@ -10,7 +10,7 @@
 
 namespace XX
 {
-   //! @brief override the default Qt message handler
+   //! @brief intercept the default Qt message handler
    //! @ingroup XXLog
 
    struct XXLOG_DECLSPEC MessageInterceptor : public QObject
