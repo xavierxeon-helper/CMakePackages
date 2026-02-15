@@ -3,7 +3,7 @@ function(init_all_git_submodules)
    find_package(Git QUIET)
 
    if(WIN32)
-      message(WARNING "GIT SUBMODULE: no test")
+      message(WARNING "GIT SUBMODULE: no test on windows")
       return()
    else()
       execute_process(COMMAND ${GIT_EXECUTABLE} submodule status

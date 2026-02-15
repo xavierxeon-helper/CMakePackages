@@ -4,6 +4,8 @@
 #include "XXLogExportDef.h"
 #include <QTextDocument>
 
+#include <QTextCursor>
+
 namespace XX
 {
    class XXLOG_DECLSPEC MessageDocument : public QTextDocument
@@ -19,6 +21,7 @@ namespace XX
 
    private:
       const int maxLines;
+      QTextCursor cursor;
    };
 } // namespace XX
 
