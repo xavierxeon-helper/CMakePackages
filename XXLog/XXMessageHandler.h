@@ -24,6 +24,8 @@ namespace XX
       template <typename HandlerClass>
       static void disable(HandlerClass* instance);
 
+      static QString symbol(const QtMsgType& type);
+
    private:
       MessageHandler();
       ~MessageHandler();
@@ -47,4 +49,4 @@ namespace XX
 #include "XXMessageHandler.hpp"
 #endif // NOT XXMessageHandlerHPP
 
-#endif // NOT MessageHandlerH
+#endif // NOT XXMessageHandlerH

@@ -3,6 +3,8 @@
 
 #include <QThread>
 
+#include "XXLogSymbol.h"
+
 XX::MessageHandler* XX::MessageHandler::me = nullptr;
 
 XX::MessageHandler::MessageHandler()
@@ -18,6 +20,25 @@ XX::MessageHandler::~MessageHandler()
 {
    qInstallMessageHandler(systemHandler);
    me = nullptr;
+}
+
+QString XX::MessageHandler::symbol(const QtMsgType& type)
+{
+   QString symbol;
+   switch (type)
+   {
+      case QtDebugMsg:
+         symbol = XX::LogSymbol::Debug;
+         break;
+      case QtInfoMsg:
+         symbol = XX::LogSymbol::Info;
+         break;
+      default:
+         symbol = XX::LogSymbol::Warning;
+         break;
+   }
+
+   return symbol;
 }
 
 void XX::MessageHandler::outputInternal(QtMsgType type, const QMessageLogContext& context, const QString& msg)
