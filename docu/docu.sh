@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOCU_ROOT=$(dirname "$(readlink -f "$0")")/..
+export DOCU_ROOT=$(dirname "$(readlink -f "$0")")/..
 
 TMP_DIR=~/tmp/
 if [ ! -d $TMP_DIR ]
@@ -15,14 +15,8 @@ then
   git clone git@github.com:xavierxeon/xavierxeon.github.io.git
 fi
 
-XX_DOC_PATH=$DOCU_ROOT/build/docu
-if [ ! -d $XX_DOC_PATH ]
-then
-  mkdir -p $XX_DOC_PATH
-fi
-
 cd $DOCU_ROOT
-#XX_DOC_PATH=$TMP_DIR/xavierxeon.github.io/XX 
+export XX_DOC_PATH=$TMP_DIR/xavierxeon.github.io/XX 
 doxygen docu/Doxyfile
 
 cd $TMP_DIR/xavierxeon.github.io
