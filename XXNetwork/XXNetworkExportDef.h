@@ -1,6 +1,11 @@
 #ifndef XXNetworkExportDefH
 #define XXNetworkExportDefH
 
+/*!
+@defgroup XXNetwork Network
+@includedoc{doc} XXNetwork/XXNetwork.md
+*/
+
 // clang-format off
 #if defined(__unix) || defined(__APPLE__) || defined(DOXYGEN)
    #define XXNETWORK_DECLSPEC

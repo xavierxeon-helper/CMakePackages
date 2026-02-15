@@ -1,6 +1,11 @@
 #ifndef XXAudioExportDefH
 #define XXAudioExportDefH
 
+/*!
+@defgroup XXAudio Audio 
+@includedoc{doc} XXAudio/XXAudio.md
+*/
+
 // clang-format off
 #if defined(__unix) || defined(__APPLE__) || defined(DOXYGEN)
    #define XXAUDIO_DECLSPEC

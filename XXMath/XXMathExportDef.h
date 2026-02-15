@@ -1,6 +1,11 @@
 #ifndef XXMathExportDefH
 #define XXMathExportDefH
 
+/*!
+@defgroup XXMath Math
+@includedoc{doc} XXMath/XXMath.md
+*/
+
 // clang-format off
 #if defined(__unix) || defined(__APPLE__) || defined(DOXYGEN)
    #define XXMATH_DECLSPEC

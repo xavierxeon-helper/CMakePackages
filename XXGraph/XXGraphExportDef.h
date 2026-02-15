@@ -1,6 +1,11 @@
 #ifndef XXGraphExportDefH
 #define XXGraphExportDefH
 
+/*!
+@defgroup XXGraph Graph 
+@includedoc{doc} XXGraph/XXGraph.md
+*/
+
 // clang-format off
 #if defined(__unix) || defined(__APPLE__) || defined(DOXYGEN)
    #define XXGRAPH_DECLSPEC

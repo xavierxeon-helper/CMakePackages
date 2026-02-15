@@ -1,6 +1,11 @@
 #ifndef XXMusicExportDefH
 #define XXMusicExportDefH
 
+/*!
+@defgroup XXMusic Music
+@includedoc{doc} XXMusic/XXMusic.md
+*/
+
 // clang-format off
 #if defined(__unix) || defined(__APPLE__) || defined(DOXYGEN)
    #define XXMUSIC_DECLSPEC

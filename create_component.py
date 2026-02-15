@@ -61,6 +61,11 @@ def createComponent(name, useQt=True):
       line(f'#ifndef {name}ExportDefH')
       line(f'#define {name}ExportDefH')
       line()
+      line('/*!')
+      line(f'@defgroup {name} {name} component')
+      line(f'@includedoc{{doc}} {name}/{name}.md')
+      line('*/')
+      line()
       line('// clang-format off')
       line('#if defined(__unix) || defined(__APPLE__) || defined(DOXYGEN)')
       line(f'   #define {macroName}_DECLSPEC')
@@ -126,22 +131,9 @@ def createComponent(name, useQt=True):
          line('target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Core)')
       line()
 
-   with FileWriter('README.md') as line:
-
-      line(f'# {name}')
-      line()
-
    with FileWriter(f'{name}.md') as line:
 
       line(f'@brief {name} ')
-      line()
-
-   with FileWriter(f'{name}.dox') as line:
-
-      line('/*!')
-      line(f'@defgroup {name} {name} component')
-      line(f'@includedoc{{doc}} {name}/{name}.md')
-      line('*/')
       line()
 
 

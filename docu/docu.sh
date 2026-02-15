@@ -1,6 +1,34 @@
 #!/bin/bash
 
-HERE=$(dirname "$(readlink -f "$0")")
+DOXYGEN_VERSION=$(doxygen --version)
+TARGET_VERSION="1.16.0"
+
+VERSION_TEST=$(cat <<EOF
+import sys
+
+source = "$DOXYGEN_VERSION".split(".")
+source = [int(x) for x in source]
+
+target = "$TARGET_VERSION".split(".")
+target = [int(x) for x in target]
+
+if source[0] > target[0]:
+   sys.exit(0)
+
+if source[1] >= target[1]:
+   sys.exit(0)
+
+sys.exit(1)
+EOF
+)
+
+if ! /usr/bin/env python3 -c "$VERSION_TEST" > /dev/null
+then
+   echo "Doxygen version $DOXYGEN_VERSION not supported, requires $TARGET_VERSION or higher"
+   exit 1
+fi
+
+export DOCU_ROOT=$(dirname "$(readlink -f "$0")")/..
 
 TMP_DIR=~/tmp/
 if [ ! -d $TMP_DIR ]
@@ -15,9 +43,9 @@ then
   git clone git@github.com:xavierxeon/xavierxeon.github.io.git
 fi
 
-cd $HERE
-export XX_DOC_PATH=$TMP_DIR/xavierxeon.github.io/XX
-doxygen Doxyfile
+cd $DOCU_ROOT
+export XX_DOC_PATH=$TMP_DIR/xavierxeon.github.io/XX 
+doxygen docu/Doxyfile
 
 cd $TMP_DIR/xavierxeon.github.io
 git add *

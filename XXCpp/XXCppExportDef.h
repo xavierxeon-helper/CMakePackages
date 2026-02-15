@@ -1,6 +1,11 @@
 #ifndef XXWaToolCppExportDefH
 #define XXWaToolCppExportDefH
 
+/*!
+@defgroup XXCpp Cpp 
+@includedoc{doc} XXCpp/XXCpp.md
+*/
+
 // clang-format off
 #if defined(__unix) || defined(__APPLE__) || defined(DOXYGEN)
    #define XXCPP_DECLSPEC
