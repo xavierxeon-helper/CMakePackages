@@ -1,13 +1,13 @@
-#ifndef XXMessageHandlerHPP
-#define XXMessageHandlerHPP
+#ifndef XXMessageInterceptorHPP
+#define XXMessageInterceptorHPP
 
-#include "XXMessageHandler.h"
+#include "XXMessageInterceptor.h"
 
 template <typename HandlerClass>
-bool XX::MessageHandler::enable(HandlerClass* instance, void (HandlerClass::*hanlderFunction)(QtMsgType, const QMessageLogContext&, const QString&))
+bool XX::MessageInterceptor::enable(HandlerClass* instance, void (HandlerClass::*hanlderFunction)(QtMsgType, const QMessageLogContext&, const QString&))
 {
    if (!me)
-      new MessageHandler();
+      new MessageInterceptor();
 
    void* target = static_cast<void*>(instance);
    if (me->targetMap.contains(target))
@@ -19,7 +19,7 @@ bool XX::MessageHandler::enable(HandlerClass* instance, void (HandlerClass::*han
 }
 
 template <typename HandlerClass>
-void XX::MessageHandler::disable(HandlerClass* instance)
+void XX::MessageInterceptor::disable(HandlerClass* instance)
 {
    if (!me)
       return;
@@ -28,4 +28,4 @@ void XX::MessageHandler::disable(HandlerClass* instance)
    me->targetMap.remove(target);
 }
 
-#endif // NOT XXMessageHandlerHPP
+#endif // NOT XXMessageInterceptorHPP

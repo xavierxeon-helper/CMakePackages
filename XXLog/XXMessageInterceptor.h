@@ -1,5 +1,5 @@
-#ifndef XXMessageHandlerH
-#define XXMessageHandlerH
+#ifndef XXMessageInterceptorH
+#define XXMessageInterceptorH
 
 #include "XXLogExportDef.h"
 #include <QObject>
@@ -13,7 +13,7 @@ namespace XX
    //! @brief override the default Qt message handler
    //! @ingroup XXLog
 
-   struct XXLOG_DECLSPEC MessageHandler : public QObject
+   struct XXLOG_DECLSPEC MessageInterceptor : public QObject
    {
       Q_OBJECT
 
@@ -27,8 +27,8 @@ namespace XX
       static QString symbol(const QtMsgType& type);
 
    private:
-      MessageHandler();
-      ~MessageHandler();
+      MessageInterceptor();
+      ~MessageInterceptor();
 
    private:
       using Function = std::function<void(QtMsgType, const QMessageLogContext&, const QString&)>;
@@ -39,14 +39,14 @@ namespace XX
       static void output(QtMsgType type, const QMessageLogContext& context, const QString& msg);
 
    private:
-      static MessageHandler* me;
+      static MessageInterceptor* me;
       QtMessageHandler systemHandler;
       TargetMap targetMap;
    };
 } // namespace XX
 
-#ifndef XXMessageHandlerHPP
-#include "XXMessageHandler.hpp"
-#endif // NOT XXMessageHandlerHPP
+#ifndef XXMessageInterceptorHPP
+#include "XXMessageInterceptor.hpp"
+#endif // NOT XXMessageInterceptorHPP
 
-#endif // NOT XXMessageHandlerH
+#endif // NOT XXMessageInterceptorH

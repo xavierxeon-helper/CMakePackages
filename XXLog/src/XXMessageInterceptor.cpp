@@ -1,28 +1,28 @@
 
-#include "XXMessageHandler.h"
+#include "XXMessageInterceptor.h"
 
 #include <QThread>
 
 #include "XXLogSymbol.h"
 
-XX::MessageHandler* XX::MessageHandler::me = nullptr;
+XX::MessageInterceptor* XX::MessageInterceptor::me = nullptr;
 
-XX::MessageHandler::MessageHandler()
+XX::MessageInterceptor::MessageInterceptor()
    : QObject(nullptr)
    , systemHandler()
    , targetMap()
 {
    me = this;
-   systemHandler = qInstallMessageHandler(&MessageHandler::output);
+   systemHandler = qInstallMessageHandler(&MessageInterceptor::output);
 }
 
-XX::MessageHandler::~MessageHandler()
+XX::MessageInterceptor::~MessageInterceptor()
 {
    qInstallMessageHandler(systemHandler);
    me = nullptr;
 }
 
-QString XX::MessageHandler::symbol(const QtMsgType& type)
+QString XX::MessageInterceptor::symbol(const QtMsgType& type)
 {
    QString symbol;
    switch (type)
@@ -41,7 +41,7 @@ QString XX::MessageHandler::symbol(const QtMsgType& type)
    return symbol;
 }
 
-void XX::MessageHandler::outputInternal(QtMsgType type, const QMessageLogContext& context, const QString& msg)
+void XX::MessageInterceptor::outputInternal(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
    for (Function function : targetMap.values())
       function(type, context, msg);
@@ -49,7 +49,7 @@ void XX::MessageHandler::outputInternal(QtMsgType type, const QMessageLogContext
    systemHandler(type, context, msg);
 }
 
-void XX::MessageHandler::output(QtMsgType type, const QMessageLogContext& context, const QString& msg)
+void XX::MessageInterceptor::output(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
    if (!me)
       return;
@@ -58,6 +58,6 @@ void XX::MessageHandler::output(QtMsgType type, const QMessageLogContext& contex
       me->outputInternal(type, context, msg);
    else
    {
-      //QMetaObject::invokeMethod(me, &MessageHandler::outputInternal, Qt::QueuedConnection, type, context, msg);
+      //QMetaObject::invokeMethod(me, &MessageInterceptor::outputInternal, Qt::QueuedConnection, type, context, msg);
    }
 }
