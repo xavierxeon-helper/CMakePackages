@@ -3,6 +3,7 @@
 #include <QDir>
 #include <QDirIterator>
 #include <QJsonDocument>
+#include <QProcess>
 #include <QSettings>
 #include <QStandardPaths>
 
@@ -152,4 +153,20 @@ QStringList XX::FileTools::compileResourceNames(const QStringList& ignoreList)
    }
 
    return nameList;
+}
+
+void XX::FileTools::openVSCode(const QString& path)
+{
+   openVSCode(QStringList{path});
+}
+
+void XX::FileTools::openVSCode(const QStringList& pathList)
+{
+#if defined(Q_OS_MAC)
+   QProcess::startDetached("code", pathList);
+#elif defined(Q_OS_WIN)
+   QProcess::startDetached("code.cmd", pathList);
+#else
+   QProcess::startDetached("code", pathList);
+#endif
 }
