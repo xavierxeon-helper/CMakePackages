@@ -1,6 +1,11 @@
 #ifndef XXGuiExportDefH
 #define XXGuiExportDefH
 
+/*!
+@defgroup XXGui Gui 
+@includedoc{doc} XXGui/XXGui.md
+*/
+
 // clang-format off
 #if defined(__unix) || defined(__APPLE__) || defined(DOXYGEN)
    #define XXGUI_DECLSPEC

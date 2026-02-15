@@ -1,6 +1,11 @@
 #ifndef XXApplicationExportDefH
 #define XXApplicationExportDefH
 
+/*!
+@defgroup XXApplication Application 
+@includedoc{doc} XXApplication/XXApplication.md
+*/
+
 // clang-format off
 #if defined(__unix) || defined(__APPLE__) || defined(DOXYGEN)
    #define XXAPPLICATION_DECLSPEC

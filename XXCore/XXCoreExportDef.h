@@ -1,6 +1,11 @@
 #ifndef XXCoreExportDefH
 #define XXCoreExportDefH
 
+/*!
+@defgroup XXCore Core 
+@includedoc{doc} XXCore/XXCore.md
+*/
+
 // clang-format off
 #if defined(__unix) || defined(__APPLE__) || defined(DOXYGEN)
    #define XXCORE_DECLSPEC

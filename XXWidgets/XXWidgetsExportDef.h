@@ -1,6 +1,11 @@
 #ifndef XXWidgetsExportDefH
 #define XXWidgetsExportDefH
 
+/*!
+@defgroup XXWidgets Widgets
+@includedoc{doc} XXWidgets/XXWidgets.md
+*/
+
 // clang-format off
 #if defined(__unix) || defined(__APPLE__) || defined(DOXYGEN)
    #define XXWIDGETS_DECLSPEC
