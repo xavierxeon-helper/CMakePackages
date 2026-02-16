@@ -8,6 +8,11 @@ XX::Rainbow::Rainbow(quint64 maxIndex, quint16 shade)
    changeShade(shade);
 }
 
+const quint64& XX::Rainbow::getMaxIndex() const
+{
+   return maxIndex;
+}
+
 void XX::Rainbow::changeShade(quint16 shade)
 {
    colorMap.clear();
