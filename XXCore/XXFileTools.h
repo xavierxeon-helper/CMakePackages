@@ -25,7 +25,7 @@ namespace XX
       static QStringList compileResourceNames(const QStringList& ignoreList = {":/qt-project.org"});
 
       static void openVSCode(const QString& path);
-      static void openVSCode(const QStringList& pathList);
+      static void openVSCode(QStringList pathList);
    };
 } // namespace XX
 

@@ -5,6 +5,14 @@ XX::Rainbow::Rainbow(quint64 maxIndex, quint16 shade)
    , colorMap()
    , currentIndex(0)
 {
+   changeShade(shade);
+}
+
+void XX::Rainbow::changeShade(quint16 shade)
+{
+   colorMap.clear();
+   currentIndex = 0;
+
    static const Section::List sectionList = {
       {QColor(255, 0, 0), 1, true},
       {QColor(255, 255, 0), 0, false},
@@ -43,9 +51,10 @@ XX::Rainbow::Rainbow(quint64 maxIndex, quint16 shade)
    }
 }
 
-QColor XX::Rainbow::getColor()
+QColor XX::Rainbow::getColor(const quint64 offset)
 {
-   return colorMap.value(currentIndex);
+   const quint64 index = (currentIndex + offset) % maxIndex;
+   return colorMap.value(index);
 }
 
 QColor XX::Rainbow::advanceColor()

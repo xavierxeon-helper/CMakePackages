@@ -160,13 +160,19 @@ void XX::FileTools::openVSCode(const QString& path)
    openVSCode(QStringList{path});
 }
 
-void XX::FileTools::openVSCode(const QStringList& pathList)
+void XX::FileTools::openVSCode(QStringList pathList)
 {
+   pathList.removeAll(QString(""));
+   if (pathList.isEmpty())
+      return;
+
 #if defined(Q_OS_MAC)
-   QProcess::startDetached("code", pathList);
+   QString editorCommand = "code";
 #elif defined(Q_OS_WIN)
-   QProcess::startDetached("code.cmd", pathList);
+   QString editorCommand = "code.cmd";
 #else
-   QProcess::startDetached("code", pathList);
+   QString editorCommand = "code";
 #endif
+
+   QProcess::startDetached(editorCommand, pathList);
 }

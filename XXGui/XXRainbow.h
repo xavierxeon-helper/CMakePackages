@@ -18,7 +18,7 @@ namespace XX
 
    public:
       void changeShade(quint16 shade);
-      QColor getColor();
+      QColor getColor(const quint64 offset = 0);
       QColor advanceColor();
       QColor lookup(quint64 value, bool wrap);
 
