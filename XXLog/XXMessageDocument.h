@@ -16,6 +16,10 @@ namespace XX
       MessageDocument(QObject* parent, int maxLines = -1);
       ~MessageDocument();
 
+   public:
+      static QColor symbolColor(const QtMsgType& type);
+      static QColor messageColor(const QtMsgType& type);
+
    private:
       void outputMessage(QtMsgType type, const QMessageLogContext& context, const QString& msg);
 

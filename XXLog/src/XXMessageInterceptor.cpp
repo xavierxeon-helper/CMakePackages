@@ -43,7 +43,7 @@ QString XX::MessageInterceptor::symbol(const QtMsgType& type)
 
 void XX::MessageInterceptor::outputInternal(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
-   for (Function function : targetMap.values())
+   for (const Function& function : targetMap.values())
       function(type, context, msg);
 
    systemHandler(type, context, msg);

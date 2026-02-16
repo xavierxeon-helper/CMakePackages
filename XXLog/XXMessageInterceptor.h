@@ -6,6 +6,7 @@
 
 #include <functional>
 
+#include <QColor>
 #include <QMap>
 
 namespace XX
