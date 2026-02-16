@@ -17,6 +17,7 @@ namespace XX
       Rainbow(quint64 maxIndex, quint16 shade = 200);
 
    public:
+      void changeShade(quint16 shade);
       QColor getColor();
       QColor advanceColor();
       QColor lookup(quint64 value, bool wrap);
