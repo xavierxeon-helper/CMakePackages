@@ -42,8 +42,7 @@ function(add_qml_module_dir SUBPATH)
       message(STATUS "QML ${NAME} LINK = ${QML_MODULE_ARG_LINK}")
       target_link_libraries(${PROJECT_NAME}_QML PUBLIC ${QML_MODULE_ARG_LINK})
    endif()
-
-   message(STATUS "MODULE DIR QML_FILES for ${PROJECT_NAME} found @ ${SUBPATH} = ${QML_FILES}")
+   message(STATUS "MODULE DIR for ${PROJECT_NAME} @ ${SUBPATH} found QML_FILES = ${QML_FILES}, QML_SOURCE_FILES = ${QML_SOURCE_FILES}")
 
 endfunction()
 
