@@ -6,6 +6,9 @@ include(../CommonBuild.cmake)
 find_package(Qt6 REQUIRED COMPONENTS Quick)
 set(CMAKE_AUTOMOC ON)
 
+find_package(XX REQUIRED COMPONENTS Gui)
+
+# c++
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 file(GLOB HEADER_FILES
@@ -24,3 +27,5 @@ add_compile_definitions(EXTENSION_XXQUICK)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Quick)
 
+#qml
+add_qml_module_dir(QmlTypes NAME XXQuick LINK XXGui)
