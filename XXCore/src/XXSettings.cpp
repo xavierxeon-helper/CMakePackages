@@ -78,7 +78,7 @@ QVariant XX::Settings::value(const QString& key, const QVariant& defaultValue) c
 {
    const PathKey pathKey = compilePathKey(key);
    const QJsonValue value = getPathValue(pathKey);
-   if (value.isNull())
+   if (value.isUndefined())
       return defaultValue;
 
    switch (value.type())
