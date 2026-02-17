@@ -1,15 +1,15 @@
 #ifndef XXQmlViewH
 #define XXQmlViewH
 
-#include "XXGuiExportDef.h"
+#include "XXQuickExportDef.h"
 #include <QQuickView>
 
 namespace XX
 {
    //! @brief a wrapper for QQuickView
-   //! @ingroup XXGui
+   //! @ingroup XXQuick
 
-   class XXGUI_DECLSPEC QmlView : public QQuickView
+   class XXQUICK_DECLSPEC QmlView : public QQuickView
    {
       Q_OBJECT
 
