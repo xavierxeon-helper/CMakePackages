@@ -3,39 +3,30 @@
 
 #include "XXLogFile.h"
 
-#include <QFileInfo>
+template <XX::CompileTimeString tag>
+inline XX::LogFile<tag>* XX::LogFile<tag>::me = nullptr;
 
-QString LogFileBase::appendTimeStampToFileName(const QString& fileName, const QDateTime& timestamp)
-{
-   const QFileInfo info(fileName);
-
-   QString logFileName = info.path() + "/" + info.baseName();
-   logFileName += timestamp.toString("_yyyyMMdd_hhmmss");
-   logFileName += "." + info.completeSuffix();
-
-   return logFileName;
-}
-
-template <CompileTimeString tag>
-inline LogFile<tag>* LogFile<tag>::me = nullptr;
-
-template <CompileTimeString tag>
-inline LogFile<tag>::LogFile(const QString& fileName)
+template <XX::CompileTimeString tag>
+inline XX::LogFile<tag>::LogFile(const QString& fileName)
    : QFile(fileName)
 {
    me = this;
-   open(QIODevice::WriteOnly);
+   const bool result = open(QIODevice::WriteOnly);
+
+   qDebug() << "LOG FILE OPEN" << result << fileName;
 }
 
-template <CompileTimeString tag>
-inline LogFile<tag>::~LogFile()
+template <XX::CompileTimeString tag>
+inline XX::LogFile<tag>::~LogFile()
 {
    me = nullptr;
    close();
+
+   qDebug() << "LOG FILE CLOSE" << fileName();
 }
 
-template <CompileTimeString tag>
-inline QTextStream LogFile<tag>::stream()
+template <XX::CompileTimeString tag>
+inline QTextStream XX::LogFile<tag>::stream()
 {
    if (!me)
       return QTextStream();
@@ -43,8 +34,8 @@ inline QTextStream LogFile<tag>::stream()
    return QTextStream(me);
 }
 
-template <CompileTimeString tag>
-void LogFile<tag>::changeFileName(const QString& fileName)
+template <XX::CompileTimeString tag>
+void XX::LogFile<tag>::changeFileName(const QString& fileName)
 {
    close();
    setFileName(fileName);
