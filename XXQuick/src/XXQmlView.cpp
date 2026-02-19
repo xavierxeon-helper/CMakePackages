@@ -21,21 +21,20 @@ void XX::QmlView::setQuickProperty(const QString& name, const QVariant& value)
 
 void XX::QmlView::tabletEvent(QTabletEvent* tabletEvent)
 {
-   tabletEvent->accept();
+   //tabletEvent->accept();
 
-   const double x = tabletEvent->position().x();
-   const double y = tabletEvent->position().y();
+   //const double x = tabletEvent->position().x();
+   //const double y = tabletEvent->position().y();
 
    std::function<void(QQuickItem*)> childCrawler = [&](QQuickItem* parent)
    {
-      QQuickItem* childItem = parent->childAt(x, y);
-      if (!childItem)
-         return;
+      for (QQuickItem* childItem : parent->childItems())
+      {
+         if (wantsTabletEvents(childItem))
+            QGuiApplication::sendEvent(childItem, tabletEvent);
 
-      if (wantsTabletEvents(childItem))
-         QGuiApplication::sendEvent(childItem, tabletEvent);
-
-      childCrawler(childItem);
+         childCrawler(childItem);
+      }
    };
 
    childCrawler(contentItem());
@@ -49,7 +48,7 @@ bool XX::QmlView::wantsTabletEvents(const QQuickItem* item)
    if (cache.contains(mo))
       return cache[mo];
 
-   const int index = mo->indexOfClassInfo("CaptureTablet");
+   const int index = mo->indexOfClassInfo("XXCaptureTablet");
    if (index < 0)
       return false;
 

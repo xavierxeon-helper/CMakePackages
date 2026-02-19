@@ -7,6 +7,9 @@
 namespace XX
 {
    //! @brief a wrapper for QQuickView
+   /*!
+    @details All Child items (derived from QQuickItem) that have a classinfo "XXCaptureTablet" set to "true" will receive QTabletEvents
+   */
    //! @ingroup XXQuick
 
    class XXQUICK_DECLSPEC QmlView : public QQuickView
