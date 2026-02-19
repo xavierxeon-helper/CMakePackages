@@ -4,6 +4,10 @@
 #include "XXGuiExportDef.h"
 #include <QObject>
 
+#ifdef Q_OS_WINDOWS
+#include <windows.h>
+#endif
+
 #include <QQmlApplicationEngine>
 #include <QSize>
 #include <QWindow>
@@ -31,7 +35,12 @@ namespace XX
       static void fixSize(QWindow* window, const DeviceIdentifier& deviceId);
 
       static void forceDisplayMode(bool light = true);
+      static void enableWindowsConsole();
    };
 } // namespace XX
+
+#ifndef XXDeviceToolsHPP
+#include "XXDeviceTools.hpp"
+#endif // NOT XXDeviceToolsHPP
 
 #endif // NOT XXDeviceToolsH

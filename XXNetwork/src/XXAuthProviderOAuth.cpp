@@ -186,8 +186,9 @@ bool XX::AuthProvider::OAuth::update()
 
    state = State::Update;
 
-   if (oauthFlow->refreshToken().isEmpty())
-      return authorizeUser();
+   const bool missingRefreshToken = oauthFlow->refreshToken().isEmpty();
+   if (missingRefreshToken)
+      oauthFlow->setRefreshToken("check database connection");
 
    QEventLoop loop;
    QObject::connect(oauthFlow, &QAbstractOAuth::granted, &loop, &QEventLoop::quit);
@@ -201,6 +202,8 @@ bool XX::AuthProvider::OAuth::update()
       {
          if (QAbstractOAuth::Error::NetworkError == error)
             throw new RestApi::UnreachableException(oauthFlow->authorizationUrl());
+         else if (missingRefreshToken && QAbstractOAuth::Error::ServerError == error)
+            return; // no refresh token, but server connection
          else
             throw new RestApi::StatusException(500 + int(error), oauthFlow->authorizationUrl());
       }
