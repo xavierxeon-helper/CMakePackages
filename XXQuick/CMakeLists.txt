@@ -1,6 +1,11 @@
 cmake_minimum_required(VERSION 3.20)
 project(XXQuick LANGUAGES CXX)
 
+if(LINUX AND "aarch64" STREQUAL ${CMAKE_SYSTEM_PROCESSOR})
+   message(STATUS "SKIPPING ${PROJECT_NAME} on ARM64 Linux")
+   return()
+endif()
+
 include(../CommonBuild.cmake)
 
 find_package(Qt6 REQUIRED COMPONENTS Quick)
