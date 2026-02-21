@@ -4,6 +4,10 @@ function(set_standrard_release_output_path)
       return()
    endif()
 
+   if(ANDROID OR IOS)
+      return()
+   endif()
+
    get_property(TARGET_TEST DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY BUILDSYSTEM_TARGETS)
 
    if(TARGET_TEST)
