@@ -48,7 +48,11 @@ function(set_application_icon PATH_TO_ICON)
       if(NOT EXISTS ${ASSET_CATALOG_PATH})
          file(MAKE_DIRECTORY ${ASSET_CATALOG_PATH})
       endif()
-      file(COPY ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/resources/Contents.json DESTINATION ${ASSET_CATALOG_PATH}/AppIcon.appiconset)
+
+      if(NOT EXISTS ${ASSET_CATALOG_PATH}/AppIcon.appiconset)
+         file(COPY ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/resources/Contents.json DESTINATION ${ASSET_CATALOG_PATH}/AppIcon.appiconset)
+      endif()
+
       target_sources(${PROJECT_NAME} PRIVATE "${ASSET_CATALOG_PATH}")
       set_source_files_properties(${ASSET_CATALOG_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
       set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME AppIcon)
