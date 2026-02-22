@@ -1,5 +1,5 @@
-#ifndef XXMessageModelH
-#define XXMessageModelH
+#ifndef XXLoggerModelH
+#define XXLoggerModelH
 
 #include "XXGuiExportDef.h"
 #include <XXLogger.h>
@@ -10,12 +10,12 @@ namespace XX
    //! @brief expose a logger as a QStandardItemModel
    //! @ingroup XXGui
 
-   class XXGUI_DECLSPEC MessageModel : public QStandardItemModel, private Logger::Target
+   class XXGUI_DECLSPEC LoggerModel : public QStandardItemModel, private Logger::Target
    {
       Q_OBJECT
 
    public:
-      MessageModel(QObject* parent, int stackSize);
+      LoggerModel(QObject* parent, int stackSize);
 
    signals:
       void contentUpdated();
@@ -25,4 +25,4 @@ namespace XX
    };
 } // namespace XX
 
-#endif // NOT XXMessageModelH
+#endif // NOT XXLoggerModelH

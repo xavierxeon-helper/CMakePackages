@@ -1,28 +1,28 @@
 
-#include "XXMessageInterceptor.h"
+#include "XXQtMessageInterceptor.h"
 
 #include <QThread>
 
 #include "XXLogSymbol.h"
 
-XX::MessageInterceptor* XX::MessageInterceptor::me = nullptr;
+XX::QtMessage::Interceptor* XX::QtMessage::Interceptor::me = nullptr;
 
-XX::MessageInterceptor::MessageInterceptor()
+XX::QtMessage::Interceptor::Interceptor()
    : QObject(nullptr)
    , systemHandler()
    , targetMap()
 {
    me = this;
-   systemHandler = qInstallMessageHandler(&MessageInterceptor::output);
+   systemHandler = qInstallMessageHandler(&Interceptor::output);
 }
 
-XX::MessageInterceptor::~MessageInterceptor()
+XX::QtMessage::Interceptor::~Interceptor()
 {
    qInstallMessageHandler(systemHandler);
    me = nullptr;
 }
 
-QString XX::MessageInterceptor::symbol(const QtMsgType& type)
+QString XX::QtMessage::Interceptor::symbol(const QtMsgType& type)
 {
    QString symbol;
    switch (type)
@@ -41,7 +41,7 @@ QString XX::MessageInterceptor::symbol(const QtMsgType& type)
    return symbol;
 }
 
-void XX::MessageInterceptor::outputInternal(QtMsgType type, const QMessageLogContext& context, const QString& msg)
+void XX::QtMessage::Interceptor::outputInternal(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
    for (const Function& function : targetMap.values())
       function(type, context, msg);
@@ -49,7 +49,7 @@ void XX::MessageInterceptor::outputInternal(QtMsgType type, const QMessageLogCon
    systemHandler(type, context, msg);
 }
 
-void XX::MessageInterceptor::output(QtMsgType type, const QMessageLogContext& context, const QString& msg)
+void XX::QtMessage::Interceptor::output(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
    if (!me)
       return;
@@ -58,6 +58,6 @@ void XX::MessageInterceptor::output(QtMsgType type, const QMessageLogContext& co
       me->outputInternal(type, context, msg);
    else
    {
-      //QMetaObject::invokeMethod(me, &MessageInterceptor::outputInternal, Qt::QueuedConnection, type, context, msg);
+      //QMetaObject::invokeMethod(me, &Interceptor::outputInternal, Qt::QueuedConnection, type, context, msg);
    }
 }

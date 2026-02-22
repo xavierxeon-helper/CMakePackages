@@ -1,23 +1,21 @@
-#include "XXMessageDocument.h"
+#include "XXQtMessageDocument.h"
 
-#include <iostream>
+#include "XXQtMessageInterceptor.h"
 
-#include "XXMessageInterceptor.h"
-
-XX::MessageDocument::MessageDocument(QObject* parent, int maxLines)
+XX::QtMessage::Document::Document(QObject* parent, int maxLines)
    : QTextDocument(parent)
    , maxLines(maxLines)
    , cursor(this)
 {
-   MessageInterceptor::enable(this, &MessageDocument::outputMessage);
+   Interceptor::enable(this, &Document::outputMessage);
 }
 
-XX::MessageDocument::~MessageDocument()
+XX::QtMessage::Document::~Document()
 {
-   MessageInterceptor::disable(this);
+   Interceptor::disable(this);
 }
 
-QColor XX::MessageDocument::symbolColor(const QtMsgType& type)
+QColor XX::QtMessage::Document::symbolColor(const QtMsgType& type)
 {
    switch (type)
    {
@@ -34,7 +32,7 @@ QColor XX::MessageDocument::symbolColor(const QtMsgType& type)
    return QColor(Qt::black);
 }
 
-QColor XX::MessageDocument::messageColor(const QtMsgType& type)
+QColor XX::QtMessage::Document::messageColor(const QtMsgType& type)
 {
    switch (type)
    {
@@ -51,10 +49,10 @@ QColor XX::MessageDocument::messageColor(const QtMsgType& type)
    return QColor(Qt::black);
 }
 
-void XX::MessageDocument::outputMessage(QtMsgType type, const QMessageLogContext& context, const QString& msg)
+void XX::QtMessage::Document::outputMessage(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
    QString text = "<span style=\"color:" + symbolColor(type).name() + ";\">";
-   text += MessageInterceptor::symbol(type) + "</span> ";
+   text += Interceptor::symbol(type) + "</span> ";
    text += "<span style=\"color:" + messageColor(type).name() + ";\">" + msg + "</span>";
 
    cursor.movePosition(QTextCursor::End);
