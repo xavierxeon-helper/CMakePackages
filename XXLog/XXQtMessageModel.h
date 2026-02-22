@@ -1,6 +1,7 @@
 #ifndef XXQtMessageModelH
 #define XXQtMessageModelH
 
+#include "XXLogExportDef.h"
 #include <QStandardItemModel>
 
 namespace XX
@@ -10,7 +11,7 @@ namespace XX
       //! @brief qt message as model
       //! @ingroup XXLog
 
-      class Model : public QStandardItemModel
+      class XXLOG_DECLSPEC Model : public QStandardItemModel
       {
          Q_OBJECT
 
