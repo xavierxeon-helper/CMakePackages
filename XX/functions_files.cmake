@@ -31,7 +31,19 @@ endfunction()
 
 # application icon
 function(set_application_icon PATH_TO_ICON)
-   if(IOS)
+   if(ANDROID)
+      # see https://creativefreedom.co.uk/icon-designers-blog/android-icon-sizes/
+      if(NOT EXISTS ${CMAKE_CURRENT_LIST_DIR}/android/res)
+         file(MAKE_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/android/res)
+      endif()
+
+      set_target_properties(${PROJECT_NAME}
+        PROPERTIES
+            QT_ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/android"
+            QT_ANDROID_APP_ICON "@mipmap/icon"
+      )      
+   elseif(IOS)
+      # see https://doc.qt.io/qt-6/ios-platform-notes.html#launch-screens-and-launch-images
       set(ASSET_CATALOG_PATH "${PATH_TO_ICON}/Assets.xcassets")
       if(NOT EXISTS ${ASSET_CATALOG_PATH})
          file(MAKE_DIRECTORY ${ASSET_CATALOG_PATH})
@@ -67,6 +79,7 @@ endfunction()
 # application without icon
 function(set_application_no_icon)
    if(IOS)
+      set_target_properties(${PROJECT_NAME} PROPERTIES MACOSX_BUNDLE TRUE)
    elseif(APPLE)
       set_target_properties(${PROJECT_NAME} PROPERTIES MACOSX_BUNDLE TRUE)
    elseif(WIN32)
