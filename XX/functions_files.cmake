@@ -31,6 +31,13 @@ endfunction()
 
 # application icon
 function(set_application_icon PATH_TO_ICON)
+
+   cmake_parse_arguments(PARSE_ARGV 1 APP_ICON_ARG "" "NAME" "")
+
+   if(NOT APP_ICON_ARG_NAME)
+      set(APP_ICON_ARG_NAME ${PROJECT_NAME})
+   endif()
+
    if(ANDROID)
       # see https://creativefreedom.co.uk/icon-designers-blog/android-icon-sizes/
       if(NOT EXISTS ${CMAKE_CURRENT_LIST_DIR}/android/res)
@@ -58,17 +65,17 @@ function(set_application_icon PATH_TO_ICON)
       set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME AppIcon)
    elseif(APPLE)
       set_target_properties(${PROJECT_NAME} PROPERTIES MACOSX_BUNDLE TRUE)
-      set(APP_ICON ${PATH_TO_ICON}/${PROJECT_NAME}.icns)
+      set(APP_ICON ${PATH_TO_ICON}/${APP_ICON_ARG_NAME}.icns)
       message(STATUS "APP_ICON: ${APP_ICON}")
 
-      set(MACOSX_BUNDLE_ICON_FILE ${PROJECT_NAME}.icns PARENT_SCOPE)
+      set(MACOSX_BUNDLE_ICON_FILE ${APP_ICON_ARG_NAME}.icns PARENT_SCOPE)
       set_source_files_properties(${APP_ICON} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
       target_sources(${PROJECT_NAME} PRIVATE ${APP_ICON})
    elseif(WIN32)
       set_target_properties(${PROJECT_NAME} PROPERTIES WIN32_EXECUTABLE TRUE)
       set(ICON_RC_FILE ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.rc)
-      set(APP_ICON ${PATH_TO_ICON}/${PROJECT_NAME}.ico)
+      set(APP_ICON ${PATH_TO_ICON}/${APP_ICON_ARG_NAME}.ico)
 
       if(NOT EXISTS ${ICON_RC_FILE})         
          file(WRITE ${ICON_RC_FILE} "#include \"winver.h\"\nIDI_ICON1 ICON \"${APP_ICON}\"\n")
