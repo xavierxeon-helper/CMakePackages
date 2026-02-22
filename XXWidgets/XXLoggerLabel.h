@@ -1,5 +1,5 @@
-#ifndef XXMessageLabelH
-#define XXMessageLabelH
+#ifndef XXLoggerLabelH
+#define XXLoggerLabelH
 
 #include "XXWidgetsExportDef.h"
 #include <XXLogger.h>
@@ -9,16 +9,17 @@
 
 namespace XX
 {
+
    //! @brief a QLabel that can display log messages
    //! @details can display log messages from a Logger
    //! @ingroup XXWidgets
 
-   class XXWIDGETS_DECLSPEC MessageLabel : public QLabel, public Logger::Target
+   class XXWIDGETS_DECLSPEC LoggerLabel : public QLabel, public Logger::Target
    {
       Q_OBJECT
 
    public:
-      MessageLabel(QWidget* parent, int stackSize = 10);
+      LoggerLabel(QWidget* parent, int stackSize = 10);
 
    public:
       void setShowToolTip(bool newShowToolTip);
@@ -36,4 +37,4 @@ namespace XX
    };
 } // namespace XX
 
-#endif // NOT XXMessageLabelH
+#endif // NOT XXLoggerLabelH

@@ -1,5 +1,5 @@
 
-#include "XXMessageLabel.h"
+#include "XXLoggerLabel.h"
 
 #include <QEvent>
 #include <QMouseEvent>
@@ -8,7 +8,7 @@
 
 #include "XXLogSymbol.h"
 
-XX::MessageLabel::MessageLabel(QWidget* parent, int stackSize)
+XX::LoggerLabel::LoggerLabel(QWidget* parent, int stackSize)
    : QLabel(parent)
    , Logger::Target(stackSize)
    , showToolTip(true)
@@ -19,17 +19,17 @@ XX::MessageLabel::MessageLabel(QWidget* parent, int stackSize)
    setFrameShadow(QFrame::Plain);
 
    QTimer* messageTimer = new QTimer(this);
-   connect(messageTimer, &QTimer::timeout, this, &MessageLabel::slotUpdateTimeout);
+   connect(messageTimer, &QTimer::timeout, this, &LoggerLabel::slotUpdateTimeout);
    messageTimer->setInterval(1000);
    messageTimer->start();
 }
 
-void XX::MessageLabel::setShowToolTip(bool newShowToolTip)
+void XX::LoggerLabel::setShowToolTip(bool newShowToolTip)
 {
    showToolTip = newShowToolTip;
 }
 
-void XX::MessageLabel::slotUpdateTimeout()
+void XX::LoggerLabel::slotUpdateTimeout()
 {
    if (messageExpiration.isNull())
       return;
@@ -41,7 +41,7 @@ void XX::MessageLabel::slotUpdateTimeout()
    setText("");
 }
 
-void XX::MessageLabel::update(const Entry::Buffer& buffer)
+void XX::LoggerLabel::update(const Entry::Buffer& buffer)
 {
    static const QColor neutral(Qt::black);
 
@@ -63,7 +63,7 @@ void XX::MessageLabel::update(const Entry::Buffer& buffer)
       setToolTip(toolTip);
 }
 
-void XX::MessageLabel::mouseDoubleClickEvent(QMouseEvent* event)
+void XX::LoggerLabel::mouseDoubleClickEvent(QMouseEvent* event)
 {
    setText("");
 }
