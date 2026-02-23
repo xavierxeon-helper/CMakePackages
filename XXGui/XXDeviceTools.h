@@ -35,12 +35,21 @@ namespace XX
       static void fixSize(QWindow* window, const DeviceIdentifier& deviceId);
 
       static void forceDisplayMode(bool light = true);
-      static void enableWindowsConsole();
    };
 } // namespace XX
 
-#ifndef XXDeviceToolsHPP
-#include "XXDeviceTools.hpp"
-#endif // NOT XXDeviceToolsHPP
+// does not work when encapsulated in function!
+#ifdef Q_OS_WINDOWS
+#define ENABLE_WINDOWS_CONSOLE                      \
+   if (AttachConsole(ATTACH_PARENT_PROCESS))        \
+   {                                                \
+      FILE* fpstdout = stdout;                      \
+      freopen_s(&fpstdout, "CONOUT$", "w", stdout); \
+      FILE* fpstderr = stderr;                      \
+      freopen_s(&fpstderr, "CONOUT$", "w", stderr); \
+   }
+#else
+#define ENABLE_WINDOWS_CONSOLE
+#endif // Q_OS_WINDOWS
 
 #endif // NOT XXDeviceToolsH

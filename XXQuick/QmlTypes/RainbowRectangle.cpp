@@ -67,33 +67,29 @@ void RainbowRectangle::paint(QPainter* painter)
    const QColor bgColor = rainbow.advanceColor();
    if (0.0 == stretch)
    {
-      painter->fillRect(contentsBoundingRect(), bgColor);
+      const QBrush solidBrush(bgColor);
+      painter->fillRect(contentsBoundingRect(), solidBrush);
    }
    else
    {
-      const int width = boundingRect().width();
-      const int height = boundingRect().height();
+      QLinearGradient gradient;
+      gradient.setStart(QPointF(0, 0));
       if (Qt::Horizontal == orientation)
-      {
-         const double repeats = (double)width / (stretch * rainbow.getMaxIndex());
-
-         for (int x = 0; x < width; x++)
-         {
-            const int offset = inverse ? (width - x) * repeats : x * repeats;
-            const QColor color = rainbow.getColor(offset);
-            painter->fillRect(QRect(x, 0, x, height), color);
-         }
-      }
+         gradient.setFinalStop(QPointF(stretch * rainbow.getMaxIndex(), 0));
       else
-      {
-         const double repeats = (double)height / (stretch * rainbow.getMaxIndex());
+         gradient.setFinalStop(QPointF(0, stretch * rainbow.getMaxIndex()));
+      gradient.setSpread(QGradient::RepeatSpread);
 
-         for (int y = 0; y < height; y++)
-         {
-            const int offset = inverse ? (height - y) * repeats : y * repeats;
-            const QColor color = rainbow.getColor(offset);
-            painter->fillRect(QRect(0, y, width, y), color);
-         }
+      for (int index = 0; index < rainbow.getMaxIndex(); index++)
+      {
+         const int offset = inverse ? (rainbow.getMaxIndex() - index) : index;
+         const QColor color = rainbow.getColor(offset);
+
+         const double pos = (double)index / (double)rainbow.getMaxIndex();
+         gradient.setColorAt(pos, color);
       }
+
+      const QBrush gradientBrush(gradient);
+      painter->fillRect(contentsBoundingRect(), gradientBrush);
    }
 }
