@@ -11,6 +11,8 @@ QSize XX::DeviceTools::getSize(const DeviceIdentifier& deviceId)
          return QSize(1133, 695);
       case iPadPro13:
          return QSize(1376, 975);
+      case NoteAir5C:
+         return QSize(1323, 992);
       default:
          return QSize(0, 0);
    }
