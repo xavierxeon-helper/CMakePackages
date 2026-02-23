@@ -2,15 +2,20 @@
 
 #include <QPainter>
 #include <QTimer>
+#include <QtMath>
 
 XX::RainbowRectangle::RainbowRectangle(QQuickItem* parent)
    : QQuickPaintedItem(parent)
    , shade(300)
    , stretch(0.0)
-   , orientation(Qt::Vertical)
-   , inverse(false)
+   , rotation(180.0)
    , rainbow(300, shade)
+   , gradient()
 {
+   gradient.setStart(QPointF(0, 0));
+   gradient.setSpread(QGradient::RepeatSpread);
+   updateDirection();
+
    auto updateWrapper = [this]()
    {
       this->update();
@@ -40,26 +45,45 @@ double XX::RainbowRectangle::getStretch() const
 void XX::RainbowRectangle::setStretch(const double& value)
 {
    stretch = value;
+
+   updateDirection();
 }
 
-Qt::Orientation XX::RainbowRectangle::getOrientation() const
+double XX::RainbowRectangle::getRotation() const
 {
-   return orientation;
+   return rotation;
 }
 
-void XX::RainbowRectangle::setOrientation(const Qt::Orientation& value)
+void XX::RainbowRectangle::setRotation(const double& value)
 {
-   orientation = value;
+   rotation = value;
+   while (rotation < 0)
+      rotation += 360;
+   while (rotation >= 360)
+      rotation -= 360;
+
+   updateDirection();
 }
 
-bool XX::RainbowRectangle::getInverse() const
+void XX::RainbowRectangle::updateDirection()
 {
-   return inverse;
+   const double radius = stretch * rainbow.getMaxIndex();
+   const double angle = qDegreesToRadians(rotation - 90);
+
+   const double x = radius * qSin(angle);
+   const double y = radius * qCos(angle);
+   gradient.setFinalStop(QPointF(x, y));
 }
 
-void XX::RainbowRectangle::setInverse(const bool& value)
+void XX::RainbowRectangle::updateColor()
 {
-   inverse = value;
+   for (int index = 0; index < rainbow.getMaxIndex(); index++)
+   {
+      const QColor color = rainbow.getColor(index);
+
+      const double pos = (double)index / (double)rainbow.getMaxIndex();
+      gradient.setColorAt(pos, color);
+   }
 }
 
 void XX::RainbowRectangle::paint(QPainter* painter)
@@ -72,25 +96,7 @@ void XX::RainbowRectangle::paint(QPainter* painter)
    }
    else
    {
-      // create gradient
-      QLinearGradient gradient;
-      gradient.setStart(QPointF(0, 0));
-      if (Qt::Horizontal == orientation)
-         gradient.setFinalStop(QPointF(stretch * rainbow.getMaxIndex(), 0));
-      else
-         gradient.setFinalStop(QPointF(0, stretch * rainbow.getMaxIndex()));
-      gradient.setSpread(QGradient::RepeatSpread);
-
-      for (int index = 0; index < rainbow.getMaxIndex(); index++)
-      {
-         const int offset = inverse ? (rainbow.getMaxIndex() - index) : index;
-         const QColor color = rainbow.getColor(offset);
-
-         const double pos = (double)index / (double)rainbow.getMaxIndex();
-         gradient.setColorAt(pos, color);
-      }
-
-      // draw
+      updateColor();
       const QBrush gradientBrush(gradient);
       painter->fillRect(contentsBoundingRect(), gradientBrush);
    }

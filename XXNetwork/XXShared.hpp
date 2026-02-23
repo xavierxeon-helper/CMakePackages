@@ -9,14 +9,14 @@
 #include <QProcess>
 #include <QThread>
 
-template <CompileTimeString AppName>
+template <XX::CompileTimeString AppName>
 QString XX::Shared<AppName>::appName()
 {
    static const QString name = QString::fromStdString(AppName.text());
    return name;
 }
 
-template <CompileTimeString AppName>
+template <XX::CompileTimeString AppName>
 QString XX::Shared<AppName>::compileSharedFileName(const QString& suffix, const QStandardPaths::StandardLocation& location)
 {
    const QString path = QStandardPaths::writableLocation(location);
@@ -25,7 +25,7 @@ QString XX::Shared<AppName>::compileSharedFileName(const QString& suffix, const 
    return fileName;
 }
 
-template <CompileTimeString AppName>
+template <XX::CompileTimeString AppName>
 QString XX::Shared<AppName>::socketName()
 {
 #if defined(Q_OS_WIN)
@@ -37,7 +37,7 @@ QString XX::Shared<AppName>::socketName()
    return name;
 }
 
-template <CompileTimeString AppName>
+template <XX::CompileTimeString AppName>
 bool XX::Shared<AppName>::isServerActive()
 {
    const QString socketName = Shared<AppName>::socketName();
@@ -58,7 +58,7 @@ bool XX::Shared<AppName>::isServerActive()
    return false;
 }
 
-template <CompileTimeString AppName>
+template <XX::CompileTimeString AppName>
 void XX::Shared<AppName>::startApplication()
 {
 #if defined(__APPLE__)

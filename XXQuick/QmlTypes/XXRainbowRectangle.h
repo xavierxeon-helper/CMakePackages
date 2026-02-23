@@ -3,6 +3,8 @@
 
 #include <QQuickPaintedItem>
 
+#include <QLinearGradient>
+
 #include <XXRainbow.h>
 
 namespace XX
@@ -17,8 +19,7 @@ namespace XX
 
       Q_PROPERTY(int shade READ getShade WRITE setShade)
       Q_PROPERTY(double stretch READ getStretch WRITE setStretch)
-      Q_PROPERTY(Qt::Orientation orientation READ getOrientation WRITE setOrientation)
-      Q_PROPERTY(bool inverse READ getInverse WRITE setInverse)
+      Q_PROPERTY(double rotation READ getRotation WRITE setRotation)
 
    public:
       RainbowRectangle(QQuickItem* parent = nullptr);
@@ -30,20 +31,20 @@ namespace XX
       double getStretch() const;
       void setStretch(const double& value);
 
-      Qt::Orientation getOrientation() const;
-      void setOrientation(const Qt::Orientation& value);
+      double getRotation() const;
+      void setRotation(const double& value);
 
-      bool getInverse() const;
-      void setInverse(const bool& value);
+      void updateDirection();
+      void updateColor();
 
       void paint(QPainter* painter) override;
 
    private:
       int shade;
       double stretch;
-      Qt::Orientation orientation;
-      bool inverse;
+      double rotation;
       XX::Rainbow rainbow;
+      QLinearGradient gradient;
    };
 } // namespace XX
 
