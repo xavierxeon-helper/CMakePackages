@@ -45,6 +45,8 @@ double XX::RainbowRectangle::getStretch() const
 void XX::RainbowRectangle::setStretch(const double& value)
 {
    stretch = value;
+   if (stretch < 0.0)
+      stretch = 0.0;
 
    updateDirection();
 }
