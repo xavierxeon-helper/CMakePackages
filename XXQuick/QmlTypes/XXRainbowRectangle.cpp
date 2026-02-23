@@ -1,9 +1,9 @@
-#include "RainbowRectangle.h"
+#include "XXRainbowRectangle.h"
 
 #include <QPainter>
 #include <QTimer>
 
-RainbowRectangle::RainbowRectangle(QQuickItem* parent)
+XX::RainbowRectangle::RainbowRectangle(QQuickItem* parent)
    : QQuickPaintedItem(parent)
    , shade(300)
    , stretch(0.0)
@@ -21,48 +21,48 @@ RainbowRectangle::RainbowRectangle(QQuickItem* parent)
    updateTimer->start(100);
 }
 
-int RainbowRectangle::getShade() const
+int XX::RainbowRectangle::getShade() const
 {
    return shade;
 }
 
-void RainbowRectangle::setShade(const int& value)
+void XX::RainbowRectangle::setShade(const int& value)
 {
    shade = value;
    rainbow.changeShade(shade);
 }
 
-double RainbowRectangle::getStretch() const
+double XX::RainbowRectangle::getStretch() const
 {
    return stretch;
 }
 
-void RainbowRectangle::setStretch(const double& value)
+void XX::RainbowRectangle::setStretch(const double& value)
 {
    stretch = value;
 }
 
-Qt::Orientation RainbowRectangle::getOrientation() const
+Qt::Orientation XX::RainbowRectangle::getOrientation() const
 {
    return orientation;
 }
 
-void RainbowRectangle::setOrientation(const Qt::Orientation& value)
+void XX::RainbowRectangle::setOrientation(const Qt::Orientation& value)
 {
    orientation = value;
 }
 
-bool RainbowRectangle::getInverse() const
+bool XX::RainbowRectangle::getInverse() const
 {
    return inverse;
 }
 
-void RainbowRectangle::setInverse(const bool& value)
+void XX::RainbowRectangle::setInverse(const bool& value)
 {
    inverse = value;
 }
 
-void RainbowRectangle::paint(QPainter* painter)
+void XX::RainbowRectangle::paint(QPainter* painter)
 {
    const QColor bgColor = rainbow.advanceColor();
    if (0.0 == stretch)
@@ -72,6 +72,7 @@ void RainbowRectangle::paint(QPainter* painter)
    }
    else
    {
+      // create gradient
       QLinearGradient gradient;
       gradient.setStart(QPointF(0, 0));
       if (Qt::Horizontal == orientation)
@@ -89,6 +90,7 @@ void RainbowRectangle::paint(QPainter* painter)
          gradient.setColorAt(pos, color);
       }
 
+      // draw
       const QBrush gradientBrush(gradient);
       painter->fillRect(contentsBoundingRect(), gradientBrush);
    }
