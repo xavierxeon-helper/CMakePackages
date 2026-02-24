@@ -9,12 +9,13 @@ XX::RainbowRectangle::RainbowRectangle(QQuickItem* parent)
    , shade(300)
    , stretch(0.0)
    , rotation(180.0)
-   , rainbow(300, shade)
+   , speed(1)
+   , rainbow(600, shade)
    , gradient()
 {
    gradient.setStart(QPointF(0, 0));
    gradient.setSpread(QGradient::RepeatSpread);
-   updateDirection();
+   updateGradientDirection();
 
    auto updateWrapper = [this]()
    {
@@ -48,7 +49,7 @@ void XX::RainbowRectangle::setStretch(const double& value)
    if (stretch < 0.0)
       stretch = 0.0;
 
-   updateDirection();
+   updateGradientDirection();
 }
 
 double XX::RainbowRectangle::getRotation() const
@@ -64,10 +65,20 @@ void XX::RainbowRectangle::setRotation(const double& value)
    while (rotation >= 360)
       rotation -= 360;
 
-   updateDirection();
+   updateGradientDirection();
 }
 
-void XX::RainbowRectangle::updateDirection()
+uint XX::RainbowRectangle::getSpeed() const
+{
+   return speed;
+}
+
+void XX::RainbowRectangle::setSpeed(const uint& value)
+{
+   speed = value;
+}
+
+void XX::RainbowRectangle::updateGradientDirection()
 {
    const double radius = stretch * rainbow.getMaxIndex();
    const double angle = qDegreesToRadians(rotation - 90);
@@ -77,7 +88,7 @@ void XX::RainbowRectangle::updateDirection()
    gradient.setFinalStop(QPointF(x, y));
 }
 
-void XX::RainbowRectangle::updateColor()
+void XX::RainbowRectangle::updateGradientColor()
 {
    for (int index = 0; index < rainbow.getMaxIndex(); index++)
    {
@@ -90,7 +101,7 @@ void XX::RainbowRectangle::updateColor()
 
 void XX::RainbowRectangle::paint(QPainter* painter)
 {
-   const QColor bgColor = rainbow.advanceColor();
+   const QColor bgColor = rainbow.advanceColor(speed);
    if (0.0 == stretch)
    {
       const QBrush solidBrush(bgColor);
@@ -98,7 +109,7 @@ void XX::RainbowRectangle::paint(QPainter* painter)
    }
    else
    {
-      updateColor();
+      updateGradientColor();
       const QBrush gradientBrush(gradient);
       painter->fillRect(contentsBoundingRect(), gradientBrush);
    }
