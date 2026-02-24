@@ -25,7 +25,8 @@ namespace XX
       enum DeviceIdentifier
       {
          iPadMini,
-         iPadPro13
+         iPadPro13,
+         NoteAir5C
       };
       Q_ENUM(DeviceIdentifier)
 

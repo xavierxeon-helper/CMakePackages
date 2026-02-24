@@ -20,8 +20,8 @@ namespace XX
       const quint64& getMaxIndex() const;
       void changeShade(quint16 shade);
       QColor getColor(const quint64 offset = 0);
-      QColor advanceColor();
-      QColor lookup(quint64 value, bool wrap);
+      QColor advanceColor(const quint64& offset = 1);
+      QColor lookup(const quint64& value, bool wrap);
 
    private:
       using ColorMap = QMap<quint64, QColor>;

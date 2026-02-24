@@ -62,16 +62,13 @@ QColor XX::Rainbow::getColor(const quint64 offset)
    return colorMap.value(index);
 }
 
-QColor XX::Rainbow::advanceColor()
+QColor XX::Rainbow::advanceColor(const quint64& offset)
 {
-   currentIndex++;
-   if (currentIndex >= maxIndex)
-      currentIndex = 0;
-
+   currentIndex = (currentIndex + offset) % maxIndex;
    return colorMap.value(currentIndex);
 }
 
-QColor XX::Rainbow::lookup(quint64 value, bool wrap)
+QColor XX::Rainbow::lookup(const quint64& value, bool wrap)
 {
    quint64 index = wrap ? value % maxIndex : value;
    if (index >= maxIndex)
