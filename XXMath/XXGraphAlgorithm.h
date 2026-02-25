@@ -1,7 +1,7 @@
 #ifndef XXDiscreteMathsAlgorithmH
 #define XXDiscreteMathsAlgorithmH
 
-#include "XXGraphExportDef.h"
+#include "XXMathExportDef.h"
 
 #include <QList>
 
@@ -12,9 +12,9 @@
 namespace XX
 {
    //! @brief graph algorithms
-   //! @ingroup XXGraph
+   //! @ingroup XXMath
 
-   class XXGRAPH_DECLSPEC Graph::Algorithm
+   class XXMATH_DECLSPEC Graph::Algorithm
    {
    public:
       //! @brief list of vertex or edge indexes
@@ -32,7 +32,7 @@ namespace XX
       };
 
       //! @brief result tree of graph traversal
-      struct XXGRAPH_DECLSPEC Tree
+      struct XXMATH_DECLSPEC Tree
       {
          struct VertexData
          {
@@ -52,7 +52,7 @@ namespace XX
       };
 
       //! @brief graph algorithms
-      struct TreeEdges
+      struct XXMATH_DECLSPEC TreeEdges
       {
          IndexList treeEdges;    // edges used for visit
          IndexList forwardEdges; // unvisited, in order

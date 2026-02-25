@@ -1,32 +1,16 @@
-#ifndef XXMathVector3H
-#define XXMathVector3H
+#ifndef XXLinalgVectorH
+#define XXLinalgVectorH
 
 #include "XXMathExportDef.h"
 
 #include <iostream>
 
+#include "XXLinalgSpherical.h"
+
 namespace XX
 {
-   namespace Math
+   namespace Linalg
    {
-      //! @brief Spherical coordinates, used to represent points in 3D space.
-      //! @ingroup XXMath
-
-      class XXMATH_DECLSPEC Spherical
-      {
-      public:
-         Spherical(const double& az = 0.0, const double& el = 0.0, const double& radius = 1.0);
-
-      public:
-         bool operator<(const Spherical& other) const;
-         friend std::ostream& operator<<(std::ostream& out, const Spherical& value);
-
-      public:
-         double az = 0.0;
-         double el = 0.0;
-         double radius = 0.0;
-      };
-
       //! @brief 3D vector, used to represent points or directions in 3D space.
       //! @ingroup XXMath
 
@@ -36,7 +20,7 @@ namespace XX
          {
             X = 0,
             Y = 1,
-            Z = 3
+            Z = 2
          };
 
       public:
@@ -90,12 +74,14 @@ namespace XX
          @ingroup XXMath
          @brief streaming operators for math types
       */
-      std::ostream& operator<<(std::ostream& out, const Spherical& value);
       std::ostream& operator<<(std::ostream& out, const Vector3& value);
+      XXMATH_DECLSPEC QDebug operator<<(QDebug stream, const Vector3& data);
+      XXMATH_DECLSPEC QTextStream& operator>>(QTextStream& stream, Vector3& data);
+      XXMATH_DECLSPEC QTextStream& operator<<(QTextStream& stream, const Vector3& data);
 
       //! @}
 
-   } // namespace Math
+   } // namespace Linalg
 } // namespace XX
 
-#endif // NOT XXMathVector3H
+#endif // NOT XXLinalgVectorH

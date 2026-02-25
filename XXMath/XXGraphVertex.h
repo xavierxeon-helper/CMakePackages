@@ -1,7 +1,7 @@
 #ifndef XXDiscreteMathsVertexH
 #define XXDiscreteMathsVertexH
 
-#include "XXGraphExportDef.h"
+#include "XXMathExportDef.h"
 
 #include <QString>
 
@@ -10,9 +10,9 @@
 namespace XX
 {
    //! @brief a vertex in a graph
-   //! @ingroup XXGraph
+   //! @ingroup XXMath
 
-   class XXGRAPH_DECLSPEC Graph::Vertex
+   class XXMATH_DECLSPEC Graph::Vertex
    {
    public:
       Vertex(const QString& name = QString());

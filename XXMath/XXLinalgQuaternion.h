@@ -1,11 +1,11 @@
-#ifndef XXMathQuaternionH
-#define XXMathQuaternionH
+#ifndef XXLinalgQuaternionH
+#define XXLinalgQuaternionH
 
 #include "XXMathExportDef.h"
 
 namespace XX
 {
-   namespace Math
+   namespace Linalg
    {
       //! @brief quaternions, used to represent rotations in 3D space.
       //! @ingroup XXMath
@@ -15,7 +15,7 @@ namespace XX
       public:
          Quaternion();
       };
-   } // namespace Math
+   } // namespace Linalg
 } // namespace XX
 
-#endif // NOT XXMathQuaternionH
+#endif // NOT XXLinalgQuaternionH

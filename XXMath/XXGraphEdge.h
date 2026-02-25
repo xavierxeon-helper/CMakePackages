@@ -1,7 +1,7 @@
 #ifndef XXDiscreteMathsEdgeH
 #define XXDiscreteMathsEdgeH
 
-#include "XXGraphExportDef.h"
+#include "XXMathExportDef.h"
 
 #include "XXGraph.h"
 
@@ -11,9 +11,9 @@ namespace XX
 {
    //! @brief an edge in a graph
    //! @details an edge can be directed or undirected, depending on the weights
-   //! @ingroup XXGraph
+   //! @ingroup XXMath
 
-   class XXGRAPH_DECLSPEC Graph::Edge
+   class XXMATH_DECLSPEC Graph::Edge
    {
    public:
       static const double invalidWeight;

@@ -1,34 +1,15 @@
-#include "XXMathVector3.h"
+#include "XXLinalgVector.h"
 
 #include "XXMathGeneral.h"
 
-XX::Math::Spherical::Spherical(const double& az, const double& el, const double& radius)
-   : az(az)
-   , el(el)
-   , radius(radius)
-{
-}
-
-bool XX::Math::Spherical::operator<(const Spherical& other) const
-{
-   if (az < other.az)
-      return true;
-   else if (az > other.az)
-      return false;
-   else
-      return (el < other.el);
-}
-
-//
-
-XX::Math::Vector3::Vector3(const double& x, const double& y, const double& z)
+XX::Linalg::Vector3::Vector3(const double& x, const double& y, const double& z)
    : x(x)
    , y(y)
    , z(z)
 {
 }
 
-bool XX::Math::Vector3::operator==(const Vector3& other) const
+bool XX::Linalg::Vector3::operator==(const Vector3& other) const
 {
    if (x != other.x)
       return false;
@@ -40,7 +21,7 @@ bool XX::Math::Vector3::operator==(const Vector3& other) const
    return true;
 }
 
-bool XX::Math::Vector3::operator<(const Vector3& other) const
+bool XX::Linalg::Vector3::operator<(const Vector3& other) const
 {
    if (x < other.x)
       return true;
@@ -54,7 +35,7 @@ bool XX::Math::Vector3::operator<(const Vector3& other) const
       return (z < other.z);
 }
 
-XX::Math::Vector3 XX::Math::Vector3::operator+(const Vector3& other) const
+XX::Linalg::Vector3 XX::Linalg::Vector3::operator+(const Vector3& other) const
 {
    const double nx = x + other.x;
    const double ny = y + other.y;
@@ -63,7 +44,7 @@ XX::Math::Vector3 XX::Math::Vector3::operator+(const Vector3& other) const
    return Vector3(nx, ny, nz);
 }
 
-XX::Math::Vector3& XX::Math::Vector3::operator+=(const Vector3& other)
+XX::Linalg::Vector3& XX::Linalg::Vector3::operator+=(const Vector3& other)
 {
    x += other.x;
    y += other.y;
@@ -72,40 +53,40 @@ XX::Math::Vector3& XX::Math::Vector3::operator+=(const Vector3& other)
    return *this;
 }
 
-const double& XX::Math::Vector3::operator[](const int index) const
+const double& XX::Linalg::Vector3::operator[](const int index) const
 {
    return data[index];
 }
 
-double& XX::Math::Vector3::operator[](const int index)
+double& XX::Linalg::Vector3::operator[](const int index)
 {
    return data[index];
 }
 
-const double& XX::Math::Vector3::getX() const
+const double& XX::Linalg::Vector3::getX() const
 {
    return x;
 }
 
-const double& XX::Math::Vector3::getY() const
+const double& XX::Linalg::Vector3::getY() const
 {
    return y;
 }
 
-const double& XX::Math::Vector3::getZ() const
+const double& XX::Linalg::Vector3::getZ() const
 {
    return z;
 }
 
-XX::Math::Vector3 XX::Math::Vector3::fromSpherical(const Spherical& spherical, const bool fromDegree)
+XX::Linalg::Vector3 XX::Linalg::Vector3::fromSpherical(const Spherical& spherical, const bool fromDegree)
 {
    double az = spherical.az;
    double el = spherical.el;
 
    if (fromDegree)
    {
-      az = deg2Rad(az);
-      el = deg2Rad(el);
+      az = Math::deg2Rad(az);
+      el = Math::deg2Rad(el);
    }
 
    const double x = spherical.radius * std::sin(el) * std::cos(az);
@@ -115,7 +96,7 @@ XX::Math::Vector3 XX::Math::Vector3::fromSpherical(const Spherical& spherical, c
    return Vector3(x, y, z);
 }
 
-XX::Math::Spherical XX::Math::Vector3::toSpherical(const bool toDegree) const
+XX::Linalg::Spherical XX::Linalg::Vector3::toSpherical(const bool toDegree) const
 {
    const double radius = length();
    if (0.0 == radius)
@@ -130,20 +111,20 @@ XX::Math::Spherical XX::Math::Vector3::toSpherical(const bool toDegree) const
 
    if (toDegree)
    {
-      az = rad2Deg(az);
-      el = rad2Deg(el);
+      az = Math::rad2Deg(az);
+      el = Math::rad2Deg(el);
    }
 
    return Spherical(az, el, radius);
 }
 
-double XX::Math::Vector3::length() const
+double XX::Linalg::Vector3::length() const
 {
    const double selfDot = dot(*this);
    return std::sqrt(selfDot);
 }
 
-XX::Math::Vector3 XX::Math::Vector3::norm() const
+XX::Linalg::Vector3 XX::Linalg::Vector3::norm() const
 {
    const double l = length();
    if (0.0 == l)
@@ -156,24 +137,24 @@ XX::Math::Vector3 XX::Math::Vector3::norm() const
    return Vector3(nx, ny, nz);
 }
 
-double XX::Math::Vector3::dot(const Vector3& other) const
+double XX::Linalg::Vector3::dot(const Vector3& other) const
 {
    return (x * other.x) + (y * other.y) + (z * other.z);
 }
 
-double XX::Math::Vector3::dotAngle(const Vector3& other, const bool toDegree) const
+double XX::Linalg::Vector3::dotAngle(const Vector3& other, const bool toDegree) const
 {
    const double d = dot(other);
    const double l = length() * other.length();
    double angle = std::acos(d / l);
 
    if (toDegree)
-      angle = rad2Deg(angle);
+      angle = Math::rad2Deg(angle);
 
    return angle;
 }
 
-XX::Math::Vector3 XX::Math::Vector3::cross(const Vector3& other) const
+XX::Linalg::Vector3 XX::Linalg::Vector3::cross(const Vector3& other) const
 {
    const double x = (y * other.z) - (z * other.y);
    const double y = (z * other.x) - (x * other.z);
@@ -182,28 +163,41 @@ XX::Math::Vector3 XX::Math::Vector3::cross(const Vector3& other) const
    return Vector3(x, y, z);
 }
 
-double XX::Math::Vector3::crossAngle(const Vector3& other, const bool toDegree) const
+double XX::Linalg::Vector3::crossAngle(const Vector3& other, const bool toDegree) const
 {
    const double c = cross(other).length();
    const double l = length() * other.length();
    double angle = std::asin(c / l);
 
    if (toDegree)
-      angle = rad2Deg(angle);
+      angle = Math::rad2Deg(angle);
 
    return angle;
 }
 
 //
 
-std::ostream& XX::Math::operator<<(std::ostream& out, const Math::Spherical& value)
-{
-   out << "sperical[" << value.az << ", " << value.el << ", " << value.radius << "]";
-   return out;
-}
-
-std::ostream& XX::Math::operator<<(std::ostream& out, const Math::Vector3& value)
+std::ostream& XX::Linalg::operator<<(std::ostream& out, const Linalg::Vector3& value)
 {
    out << "[" << value.x << ", " << value.y << ", " << value.z << "]";
    return out;
+}
+
+QDebug XX::Linalg::operator<<(QDebug stream, const Vector3& data)
+{
+   stream << "[" << data[0] << ", " << data[1] << ", " << data[2] << "]";
+   return stream;
+}
+
+QTextStream& XX::Linalg::operator<<(QTextStream& stream, const Vector3& data)
+{
+   stream << "[" << data[0] << "," << data[1] << "," << data[2] << "]";
+   return stream;
+}
+
+QTextStream& XX::Linalg::operator>>(QTextStream& stream, Vector3& data)
+{
+   char dummy;
+   stream >> dummy >> data[0] >> dummy >> data[1] >> dummy >> data[2] >> dummy;
+   return stream;
 }

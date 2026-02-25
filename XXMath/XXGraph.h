@@ -1,7 +1,7 @@
 #ifndef XXDiscreteMathsGraphH
 #define XXDiscreteMathsGraphH
 
-#include "XXGraphExportDef.h"
+#include "XXMathExportDef.h"
 
 #include <QList>
 
@@ -11,9 +11,9 @@ namespace XX
    /*!
       @details fill with \ref Vertex "vertices" and  \ref Edge "edges", then use \ref Algorithm "algorithms" to process the graph data
    */
-   //! @ingroup XXGraph
+   //! @ingroup XXMath
 
-   class XXGRAPH_DECLSPEC Graph
+   class XXMATH_DECLSPEC Graph
    {
    public:
       class Algorithm;
