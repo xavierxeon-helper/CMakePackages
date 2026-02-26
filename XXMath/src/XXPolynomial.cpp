@@ -33,7 +33,7 @@ bool XX::Polynomial::operator==(const Polynomial& other) const
 
 bool XX::Polynomial::operator!=(const Polynomial& other) const
 {
-   return (coefficents != other.coefficents);
+   return !(*this == other);
 }
 
 XX::Polynomial XX::Polynomial::operator+(const Polynomial& other) const

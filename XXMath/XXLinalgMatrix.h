@@ -13,6 +13,18 @@ namespace XX
          Matrix(size_t rowCount, size_t columnCount);
 
       public:
+         bool operator==(const Matrix& other) const;
+         bool operator!=(const Matrix& other) const;
+
+         Matrix operator+(const Matrix& other) const;
+         Matrix operator-(const Matrix& other) const;
+
+         Matrix& operator+=(const Matrix& other);
+         Matrix& operator-=(const Matrix& other);
+
+      public:
+         bool sizeMatch(const Matrix& other) const;
+
          Matrix inverse() const;
          Matrix transpose() const;
          double determinant() const;

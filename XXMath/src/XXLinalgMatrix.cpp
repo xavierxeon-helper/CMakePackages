@@ -6,6 +6,46 @@ XX::Linalg::Matrix::Matrix(size_t rowCount, size_t columnCount)
 {
 }
 
+bool XX::Linalg::Matrix::operator==(const Matrix& other) const
+{
+   if (!sizeMatch(other))
+      return false;
+
+   return true;
+}
+
+bool XX::Linalg::Matrix::operator!=(const Matrix& other) const
+{
+   return !(*this == other);
+}
+
+XX::Linalg::Matrix XX::Linalg::Matrix::operator+(const Matrix& other) const
+{
+}
+
+XX::Linalg::Matrix XX::Linalg::Matrix::operator-(const Matrix& other) const
+{
+}
+
+XX::Linalg::Matrix& XX::Linalg::Matrix::operator+=(const Matrix& other)
+{
+}
+
+XX::Linalg::Matrix& XX::Linalg::Matrix::operator-=(const Matrix& other)
+{
+}
+
+bool XX::Linalg::Matrix::sizeMatch(const Matrix& other) const
+{
+   if (columnSize != other.columnSize)
+      return false;
+
+   if (data.size() != other.data.size())
+      return false;
+
+   return true;
+}
+
 // see https://en.wikipedia.org/wiki/Invertible_matrix
 XX::Linalg::Matrix XX::Linalg::Matrix::inverse() const
 {
