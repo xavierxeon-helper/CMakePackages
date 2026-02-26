@@ -1,8 +1,15 @@
 #include "XXPolynomialRegression.h"
 
+#include <QDebug>
+
 XX::Polynomial::Regression::Regression(size_t size)
    : values(size, 0.0)
 {
+}
+
+size_t XX::Polynomial::Regression::size() const
+{
+   return values.size();
 }
 
 void XX::Polynomial::Regression::setValue(const size_t index, const double& value)
@@ -11,6 +18,15 @@ void XX::Polynomial::Regression::setValue(const size_t index, const double& valu
       return;
 
    values[index] = value;
+}
+
+XX::Polynomial::Segment::Bundle XX::Polynomial::Regression::fit(size_t degree) const
+{
+   Segment::Bundle bundle;
+
+   qDebug() << __FUNCTION__ << degree;
+
+   return bundle;
 }
 
 void XX::Polynomial::Regression::clear()
@@ -55,11 +71,4 @@ XX::Polynomial::Regression::Section::List XX::Polynomial::Regression::compileSec
 const QVector<double>& XX::Polynomial::Regression::getRawValues() const
 {
    return values;
-}
-
-XX::Polynomial::Segment::Bundle XX::Polynomial::Regression::fit(size_t degree) const
-{
-   Segment::Bundle bundle;
-
-   return bundle;
 }

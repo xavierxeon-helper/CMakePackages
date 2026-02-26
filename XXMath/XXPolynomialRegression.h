@@ -27,12 +27,14 @@ namespace XX
       };
 
    public:
+      size_t size() const;
+
       void setValue(const size_t index, const double& value);
+      Segment::Bundle fit(size_t degree) const;
       void clear();
+
       Section::List compileSections(double threshold = 10.0) const;
       const QVector<double>& getRawValues() const;
-
-      Segment::Bundle fit(size_t degree) const;
 
    private:
       QVector<double> values;
