@@ -1,6 +1,6 @@
 #include "XXLinalgVector.h"
 
-#include "XXMathGeneral.h"
+#include "XXMath.h"
 
 XX::Linalg::Vector3::Vector3(const double& x, const double& y, const double& z)
    : x(x)

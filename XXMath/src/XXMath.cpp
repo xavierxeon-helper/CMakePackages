@@ -1,4 +1,4 @@
-#include "XXMathGeneral.h"
+#include "XXMath.h"
 
 double XX::Math::deg2Rad(const double& degrees)
 {

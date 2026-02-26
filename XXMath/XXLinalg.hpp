@@ -1,10 +1,10 @@
-#ifndef XXMathGeneralHPP
-#define XXMathGeneralHPP
+#ifndef XXLinalgGeneralHPP
+#define XXLinalgGeneralHPP
 
-#include "XXMathGeneral.h"
+#include "XXLinalg.h"
 
 template <typename RealType>
-std::complex<RealType> XX::Math::cartesianToPolar(const std::complex<RealType>& cartesian)
+std::complex<RealType> XX::Linalg::cartesianToPolar(const std::complex<RealType>& cartesian)
 {
    const float x = cartesian.real();
    const float y = cartesian.imag();
@@ -17,7 +17,7 @@ std::complex<RealType> XX::Math::cartesianToPolar(const std::complex<RealType>& 
 }
 
 template <typename RealType>
-std::complex<RealType> XX::Math::polarToCartesian(const std::complex<RealType>& polar)
+std::complex<RealType> XX::Linalg::polarToCartesian(const std::complex<RealType>& polar)
 {
    const float r = polar.real();
    const float theta = polar.imag();
@@ -29,4 +29,4 @@ std::complex<RealType> XX::Math::polarToCartesian(const std::complex<RealType>& 
    return result;
 }
 
-#endif // NOT XXMathGeneralHPP
+#endif // NOT XXLinalgGeneralHPP

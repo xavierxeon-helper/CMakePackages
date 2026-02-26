@@ -1,6 +1,6 @@
 #include "XXPolynomialBundle.h"
 
-XX::Polynomial::Bundle::Bundle()
+XX::Polynomial::Segement::Bundle::Bundle()
+   : Segement::List()
 {
 }
-
