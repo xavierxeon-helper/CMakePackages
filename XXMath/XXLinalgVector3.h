@@ -1,5 +1,5 @@
-#ifndef XXLinalgVectorH
-#define XXLinalgVectorH
+#ifndef XXLinalgVector3H
+#define XXLinalgVector3H
 
 #include "XXMathExportDef.h"
 
@@ -84,4 +84,4 @@ namespace XX
    } // namespace Linalg
 } // namespace XX
 
-#endif // NOT XXLinalgVectorH
+#endif // NOT XXLinalgVector3H
