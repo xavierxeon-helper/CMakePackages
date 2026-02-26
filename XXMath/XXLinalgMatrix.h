@@ -9,6 +9,11 @@ namespace XX
       {
       public:
          Matrix();
+
+      public:
+         Matrix inverse() const;
+         Matrix transpose() const;
+         double determinant() const;
       };
    } // namespace Linalg
 } // namespace XX
