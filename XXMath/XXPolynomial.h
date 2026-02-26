@@ -18,7 +18,7 @@ namespace XX
    {
    public:
       class Regression;
-      class Segement;
+      class Segment;
 
    public:
       Polynomial(size_t degree = 0);

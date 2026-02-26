@@ -4,6 +4,8 @@
 #include "XXMathExportDef.h"
 #include "XXPolynomial.h"
 
+#include "XXPolynomialSegmentBundle.h"
+
 namespace XX
 {
    //! @brief fit polynomials to data
@@ -29,6 +31,8 @@ namespace XX
       void clear();
       Section::List compileSections(double threshold = 10.0) const;
       const QVector<double>& getRawValues() const;
+
+      Segment::Bundle fit(size_t degree) const;
 
    private:
       QVector<double> values;

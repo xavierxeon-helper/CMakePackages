@@ -56,3 +56,10 @@ const QVector<double>& XX::Polynomial::Regression::getRawValues() const
 {
    return values;
 }
+
+XX::Polynomial::Segment::Bundle XX::Polynomial::Regression::fit(size_t degree) const
+{
+   Segment::Bundle bundle;
+
+   return bundle;
+}
