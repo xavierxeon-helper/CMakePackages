@@ -33,64 +33,29 @@ bool XX::Linalg::Matrix::operator!=(const Matrix& other) const
 
 XX::Linalg::Matrix XX::Linalg::Matrix::operator+(const Matrix& other) const
 {
-   if (!sizeMatch(other))
-      return Matrix();
-
-   Matrix result(columnSize, data.size());
-   for (size_t columnIndex = 0; columnIndex < data.size(); columnIndex++)
-   {
-      const Column& myColumn = data.at(columnIndex);
-      const Column& otherColumn = other.data.at(columnIndex);
-
-      Column& resultColumn = result.data[columnIndex];
-      for (size_t rowIndex = 0; rowIndex < columnSize; rowIndex++)
-      {
-         resultColumn[rowIndex] = myColumn.at(rowIndex) + otherColumn.at(rowIndex);
-      }
-   }
-
+   Matrix result = *this;
+   result += other;
    return result;
 }
 
 XX::Linalg::Matrix XX::Linalg::Matrix::operator-(const Matrix& other) const
 {
-   if (!sizeMatch(other))
-      return Matrix();
-
-   Matrix result(columnSize, data.size());
-   for (size_t columnIndex = 0; columnIndex < data.size(); columnIndex++)
-   {
-      const Column& myColumn = data.at(columnIndex);
-      const Column& otherColumn = other.data.at(columnIndex);
-
-      Column& resultColumn = result.data[columnIndex];
-      for (size_t rowIndex = 0; rowIndex < columnSize; rowIndex++)
-      {
-         resultColumn[rowIndex] = myColumn.at(rowIndex) - otherColumn.at(rowIndex);
-      }
-   }
-
+   Matrix result = *this;
+   result -= other;
    return result;
 }
 
 XX::Linalg::Matrix XX::Linalg::Matrix::operator*(const Matrix& other) const
 {
+   Matrix result = *this;
+   result *= other;
+   return result;
 }
 
 XX::Linalg::Matrix XX::Linalg::Matrix::operator*(const double& value) const
 {
-   Matrix result(columnSize, data.size());
-   for (size_t columnIndex = 0; columnIndex < data.size(); columnIndex++)
-   {
-      const Column& myColumn = data.at(columnIndex);
-
-      Column& resultColumn = result.data[columnIndex];
-      for (size_t rowIndex = 0; rowIndex < columnSize; rowIndex++)
-      {
-         resultColumn[rowIndex] = myColumn.at(rowIndex) * value;
-      }
-   }
-
+   Matrix result = *this;
+   result *= value;
    return result;
 }
 
@@ -132,12 +97,16 @@ XX::Linalg::Matrix& XX::Linalg::Matrix::operator-=(const Matrix& other)
    return *this;
 }
 
-XX::Linalg::Matrix& XX::Linalg::Matrix::operator*(const Matrix& other)
+// see https://en.wikipedia.org/wiki/Matrix_multiplication
+XX::Linalg::Matrix& XX::Linalg::Matrix::operator*=(const Matrix& other)
 {
+   if (columnSize != other.data.size())
+      return *this;
+
    return *this;
 }
 
-XX::Linalg::Matrix& XX::Linalg::Matrix::operator*(const double& value)
+XX::Linalg::Matrix& XX::Linalg::Matrix::operator*=(const double& value)
 {
    for (size_t columnIndex = 0; columnIndex < data.size(); columnIndex++)
    {

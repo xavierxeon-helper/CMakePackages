@@ -25,15 +25,13 @@ namespace XX
 
          Matrix operator+(const Matrix& other) const;
          Matrix operator-(const Matrix& other) const;
-
          Matrix operator*(const Matrix& other) const;
          Matrix operator*(const double& value) const;
 
          Matrix& operator+=(const Matrix& other);
          Matrix& operator-=(const Matrix& other);
-
-         Matrix& operator*(const Matrix& other);
-         Matrix& operator*(const double& value);
+         Matrix& operator*=(const Matrix& other);
+         Matrix& operator*=(const double& value);
 
       public:
          double getValue(const size_t& rowIndex, const size_t& columnIndex) const;
