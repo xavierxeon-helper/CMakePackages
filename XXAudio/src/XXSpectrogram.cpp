@@ -1,6 +1,7 @@
 #include "XXSpectrogram.h"
 
-#include <XXMathGeneral.h>
+#include <XXLinalg.h>
+#include <XXMath.h>
 
 #include <QDebug>
 
@@ -68,7 +69,7 @@ void XX::Spectrogram::load(const Sample::Data& data)
       Sample::Data amplitudes;
       for (FastFourierTransfrom::ComplexType& cartesian : complex)
       {
-         FastFourierTransfrom::ComplexType polar = Math::cartesianToPolar(cartesian);
+         FastFourierTransfrom::ComplexType polar = Linalg::cartesianToPolar(cartesian);
          amplitudes.append(polar.real());
       }
 

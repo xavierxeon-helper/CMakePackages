@@ -14,7 +14,7 @@ QByteArray XX::ShellClient::executeRemote(const QString& host, const QString& co
 
 QByteArray XX::ShellClient::execute(const QString& program, const QStringList& args, QByteArray* error)
 {
-#ifdef Q_OS_IOS
+#if defined(Q_OS_IOS) || defined(Q_OS_ANDROID) || defined(Q_OS_WASM)
    return QByteArray();
 #else
    QProcess process;

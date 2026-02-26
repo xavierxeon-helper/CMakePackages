@@ -174,7 +174,7 @@ void XX::FileTools::openVSCode(QStringList pathList)
    QString editorCommand = "code";
 #endif
 
-#if defined(Q_OS_IOS) || defined(Q_OS_ANDROID)
+#if defined(Q_OS_IOS) || defined(Q_OS_ANDROID) || defined(Q_OS_WASM)
    qWarning() << __FUNCTION__ << "Not supported on mobile platforms";
 #else
    QProcess::startDetached(editorCommand, pathList);

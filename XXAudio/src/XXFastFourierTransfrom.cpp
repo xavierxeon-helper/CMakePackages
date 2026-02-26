@@ -4,7 +4,7 @@
 
 #include <QDebug>
 
-#include <XXMathGeneral.h>
+#include <XXMath.h>
 
 XX::FastFourierTransfrom::FastFourierTransfrom(const size_t size)
    : size(Math::getNearestPowerOfTwo(size))
