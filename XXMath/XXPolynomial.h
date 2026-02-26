@@ -21,7 +21,7 @@ namespace XX
       class Segement;
 
    public:
-      Polynomial(size_t degree);
+      Polynomial(size_t degree = 0);
       Polynomial(QVector<double> coefficents);
       Polynomial(const Polynomial& other);
 

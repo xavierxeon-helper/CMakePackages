@@ -18,7 +18,8 @@ namespace XX
       class Bundle;
 
    public:
-      Segement();
+      Segement(size_t degree = 0);
+      Segement(QVector<double> coefficents);
    };
 } // namespace XX
 
