@@ -8,7 +8,7 @@ get_filename_component(XX_LIB_DIR "${CMAKE_CURRENT_LIST_DIR}/../lib" ABSOLUTE)
 
 option(XX_USE_AS_SUBDIRECTORY "Use XX as subdirectory" OFF)
 
-if(IOS OR ANDROID)
+if(IOS OR ANDROID OR EMSCRIPTEN)
    set(XX_USE_AS_SUBDIRECTORY ON)
 endif()
 

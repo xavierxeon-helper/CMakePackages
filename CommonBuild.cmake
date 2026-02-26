@@ -10,6 +10,8 @@ if(IOS)
    set(XX_LIB_TYPE "STATIC")
 elseif(ANDROID)
    set(XX_LIB_TYPE "STATIC")
+elseif(EMSCRIPTEN)
+   set(XX_LIB_TYPE "STATIC")
 elseif(APPLE)
    set(CMAKE_OSX_DEPLOYMENT_TARGET "26.0") # for Qt
 endif()

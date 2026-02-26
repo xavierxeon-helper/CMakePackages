@@ -4,7 +4,7 @@ function(set_standrard_release_output_path)
       return()
    endif()
 
-   if(ANDROID OR IOS)
+   if(ANDROID OR IOS OR EMSCRIPTEN)
       return()
    endif()
 
