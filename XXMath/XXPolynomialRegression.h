@@ -13,7 +13,25 @@ namespace XX
    class XXMATH_DECLSPEC Polynomial::Regression
    {
    public:
-      Regression();
+      Regression(size_t size);
+
+   public:
+      struct Section
+      {
+         size_t start;
+         size_t end;
+
+         using List = QList<Section>;
+      };
+
+   public:
+      void setValue(const size_t index, const double& value);
+      void clear();
+      Section::List compileSections(double threshold = 10.0) const;
+      const QVector<double>& getRawValues() const;
+
+   private:
+      QVector<double> values;
    };
 } // namespace XX
 
