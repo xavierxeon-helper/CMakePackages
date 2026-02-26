@@ -41,6 +41,7 @@ namespace XX
    public:
       double value(const double& x) const;
 
+      void setDegree(size_t degree);
       size_t getDegree() const;
       const QVector<double>& getCoeficents() const;
       void setCoefficient(size_t index, const double& value);

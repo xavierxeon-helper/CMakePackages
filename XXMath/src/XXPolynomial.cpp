@@ -102,6 +102,11 @@ double XX::Polynomial::value(const double& x) const
    return result;
 }
 
+void XX::Polynomial::setDegree(size_t degree)
+{
+   coefficents = QVector<double>(degree, 0.0);
+}
+
 size_t XX::Polynomial::getDegree() const
 {
    return coefficents.size();
