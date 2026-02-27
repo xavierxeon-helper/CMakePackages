@@ -1,7 +1,7 @@
 #include "XXPolynomial.h"
 
 XX::Polynomial::Polynomial(size_t degree)
-   : coefficents(degree, 0.0)
+   : coefficents(degree + 1, 0.0)
 {
 }
 

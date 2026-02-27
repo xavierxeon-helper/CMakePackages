@@ -30,8 +30,9 @@ namespace XX
       size_t size() const;
 
       void setValue(const size_t index, const double& value);
-      Segment::Bundle fit(size_t degree) const;
       void clear();
+
+      Segment::Bundle fit(size_t degree, double threshold = 10.0) const;
 
       Section::List compileSections(double threshold = 10.0) const;
       const QVector<double>& getRawValues() const;
