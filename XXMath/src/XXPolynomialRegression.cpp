@@ -45,7 +45,7 @@ XX::Polynomial::Segment::Bundle XX::Polynomial::Regression::fit(size_t degree, d
 
       for (size_t index = 0; index < length; index++)
       {
-         const double x = (double)(index + section.start);
+         const double x = (double)(index);
          const double y = values.at(index + section.start);
 
          yMatrix.setValue(index, 0, y);

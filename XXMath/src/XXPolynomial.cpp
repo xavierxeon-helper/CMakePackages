@@ -136,7 +136,7 @@ QDebug XX::operator<<(QDebug stream, const Polynomial& polynomial)
          stream << qPrintable("+");
 
       int pow = polynomial.coefficents.size() - (index + 1);
-      stream << polynomial.coefficents.at(index) << qPrintable("*x^" + QString::number(pow));
+      stream << polynomial.coefficents.at(index) << qPrintable("* x^" + QString::number(pow));
    }
 
    return stream;

@@ -40,7 +40,7 @@ namespace XX
       Polynomial& operator-=(const Polynomial& other);
 
    public:
-      double value(const double& x) const;
+      virtual double value(const double& x) const;
 
       void setDegree(size_t degree);
       size_t getDegree() const;

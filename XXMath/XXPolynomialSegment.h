@@ -31,6 +31,8 @@ namespace XX
       void setStart(const double& value);
       void setEnd(const double& value);
 
+      double value(const double& x) const override;
+
    private:
       friend XXMATH_DECLSPEC QDebug operator<<(QDebug stream, const Segment& segment);
 

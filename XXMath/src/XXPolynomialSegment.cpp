@@ -39,10 +39,16 @@ void XX::Polynomial::Segment::setEnd(const double& value)
    end = value;
 }
 
+double XX::Polynomial::Segment::value(const double& x) const
+{
+   return Polynomial::value(x - start);
+}
+
 //
 
 QDebug XX::operator<<(QDebug stream, const Polynomial::Segment& segment)
 {
+   stream << "Segment[" << segment.start << segment.end << "] with";
    stream << static_cast<Polynomial>(segment);
    return stream;
 }
