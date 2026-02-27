@@ -140,6 +140,18 @@ void XX::Linalg::Matrix::setValue(const size_t& rowIndex, const size_t& columnIn
    data[index] = value;
 }
 
+void XX::Linalg::Matrix::setValues(const Cell::List& cellList)
+{
+   for (const Cell& cell : cellList)
+   {
+      const size_t index = dataIndex(cell.rowIndex, cell.columnIndex);
+      if (index >= data.size())
+         continue;
+
+      data[index] = cell.value;
+   }
+}
+
 bool XX::Linalg::Matrix::sizeMatch(const Matrix& other) const
 {
    if (rowCount != other.rowCount)
@@ -163,7 +175,7 @@ size_t XX::Linalg::Matrix::getRowCount() const
 
 size_t XX::Linalg::Matrix::getColumnCount() const
 {
-   return data.size();
+   return columnCount;
 }
 
 // see https://en.wikipedia.org/wiki/Invertible_matrix
@@ -175,7 +187,16 @@ XX::Linalg::Matrix XX::Linalg::Matrix::inverse() const
 // see https://en.wikipedia.org/wiki/Transpose
 XX::Linalg::Matrix XX::Linalg::Matrix::transpose() const
 {
-   return Matrix();
+   Matrix result(columnCount, rowCount);
+   for (size_t rowIndex = 0; rowIndex < rowCount; rowIndex++)
+   {
+      for (size_t columnIndex = 0; columnIndex < columnCount; columnIndex++)
+      {
+         const double value = getValue(rowIndex, columnIndex);
+         result.setValue(columnIndex, rowIndex, value);
+      }
+   }
+   return result;
 }
 
 // see https://en.wikipedia.org/wiki/Determinant
@@ -200,12 +221,34 @@ size_t XX::Linalg::Matrix::dataIndex(const size_t& rowIndex, const size_t& colum
 
 //
 
-QTextStream& XX::Linalg::operator>>(QTextStream& stream, Matrix& data)
+QDebug XX::Linalg::operator<<(QDebug stream, const Matrix& matrix)
+{
+   stream << "[" << matrix.rowCount << "rows," << matrix.columnCount << "solumns]=";
+
+   for (int rowIndex = 0; rowIndex < matrix.rowCount; rowIndex++)
+   {
+      stream << "(";
+      for (size_t columnIndex = 0; columnIndex < matrix.columnCount; columnIndex++)
+      {
+         if (0 != columnIndex)
+            stream << ",";
+
+         const size_t index = matrix.dataIndex(rowIndex, columnIndex);
+         const double value = matrix.data.at(index);
+
+         stream << value;
+      }
+      stream << ")";
+   }
+   return stream;
+}
+
+QTextStream& XX::Linalg::operator>>(QTextStream& stream, Matrix& matrix)
 {
    return stream;
 }
 
-QTextStream& XX::Linalg::operator<<(QTextStream& stream, const Matrix& data)
+QTextStream& XX::Linalg::operator<<(QTextStream& stream, const Matrix& matrix)
 {
    return stream;
 }

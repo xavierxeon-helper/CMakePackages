@@ -177,27 +177,27 @@ double XX::Linalg::Vector3::crossAngle(const Vector3& other, const bool toDegree
 
 //
 
-std::ostream& XX::Linalg::operator<<(std::ostream& out, const Linalg::Vector3& value)
+std::ostream& XX::Linalg::operator<<(std::ostream& out, const Linalg::Vector3& vector)
 {
-   out << "[" << value.x << ", " << value.y << ", " << value.z << "]";
+   out << "[" << vector.x << ", " << vector.y << ", " << vector.z << "]";
    return out;
 }
 
-QDebug XX::Linalg::operator<<(QDebug stream, const Vector3& data)
+QDebug XX::Linalg::operator<<(QDebug stream, const Vector3& vector)
 {
-   stream << "[" << data[0] << ", " << data[1] << ", " << data[2] << "]";
+   stream << "[" << vector[0] << ", " << vector[1] << ", " << vector[2] << "]";
    return stream;
 }
 
-QTextStream& XX::Linalg::operator<<(QTextStream& stream, const Vector3& data)
+QTextStream& XX::Linalg::operator<<(QTextStream& stream, const Vector3& vector)
 {
-   stream << "[" << data[0] << "," << data[1] << "," << data[2] << "]";
+   stream << "[" << vector[0] << "," << vector[1] << "," << vector[2] << "]";
    return stream;
 }
 
-QTextStream& XX::Linalg::operator>>(QTextStream& stream, Vector3& data)
+QTextStream& XX::Linalg::operator>>(QTextStream& stream, Vector3& vector)
 {
    char dummy;
-   stream >> dummy >> data[0] >> dummy >> data[1] >> dummy >> data[2] >> dummy;
+   stream >> dummy >> vector[0] >> dummy >> vector[1] >> dummy >> vector[2] >> dummy;
    return stream;
 }

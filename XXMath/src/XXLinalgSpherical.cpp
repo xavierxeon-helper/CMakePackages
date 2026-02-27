@@ -19,14 +19,14 @@ bool XX::Linalg::Spherical::operator<(const Spherical& other) const
 
 //
 
-std::ostream& XX::Linalg::operator<<(std::ostream& out, const Linalg::Spherical& value)
+std::ostream& XX::Linalg::operator<<(std::ostream& out, const Linalg::Spherical& spherial)
 {
-   out << "sperical[" << value.az << ", " << value.el << ", " << value.radius << "]";
+   out << "sperical[" << spherial.az << ", " << spherial.el << ", " << spherial.radius << "]";
    return out;
 }
 
-QDebug XX::Linalg::operator<<(QDebug stream, const Spherical& data)
+QDebug XX::Linalg::operator<<(QDebug stream, const Spherical& spherial)
 {
-   stream << "spherical[" << data.az << ", " << data.el << ", " << data.radius << "]";
+   stream << "spherical[" << spherial.az << ", " << spherial.el << ", " << spherial.radius << "]";
    return stream;
 }

@@ -5,6 +5,9 @@
 
 #include <iostream>
 
+#include <QDebug>
+#include <QTextStream>
+
 #include "XXLinalgSpherical.h"
 
 namespace XX
@@ -35,7 +38,6 @@ namespace XX
 
          const double& operator[](const int index) const;
          double& operator[](const int index);
-         friend std::ostream& operator<<(std::ostream& out, const Vector3& value);
 
       public:
          const double& getX() const;
@@ -56,6 +58,12 @@ namespace XX
          double crossAngle(const Vector3& other, const bool toDegree = true) const;
 
       private:
+         friend XXMATH_DECLSPEC std::ostream& operator<<(std::ostream& out, const Vector3& vector);
+         friend XXMATH_DECLSPEC QDebug operator<<(QDebug stream, const Vector3& vector);
+         friend XXMATH_DECLSPEC QTextStream& operator>>(QTextStream& stream, Vector3& vector);
+         friend XXMATH_DECLSPEC QTextStream& operator<<(QTextStream& stream, const Vector3& vector);
+
+      private:
          union
          {
             struct
@@ -72,12 +80,13 @@ namespace XX
          @addtogroup Streaming
          @{
          @ingroup XXMath
-         @brief streaming operators for math types
+         @brief streaming operators for vector3
       */
-      std::ostream& operator<<(std::ostream& out, const Vector3& value);
-      XXMATH_DECLSPEC QDebug operator<<(QDebug stream, const Vector3& data);
-      XXMATH_DECLSPEC QTextStream& operator>>(QTextStream& stream, Vector3& data);
-      XXMATH_DECLSPEC QTextStream& operator<<(QTextStream& stream, const Vector3& data);
+
+      XXMATH_DECLSPEC std::ostream& operator<<(std::ostream& out, const Vector3& vector);
+      XXMATH_DECLSPEC QDebug operator<<(QDebug stream, const Vector3& vector);
+      XXMATH_DECLSPEC QTextStream& operator>>(QTextStream& stream, Vector3& vector);
+      XXMATH_DECLSPEC QTextStream& operator<<(QTextStream& stream, const Vector3& vector);
 
       //! @}
 

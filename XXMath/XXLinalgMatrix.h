@@ -5,6 +5,7 @@
 
 #include <QVector>
 
+#include <QDebug>
 #include <QTextStream>
 
 namespace XX
@@ -18,6 +19,16 @@ namespace XX
       {
       public:
          Matrix(const size_t& rowCount = 0, const size_t& columnCount = 0);
+
+      public:
+         struct Cell
+         {
+            size_t rowIndex;
+            size_t columnIndex;
+            double value;
+
+            using List = QList<Cell>;
+         };
 
       public:
          bool operator==(const Matrix& other) const;
@@ -35,6 +46,7 @@ namespace XX
       public:
          double getValue(const size_t& rowIndex, const size_t& columnIndex) const;
          void setValue(const size_t& rowIndex, const size_t& columnIndex, const double& value);
+         void setValues(const Cell::List& cellList);
 
          bool sizeMatch(const Matrix& other) const;
          bool isNull() const;
@@ -47,6 +59,11 @@ namespace XX
          double determinant() const;
 
       private:
+         friend XXMATH_DECLSPEC QDebug operator<<(QDebug stream, const Matrix& data);
+         friend XXMATH_DECLSPEC QTextStream& operator>>(QTextStream& stream, Matrix& data);
+         friend XXMATH_DECLSPEC QTextStream& operator<<(QTextStream& stream, const Matrix& data);
+
+      private:
          size_t dataIndex(const size_t& rowIndex, const size_t& columnIndex) const;
 
       private:
@@ -55,8 +72,18 @@ namespace XX
          QVector<double> data;
       };
 
-      XXMATH_DECLSPEC QTextStream& operator>>(QTextStream& stream, Matrix& data);
-      XXMATH_DECLSPEC QTextStream& operator<<(QTextStream& stream, const Matrix& data);
+      /*!
+         @addtogroup Streaming
+         @{
+         @ingroup XXMath
+         @brief streaming operators for matrix
+      */
+
+      XXMATH_DECLSPEC QDebug operator<<(QDebug stream, const Matrix& matrix);
+      XXMATH_DECLSPEC QTextStream& operator>>(QTextStream& stream, Matrix& matrix);
+      XXMATH_DECLSPEC QTextStream& operator<<(QTextStream& stream, const Matrix& matrix);
+
+      //! @}
 
    } // namespace Linalg
 } // namespace XX

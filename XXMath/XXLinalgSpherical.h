@@ -6,7 +6,6 @@
 #include <iostream>
 
 #include <QDebug>
-#include <QTextStream>
 
 namespace XX
 {
@@ -22,22 +21,26 @@ namespace XX
 
       public:
          bool operator<(const Spherical& other) const;
-         friend std::ostream& operator<<(std::ostream& out, const Spherical& value);
 
       public:
          double az = 0.0;
          double el = 0.0;
          double radius = 0.0;
+
+      private:
+         friend XXMATH_DECLSPEC std::ostream& operator<<(std::ostream& out, const Spherical& spherial);
+         friend XXMATH_DECLSPEC QDebug operator<<(QDebug stream, const Spherical& spherial);
       };
 
       /*!
          @addtogroup Streaming
          @{
          @ingroup XXMath
-         @brief streaming operators for math types
+         @brief streaming operators for spherical
       */
-      std::ostream& operator<<(std::ostream& out, const Spherical& value);
-      XXMATH_DECLSPEC QDebug operator<<(QDebug stream, const Spherical& data);
+
+      XXMATH_DECLSPEC std::ostream& operator<<(std::ostream& out, const Spherical& spherial);
+      XXMATH_DECLSPEC QDebug operator<<(QDebug stream, const Spherical& spherial);
 
       //! @}
 
