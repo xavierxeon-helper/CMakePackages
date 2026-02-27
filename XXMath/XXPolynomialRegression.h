@@ -28,13 +28,11 @@ namespace XX
 
    public:
       size_t size() const;
-
       void setValue(const size_t index, const double& value);
       void clear();
 
-      Segment::Bundle fit(size_t degree, double threshold = 10.0) const;
-
-      Section::List compileSections(double threshold = 10.0) const;
+      Segment::Bundle fit(size_t degree, size_t maxSegmentLength, double threshold) const;
+      Section::List compileSections(size_t maxSegmentLength, double threshold) const;
       const QVector<double>& getRawValues() const;
 
    private:

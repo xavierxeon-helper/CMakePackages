@@ -27,9 +27,9 @@ void XX::Polynomial::Regression::clear()
    values = QVector<double>(values.size(), 0.0);
 }
 
-XX::Polynomial::Segment::Bundle XX::Polynomial::Regression::fit(size_t degree, double threshold) const
+XX::Polynomial::Segment::Bundle XX::Polynomial::Regression::fit(size_t degree, size_t maxSegmentLength, double threshold) const
 {
-   const Section::List sections = compileSections(threshold);
+   const Section::List sections = compileSections(maxSegmentLength, threshold);
 
    Segment::Bundle bundle;
    for (const Section& section : sections)
@@ -69,7 +69,7 @@ XX::Polynomial::Segment::Bundle XX::Polynomial::Regression::fit(size_t degree, d
    return bundle;
 }
 
-XX::Polynomial::Regression::Section::List XX::Polynomial::Regression::compileSections(double threshold) const
+XX::Polynomial::Regression::Section::List XX::Polynomial::Regression::compileSections(size_t maxSegmentLength, double threshold) const
 {
    Section::List sections;
    if (threshold <= 0)
@@ -87,14 +87,16 @@ XX::Polynomial::Regression::Section::List XX::Polynomial::Regression::compileSec
       const double y1 = values.at(index - 1);
       const double y2 = values.at(index);
 
+      const size_t length = index - start;
+
       const double yDiff = std::abs(y2 - y1);
-      if (yDiff < threshold)
-         continue;
+      if (yDiff > threshold || length > maxSegmentLength)
+      {
+         Section section = {start, index};
+         sections.append(section);
 
-      Section section = {start, index};
-      sections.append(section);
-
-      start = index;
+         start = index;
+      }
    }
 
    Section section = {start, (size_t)values.size() - 1};
