@@ -49,8 +49,11 @@ XX::Polynomial::Segment::Bundle XX::Polynomial::Regression::fit(size_t degree, d
          const double y = values.at(index + section.start);
 
          yMatrix.setValue(index, 0, y);
-         for (int d = 0; d < degree; d++)
-            xMatrix.setValue(index, d, std::pow(x, degree - d));
+         for (size_t d = 0; d < degree; d++)
+         {
+            const size_t expo = degree - (d + 1);
+            xMatrix.setValue(index, d, std::pow(x, expo));
+         }
       }
 
       const XX::Linalg::Matrix xTrans = xMatrix.transpose();

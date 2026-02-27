@@ -1,7 +1,7 @@
 #include "XXPolynomial.h"
 
 XX::Polynomial::Polynomial(size_t degree)
-   : coefficents(degree + 1, 0.0)
+   : coefficents(degree, 0.0)
 {
 }
 
@@ -94,10 +94,10 @@ double XX::Polynomial::value(const double& x) const
 {
    double result = 0.0;
 
-   for (size_t index = 0; index < coefficents.size(); index++)
+   for (size_t d = 0; d < coefficents.size(); d++)
    {
-      const size_t expo = coefficents.size() - (index + 1);
-      result += coefficents.at(index) * std::pow(x, expo);
+      const size_t expo = coefficents.size() - (d + 1);
+      result += coefficents.at(d) * std::pow(x, expo);
    }
    return result;
 }
