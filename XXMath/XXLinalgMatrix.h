@@ -38,10 +38,15 @@ namespace XX
          Matrix operator-(const Matrix& other) const;
          Matrix operator*(const Matrix& other) const;
          Matrix operator*(const double& value) const;
+         Matrix operator/(const double& value) const;
 
          Matrix& operator+=(const Matrix& other);
          Matrix& operator-=(const Matrix& other);
          Matrix& operator*=(const double& value);
+         Matrix& operator/=(const double& value);
+
+         const double& operator()(const size_t& rowIndex, const size_t& columnIndex) const;
+         double& operator()(const size_t& rowIndex, const size_t& columnIndex);
 
       public:
          double getValue(const size_t& rowIndex, const size_t& columnIndex) const;

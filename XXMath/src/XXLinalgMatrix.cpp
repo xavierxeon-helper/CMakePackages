@@ -1,7 +1,5 @@
 #include "XXLinalgMatrix.h"
 
-#include "XXMath.h"
-
 XX::Linalg::Matrix::Matrix(const size_t& rowCount, const size_t& columnCount)
    : rowCount(rowCount)
    , columnCount(columnCount)
@@ -75,6 +73,13 @@ XX::Linalg::Matrix XX::Linalg::Matrix::operator*(const double& value) const
    return result;
 }
 
+XX::Linalg::Matrix XX::Linalg::Matrix::operator/(const double& value) const
+{
+   Matrix result = *this;
+   result /= value;
+   return result;
+}
+
 XX::Linalg::Matrix& XX::Linalg::Matrix::operator+=(const Matrix& other)
 {
    if (!sizeMatch(other))
@@ -121,6 +126,42 @@ XX::Linalg::Matrix& XX::Linalg::Matrix::operator*=(const double& value)
    }
 
    return *this;
+}
+
+XX::Linalg::Matrix& XX::Linalg::Matrix::operator/=(const double& value)
+{
+   for (size_t rowIndex = 0; rowIndex < rowCount; rowIndex++)
+   {
+      for (size_t columnIndex = 0; columnIndex < columnCount; columnIndex++)
+      {
+         const size_t index = dataIndex(rowIndex, columnIndex);
+         data[index] /= value;
+      }
+   }
+
+   return *this;
+}
+
+const double& XX::Linalg::Matrix::operator()(const size_t& rowIndex, const size_t& columnIndex) const
+{
+   static const double dummy = 0.0;
+
+   const size_t index = dataIndex(rowIndex, columnIndex);
+   if (index >= data.size())
+      return dummy;
+
+   return data.at(index);
+}
+
+double& XX::Linalg::Matrix::operator()(const size_t& rowIndex, const size_t& columnIndex)
+{
+   static double dummy = 0.0;
+
+   const size_t index = dataIndex(rowIndex, columnIndex);
+   if (index >= data.size())
+      return dummy;
+
+   return data[index];
 }
 
 double XX::Linalg::Matrix::getValue(const size_t& rowIndex, const size_t& columnIndex) const
@@ -213,8 +254,9 @@ XX::Linalg::Matrix XX::Linalg::Matrix::inverse() const
 {
    const double det = determinant();
    const Matrix c = cofactor();
+   const Matrix ct = c.transpose();
 
-   return c.transpose() * det;
+   return ct / det;
 }
 
 // see https://en.wikipedia.org/wiki/Minor_(linear_algebra)#Inverse_of_a_matrix
@@ -249,7 +291,11 @@ XX::Linalg::Matrix XX::Linalg::Matrix::cofactor() const
             subColumnIndex++;
          }
 
-         result.setValue(rowIndex, columnIndex, subMatrix.determinant());
+         const bool positive = ((rowIndex + columnIndex) % 2 == 0);
+         const int sign = positive ? 1 : -1;
+         const double cofactorValue = sign * subMatrix.determinant();
+
+         result.setValue(rowIndex, columnIndex, cofactorValue);
       }
    }
 
