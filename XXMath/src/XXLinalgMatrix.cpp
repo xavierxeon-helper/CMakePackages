@@ -2,7 +2,8 @@
 
 XX::Linalg::Matrix::Matrix(const size_t& rowCount, const size_t& columnCount)
    : rowCount(rowCount)
-   , data(columnCount, Column(rowCount, 0.0))
+   , columnCount(columnCount)
+   , data(rowCount * columnCount, 0.0)
 {
 }
 
@@ -11,14 +12,12 @@ bool XX::Linalg::Matrix::operator==(const Matrix& other) const
    if (!sizeMatch(other))
       return false;
 
-   for (size_t columnIndex = 0; columnIndex < data.size(); columnIndex++)
+   for (size_t rowIndex = 0; rowIndex < rowCount; rowIndex++)
    {
-      const Column& myColumn = data.at(columnIndex);
-      const Column& otherColumn = other.data.at(columnIndex);
-
-      for (size_t rowIndex = 0; rowIndex < rowCount; rowIndex++)
+      for (size_t columnIndex = 0; columnIndex < data.size(); columnIndex++)
       {
-         if (myColumn.at(rowIndex) != otherColumn.at(rowIndex))
+         const size_t index = dataIndex(rowIndex, columnIndex);
+         if (data.at(index) != other.data.at(index))
             return false;
       }
    }
@@ -48,23 +47,20 @@ XX::Linalg::Matrix XX::Linalg::Matrix::operator-(const Matrix& other) const
 // see https://en.wikipedia.org/wiki/Matrix_multiplication
 XX::Linalg::Matrix XX::Linalg::Matrix::operator*(const Matrix& other) const
 {
-   if (data.size() != other.rowCount)
+   if (columnCount != other.rowCount)
       return Matrix();
 
-   Matrix result(rowCount, other.data.size());
-
-   for (size_t columnIndex = 0; columnIndex < other.data.size(); columnIndex++)
+   Matrix result(rowCount, other.columnCount);
+   for (size_t rowIndex = 0; rowIndex < rowCount; rowIndex++)
    {
-      Column& resultColumn = result.data[columnIndex];
-
-      for (size_t rowIndex = 0; rowIndex < rowCount; rowIndex++)
+      for (size_t columnIndex = 0; columnIndex < other.columnCount; columnIndex++)
       {
          double value = 0.0;
-         for (size_t index = 0; index < other.rowCount; index++)
+         for (size_t commonIndex = 0; commonIndex < columnCount; commonIndex++)
          {
-            value += getValue(rowIndex, index) * other.getValue(index, columnIndex);
+            value += getValue(rowIndex, commonIndex) * other.getValue(commonIndex, columnIndex);
          }
-         resultColumn[rowIndex] = value;
+         result.setValue(rowIndex, columnIndex, value);
       }
    }
    return result;
@@ -82,14 +78,12 @@ XX::Linalg::Matrix& XX::Linalg::Matrix::operator+=(const Matrix& other)
    if (!sizeMatch(other))
       return *this;
 
-   for (size_t columnIndex = 0; columnIndex < data.size(); columnIndex++)
+   for (size_t rowIndex = 0; rowIndex < rowCount; rowIndex++)
    {
-      Column& myColumn = data[columnIndex];
-      const Column& otherColumn = other.data.at(columnIndex);
-
-      for (size_t rowIndex = 0; rowIndex < rowCount; rowIndex++)
+      for (size_t columnIndex = 0; columnIndex < columnCount; columnIndex++)
       {
-         myColumn[rowIndex] += otherColumn.at(rowIndex);
+         const size_t index = dataIndex(rowIndex, columnIndex);
+         data[index] += other.data.at(index);
       }
    }
 
@@ -101,14 +95,12 @@ XX::Linalg::Matrix& XX::Linalg::Matrix::operator-=(const Matrix& other)
    if (!sizeMatch(other))
       return *this;
 
-   for (size_t columnIndex = 0; columnIndex < data.size(); columnIndex++)
+   for (size_t rowIndex = 0; rowIndex < rowCount; rowIndex++)
    {
-      Column& myColumn = data[columnIndex];
-      const Column& otherColumn = other.data.at(columnIndex);
-
-      for (size_t rowIndex = 0; rowIndex < rowCount; rowIndex++)
+      for (size_t columnIndex = 0; columnIndex < columnCount; columnIndex++)
       {
-         myColumn[rowIndex] -= otherColumn.at(rowIndex);
+         const size_t index = dataIndex(rowIndex, columnIndex);
+         data[index] -= other.data.at(index);
       }
    }
 
@@ -117,13 +109,12 @@ XX::Linalg::Matrix& XX::Linalg::Matrix::operator-=(const Matrix& other)
 
 XX::Linalg::Matrix& XX::Linalg::Matrix::operator*=(const double& value)
 {
-   for (size_t columnIndex = 0; columnIndex < data.size(); columnIndex++)
+   for (size_t rowIndex = 0; rowIndex < rowCount; rowIndex++)
    {
-      Column& myColumn = data[columnIndex];
-
-      for (size_t rowIndex = 0; rowIndex < rowCount; rowIndex++)
+      for (size_t columnIndex = 0; columnIndex < columnCount; columnIndex++)
       {
-         myColumn[rowIndex] *= value;
+         const size_t index = dataIndex(rowIndex, columnIndex);
+         data[index] *= value;
       }
    }
 
@@ -132,27 +123,21 @@ XX::Linalg::Matrix& XX::Linalg::Matrix::operator*=(const double& value)
 
 double XX::Linalg::Matrix::getValue(const size_t& rowIndex, const size_t& columnIndex) const
 {
-   if (columnIndex >= data.size())
+   const size_t index = dataIndex(rowIndex, columnIndex);
+   if (index >= data.size())
       return 0.0;
 
-   const Column& column = data.at(columnIndex);
-   if (rowIndex >= column.size())
-      return 0.0;
-
-   const double& value = column.at(rowIndex);
+   const double& value = data.at(index);
    return value;
 }
 
 void XX::Linalg::Matrix::setValue(const size_t& rowIndex, const size_t& columnIndex, const double& value)
 {
-   if (columnIndex >= data.size())
+   const size_t index = dataIndex(rowIndex, columnIndex);
+   if (index >= data.size())
       return;
 
-   Column& column = data[columnIndex];
-   if (rowIndex >= column.size())
-      return;
-
-   column[rowIndex] = value;
+   data[index] = value;
 }
 
 bool XX::Linalg::Matrix::sizeMatch(const Matrix& other) const
@@ -160,7 +145,7 @@ bool XX::Linalg::Matrix::sizeMatch(const Matrix& other) const
    if (rowCount != other.rowCount)
       return false;
 
-   if (data.size() != other.data.size())
+   if (columnCount != other.columnCount)
       return false;
 
    return true;
@@ -168,10 +153,7 @@ bool XX::Linalg::Matrix::sizeMatch(const Matrix& other) const
 
 bool XX::Linalg::Matrix::isNull() const
 {
-   if (rowCount == 0 || data.size() == 0)
-      return true;
-
-   return false;
+   return (data.size() == 0);
 }
 
 size_t XX::Linalg::Matrix::getRowCount() const
@@ -200,15 +182,20 @@ XX::Linalg::Matrix XX::Linalg::Matrix::transpose() const
 double XX::Linalg::Matrix::determinant() const
 {
    double value = 0.0;
-   for (int columnIndex = 0; columnIndex < data.size(); columnIndex++)
+   for (int rowIndex = 0; rowIndex < rowCount; rowIndex++)
    {
-      const Column& column = data.at(columnIndex);
-      for (int rowIndex = 0; rowIndex < rowCount; rowIndex++)
+      for (size_t columnIndex = 0; columnIndex < columnCount; columnIndex++)
       {
-         value += column.at(rowIndex);
+         const size_t index = dataIndex(rowIndex, columnIndex);
+         value += data.at(index);
       }
    }
    return value;
+}
+
+size_t XX::Linalg::Matrix::dataIndex(const size_t& rowIndex, const size_t& columnIndex) const
+{
+   return (columnIndex * rowCount) + rowIndex;
 }
 
 //

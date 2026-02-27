@@ -47,12 +47,12 @@ namespace XX
          double determinant() const;
 
       private:
-         using Column = QVector<double>;
-         using Data = QVector<Column>;
+         size_t dataIndex(const size_t& rowIndex, const size_t& columnIndex) const;
 
       private:
          const size_t rowCount;
-         Data data;
+         const size_t columnCount;
+         QVector<double> data;
       };
 
       XXMATH_DECLSPEC QTextStream& operator>>(QTextStream& stream, Matrix& data);
