@@ -199,7 +199,16 @@ XX::Linalg::Matrix XX::Linalg::Matrix::transpose() const
 // see https://en.wikipedia.org/wiki/Determinant
 double XX::Linalg::Matrix::determinant() const
 {
-   return 0.0;
+   double value = 0.0;
+   for (int columnIndex = 0; columnIndex < data.size(); columnIndex++)
+   {
+      const Column& column = data.at(columnIndex);
+      for (int rowIndex = 0; rowIndex < rowCount; rowIndex++)
+      {
+         value += column.at(rowIndex);
+      }
+   }
+   return value;
 }
 
 //
