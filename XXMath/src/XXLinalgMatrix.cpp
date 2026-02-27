@@ -1,7 +1,7 @@
 #include "XXLinalgMatrix.h"
 
 XX::Linalg::Matrix::Matrix(const size_t& rowCount, const size_t& columnCount)
-   : columnSize(rowCount)
+   : rowCount(rowCount)
    , data(columnCount, Column(rowCount, 0.0))
 {
 }
@@ -16,7 +16,7 @@ bool XX::Linalg::Matrix::operator==(const Matrix& other) const
       const Column& myColumn = data.at(columnIndex);
       const Column& otherColumn = other.data.at(columnIndex);
 
-      for (size_t rowIndex = 0; rowIndex < columnSize; rowIndex++)
+      for (size_t rowIndex = 0; rowIndex < rowCount; rowIndex++)
       {
          if (myColumn.at(rowIndex) != otherColumn.at(rowIndex))
             return false;
@@ -45,10 +45,28 @@ XX::Linalg::Matrix XX::Linalg::Matrix::operator-(const Matrix& other) const
    return result;
 }
 
+// see https://en.wikipedia.org/wiki/Matrix_multiplication
 XX::Linalg::Matrix XX::Linalg::Matrix::operator*(const Matrix& other) const
 {
-   Matrix result = *this;
-   result *= other;
+   if (data.size() != other.rowCount)
+      return Matrix();
+
+   Matrix result(rowCount, other.data.size());
+
+   for (size_t columnIndex = 0; columnIndex < other.data.size(); columnIndex++)
+   {
+      Column& resultColumn = result.data[columnIndex];
+
+      for (size_t rowIndex = 0; rowIndex < rowCount; rowIndex++)
+      {
+         double value = 0.0;
+         for (size_t index = 0; index < other.rowCount; index++)
+         {
+            value += getValue(rowIndex, index) * other.getValue(index, columnIndex);
+         }
+         resultColumn[rowIndex] = value;
+      }
+   }
    return result;
 }
 
@@ -69,7 +87,7 @@ XX::Linalg::Matrix& XX::Linalg::Matrix::operator+=(const Matrix& other)
       Column& myColumn = data[columnIndex];
       const Column& otherColumn = other.data.at(columnIndex);
 
-      for (size_t rowIndex = 0; rowIndex < columnSize; rowIndex++)
+      for (size_t rowIndex = 0; rowIndex < rowCount; rowIndex++)
       {
          myColumn[rowIndex] += otherColumn.at(rowIndex);
       }
@@ -88,20 +106,11 @@ XX::Linalg::Matrix& XX::Linalg::Matrix::operator-=(const Matrix& other)
       Column& myColumn = data[columnIndex];
       const Column& otherColumn = other.data.at(columnIndex);
 
-      for (size_t rowIndex = 0; rowIndex < columnSize; rowIndex++)
+      for (size_t rowIndex = 0; rowIndex < rowCount; rowIndex++)
       {
          myColumn[rowIndex] -= otherColumn.at(rowIndex);
       }
    }
-
-   return *this;
-}
-
-// see https://en.wikipedia.org/wiki/Matrix_multiplication
-XX::Linalg::Matrix& XX::Linalg::Matrix::operator*=(const Matrix& other)
-{
-   if (columnSize != other.data.size())
-      return *this;
 
    return *this;
 }
@@ -112,7 +121,7 @@ XX::Linalg::Matrix& XX::Linalg::Matrix::operator*=(const double& value)
    {
       Column& myColumn = data[columnIndex];
 
-      for (size_t rowIndex = 0; rowIndex < columnSize; rowIndex++)
+      for (size_t rowIndex = 0; rowIndex < rowCount; rowIndex++)
       {
          myColumn[rowIndex] *= value;
       }
@@ -148,7 +157,7 @@ void XX::Linalg::Matrix::setValue(const size_t& rowIndex, const size_t& columnIn
 
 bool XX::Linalg::Matrix::sizeMatch(const Matrix& other) const
 {
-   if (columnSize != other.columnSize)
+   if (rowCount != other.rowCount)
       return false;
 
    if (data.size() != other.data.size())
@@ -159,7 +168,7 @@ bool XX::Linalg::Matrix::sizeMatch(const Matrix& other) const
 
 bool XX::Linalg::Matrix::isNull() const
 {
-   if (columnSize == 0 || data.size() == 0)
+   if (rowCount == 0 || data.size() == 0)
       return true;
 
    return false;
@@ -167,7 +176,7 @@ bool XX::Linalg::Matrix::isNull() const
 
 size_t XX::Linalg::Matrix::getRowCount() const
 {
-   return columnSize;
+   return rowCount;
 }
 
 size_t XX::Linalg::Matrix::getColumnCount() const

@@ -30,7 +30,6 @@ namespace XX
 
          Matrix& operator+=(const Matrix& other);
          Matrix& operator-=(const Matrix& other);
-         Matrix& operator*=(const Matrix& other);
          Matrix& operator*=(const double& value);
 
       public:
@@ -52,7 +51,7 @@ namespace XX
          using Data = QVector<Column>;
 
       private:
-         const size_t columnSize;
+         const size_t rowCount;
          Data data;
       };
 
