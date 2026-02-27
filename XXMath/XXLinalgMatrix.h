@@ -54,9 +54,11 @@ namespace XX
          size_t getRowCount() const;
          size_t getColumnCount() const;
 
-         Matrix inverse() const;
          Matrix transpose() const;
          double determinant() const;
+
+         Matrix inverse() const;
+         Matrix cofactor() const;
 
       private:
          friend XXMATH_DECLSPEC QDebug operator<<(QDebug stream, const Matrix& data);

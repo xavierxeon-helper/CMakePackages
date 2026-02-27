@@ -180,12 +180,6 @@ size_t XX::Linalg::Matrix::getColumnCount() const
    return columnCount;
 }
 
-// see https://en.wikipedia.org/wiki/Invertible_matrix
-XX::Linalg::Matrix XX::Linalg::Matrix::inverse() const
-{
-   return Matrix();
-}
-
 // see https://en.wikipedia.org/wiki/Transpose
 XX::Linalg::Matrix XX::Linalg::Matrix::transpose() const
 {
@@ -247,6 +241,21 @@ double XX::Linalg::Matrix::determinant() const
 
    const double value = subDeterminant(*this);
    return value;
+}
+
+// see https://en.wikipedia.org/wiki/Invertible_matrix
+XX::Linalg::Matrix XX::Linalg::Matrix::inverse() const
+{
+   const double det = determinant();
+   const Matrix c = cofactor();
+
+   return c.transpose() * det;
+}
+
+// see https://en.wikipedia.org/wiki/Minor_(linear_algebra)#Inverse_of_a_matrix
+XX::Linalg::Matrix XX::Linalg::Matrix::cofactor() const
+{
+   return Matrix();
 }
 
 size_t XX::Linalg::Matrix::dataIndex(const size_t& rowIndex, const size_t& columnIndex) const
