@@ -1,5 +1,7 @@
 #include "XXLinalgMatrix.h"
 
+#include "XXMath.h"
+
 XX::Linalg::Matrix::Matrix(const size_t& rowCount, const size_t& columnCount)
    : rowCount(rowCount)
    , columnCount(columnCount)
@@ -202,16 +204,77 @@ XX::Linalg::Matrix XX::Linalg::Matrix::transpose() const
 // see https://en.wikipedia.org/wiki/Determinant
 double XX::Linalg::Matrix::determinant() const
 {
-   double value = 0.0;
-   for (int rowIndex = 0; rowIndex < rowCount; rowIndex++)
+   if (0 == data.size())
+      return 0.0;
+
+   if (rowCount != columnCount)
+      return 0.0;
+
+   const size_t size = rowCount;
+   Matrix work = *this;
+
+   double determinantValue = 1.0;
+   bool signFlip = false;
+
+   for (size_t pivotIndex = 0; pivotIndex < size; pivotIndex++)
    {
-      for (size_t columnIndex = 0; columnIndex < columnCount; columnIndex++)
+      size_t maxRowIndex = pivotIndex;
+      double maxAbsValue = work.getValue(pivotIndex, pivotIndex);
+      if (maxAbsValue < 0.0)
+         maxAbsValue = -maxAbsValue;
+
+      for (size_t rowIndex = pivotIndex + 1; rowIndex < size; rowIndex++)
       {
-         const size_t index = dataIndex(rowIndex, columnIndex);
-         value += data.at(index);
+         double candidateAbsValue = work.getValue(rowIndex, pivotIndex);
+         if (candidateAbsValue < 0.0)
+            candidateAbsValue = -candidateAbsValue;
+
+         if (candidateAbsValue > maxAbsValue)
+         {
+            maxAbsValue = candidateAbsValue;
+            maxRowIndex = rowIndex;
+         }
+      }
+
+      if (maxAbsValue <= XX::Math::epsilon)
+         return 0.0;
+
+      if (maxRowIndex != pivotIndex)
+      {
+         for (size_t columnIndex = 0; columnIndex < size; columnIndex++)
+         {
+            const double topValue = work.getValue(pivotIndex, columnIndex);
+            const double bottomValue = work.getValue(maxRowIndex, columnIndex);
+            work.setValue(pivotIndex, columnIndex, bottomValue);
+            work.setValue(maxRowIndex, columnIndex, topValue);
+         }
+         signFlip = !signFlip;
+      }
+
+      const double pivotValue = work.getValue(pivotIndex, pivotIndex);
+      determinantValue *= pivotValue;
+
+      for (size_t rowIndex = pivotIndex + 1; rowIndex < size; rowIndex++)
+      {
+         const double factor = work.getValue(rowIndex, pivotIndex) / pivotValue;
+         if (factor == 0.0)
+            continue;
+
+         work.setValue(rowIndex, pivotIndex, 0.0);
+
+         for (size_t columnIndex = pivotIndex + 1; columnIndex < size; columnIndex++)
+         {
+            const double reducedValue =
+               work.getValue(rowIndex, columnIndex) - (factor * work.getValue(pivotIndex, columnIndex));
+            work.setValue(rowIndex, columnIndex, reducedValue);
+         }
       }
    }
-   return value;
+
+   if (signFlip)
+      determinantValue = -determinantValue;
+
+   return determinantValue;
 }
 
 size_t XX::Linalg::Matrix::dataIndex(const size_t& rowIndex, const size_t& columnIndex) const

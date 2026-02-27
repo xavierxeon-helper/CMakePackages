@@ -10,6 +10,7 @@ namespace XX
    namespace Math
    {
       static const double pi = 2.0 * std::asin(1.0);
+      static const double epsilon = 1e-12;
 
       XXMATH_DECLSPEC double deg2Rad(const double& degrees);
       XXMATH_DECLSPEC double rad2Deg(const double& radians);
