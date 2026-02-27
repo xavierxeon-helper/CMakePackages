@@ -66,6 +66,7 @@ namespace XX
          friend XXMATH_DECLSPEC QTextStream& operator<<(QTextStream& stream, const Matrix& data);
 
       private:
+         double subDeterminant(const Matrix& matrix) const;
          size_t dataIndex(const size_t& rowIndex, const size_t& columnIndex) const;
 
       private:

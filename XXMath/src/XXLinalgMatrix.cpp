@@ -204,41 +204,6 @@ double XX::Linalg::Matrix::determinant() const
    if (rowCount != columnCount)
       return 0.0;
 
-   // https://en.wikipedia.org/wiki/Laplace_expansion
-   std::function<double(const Matrix& matrix)> subDeterminant = [&](const Matrix& matrix)
-   {
-      const int n = matrix.rowCount;
-      if (1 == n)
-         return matrix.getValue(0, 0);
-
-      double value = 0.0;
-      for (int column = 0; column < n; column++)
-      {
-         Matrix subMatrix(n - 1, n - 1);
-
-         int columnIndex = 0;
-         for (int i = 1; i < n; i++)
-         {
-            int rowIndex = 0;
-            for (int j = 0; j < n; j++)
-            {
-               if (j != column) // exclude the current column
-               {
-                  const double entry = matrix.getValue(i, j);
-                  subMatrix.setValue(rowIndex, columnIndex, entry);
-                  rowIndex++;
-               }
-            }
-            columnIndex++;
-         }
-
-         const int sign = (column % 2 == 0) ? 1 : -1;
-         value += sign * matrix.getValue(0, column) * subDeterminant(subMatrix);
-      }
-
-      return value;
-   };
-
    const double value = subDeterminant(*this);
    return value;
 }
@@ -255,7 +220,75 @@ XX::Linalg::Matrix XX::Linalg::Matrix::inverse() const
 // see https://en.wikipedia.org/wiki/Minor_(linear_algebra)#Inverse_of_a_matrix
 XX::Linalg::Matrix XX::Linalg::Matrix::cofactor() const
 {
-   return Matrix();
+   Matrix result(rowCount, columnCount);
+
+   for (size_t rowIndex = 0; rowIndex < rowCount; rowIndex++)
+   {
+      for (size_t columnIndex = 0; columnIndex < columnCount; columnIndex++)
+      {
+         Matrix subMatrix(rowCount - 1, columnCount - 1);
+
+         int subColumnIndex = 0;
+         for (size_t i = 0; i < rowCount; i++)
+         {
+            if (i == rowIndex)
+               continue;
+
+            int subRowIndex = 0;
+            for (size_t j = 0; j < columnCount; j++)
+            {
+               if (j == columnIndex)
+                  continue;
+
+               const double entry = getValue(i, j);
+               subMatrix.setValue(subRowIndex, subColumnIndex, entry);
+
+               subRowIndex++;
+            }
+
+            subColumnIndex++;
+         }
+
+         result.setValue(rowIndex, columnIndex, subMatrix.determinant());
+      }
+   }
+
+   return result;
+}
+
+// https://en.wikipedia.org/wiki/Laplace_expansion
+double XX::Linalg::Matrix::subDeterminant(const Matrix& matrix) const
+{
+   const int n = matrix.rowCount;
+   if (1 == n)
+      return matrix.getValue(0, 0);
+
+   double value = 0.0;
+   for (int column = 0; column < n; column++)
+   {
+      Matrix subMatrix(n - 1, n - 1);
+
+      int columnIndex = 0;
+      for (int i = 1; i < n; i++)
+      {
+         int rowIndex = 0;
+         for (int j = 0; j < n; j++)
+         {
+            if (j != column) // exclude the current column
+            {
+               const double entry = matrix.getValue(i, j);
+               subMatrix.setValue(rowIndex, columnIndex, entry);
+               rowIndex++;
+            }
+         }
+         columnIndex++;
+      }
+
+      const int sign = (column % 2 == 0) ? 1 : -1;
+      value += sign * matrix.getValue(0, column) * subDeterminant(subMatrix);
+   }
+
+   return value;
 }
 
 size_t XX::Linalg::Matrix::dataIndex(const size_t& rowIndex, const size_t& columnIndex) const
