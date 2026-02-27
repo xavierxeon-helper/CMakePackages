@@ -211,82 +211,42 @@ double XX::Linalg::Matrix::determinant() const
       return 0.0;
 
    // https://en.wikipedia.org/wiki/Laplace_expansion
-   auto subDeterminant = [](const Matrix& matrix)
+   std::function<double(const Matrix& matrix)> subDeterminant = [&](const Matrix& matrix)
    {
-      if (1 == matrix.rowCount)
-         return 0.0;
+      const int n = matrix.rowCount;
+      if (1 == n)
+         return matrix.getValue(0, 0);
 
       double value = 0.0;
+      for (int column = 0; column < n; column++)
+      {
+         Matrix subMatrix(n - 1, n - 1);
+
+         int columnIndex = 0;
+         for (int i = 1; i < n; i++)
+         {
+            int rowIndex = 0;
+            for (int j = 0; j < n; j++)
+            {
+               if (j != column) // exclude the current column
+               {
+                  const double entry = matrix.getValue(i, j);
+                  subMatrix.setValue(rowIndex, columnIndex, entry);
+                  rowIndex++;
+               }
+            }
+            columnIndex++;
+         }
+
+         const int sign = (column % 2 == 0) ? 1 : -1;
+         value += sign * matrix.getValue(0, column) * subDeterminant(subMatrix);
+      }
+
       return value;
    };
 
-   subDeterminant(*this);
-
-   const size_t size = rowCount;
-   Matrix work = *this;
-
-   double determinantValue = 1.0;
-   bool signFlip = false;
-
-   for (size_t pivotIndex = 0; pivotIndex < size; pivotIndex++)
-   {
-      size_t maxRowIndex = pivotIndex;
-      double maxAbsValue = work.getValue(pivotIndex, pivotIndex);
-      if (maxAbsValue < 0.0)
-         maxAbsValue = -maxAbsValue;
-
-      for (size_t rowIndex = pivotIndex + 1; rowIndex < size; rowIndex++)
-      {
-         double candidateAbsValue = work.getValue(rowIndex, pivotIndex);
-         if (candidateAbsValue < 0.0)
-            candidateAbsValue = -candidateAbsValue;
-
-         if (candidateAbsValue > maxAbsValue)
-         {
-            maxAbsValue = candidateAbsValue;
-            maxRowIndex = rowIndex;
-         }
-      }
-
-      if (maxAbsValue <= XX::Math::epsilon)
-         return 0.0;
-
-      if (maxRowIndex != pivotIndex)
-      {
-         for (size_t columnIndex = 0; columnIndex < size; columnIndex++)
-         {
-            const double topValue = work.getValue(pivotIndex, columnIndex);
-            const double bottomValue = work.getValue(maxRowIndex, columnIndex);
-            work.setValue(pivotIndex, columnIndex, bottomValue);
-            work.setValue(maxRowIndex, columnIndex, topValue);
-         }
-         signFlip = !signFlip;
-      }
-
-      const double pivotValue = work.getValue(pivotIndex, pivotIndex);
-      determinantValue *= pivotValue;
-
-      for (size_t rowIndex = pivotIndex + 1; rowIndex < size; rowIndex++)
-      {
-         const double factor = work.getValue(rowIndex, pivotIndex) / pivotValue;
-         if (factor == 0.0)
-            continue;
-
-         work.setValue(rowIndex, pivotIndex, 0.0);
-
-         for (size_t columnIndex = pivotIndex + 1; columnIndex < size; columnIndex++)
-         {
-            const double reducedValue =
-               work.getValue(rowIndex, columnIndex) - (factor * work.getValue(pivotIndex, columnIndex));
-            work.setValue(rowIndex, columnIndex, reducedValue);
-         }
-      }
-   }
-
-   if (signFlip)
-      determinantValue = -determinantValue;
-
-   return determinantValue;
+   const double value = subDeterminant(*this);
+   return value;
 }
 
 size_t XX::Linalg::Matrix::dataIndex(const size_t& rowIndex, const size_t& columnIndex) const
