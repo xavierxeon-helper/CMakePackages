@@ -210,6 +210,18 @@ double XX::Linalg::Matrix::determinant() const
    if (rowCount != columnCount)
       return 0.0;
 
+   // https://en.wikipedia.org/wiki/Laplace_expansion
+   auto subDeterminant = [](const Matrix& matrix)
+   {
+      if (1 == matrix.rowCount)
+         return 0.0;
+
+      double value = 0.0;
+      return value;
+   };
+
+   subDeterminant(*this);
+
    const size_t size = rowCount;
    Matrix work = *this;
 
