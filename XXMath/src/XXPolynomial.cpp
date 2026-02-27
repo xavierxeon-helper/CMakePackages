@@ -124,3 +124,20 @@ void XX::Polynomial::setCoefficient(size_t index, const double& value)
 
    coefficents[index] = value;
 }
+
+//
+
+QDebug XX::operator<<(QDebug stream, const Polynomial& polynomial)
+{
+   stream << "Polynomial: y =";
+   for (size_t index = 0; index < polynomial.coefficents.size(); index++)
+   {
+      if (0 != index)
+         stream << qPrintable("+");
+
+      int pow = polynomial.coefficents.size() - (index + 1);
+      stream << polynomial.coefficents.at(index) << qPrintable("*x^" + QString::number(pow));
+   }
+
+   return stream;
+}

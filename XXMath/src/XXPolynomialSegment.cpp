@@ -38,3 +38,11 @@ void XX::Polynomial::Segment::setEnd(const double& value)
 {
    end = value;
 }
+
+//
+
+QDebug XX::operator<<(QDebug stream, const Polynomial::Segment& segment)
+{
+   stream << static_cast<Polynomial>(segment);
+   return stream;
+}

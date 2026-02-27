@@ -4,6 +4,7 @@
 #include "XXMathExportDef.h"
 #include "XXPolynomial.h"
 
+#include <QDebug>
 #include <QList>
 
 namespace XX
@@ -31,9 +32,24 @@ namespace XX
       void setEnd(const double& value);
 
    private:
+      friend XXMATH_DECLSPEC QDebug operator<<(QDebug stream, const Segment& segment);
+
+   private:
       double start;
       double end;
    };
+
+   /*!
+      @addtogroup Streaming
+      @{
+      @ingroup XXMath
+      @brief streaming operators for polynomial segments
+   */
+
+   XXMATH_DECLSPEC QDebug operator<<(QDebug stream, const Polynomial::Segment& segment);
+
+   //! @}
+
 } // namespace XX
 
 #endif // NOT XXPolynomialSegmentH

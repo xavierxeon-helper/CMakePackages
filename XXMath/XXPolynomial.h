@@ -3,6 +3,7 @@
 
 #include "XXMathExportDef.h"
 
+#include <QDebug>
 #include <QList>
 
 namespace XX
@@ -47,8 +48,23 @@ namespace XX
       void setCoefficient(size_t index, const double& value);
 
    private:
+      friend XXMATH_DECLSPEC QDebug operator<<(QDebug stream, const Polynomial& polynomial);
+
+   private:
       QVector<double> coefficents;
    };
+
+   /*!
+      @addtogroup Streaming
+      @{
+      @ingroup XXMath
+      @brief streaming operators for polynomials
+   */
+
+   XXMATH_DECLSPEC QDebug operator<<(QDebug stream, const Polynomial& polynomial);
+
+   //! @}
+
 } // namespace XX
 
 #endif // NOT XXPolynomialH

@@ -66,9 +66,9 @@ namespace XX
          Matrix cofactor() const;
 
       private:
-         friend XXMATH_DECLSPEC QDebug operator<<(QDebug stream, const Matrix& data);
-         friend XXMATH_DECLSPEC QTextStream& operator>>(QTextStream& stream, Matrix& data);
-         friend XXMATH_DECLSPEC QTextStream& operator<<(QTextStream& stream, const Matrix& data);
+         friend XXMATH_DECLSPEC QDebug operator<<(QDebug stream, const Matrix& matrix);
+         friend XXMATH_DECLSPEC QTextStream& operator>>(QTextStream& stream, Matrix& matrix);
+         friend XXMATH_DECLSPEC QTextStream& operator<<(QTextStream& stream, const Matrix& matrix);
 
       private:
          double subDeterminant(const Matrix& matrix) const;
