@@ -27,26 +27,31 @@ void XX::Polynomial::Regression::clear()
    values = QVector<double>(values.size(), 0.0);
 }
 
-XX::Polynomial::Segment::Bundle XX::Polynomial::Regression::fit(size_t degree, size_t maxSegmentLength, double threshold) const
+XX::Polynomial::Segment::Bundle XX::Polynomial::Regression::fit(size_t degree, double threshold, size_t maxSegmentLength) const
 {
-   const Section::List sections = compileSections(maxSegmentLength, threshold);
+   const Section::List sections = compileSections(threshold, maxSegmentLength);
 
    Segment::Bundle bundle;
-   for (const Section& section : sections)
+   for (int sectionIndex = 0; sectionIndex < sections.size(); sectionIndex++)
    {
+      const Section& section = sections.at(sectionIndex);
+
       Segment segment(degree);
       segment.setStart(section.start);
       segment.setEnd(section.end);
 
-      const size_t length = section.end - section.start;
+      size_t length = section.end - section.start;
+      size_t start = section.start;
+
+      size_t xOffset = section.start - start;
 
       XX::Linalg::Matrix yMatrix(length, 1);
       XX::Linalg::Matrix xMatrix(length, degree);
 
       for (size_t index = 0; index < length; index++)
       {
-         const double x = (double)(index);
-         const double y = values.at(index + section.start);
+         const double x = (double)index - (double)xOffset;
+         const double y = values.at(index + start);
 
          yMatrix.setValue(index, 0, y);
          for (size_t d = 0; d < degree; d++)
@@ -69,7 +74,7 @@ XX::Polynomial::Segment::Bundle XX::Polynomial::Regression::fit(size_t degree, s
    return bundle;
 }
 
-XX::Polynomial::Regression::Section::List XX::Polynomial::Regression::compileSections(size_t maxSegmentLength, double threshold) const
+XX::Polynomial::Regression::Section::List XX::Polynomial::Regression::compileSections(double threshold, size_t maxSegmentLength) const
 {
    Section::List sections;
    if (threshold <= 0)
