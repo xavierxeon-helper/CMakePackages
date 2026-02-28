@@ -88,11 +88,18 @@ XX::Polynomial::Regression::Section::List XX::Polynomial::Regression::compileSec
       const double y2 = values.at(index);
 
       const size_t length = index - start;
-
       const double yDiff = std::abs(y2 - y1);
-      if (yDiff > threshold || length > maxSegmentLength)
+
+      if (yDiff > threshold)
       {
-         Section section = {start, index};
+         Section section = {start, index, false};
+         sections.append(section);
+
+         start = index;
+      }
+      else if (length > maxSegmentLength)
+      {
+         Section section = {start, index, true};
          sections.append(section);
 
          start = index;

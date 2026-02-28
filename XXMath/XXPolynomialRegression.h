@@ -20,8 +20,9 @@ namespace XX
    public:
       struct Section
       {
-         size_t start;
-         size_t end;
+         size_t start = 0;
+         size_t end = 0;
+         bool steady = false; // no jump from last section
 
          using List = QList<Section>;
       };
