@@ -84,7 +84,6 @@ namespace XX
          @addtogroup Streaming
          @{
          @ingroup XXMath
-         @brief streaming operators for matrix
       */
 
       XXMATH_DECLSPEC QDebug operator<<(QDebug stream, const Matrix& matrix);

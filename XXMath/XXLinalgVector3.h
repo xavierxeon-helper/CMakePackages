@@ -80,7 +80,6 @@ namespace XX
          @addtogroup Streaming
          @{
          @ingroup XXMath
-         @brief streaming operators for vector3
       */
 
       XXMATH_DECLSPEC std::ostream& operator<<(std::ostream& out, const Vector3& vector);

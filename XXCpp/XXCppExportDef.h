@@ -1,9 +1,21 @@
-#ifndef XXWaToolCppExportDefH
-#define XXWaToolCppExportDefH
+#ifndef XXToolCppExportDefH
+#define XXToolCppExportDefH
 
 /*!
 @defgroup XXCpp Cpp 
 @includedoc{doc} XXCpp/XXCpp.md
+
+@defgroup CompilerTests
+@{
+@ingroup XXCpp
+@brief template test functions
+@}
+
+@defgroup Functions
+@{
+@ingroup XXCpp
+@brief Helper functions
+@}
 */
 
 // clang-format off
@@ -18,4 +30,4 @@
 #endif
 // clang-format on
 
-#endif // NOT XXWaToolCppExportDefH
+#endif // NOT XXToolCppExportDefH

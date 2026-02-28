@@ -36,7 +36,6 @@ namespace XX
          @addtogroup Streaming
          @{
          @ingroup XXMath
-         @brief streaming operators for spherical
       */
 
       XXMATH_DECLSPEC std::ostream& operator<<(std::ostream& out, const Spherical& spherial);

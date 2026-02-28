@@ -4,6 +4,12 @@
 /*!
 @defgroup XXMath Math
 @includedoc{doc} XXMath/XXMath.md
+
+@defgroup Streaming
+@{
+@ingroup XXMath
+@brief streaming operators for math classes
+@}
 */
 
 // clang-format off

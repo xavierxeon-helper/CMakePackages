@@ -2,7 +2,7 @@
 #define XXQuickExportDefH
 
 /*!
-@defgroup XXQuick XXQuick component
+@defgroup XXQuick Quick
 @includedoc{doc} XXQuick/XXQuick.md
 */
 
@@ -19,4 +19,3 @@
 // clang-format on
 
 #endif // NOT XXQuickExportDefH
-

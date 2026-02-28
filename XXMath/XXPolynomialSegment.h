@@ -45,7 +45,6 @@ namespace XX
       @addtogroup Streaming
       @{
       @ingroup XXMath
-      @brief streaming operators for polynomial segments
    */
 
    XXMATH_DECLSPEC QDebug operator<<(QDebug stream, const Polynomial::Segment& segment);
