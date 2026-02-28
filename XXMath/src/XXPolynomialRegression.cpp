@@ -4,6 +4,13 @@
 
 #include <XXLinalgMatrix.h>
 
+size_t XX::Polynomial::Regression::Section::length() const
+{
+   return end - start;
+}
+
+//
+
 XX::Polynomial::Regression::Regression(size_t size)
    : values(size, 0.0)
 {
@@ -27,7 +34,7 @@ void XX::Polynomial::Regression::clear()
    values = QVector<double>(values.size(), 0.0);
 }
 
-XX::Polynomial::Segment::Bundle XX::Polynomial::Regression::fit(size_t degree, double threshold, size_t maxSegmentLength) const
+XX::Polynomial::Segment::Bundle XX::Polynomial::Regression::fit(size_t degree, double threshold, size_t overFit, size_t maxSegmentLength) const
 {
    const Section::List sections = compileSections(threshold, maxSegmentLength);
 
@@ -40,8 +47,50 @@ XX::Polynomial::Segment::Bundle XX::Polynomial::Regression::fit(size_t degree, d
       segment.setStart(section.start);
       segment.setEnd(section.end);
 
-      size_t length = section.end - section.start;
+      size_t length = section.length();
       size_t start = section.start;
+
+      std::function<void(const size_t)> extendBackwards = [&](const size_t offset)
+      {
+         if (overFit == offset)
+            return;
+
+         const size_t compareIndex = sectionIndex - offset;
+         if (0 == compareIndex)
+            return;
+
+         const Section& prevSection = sections.at(compareIndex - 1);
+         if (prevSection.steady)
+         {
+            length += prevSection.length();
+            start = prevSection.start;
+
+            extendBackwards(offset + 1);
+         }
+      };
+
+      extendBackwards(0);
+
+      std::function<void(const size_t)> extendForwards = [&](const size_t offset)
+      {
+         if (overFit == offset)
+            return;
+
+         const size_t compareIndex = sectionIndex + offset;
+         if (compareIndex + 1 >= sections.size())
+            return;
+
+         const Section& compareSecton = sections.at(compareIndex);
+         if (!compareSecton.steady)
+            return;
+
+         const Section& nextSection = sections.at(compareIndex + 1);
+         length += nextSection.length();
+
+         extendForwards(offset + 1);
+      };
+
+      extendForwards(0);
 
       size_t xOffset = section.start - start;
 

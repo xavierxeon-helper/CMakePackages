@@ -22,7 +22,9 @@ namespace XX
       {
          size_t start = 0;
          size_t end = 0;
-         bool steady = false; // no jump from last section
+         bool steady = false; // no jump to next section
+
+         size_t length() const;
 
          using List = QList<Section>;
       };
@@ -32,7 +34,7 @@ namespace XX
       void setValue(const size_t index, const double& value);
       void clear();
 
-      Segment::Bundle fit(size_t degree, double threshold, size_t maxSegmentLength = 50) const;
+      Segment::Bundle fit(size_t degree, double threshold, size_t overFit = 2, size_t maxSegmentLength = 50) const;
       Section::List compileSections(double threshold, size_t maxSegmentLength = 50) const;
       const QVector<double>& getRawValues() const;
 
