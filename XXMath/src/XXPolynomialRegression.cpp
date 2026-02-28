@@ -169,7 +169,7 @@ XX::Polynomial::Regression::Section::List XX::Polynomial::Regression::compileSec
    return sections;
 }
 
-const QVector<double>& XX::Polynomial::Regression::getRawValues() const
+const QVector<double>& XX::Polynomial::Regression::getValues() const
 {
    return values;
 }

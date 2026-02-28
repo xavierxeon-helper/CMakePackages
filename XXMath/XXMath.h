@@ -4,6 +4,7 @@
 #include "XXMathExportDef.h"
 
 #include <cmath>
+#include <QVector>
 
 namespace XX
 {
@@ -19,6 +20,8 @@ namespace XX
 
       XXMATH_DECLSPEC size_t getNearestPowerOfTwo(const size_t& num);
       XXMATH_DECLSPEC bool isPowerOfTwo(const size_t& num);
+
+      XXMATH_DECLSPEC QVector<double> derivative(const QVector<double>& values, uint8_t order);
 
    } // namespace Math
 } // namespace XX

@@ -36,7 +36,7 @@ namespace XX
 
       Segment::Bundle fit(size_t degree, double threshold, size_t overFit = 2, size_t maxSegmentLength = 50) const;
       Section::List compileSections(double threshold, size_t maxSegmentLength = 50) const;
-      const QVector<double>& getRawValues() const;
+      const QVector<double>& getValues() const;
 
    private:
       QVector<double> values;

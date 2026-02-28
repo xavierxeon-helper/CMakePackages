@@ -38,3 +38,22 @@ bool XX::Math::isPowerOfTwo(const size_t& num)
 {
    return (num == getNearestPowerOfTwo(num));
 }
+
+QVector<double> XX::Math::derivative(const QVector<double>& values, uint8_t order)
+{
+   if (0 == order)
+      return values;
+
+   QVector<double> derivedValues(values.size(), 0.0);
+   for (size_t index = 1; index < values.size(); index++)
+   {
+      const double y1 = values.at(index - 1);
+      const double y2 = values.at(index);
+
+      const double diff = y2 - y1;
+
+      derivedValues[index] = diff;
+   }
+
+   return derivative(derivedValues, order - 1);
+}
