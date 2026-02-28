@@ -44,6 +44,19 @@ double XX::Polynomial::Segment::value(const double& x) const
    return Polynomial::value(x - start);
 }
 
+void XX::Polynomial::Segment::load(const QJsonObject& data)
+{
+}
+
+QJsonObject XX::Polynomial::Segment::save() const
+{
+   QJsonObject base = Polynomial::save();
+   base["start"] = start;
+   base["end"] = end;
+
+   return base;
+}
+
 //
 
 QDebug XX::operator<<(QDebug stream, const Polynomial::Segment& segment)

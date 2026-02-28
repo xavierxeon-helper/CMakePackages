@@ -4,6 +4,7 @@
 #include "XXMathExportDef.h"
 
 #include <QDebug>
+#include <QJsonObject>
 #include <QList>
 
 namespace XX
@@ -41,6 +42,8 @@ namespace XX
 
    public:
       virtual double value(const double& x) const;
+      virtual void load(const QJsonObject& data);
+      virtual QJsonObject save() const;
 
       void setDegree(size_t degree);
       size_t getDegree() const;

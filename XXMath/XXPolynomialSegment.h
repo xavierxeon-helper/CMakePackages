@@ -5,6 +5,7 @@
 #include "XXPolynomial.h"
 
 #include <QDebug>
+#include <QJsonObject>
 #include <QList>
 
 namespace XX
@@ -32,6 +33,8 @@ namespace XX
       void setEnd(const double& value);
 
       double value(const double& x) const override;
+      void load(const QJsonObject& data) override;
+      QJsonObject save() const override;
 
    private:
       friend XXMATH_DECLSPEC QDebug operator<<(QDebug stream, const Segment& segment);

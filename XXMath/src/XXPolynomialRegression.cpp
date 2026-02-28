@@ -146,8 +146,11 @@ XX::Polynomial::Regression::Section::List XX::Polynomial::Regression::compileSec
 
       if (yDiff > threshold)
       {
-         Section section = {start, index, false};
-         sections.append(section);
+         if (length > 1)
+         {
+            Section section = {start, index, false};
+            sections.append(section);
+         }
 
          start = index;
       }

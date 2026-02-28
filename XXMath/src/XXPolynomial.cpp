@@ -1,5 +1,7 @@
 #include "XXPolynomial.h"
 
+#include <QJsonArray>
+
 XX::Polynomial::Polynomial(size_t degree)
    : coefficents(degree, 0.0)
 {
@@ -100,6 +102,22 @@ double XX::Polynomial::value(const double& x) const
       result += coefficents.at(d) * std::pow(x, expo);
    }
    return result;
+}
+
+void XX::Polynomial::load(const QJsonObject& data)
+{
+}
+
+QJsonObject XX::Polynomial::save() const
+{
+   QJsonArray valueArray;
+   for (size_t index = 0; index < coefficents.size(); index++)
+      valueArray.append(coefficents.at(index));
+
+   QJsonObject content;
+   content["coefficents"] = valueArray;
+
+   return content;
 }
 
 void XX::Polynomial::setDegree(size_t degree)
