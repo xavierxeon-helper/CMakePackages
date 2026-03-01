@@ -1,5 +1,9 @@
 #include "XXFileTools.h"
 
+#ifdef Q_OS_WASM
+#include <emscripten/fetch.h>
+#endif // Q_OS_WASM
+
 #include <QDir>
 #include <QDirIterator>
 #include <QJsonDocument>
@@ -59,6 +63,55 @@ void XX::FileTools::writeJson(const QJsonObject& data, const QString& filePath, 
    file.write(doc.toJson(QJsonDocument::Indented));
    file.close();
 }
+
+#ifdef Q_OS_WASM
+
+QByteArray XX::FileTools::readIndexDB(const QString& filePath)
+{
+   emscripten_fetch_attr_t attr;
+   emscripten_fetch_attr_init(&attr);
+   strcpy(attr.requestMethod, "GET");
+   attr.attributes = EMSCRIPTEN_FETCH_NO_DOWNLOAD | EMSCRIPTEN_FETCH_SYNCHRONOUS | EMSCRIPTEN_FETCH_LOAD_TO_MEMORY;
+
+   const QByteArray filePathBytes = filePath.toUtf8();
+   emscripten_fetch_t* fetch = emscripten_fetch(&attr, filePathBytes.constData());
+
+   QByteArray data(fetch->data, fetch->numBytes);
+   emscripten_fetch_close(fetch);
+
+   return data;
+}
+
+void XX::FileTools::writeIndexDB(const QByteArray& data, const QString& filePath)
+{
+   emscripten_fetch_attr_t attr;
+   emscripten_fetch_attr_init(&attr);
+   strcpy(attr.requestMethod, "EM_IDB_STORE");
+   attr.attributes = EMSCRIPTEN_FETCH_REPLACE | EMSCRIPTEN_FETCH_SYNCHRONOUS | EMSCRIPTEN_FETCH_PERSIST_FILE;
+
+   attr.requestData = data.constData();
+   attr.requestDataSize = data.size();
+
+   const QByteArray filePathBytes = filePath.toUtf8();
+   emscripten_fetch_t* fetch = emscripten_fetch(&attr, filePathBytes.constData());
+   emscripten_fetch_close(fetch);
+}
+
+QJsonObject XX::FileTools::readIndexDBJson(const QString& filePath)
+{
+   const QByteArray content = readIndexDB(filePath);
+   return parseBytes(content);
+}
+
+void XX::FileTools::writeIndexDBJson(const QJsonObject& data, const QString& filePath)
+{
+   QJsonDocument doc(data);
+   const QByteArray content = doc.toJson(QJsonDocument::Indented);
+
+   writeIndexDB(content, filePath);
+}
+
+#endif // Q_OS_WASM
 
 QString XX::FileTools::compileDropboxPath(const QString& appName)
 {

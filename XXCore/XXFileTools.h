@@ -18,6 +18,14 @@ namespace XX
       static QJsonObject parseBytes(const QByteArray& data);
       static void writeJson(const QJsonObject& data, const QString& filePath, bool verbose = false);
 
+#ifdef Q_OS_WASM
+      static QByteArray readIndexDB(const QString& filePath);
+      static void writeIndexDB(const QByteArray& data, const QString& filePath);
+
+      static QJsonObject readIndexDBJson(const QString& filePath);
+      static void writeIndexDBJson(const QJsonObject& data, const QString& filePath);
+#endif // Q_OS_WASM
+
       static QString compileDropboxPath(const QString& appName = QCoreApplication::applicationName());
       static QString compileNextCloudPath(const QString& appName = QCoreApplication::applicationName());
 

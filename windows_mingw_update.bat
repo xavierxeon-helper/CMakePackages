@@ -2,7 +2,7 @@
 setlocal
 
 echo Setting up environment for Qt usage...
-set PATH=C:\dev\Qt\Tools\CMake_64\bin;C:\dev\Qt\6.10.2\mingw_64\bin;C:\dev\Qt\Tools\mingw1310_64\bin;%PATH%
+set PATH=C:\dev\Qt\Tools\CMake_64\bin;C:\dev\Qt\Tools\mingw1310_64\bin;%QT_DIR%\mingw_64\bin;%PATH%
 
 set THIS_DIR=%~dp0
 
