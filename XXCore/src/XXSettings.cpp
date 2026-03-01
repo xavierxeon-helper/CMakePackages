@@ -21,7 +21,13 @@ XX::Settings::Settings()
       fileName = compileFileName();
 
    if (0 == instanceCount)
+   {
+#ifdef Q_OS_WASM
+      data = FileTools::readIndexDBJson(fileName);
+#else
       data = FileTools::readJson(fileName);
+#endif //Q_OS_WASM
+   }
    instanceCount++;
 }
 
@@ -30,14 +36,20 @@ XX::Settings::~Settings()
    instanceCount--;
    if (0 == instanceCount && modified)
    {
+#ifdef Q_OS_WASM
+      FileTools::writeIndexDBJson(data, fileName);
+#else
       FileTools::writeJson(data, fileName);
+#endif //Q_OS_WASM
       modified = false;
    }
 }
 
 QString XX::Settings::compileFileName()
 {
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_WASM)
+   QString fileName = QCoreApplication::applicationName() + ".json";
+#elif defined(Q_OS_MAC)
    QString fileName = QDir::homePath() + "/.config";
    fileName += "/" + QCoreApplication::organizationDomain();
    fileName += "/" + QCoreApplication::applicationName() + ".json";
