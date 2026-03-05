@@ -34,8 +34,6 @@ XX::Settings::~Settings()
    {
       FileTools::writeJson(data, fileName);
       modified = false;
-
-      qDebug() << "write settings file to " << fileName;
    }
 }
 
