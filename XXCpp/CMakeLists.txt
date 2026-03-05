@@ -18,3 +18,8 @@ file(GLOB_RECURSE SOURCE_FILES
 
 qt_add_library(${PROJECT_NAME} ${XX_LIB_TYPE} ${HEADER_FILES} ${SOURCE_FILES})
 add_compile_definitions(EXTENSION_XXCPP)
+
+if(EMSCRIPTEN)
+   message(STATUS "add emscpripten idbfs api")
+   target_link_libraries(${PROJECT_NAME} PUBLIC idbfs.js)
+endif()

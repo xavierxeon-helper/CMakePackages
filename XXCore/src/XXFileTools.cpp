@@ -1,7 +1,8 @@
 #include "XXFileTools.h"
 
 #ifdef Q_OS_WASM
-#include <emscripten/fetch.h>
+#include <emscripten.h>
+#include <emscripten/bind.h>
 #endif // Q_OS_WASM
 
 #include <QDir>
@@ -66,52 +67,34 @@ void XX::FileTools::writeJson(const QJsonObject& data, const QString& filePath, 
 
 #ifdef Q_OS_WASM
 
-QByteArray XX::FileTools::readIndexDB(const QString& filePath)
-{
-   emscripten_fetch_attr_t attr;
-   emscripten_fetch_attr_init(&attr);
-   strcpy(attr.requestMethod, "GET");
-   attr.attributes = EMSCRIPTEN_FETCH_NO_DOWNLOAD | EMSCRIPTEN_FETCH_SYNCHRONOUS | EMSCRIPTEN_FETCH_LOAD_TO_MEMORY;
+// clang-format off
+EM_JS(
+   void,
+   createFileSystem,
+   (const char* str),
+   {
+      let path = "/" + UTF8ToString(str);
 
-   const QByteArray filePathBytes = filePath.toUtf8();
-   emscripten_fetch_t* fetch = emscripten_fetch(&attr, filePathBytes.constData());
+      FS.mkdir(path);
+      FS.mount(IDBFS, {autoPersist: true }, path);
 
-   QByteArray data(fetch->data, fetch->numBytes);
-   emscripten_fetch_close(fetch);
-
-   return data;
-}
-
-void XX::FileTools::writeIndexDB(const QByteArray& data, const QString& filePath)
-{
-   emscripten_fetch_attr_t attr;
-   emscripten_fetch_attr_init(&attr);
-   strcpy(attr.requestMethod, "EM_IDB_STORE");
-   attr.attributes = EMSCRIPTEN_FETCH_REPLACE | EMSCRIPTEN_FETCH_SYNCHRONOUS | EMSCRIPTEN_FETCH_PERSIST_FILE;
-
-   attr.requestData = data.constData();
-   attr.requestDataSize = data.size();
-
-   const QByteArray filePathBytes = filePath.toUtf8();
-   emscripten_fetch_t* fetch = emscripten_fetch(&attr, filePathBytes.constData());
-   emscripten_fetch_close(fetch);
-}
-
-QJsonObject XX::FileTools::readIndexDBJson(const QString& filePath)
-{
-   const QByteArray content = readIndexDB(filePath);
-   return parseBytes(content);
-}
-
-void XX::FileTools::writeIndexDBJson(const QJsonObject& data, const QString& filePath)
-{
-   QJsonDocument doc(data);
-   const QByteArray content = doc.toJson(QJsonDocument::Indented);
-
-   writeIndexDB(content, filePath);
-}
+      FS.syncfs(true, function(err){
+                         // Error
+                      });
+   }
+);
+// clang-format on
 
 #endif // Q_OS_WASM
+
+void XX::FileTools::initFileSystem()
+{
+#ifdef Q_OS_WASM
+
+   createFileSystem(QCoreApplication::applicationName().toUtf8().constData());
+
+#endif // Q_OS_WASM
+}
 
 QString XX::FileTools::compileDropboxPath(const QString& appName)
 {
