@@ -34,13 +34,15 @@ XX::Settings::~Settings()
    {
       FileTools::writeJson(data, fileName);
       modified = false;
+
+      qDebug() << "write settings file to " << fileName;
    }
 }
 
 QString XX::Settings::compileFileName()
 {
 #if defined(Q_OS_WASM)
-   QString fileName = QCoreApplication::applicationName() + ".settings";
+   QString fileName = "/" + QCoreApplication::applicationName() + "/Settings.json";
 #elif defined(Q_OS_MAC)
    QString fileName = QDir::homePath() + "/.config";
    fileName += "/" + QCoreApplication::organizationDomain();

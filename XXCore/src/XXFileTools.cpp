@@ -3,6 +3,25 @@
 #ifdef Q_OS_WASM
 #include <emscripten.h>
 #include <emscripten/bind.h>
+
+// clang-format off
+EM_JS(
+   void,
+   createFileSystem,
+   (const char* str),
+   {
+      let path = UTF8ToString(str);
+
+      FS.mkdir(path);
+      FS.mount(IDBFS, {autoPersist: true }, path);
+
+      FS.syncfs(true, function(err){
+                         // Error
+                      });
+   }
+);
+// clang-format on
+
 #endif // Q_OS_WASM
 
 #include <QDir>
@@ -65,34 +84,10 @@ void XX::FileTools::writeJson(const QJsonObject& data, const QString& filePath, 
    file.close();
 }
 
-#ifdef Q_OS_WASM
-
-// clang-format off
-EM_JS(
-   void,
-   createFileSystem,
-   (const char* str),
-   {
-      let path = "/" + UTF8ToString(str);
-
-      FS.mkdir(path);
-      FS.mount(IDBFS, {autoPersist: true }, path);
-
-      FS.syncfs(true, function(err){
-                         // Error
-                      });
-   }
-);
-// clang-format on
-
-#endif // Q_OS_WASM
-
-void XX::FileTools::initFileSystem()
+void XX::FileTools::initFileSystem(const QString& basePath)
 {
 #ifdef Q_OS_WASM
-
-   createFileSystem(QCoreApplication::applicationName().toUtf8().constData());
-
+   createFileSystem(basePath.toUtf8().constData());
 #endif // Q_OS_WASM
 }
 
@@ -184,8 +179,6 @@ QStringList XX::FileTools::compileResourceNames(const QStringList& ignoreList)
       QFileInfo fileInfo(name);
       if (fileInfo.isFile())
          nameList.append(name);
-
-      //nameList.append(name);
    }
 
    return nameList;
