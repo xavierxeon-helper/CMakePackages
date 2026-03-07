@@ -30,6 +30,34 @@ function(set_standrard_release_output_path)
 endfunction()
 
 # application icon
+
+function(set_application_icon_pre_target PATH_TO_ICON)
+
+   get_property(TARGET_TEST DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY BUILDSYSTEM_TARGETS)
+
+   if(TARGET_TEST)
+      message(FATAL_ERROR "The function 'set_application_icon_pre_target' must be called before any target is created")
+      return()
+   endif()
+
+   cmake_parse_arguments(PARSE_ARGV 1 APP_ICON_ARG "" "NAME" "")
+
+   if(NOT APP_ICON_ARG_NAME)
+      set(APP_ICON_ARG_NAME ${PROJECT_NAME})
+   endif()
+
+   if(APPLE)
+      set(MACOSX_BUNDLE_ICON_FILE ${APP_ICON_ARG_NAME}.icns PARENT_SCOPE)
+
+      set(APP_ICON ${PATH_TO_ICON}/${APP_ICON_ARG_NAME}.icns)
+      if(NOT EXISTS ${APP_ICON})
+         message(FATAL_ERROR "Icon file not found: ${APP_ICON}")
+      endif()
+
+   endif()
+
+endfunction()
+
 function(set_application_icon PATH_TO_ICON)
 
    cmake_parse_arguments(PARSE_ARGV 1 APP_ICON_ARG "" "NAME" "")
@@ -65,24 +93,27 @@ function(set_application_icon PATH_TO_ICON)
       set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME AppIcon)
    elseif(APPLE)
       set_target_properties(${PROJECT_NAME} PROPERTIES MACOSX_BUNDLE TRUE)
-      set(APP_ICON ${PATH_TO_ICON}/${APP_ICON_ARG_NAME}.icns)
-      message(STATUS "APP_ICON: ${APP_ICON}")
 
-      set(MACOSX_BUNDLE_ICON_FILE ${APP_ICON_ARG_NAME}.icns PARENT_SCOPE)
+      if(NOT MACOSX_BUNDLE_ICON_FILE)
+         message(FATAL_ERROR "CALL 'set_application_icon_pre_target'")
+      endif()
+
+      set(APP_ICON ${PATH_TO_ICON}/${APP_ICON_ARG_NAME}.icns)
       set_source_files_properties(${APP_ICON} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
+      message(STATUS "APP_ICON: ${APP_ICON} ")
+      message(STATUS "MACOSX_BUNDLE_ICON_FILE: ${MACOSX_BUNDLE_ICON_FILE} ")
       target_sources(${PROJECT_NAME} PRIVATE ${APP_ICON})
    elseif(WIN32)
       set_target_properties(${PROJECT_NAME} PROPERTIES WIN32_EXECUTABLE TRUE)
+
       set(ICON_RC_FILE ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.rc)
       set(APP_ICON ${PATH_TO_ICON}/${APP_ICON_ARG_NAME}.ico)
-
       if(NOT EXISTS ${ICON_RC_FILE})         
          file(WRITE ${ICON_RC_FILE} "#include \"winver.h\"\nIDI_ICON1 ICON \"${APP_ICON}\"\n")
       endif()
 
       message(STATUS "APP_ICON: ${APP_ICON} @ ${ICON_RC_FILE}")
-
       target_sources(${PROJECT_NAME} PRIVATE ${ICON_RC_FILE})
    endif()
 endfunction()
