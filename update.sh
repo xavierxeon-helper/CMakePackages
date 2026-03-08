@@ -2,7 +2,7 @@
 
 if [[ -f /proc/version && $(grep -i Microsoft /proc/version) ]]
 then
-   cmd.exe /c "windows_llvm_mingw_update.bat"
+   cmd.exe /c "windows_msvc_update.bat"
    exit 0
 fi
 
