@@ -1,5 +1,5 @@
-#ifndef XXMatrixH
-#define XXMatrixH
+#ifndef XXArray2DH
+#define XXArray2DH
 
 #include <vector>
 
@@ -11,10 +11,10 @@ namespace XX
    //! @ingroup XXCpp
 
    template <typename DataType>
-   class Matrix : public std::vector<std::vector<DataType>>
+   class Array2D : public std::vector<std::vector<DataType>>
    {
    public:
-      Matrix(const Size& size, const DataType& initialValue = DataType());
+      Array2D(const Size& size, const DataType& initialValue = DataType());
 
    public:
       const Size& getSize() const;
@@ -26,8 +26,8 @@ namespace XX
    };
 } // namespace XX
 
-#ifndef XXMatrixHPP
-#include "XXMatrix.hpp"
-#endif // NOT XXMatrixHPP
+#ifndef XXArray2DHPP
+#include "XXArray2D.hpp"
+#endif // NOT XXArray2DHPP
 
-#endif // NOT XXMatrixH
+#endif // NOT XXArray2DH

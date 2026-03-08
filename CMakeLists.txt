@@ -24,10 +24,8 @@ foreach(SUB_DIR ${SUB_DIRECTORIES})
       continue()
    endif()
 
-
    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${SUB_DIR}/CMakeLists.txt)
       file(APPEND ${MODULE_FILE} " * ${SUB_DIR}\n")
       add_subdirectory(${SUB_DIR})
    endif()
-
 endforeach()

@@ -1,10 +1,10 @@
-#ifndef XXMatrixHPP
-#define XXMatrixHPP
+#ifndef XXArray2DHPP
+#define XXArray2DHPP
 
-#include "XXMatrix.h"
+#include "XXArray2D.h"
 
 template <typename DataType>
-inline XX::Matrix<DataType>::Matrix(const Size& size, const DataType& initialValue)
+inline XX::Array2D<DataType>::Array2D(const Size& size, const DataType& initialValue)
    : std::vector<std::vector<DataType>>()
    , size(size)
 {
@@ -12,20 +12,20 @@ inline XX::Matrix<DataType>::Matrix(const Size& size, const DataType& initialVal
 }
 
 template <typename DataType>
-const XX::Size& XX::Matrix<DataType>::getSize() const
+const XX::Size& XX::Array2D<DataType>::getSize() const
 {
    return size;
 }
 
 template <typename DataType>
-void XX::Matrix<DataType>::appendRow(const DataType& initialValue)
+void XX::Array2D<DataType>::appendRow(const DataType& initialValue)
 {
    this->push_back(std::vector<DataType>(size.height, initialValue));
    size.height += 1;
 }
 
 template <typename DataType>
-void XX::Matrix<DataType>::removeRow(const uint16_t row)
+void XX::Array2D<DataType>::removeRow(const uint16_t row)
 {
    const auto it = this->cbegin() + row;
    if (this->cend() == it)
@@ -35,4 +35,4 @@ void XX::Matrix<DataType>::removeRow(const uint16_t row)
    size.height -= 1;
 }
 
-#endif // NOT XXMatrixHPP
+#endif // NOT XXArray2DHPP
