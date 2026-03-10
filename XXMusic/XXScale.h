@@ -29,6 +29,7 @@ namespace XX
       const QString getOffset() const;
       const QString& getMajorName() const;
       const QString& getMinorName() const;
+      const Note& getMajorNote() const;
 
       const KeyList& getActiveKeys() const;
       bool isActive(const int index) const;
@@ -46,6 +47,7 @@ namespace XX
       int offset;
       QString majorName;
       QString minorName;
+      Note majorNote;
 
       KeyList active;
 

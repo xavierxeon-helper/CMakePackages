@@ -147,6 +147,16 @@ const XX::Note& XX::Note::fromFrequency(float frequency)
    return note;
 }
 
+const XX::Note& XX::Note::fromValue(Value value)
+{
+   for (const Note& note : availableNotes)
+   {
+      if (note.value == value)
+         return note;
+   }
+   return zeroNote;
+}
+
 XX::Note XX::Note::up() const
 {
    const int index = availableNotes.indexOf(*this);

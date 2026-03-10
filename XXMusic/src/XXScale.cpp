@@ -5,10 +5,11 @@ const XX::Scale::Map XX::Scale::availableScales = []()
    Map map;
 
    static const bool inScale[12] = {true, false, true, false, true, true, false, true, false, true, false, true};
-   auto addScale = [&](const int& offset, QString majorName, QString minorName)
+   auto addScale = [&](const int& offset, Note::Value majorNoteValue, QString majorName, QString minorName)
    {
       Scale data;
       data.offset = offset;
+      data.majorNote = Note::fromValue(majorNoteValue);
       data.majorName = majorName;
       data.minorName = minorName;
 
@@ -24,21 +25,19 @@ const XX::Scale::Map XX::Scale::availableScales = []()
       map.insert(offset, data);
    };
 
-   //addScale(-7, "C" + Note::flatSymbol, "");
-   addScale(-6, "G" + Note::flatSymbol, "e" + Note::flatSymbol);
-   addScale(-5, "D" + Note::flatSymbol, "b" + Note::flatSymbol);
-   addScale(-4, "A" + Note::flatSymbol, "f");
-   addScale(-3, "E" + Note::flatSymbol, "c");
-   addScale(-2, "B" + Note::flatSymbol, "g");
-   addScale(-1, "F", "d");
-   addScale(0, "C", "a");
-   addScale(+1, "G", "e");
-   addScale(+2, "D", "b");
-   addScale(+3, "A", "f" + Note::sharpSymbol);
-   addScale(+4, "E", "c" + Note::sharpSymbol);
-   addScale(+5, "B", "g" + Note::sharpSymbol);
-   addScale(+6, "F" + Note::sharpSymbol, "d" + Note::sharpSymbol);
-   //addScale(+7, "C"+Note::sharpSymbol, "");
+   addScale(-6, Note::Fs, "G" + Note::flatSymbol, "e" + Note::flatSymbol);
+   addScale(-5, Note::Cs, "D" + Note::flatSymbol, "b" + Note::flatSymbol);
+   addScale(-4, Note::Gs, "A" + Note::flatSymbol, "f");
+   addScale(-3, Note::Ds, "E" + Note::flatSymbol, "c");
+   addScale(-2, Note::As, "B" + Note::flatSymbol, "g");
+   addScale(-1, Note::F, "F", "d");
+   addScale(0, Note::C, "C", "a");
+   addScale(+1, Note::G, "G", "e");
+   addScale(+2, Note::D, "D", "b");
+   addScale(+3, Note::A, "A", "f" + Note::sharpSymbol);
+   addScale(+4, Note::E, "E", "c" + Note::sharpSymbol);
+   addScale(+5, Note::B, "B", "g" + Note::sharpSymbol);
+   addScale(+6, Note::Fs, "F" + Note::sharpSymbol, "d" + Note::sharpSymbol);
 
    return map;
 }();
@@ -80,6 +79,11 @@ const QString& XX::Scale::getMinorName() const
    return minorName;
 }
 
+const XX::Note& XX::Scale::getMajorNote() const
+{
+   return majorNote;
+}
+
 const XX::Scale::KeyList& XX::Scale::getActiveKeys() const
 {
    return active;
@@ -110,6 +114,7 @@ XX::Scale::Scale()
    : offset()
    , majorName()
    , minorName()
+   , majorNote(Note::zeroNote)
    , active(emptyKeyList())
 {
 }

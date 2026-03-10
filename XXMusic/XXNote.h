@@ -56,6 +56,8 @@ namespace XX
       static const Note& fromVoltage(float voltage);
       static const Note& fromMidi(uchar midi);
       static const Note& fromFrequency(float frequency);
+      static const Note& fromValue(Value value);
+
       Note up() const;
       Note down() const;
       bool isWhiteKey() const;
