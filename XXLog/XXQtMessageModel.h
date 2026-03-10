@@ -19,6 +19,9 @@ namespace XX
          Model(QObject* parent, int maxLines = -1);
          ~Model();
 
+      signals:
+         void contentUpdated();
+
       private:
          enum Roles
          {

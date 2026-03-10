@@ -34,4 +34,6 @@ void XX::QtMessage::Model::outputMessage(QtMsgType type, const QMessageLogContex
    appendRow(item);
    if (maxLines > 0 && rowCount() > maxLines)
       removeRow(0);
+
+   emit contentUpdated();
 }
