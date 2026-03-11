@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.20)
-project(XXNetwork LANGUAGES CXX)
+project(XXNetworkOAuth LANGUAGES CXX)
 
 include(../CommonBuild.cmake)
 
-find_package(Qt6 REQUIRED COMPONENTS Gui Network )
+find_package(Qt6 REQUIRED COMPONENTS NetworkAuth)
 set(CMAKE_AUTOMOC ON)
 
-find_package(XX REQUIRED COMPONENTS Cpp Core Log)
+find_package(XX REQUIRED COMPONENTS Network)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 file(GLOB HEADER_FILES
@@ -14,13 +14,14 @@ file(GLOB HEADER_FILES
    ${CMAKE_CURRENT_SOURCE_DIR}/*.hpp
 )
 
-file(GLOB_RECURSE SOURCE_FILES
+file(GLOB SOURCE_FILES
    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.h
    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.hpp
    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
 )
 
 qt_add_library(${PROJECT_NAME} ${XX_LIB_TYPE} ${HEADER_FILES} ${SOURCE_FILES})
-add_compile_definitions(EXTENSION_XXNETWORK)
+add_compile_definitions(EXTENSION_XXNETWORKOAUTH)
 
-target_link_libraries(${PROJECT_NAME} PUBLIC Qt6::Gui Qt6::Network)
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::NetworkAuth)
+

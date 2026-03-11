@@ -2,7 +2,7 @@
 #define XXAuthProviderOAuthH
 
 #include "XXAuthProviderToken.h"
-#include "XXNetworkExportDef.h"
+#include "XXNetworkOAuthExportDef.h"
 #include "XXNetworkSettings.h"
 
 #include <QJsonObject>
@@ -14,9 +14,9 @@ namespace XX
    {
       //! @brief OAuth2 authentication provider
       //! @details redirect url is http://127.0.0.1:1234/
-      //! @ingroup XXNetwork
+      //! @ingroup XXNetworkOAuth
 
-      class XXNETWORK_DECLSPEC OAuth : public Token, public Network::Settings
+      class XXNETWORKOAUTH_DECLSPEC OAuth : public Token, public Network::Settings
       {
          Q_OBJECT
 
@@ -43,7 +43,7 @@ namespace XX
             Ready
          };
 
-         class XXNETWORK_DECLSPEC BlockState
+         class XXNETWORKOAUTH_DECLSPEC BlockState
          {
          public:
             BlockState(OAuth* auth);
