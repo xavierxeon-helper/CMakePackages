@@ -6,7 +6,7 @@ include(../CommonBuild.cmake)
 find_package(Qt6 REQUIRED COMPONENTS NetworkAuth)
 set(CMAKE_AUTOMOC ON)
 
-find_package(XX REQUIRED COMPONENTS Network)
+find_package(XX REQUIRED COMPONENTS Network Core)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 file(GLOB HEADER_FILES

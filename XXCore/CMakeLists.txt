@@ -19,9 +19,11 @@ file(GLOB_RECURSE SOURCE_FILES
    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
 )
 
-
 qt_add_library(${PROJECT_NAME} ${XX_LIB_TYPE} ${HEADER_FILES} ${SOURCE_FILES})
 add_compile_definitions(EXTENSION_XXCORE)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Core)
 
+if(EMSCRIPTEN)
+   target_link_libraries(${PROJECT_NAME} PRIVATE idbfs.js)
+endif()
