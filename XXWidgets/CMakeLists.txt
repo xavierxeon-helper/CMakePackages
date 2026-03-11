@@ -26,12 +26,10 @@ qt_add_library(${PROJECT_NAME} ${XX_LIB_TYPE} ${HEADER_FILES} ${SOURCE_FILES})
 add_compile_definitions(EXTENSION_XXWIDGETS)
 
 
-if(LINUX)
-   if("aarch64" STREQUAL ${CMAKE_SYSTEM_PROCESSOR})
-      message(STATUS "SKIPPING XX QML")
-   else()
-      add_qml_module_dir(Gui NAME XXQt)
-   endif()
+if(LINUX AND "aarch64" STREQUAL ${CMAKE_SYSTEM_PROCESSOR})
+   message(STATUS "SKIPPING XX QML")
+else()
+   add_qml_module_dir(Gui NAME XXQt)
 endif()
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets Qt6::Xml Qt6::QuickWidgets)
