@@ -184,6 +184,13 @@ QStringList XX::FileTools::compileResourceNames(const QStringList& ignoreList)
    return nameList;
 }
 
+void XX::FileTools::printAllResourceNames(const QStringList& ignoreList)
+{
+   const QStringList nameList = compileResourceNames(ignoreList);
+   for (const QString& name : nameList)
+      qDebug() << name;
+}
+
 void XX::FileTools::openVSCode(const QString& path)
 {
    openVSCode(QStringList{path});

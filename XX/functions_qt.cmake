@@ -41,16 +41,32 @@ endfunction()
 function(add_markdown_dir SUBPATH)
 
    cmake_parse_arguments(PARSE_ARGV 1 MARKDOWN_ARG "" "RCNAME;PREFIX" "")
-   add_resource_dir(${SUBPATH} RCNAME ${MARKDOWN_ARG_RCNAME} PREFIX ${MARKDOWN_ARG_PREFIX} FILTERS "*.md" "*.png")
 
+   if(NOT MARKDOWN_ARG_RCNAME)
+      set(MARKDOWN_ARG_RCNAME "${PROJECT_NAME}_${SUBPATH}")
+   endif()
+
+   if(NOT MARKDOWN_ARG_PREFIX)
+      set(MARKDOWN_ARG_PREFIX "/")
+   endif()
+
+   add_resource_dir(${SUBPATH} RCNAME ${MARKDOWN_ARG_RCNAME} PREFIX ${MARKDOWN_ARG_PREFIX} FILTERS "*.md" "*.png")
 endfunction()
 
 # icon
 function(add_icon_dir SUBPATH)
 
    cmake_parse_arguments(PARSE_ARGV 1 ICON_ARG "" "RCNAME;PREFIX" "")
-   add_resource_dir(${SUBPATH} RCNAME ${ICON_ARG_RCNAME} PREFIX ${ICON_ARG_PREFIX} FILTERS "*.svg")
 
+   if(NOT ICON_ARG_RCNAME)
+      set(ICON_ARG_RCNAME "${PROJECT_NAME}_${SUBPATH}")
+   endif()
+
+   if(NOT ICON_ARG_PREFIX)
+      set(ICON_ARG_PREFIX "/")
+   endif()
+
+   add_resource_dir(${SUBPATH} RCNAME ${ICON_ARG_RCNAME} PREFIX ${ICON_ARG_PREFIX} FILTERS "*.svg")
 endfunction()
 
 # qml module

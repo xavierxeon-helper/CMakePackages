@@ -26,6 +26,7 @@ namespace XX
 
       static QJsonObject readApiKeys(const QString& appName, bool verbose = false);
       static QStringList compileResourceNames(const QStringList& ignoreList = {":/qt-project.org"});
+      static void printAllResourceNames(const QStringList& ignoreList = {":/qt-project.org"});
 
       static void openVSCode(const QString& path);
       static void openVSCode(QStringList pathList);
