@@ -7,7 +7,7 @@
 // clang-format off
 EM_JS(
    void,
-   createFileSystem,
+   initIndexedDBFileSystem,
    (const char* str),
    {
       let path = UTF8ToString(str);
@@ -87,7 +87,7 @@ void XX::FileTools::writeJson(const QJsonObject& data, const QString& filePath, 
 void XX::FileTools::initFileSystem(const QString& basePath)
 {
 #ifdef Q_OS_WASM
-   createFileSystem(basePath.toUtf8().constData());
+   initIndexedDBFileSystem(basePath.toUtf8().constData());
 #endif // Q_OS_WASM
 }
 
