@@ -15,9 +15,12 @@ EM_JS(
       FS.mkdir(path);
       FS.mount(IDBFS, {autoPersist: true }, path);
 
-      FS.syncfs(true, function(err){
-                         // Error
-                      });
+      function syncCallback(error)
+      {
+         console.log("SYNC", error);
+      }
+
+      FS.syncfs(true, syncCallback);
    }
 );
 // clang-format on
@@ -84,10 +87,19 @@ void XX::FileTools::writeJson(const QJsonObject& data, const QString& filePath, 
    file.close();
 }
 
-void XX::FileTools::initFileSystem(const QString& basePath)
+void XX::FileTools::initFileSystem(bool printContent, const QString& basePath)
 {
 #ifdef Q_OS_WASM
    initIndexedDBFileSystem(basePath.toUtf8().constData());
+   if (!printContent)
+      return;
+
+   QDirIterator it(basePath, QDirIterator::Subdirectories);
+   while (it.hasNext())
+   {
+      const QString name = it.next();
+      qDebug() << "INDEX DB" << name;
+   }
 #endif // Q_OS_WASM
 }
 
