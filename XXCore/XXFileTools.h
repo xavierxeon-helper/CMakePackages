@@ -19,7 +19,6 @@ namespace XX
       static void writeJson(const QJsonObject& data, const QString& filePath, bool verbose = false);
 
       // for WASM
-      static void initFileSystem(bool printContent = false, const QString& basePath = "/" + QCoreApplication::applicationName());
 
       static QString compileDropboxPath(const QString& appName = QCoreApplication::applicationName());
       static QString compileNextCloudPath(const QString& appName = QCoreApplication::applicationName());

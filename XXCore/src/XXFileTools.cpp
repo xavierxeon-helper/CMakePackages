@@ -1,32 +1,6 @@
 #include "XXFileTools.h"
 
-#ifdef Q_OS_WASM
-#include <emscripten.h>
-#include <emscripten/bind.h>
-
-// clang-format off
-EM_JS(
-   void,
-   initIndexedDBFileSystem,
-   (const char* str),
-   {
-      let path = UTF8ToString(str);
-
-      FS.mkdir(path);
-      FS.mount(IDBFS, {autoPersist: true }, path);
-
-      function syncCallback(error)
-      {
-         console.log("SYNC", error);
-      }
-
-      FS.syncfs(true, syncCallback);
-   }
-);
-// clang-format on
-
-#endif // Q_OS_WASM
-
+#include <QCoreApplication>
 #include <QDir>
 #include <QDirIterator>
 #include <QJsonDocument>
@@ -85,22 +59,6 @@ void XX::FileTools::writeJson(const QJsonObject& data, const QString& filePath, 
    QJsonDocument doc(data);
    file.write(doc.toJson(QJsonDocument::Indented));
    file.close();
-}
-
-void XX::FileTools::initFileSystem(bool printContent, const QString& basePath)
-{
-#ifdef Q_OS_WASM
-   initIndexedDBFileSystem(basePath.toUtf8().constData());
-   if (!printContent)
-      return;
-
-   QDirIterator it(basePath, QDirIterator::Subdirectories);
-   while (it.hasNext())
-   {
-      const QString name = it.next();
-      qDebug() << "INDEX DB" << name;
-   }
-#endif // Q_OS_WASM
 }
 
 QString XX::FileTools::compileDropboxPath(const QString& appName)
