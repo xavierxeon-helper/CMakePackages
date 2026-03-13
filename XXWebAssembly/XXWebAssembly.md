@@ -1,2 +1,2 @@
-@brief XXWebAssembly 
+@brief WebAssembly specific components 
 

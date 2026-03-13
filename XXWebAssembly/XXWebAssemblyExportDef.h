@@ -2,7 +2,7 @@
 #define XXWebAssemblyExportDefH
 
 /*!
-@defgroup XXWebAssembly XXWebAssembly component
+@defgroup XXWebAssembly WebAssembly
 @includedoc{doc} XXWebAssembly/XXWebAssembly.md
 */
 
@@ -19,4 +19,3 @@
 // clang-format on
 
 #endif // NOT XXWebAssemblyExportDefH
-
