@@ -2,7 +2,7 @@
 #define XXNetworkOAuthExportDefH
 
 /*!
-@defgroup XXNetworkOAuth XXNetworkOAuth component
+@defgroup XXNetworkOAuth Network OAuth
 @includedoc{doc} XXNetworkOAuth/XXNetworkOAuth.md
 */
 
@@ -19,4 +19,3 @@
 // clang-format on
 
 #endif // NOT XXNetworkOAuthExportDefH
-
