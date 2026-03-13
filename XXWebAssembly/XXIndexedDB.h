@@ -7,7 +7,8 @@
 
 namespace XX
 {
-   //! @brief allows to use the IndexedDB API in WebAssembly
+   //! @brief allows to use the IndexedDB as file system
+   //! @details all paths must be relative to the base path, as set in initFileSystem()
    //! @ingroup XXWebAssembly
 
    class XXWEBASSEMBLY_DECLSPEC IndexedDB
