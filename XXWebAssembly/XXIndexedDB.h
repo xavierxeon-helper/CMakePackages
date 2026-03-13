@@ -7,6 +7,9 @@
 
 namespace XX
 {
+   //! @brief allows to use the IndexedDB API in WebAssembly
+   //! @ingroup XXWebAssembly
+
    class XXWEBASSEMBLY_DECLSPEC IndexedDB
    {
    public:
