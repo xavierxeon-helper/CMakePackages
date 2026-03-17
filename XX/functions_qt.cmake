@@ -1,4 +1,4 @@
-# seet QT_ARCH
+# set QT_ARCH
 function(set_qt_arch)
 
    find_package(Qt6 REQUIRED COMPONENTS Core)

@@ -3,7 +3,7 @@ project(XX LANGUAGES CXX)
 
 set(CMAKE_SUPPRESS_DEVELOPER_WARNINGS TRUE)
 
-find_package(Qt6 REQUIRED COMPONENTS Core)
+find_package(Qt6 REQUIRED COMPONENTS)
 include(XX/functions_qt.cmake)
 set_qt_arch()
 
