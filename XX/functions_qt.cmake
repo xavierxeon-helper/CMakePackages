@@ -1,10 +1,10 @@
 # set QT_ARCH
 function(set_qt_arch)
 
-   find_package(Qt6 REQUIRED COMPONENTS Core)
-   get_target_property(QMAKE_EXE Qt6::qmake IMPORTED_LOCATION)
-   get_filename_component(QT_BIN_DIR "${QMAKE_EXE}" DIRECTORY)
-   get_filename_component(QT_ROOT_DIR "${QT_BIN_DIR}/.." ABSOLUTE)
+   find_package(Qt6 REQUIRED COMPONENTS Core)   
+   get_target_property(QT_CORE_LIB Qt6::Core IMPORTED_LOCATION)
+   get_filename_component(QT_LIB_DIR "${QT_CORE_LIB}" DIRECTORY)
+   get_filename_component(QT_ROOT_DIR "${QT_LIB_DIR}/.." ABSOLUTE)
    get_filename_component(QT_ARCH "${QT_ROOT_DIR}" NAME)
 
    set(QT_ARCH ${QT_ARCH} PARENT_SCOPE)
