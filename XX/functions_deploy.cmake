@@ -9,15 +9,15 @@ function(run_xx_deploy)
 
    if(APPLE)
       file(GLOB XX_FILES
-         ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../lib/release/*.dylib
+         ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../lib/${QT_ARCH}/release/*.dylib
       )
    elseif(WIN32)
       file(GLOB XX_FILES
-         ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../lib/release/*.dll
+         ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../lib/${QT_ARCH}/release/*.dll
       )
    elseif(UNIX)
       file(GLOB XX_FILES
-         ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../lib/release/*.so
+         ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../lib/${QT_ARCH}/release/*.so
       )
    else()
       message(FATAL_ERROR "Unsupported platform for xx deployment")

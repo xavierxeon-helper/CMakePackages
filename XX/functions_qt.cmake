@@ -1,3 +1,16 @@
+# seet QT_ARCH
+function(set_qt_arch)
+
+   find_package(Qt6 REQUIRED COMPONENTS Core)
+   get_target_property(QMAKE_EXE Qt6::qmake IMPORTED_LOCATION)
+   get_filename_component(QT_BIN_DIR "${QMAKE_EXE}" DIRECTORY)
+   get_filename_component(QT_ROOT_DIR "${QT_BIN_DIR}/.." ABSOLUTE)
+   get_filename_component(QT_ARCH "${QT_ROOT_DIR}" NAME)
+
+   set(QT_ARCH ${QT_ARCH} PARENT_SCOPE)
+
+endfunction()
+
 # all resource files
 function(add_resource_dir SUBPATH)
 
