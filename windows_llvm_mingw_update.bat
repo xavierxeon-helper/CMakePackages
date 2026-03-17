@@ -6,14 +6,14 @@ set PATH=C:\dev\Qt\Tools\llvm-mingw1706_64\bin;%QT_DIR%\llvm-mingw_64\bin;C:\dev
 
 set THIS_DIR=%~dp0
 
-mkdir %THIS_DIR%build\cmd_line_release
-cd %THIS_DIR%build\cmd_line_release
+mkdir %THIS_DIR%build\win_llvm_release
+cd %THIS_DIR%build\win_llvm_release
 cmake %THIS_DIR%  -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles"
 cmake --build . --parallel --config Release
 if %errorlevel% NEQ 0 goto :FAIL
 
-mkdir %THIS_DIR%build\cmd_line_debug
-cd %THIS_DIR%build\cmd_line_debug
+mkdir %THIS_DIR%build\win_llvm_debug
+cd %THIS_DIR%build\win_llvm_debug
 cmake %THIS_DIR%  -DCMAKE_BUILD_TYPE=Debug -G "MinGW Makefiles"
 cmake --build . --parallel --config Debug
 if %errorlevel% EQU 0 goto :END
