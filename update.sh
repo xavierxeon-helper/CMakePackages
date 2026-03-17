@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ -f /proc/version && $(grep -i Microsoft /proc/version) ]]
+if [[ -f /proc/version && $(grep -i Microsoft /proc/version) && $1 != "--wsl" ]]
 then
    cmd.exe /c "windows_msvc_update.bat"
    exit 0
@@ -18,14 +18,14 @@ fi
 
 HERE=$(dirname "$(readlink -f "$0")")
 
-mkdir -p $HERE/build/cmd_line_debug
-cd $HERE/build/cmd_line_debug
+mkdir -p $HERE/build/unix_debug
+cd $HERE/build/unix_debug
 cmake $HERE -DCMAKE_BUILD_TYPE=Debug
 
 cmake --build . $PARALLEL_BUILD --config Debug
 
-mkdir -p $HERE/build/cmd_line_release
-cd $HERE/build/cmd_line_release
+mkdir -p $HERE/build/unix_release
+cd $HERE/build/unix_release
 cmake $HERE -DCMAKE_BUILD_TYPE=Release
 
 cmake --build . $PARALLEL_BUILD --config Release
