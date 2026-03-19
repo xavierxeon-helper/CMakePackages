@@ -2,9 +2,8 @@
 
 #include <QCoreApplication>
 #include <QDir>
+#include <QFileInfo>
 #include <QStandardPaths>
-
-#include <QSettings>
 
 #include <XXFileTools.h>
 
@@ -32,6 +31,12 @@ XX::Settings::~Settings()
    instanceCount--;
    if (0 == instanceCount && modified)
    {
+      QFileInfo info(fileName);
+      if (!info.exists())
+      {
+         const QString path = info.dir().absolutePath();
+         QDir().mkpath(path);
+      }
       FileTools::writeJson(data, fileName);
       modified = false;
    }
