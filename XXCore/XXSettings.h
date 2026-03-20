@@ -19,6 +19,7 @@ namespace XX
 
    public:
       static QString compileFileName();
+      static void printSettingsLocation();
 
       void setValue(const QString& key, const QVariant& value);
       QVariant value(const QString& key, const QVariant& defaultValue = QVariant()) const;

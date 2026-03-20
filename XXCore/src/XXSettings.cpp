@@ -63,6 +63,12 @@ QString XX::Settings::compileFileName()
    return fileName;
 }
 
+void XX::Settings::printSettingsLocation()
+{
+   const QString fileName = QDir::toNativeSeparators(compileFileName());
+   qInfo() << "SETTINGS @" << qPrintable(fileName);
+}
+
 void XX::Settings::setValue(const QString& key, const QVariant& value)
 {
    const PathKey pathKey = compilePathKey(key);

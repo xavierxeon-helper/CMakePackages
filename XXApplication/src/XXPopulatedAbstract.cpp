@@ -20,14 +20,6 @@ XX::Populated::Abstract::~Abstract()
 {
 }
 
-void XX::Populated::Abstract::printSettingsLocation()
-{
-   XX::Settings settings;
-   const QString fileName = QDir::toNativeSeparators(settings.compileFileName());
-
-   qInfo() << "SETTINGS @" << qPrintable(fileName);
-}
-
 void XX::Populated::Abstract::setActionIcon(QObject* parent, QString objectName, QIcon icon)
 {
    QAction* action = parent->findChild<QAction*>(objectName, Qt::FindChildrenRecursively);
