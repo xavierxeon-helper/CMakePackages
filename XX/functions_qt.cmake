@@ -1,6 +1,10 @@
 # set QT_ARCH
 function(set_qt_arch)
 
+   if(QT_ARCH)
+      return()
+   endif()
+
    find_package(Qt6 REQUIRED COMPONENTS Core)   
    get_target_property(QT_CORE_LIB Qt6::Core IMPORTED_LOCATION)
    get_filename_component(QT_LIB_DIR "${QT_CORE_LIB}" DIRECTORY)
