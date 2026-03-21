@@ -44,6 +44,13 @@ XX::Settings::~Settings()
 
 QString XX::Settings::compileFileName()
 {
+   if (QCoreApplication::applicationName().isEmpty() ||
+       QCoreApplication::organizationName().isEmpty() ||
+       QCoreApplication::organizationDomain().isEmpty())
+   {
+      qFatal() << "APPLICATION NAME, ORGANIZATION NAME OR DOMAIN NOT SET";
+   }
+
 #if defined(Q_OS_WASM)
    QString fileName = "/" + QCoreApplication::applicationName() + "/Settings.json";
 #elif defined(Q_OS_MAC)
