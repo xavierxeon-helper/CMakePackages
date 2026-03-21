@@ -3,7 +3,7 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QFileInfo>
-#include <QStandardPaths>
+#include <QSettings>
 
 #include <XXFileTools.h>
 
@@ -51,20 +51,16 @@ QString XX::Settings::compileFileName()
       qFatal() << "APPLICATION NAME, ORGANIZATION NAME OR DOMAIN NOT SET";
    }
 
+#ifdef Q_OS_WINDOWS
+   QSettings::setDefaultFormat(QSettings::IniFormat);
+#endif
+
 #if defined(Q_OS_WASM)
    QString fileName = "/" + QCoreApplication::applicationName() + "/Settings.json";
-#elif defined(Q_OS_MAC)
-   QString fileName = QDir::homePath() + "/.config";
-   fileName += "/" + QCoreApplication::organizationDomain();
-   fileName += "/" + QCoreApplication::applicationName() + ".json";
-#elif defined(Q_OS_WINDOWS)
-   QString fileName = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation);
-   fileName += "/" + QCoreApplication::organizationName();
-   fileName += "/" + QCoreApplication::applicationName() + ".json";
 #else
-   QString fileName = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
-   fileName += "/" + QCoreApplication::organizationName();
-   fileName += "/" + QCoreApplication::applicationName() + ".json";
+   QSettings dummy;
+   QFileInfo info(dummy.fileName());
+   QString fileName = dummy.fileName().replace(info.suffix(), "json");
 #endif
 
    return fileName;
