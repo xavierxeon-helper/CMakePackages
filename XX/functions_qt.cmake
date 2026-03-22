@@ -18,7 +18,11 @@ endfunction()
 # all resource files
 function(add_resource_dir SUBPATH)
 
-   cmake_parse_arguments(PARSE_ARGV 1 RESOURCE_ARG "" "RCNAME;PREFIX;" "FILTERS")
+   cmake_parse_arguments(PARSE_ARGV 1 RESOURCE_ARG "RECURSIVE" "RCNAME;PREFIX;" "FILTERS")
+
+   if(NOT RESOURCE_ARG_RECURSIVE)
+      set(RESOURCE_ARG_RECURSIVE FALSE)
+   endif()
 
    if(NOT RESOURCE_ARG_RCNAME)
       set(RESOURCE_ARG_RCNAME "${PROJECT_NAME}_${SUBPATH}")
@@ -34,10 +38,17 @@ function(add_resource_dir SUBPATH)
 
    list(TRANSFORM RESOURCE_ARG_FILTERS PREPEND "${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/")
 
-   file(GLOB RESOURCE_FILES
-      RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/
-      ${RESOURCE_ARG_FILTERS}
-   )
+   if(RESOURCE_ARG_RECURSIVE)
+      file(GLOB_RECURSE RESOURCE_FILES
+         RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/
+         ${RESOURCE_ARG_FILTERS}
+      )
+   else()
+      file(GLOB RESOURCE_FILES
+         RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/
+         ${RESOURCE_ARG_FILTERS}
+      )
+   endif()
 
    qt_add_resources(${PROJECT_NAME} ${RESOURCE_ARG_RCNAME}
       PREFIX ${RESOURCE_ARG_PREFIX}
