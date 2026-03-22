@@ -33,6 +33,7 @@ namespace XX
       void setEnd(const double& value);
 
       double value(const double& x) const override;
+
       void load(const QJsonObject& data) override;
       QJsonObject save() const override;
 
