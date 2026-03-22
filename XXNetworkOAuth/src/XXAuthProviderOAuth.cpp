@@ -157,7 +157,11 @@ bool XX::AuthProvider::OAuth::authorizeUser()
 
    oauthFlow->setReplyHandler(&redirectHandler);
    if (!redirectHandler.isListening())
+   {
+      qWarning() << "Failed to start local HTTP server for OAuth redirection at port 1234";
+      qWarning() << "Please check if the port is already in use (LM Studio?)";
       return false;
+   }
 
    oauthFlow->grant();
    loop.exec();
