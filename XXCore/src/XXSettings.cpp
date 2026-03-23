@@ -51,8 +51,9 @@ QString XX::Settings::compileFileName()
       qFatal() << "APPLICATION NAME, ORGANIZATION NAME OR DOMAIN NOT SET";
    }
 
+   QString fileName;
 #if defined(Q_OS_WASM)
-   QString fileName = "/" + QCoreApplication::applicationName() + "/Settings.json";
+   fileName = "/" + QCoreApplication::applicationName() + "/Settings.json";
    return fileName;
 #elif defined(Q_OS_WINDOWS)
    QSettings::setDefaultFormat(QSettings::IniFormat);
@@ -60,7 +61,7 @@ QString XX::Settings::compileFileName()
 
    QSettings dummy;
    QFileInfo info(dummy.fileName());
-   QString fileName = dummy.fileName().replace(info.suffix(), "json");
+   fileName = dummy.fileName().replace(info.suffix(), "json");
 
    return fileName;
 }
