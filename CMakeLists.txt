@@ -8,8 +8,9 @@ include(XX/functions_qt.cmake)
 set_qt_arch()
 
 set(VERSION_FILE ${CMAKE_CURRENT_LIST_DIR}/lib/${QT_ARCH}/versions.txt)
-file(WRITE ${VERSION_FILE} "CMake ${CMAKE_VERSION}\n")
-file(APPEND ${VERSION_FILE} "Qt6 ${Qt6_VERSION}\n")
+file(WRITE ${VERSION_FILE} "CMake: ${CMAKE_VERSION}\n")
+file(APPEND ${VERSION_FILE} "C++ Compiler: ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}\n")
+file(APPEND ${VERSION_FILE} "Qt6: ${Qt6_VERSION}\n")
 
 set(MODULE_FILE ${CMAKE_CURRENT_LIST_DIR}/lib/${QT_ARCH}/modules.txt)
 string(TIMESTAMP MODULE_TIMESTAMP "%Y-%m-%d %H:%M:%S")
