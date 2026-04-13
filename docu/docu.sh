@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DOXYGEN_VERSION=$(doxygen --version)
-TARGET_VERSION="1.16.0"
+TARGET_VERSION="1.15.0"
 
 VERSION_TEST=$(cat <<EOF
 import sys
