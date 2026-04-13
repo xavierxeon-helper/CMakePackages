@@ -16,7 +16,7 @@ else
    PARALLEL_BUILD=--parallel
 fi
 
-HERE=$(dirname "$(readlink -f "$0")")
+HERE=$(dirname "$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )")
 
 mkdir -p $HERE/build/unix_debug
 cd $HERE/build/unix_debug

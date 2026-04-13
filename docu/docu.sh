@@ -28,7 +28,7 @@ then
    exit 1
 fi
 
-export DOCU_ROOT=$(dirname "$(readlink -f "$0")")/..
+export DOCU_ROOT=$(dirname "$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )")/..
 
 TMP_DIR=~/tmp/
 if [ ! -d $TMP_DIR ]
