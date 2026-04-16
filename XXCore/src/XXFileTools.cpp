@@ -94,6 +94,7 @@ QString XX::FileTools::compileDropboxPath(const QString& appName)
 
 QString XX::FileTools::compileNextCloudPath(const QString& appName)
 {
+   // see https://docs.nextcloud.com/server/stable/admin_manual/desktop/configfile.html
 #if defined(Q_OS_WIN32)
    QString appPath = QStandardPaths ::writableLocation(QStandardPaths::AppDataLocation);
    appPath = QDir::fromNativeSeparators(appPath);
