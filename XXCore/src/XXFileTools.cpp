@@ -100,7 +100,8 @@ QString XX::FileTools::compileNextCloudPath(const QString& appName)
    appPath.replace(QCoreApplication::organizationName() + "/" + QCoreApplication::applicationName(), "");
    const QString nextCloudConfPath = appPath + "/Nextcloud/nextcloud.cfg";
 #elif defined(Q_OS_MACOS)
-   const QString nextCloudConfPath = QDir::homePath() + "/Library/Preferences/Nextcloud/nextcloud.cfg";
+   //const QString nextCloudConfPath = QDir::homePath() + "/Library/Preferences/Nextcloud/nextcloud.cfg";
+   const QString nextCloudConfPath = QDir::homePath() + "/Library/Containers/com.nextcloud.desktopclient/Data/Library/Preferences/Nextcloud/nextcloud.cfg";
 #else // linux
    const QString nextCloudConfPath = QDir::homePath() + "/.config/Nextcloud/nextcloud.cfg";
 #endif
