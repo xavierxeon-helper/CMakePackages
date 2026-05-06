@@ -20,13 +20,13 @@ set THIS_DIR=%~dp0
 
 mkdir %THIS_DIR%build\win_release
 cd %THIS_DIR%build\win_release
-cmake %THIS_DIR%  -DCMAKE_BUILD_TYPE=Release
+cmake %THIS_DIR%  -G Ninja -DCMAKE_BUILD_TYPE=Release
 cmake --build . --parallel --config Release
 if %errorlevel% NEQ 0 goto :FAIL
 
 mkdir %THIS_DIR%build\win_debug
 cd %THIS_DIR%build\win_debug
-cmake %THIS_DIR%  -DCMAKE_BUILD_TYPE=Debug
+cmake %THIS_DIR%  -G Ninja -DCMAKE_BUILD_TYPE=Debug
 cmake --build . --parallel --config Debug
 if %errorlevel% EQU 0 goto :END
 
@@ -35,4 +35,4 @@ echo An error occurred when building
 
 :END
 cd %THIS_DIR%
-pause
+rem pause
