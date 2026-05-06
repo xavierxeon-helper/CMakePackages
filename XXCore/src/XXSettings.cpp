@@ -72,6 +72,17 @@ void XX::Settings::printSettingsLocation()
    qInfo() << "SETTINGS @" << qPrintable(fileName);
 }
 
+bool XX::Settings::hasEntry(const QString& key) const
+{
+   const PathKey pathKey = compilePathKey(key);
+   const QJsonValue value = getPathValue(pathKey);
+
+   if (value.isUndefined())
+      return false;
+
+   return true;
+}
+
 void XX::Settings::setValue(const QString& key, const QVariant& value)
 {
    const PathKey pathKey = compilePathKey(key);
