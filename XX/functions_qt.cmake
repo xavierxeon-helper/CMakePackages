@@ -147,4 +147,29 @@ function(add_qml_module_dir SUBPATH)
 
 endfunction()
 
+function (add_camera_permissions)
+   if(IOS)
+      status(FATAL_ERROR "Camera permissions on iOS no yet supported, see https://doc.qt.io/qt-6/permissions.html#camera-permissions")
+   elseif(APPLE)
+      set(CUSTOM_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/macos/Info.plist")
+      if(NOT EXISTS "${CUSTOM_INFO_PLIST}")
+         set(SOURCE_INFO_PLIST "${PROJECT_BINARY_DIR}/${PROJECT_NAME}.app/Contents/Info.plist")
+         message(STATUS "SOURCE_INFO_PLIST ${SOURCE_INFO_PLIST}")
+
+         add_custom_command(TARGET ${PROJECT_NAME}
+            POST_BUILD
+            COMMENT "copy info.plist ..."
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SOURCE_INFO_PLIST} ${CUSTOM_INFO_PLIST}
+            COMMAND ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/scripts/fix_plist ${CUSTOM_INFO_PLIST} "NSCameraUsageDescription" "Camera permission is required"
+         )
+
+      else()
+         target_sources(${PROJECT_NAME} PRIVATE
+            ${CUSTOM_INFO_PLIST}
+         )
+         set_target_properties(${PROJECT_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CUSTOM_INFO_PLIST}")
+      endif()
+   endif()
+endfunction()
+
 

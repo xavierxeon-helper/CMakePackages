@@ -102,7 +102,6 @@ function(set_application_icon PATH_TO_ICON)
       set_source_files_properties(${APP_ICON} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
       message(STATUS "APP_ICON: ${APP_ICON} ")
-      message(STATUS "MACOSX_BUNDLE_ICON_FILE: ${MACOSX_BUNDLE_ICON_FILE} ")
       target_sources(${PROJECT_NAME} PRIVATE ${APP_ICON})
    elseif(WIN32)
       set_target_properties(${PROJECT_NAME} PROPERTIES WIN32_EXECUTABLE TRUE)

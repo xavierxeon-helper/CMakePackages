@@ -26,12 +26,11 @@ def main():
    logger = Logger()
 
    if len(sys.argv) != 4:
-      logger.write("Usage: fix_plist <bundlePath> <key> <text>")
+      logger.write("Usage: fix_plist <Info.plist> <key> <text>")
       logger.write(f"  got {len(sys.argv)} arguments")
       return
 
-   bundlePath = sys.argv[1]
-   plistFile = os.path.join(bundlePath, "Contents", "Info.plist")
+   plistFile = sys.argv[1]
    if not os.path.exists(plistFile):
       logger.write(f"plist file does not exist: {plistFile}")
       return
