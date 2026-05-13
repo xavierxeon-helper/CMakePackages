@@ -148,8 +148,13 @@ function(add_qml_module_dir SUBPATH)
 endfunction()
 
 function (add_camera_permissions)
+   find_package(Python COMPONENTS Interpreter)
+   if (NOT PYTHON_FOUND)
+      message(FATAL_ERROR "Python not found, required for adding camera permissions")
+   endif()
+   
    if(IOS)
-      status(FATAL_ERROR "Camera permissions on iOS no yet supported, see https://doc.qt.io/qt-6/permissions.html#camera-permissions")
+      status(FATAL_ERROR "Camera permissions on iOS no yet implemented, see https://doc.qt.io/qt-6/permissions.html#camera-permissions")
    elseif(APPLE)
       set(CUSTOM_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/macos/Info.plist")
       if(NOT EXISTS "${CUSTOM_INFO_PLIST}")
@@ -160,7 +165,7 @@ function (add_camera_permissions)
             POST_BUILD
             COMMENT "copy info.plist ..."
             COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SOURCE_INFO_PLIST} ${CUSTOM_INFO_PLIST}
-            COMMAND ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/scripts/fix_plist ${CUSTOM_INFO_PLIST} "NSCameraUsageDescription" "Camera permission is required"
+            COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/scripts/fix_plist.py ${CUSTOM_INFO_PLIST} "NSCameraUsageDescription" "Camera permission is required"
          )
 
       else()

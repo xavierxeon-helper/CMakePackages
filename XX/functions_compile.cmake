@@ -81,6 +81,11 @@ endfunction()
 function(add_all_subdirs_files SUB_DIR_PATH) # args = list of skip directories
    include_directories("${SUB_DIR_PATH}")
    file(GLOB SUB_DIRECTORIES LIST_DIRECTORIES true "${SUB_DIR_PATH}/*")
+
+   list(REMOVE_ITEM SUB_DIRECTORIES ${SUB_DIR_PATH}/build)
+   list(REMOVE_ITEM SUB_DIRECTORIES ${SUB_DIR_PATH}/.git)
+   list(REMOVE_ITEM SUB_DIRECTORIES ${SUB_DIR_PATH}/.qtcreator)
+
    add_sub_dirs_files(DIRS ${SUB_DIRECTORIES} SKIP ${ARGN})
 endfunction()
 
