@@ -9,6 +9,9 @@
 
 namespace Multimedia
 {
+   //! @brief provide access to the system cameras
+   //! @ingroup XXMultimedia
+
    class XXMULTIMEDIA_DECLSPEC Camera : public QMediaCaptureSession
    {
       Q_OBJECT

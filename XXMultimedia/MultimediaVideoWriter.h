@@ -13,6 +13,9 @@ namespace Multimedia
 {
    class Camera;
 
+   //! @brief write video files from a camera
+   //! @ingroup XXMultimedia
+
    class XXMULTIMEDIA_DECLSPEC VideoWriter : public QMediaCaptureSession
    {
       Q_OBJECT

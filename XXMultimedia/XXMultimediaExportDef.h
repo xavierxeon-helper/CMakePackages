@@ -2,7 +2,7 @@
 #define XXMultimediaExportDefH
 
 /*!
-@defgroup XXMultimedia XXMultimedia component
+@defgroup XXMultimedia XXMultimedia
 @includedoc{doc} XXMultimedia/XXMultimedia.md
 */
 
@@ -19,4 +19,3 @@
 // clang-format on
 
 #endif // NOT XXMultimediaExportDefH
-
