@@ -128,14 +128,19 @@ void Multimedia::VideoWriter::imageAvailable(int id, const QVideoFrame& frame)
    Q_UNUSED(id)
 
    frameCount++;
+
    const uint64_t videoSizeInBytes = frameCount * frameSizeInBytes;
    const double percentage = videoSizeInBytes * 100.0 / (double)maxVideoSizeInBytes;
    emit progress(static_cast<uint8_t>(percentage), videoSizeInBytes);
 
-   QVideoFrame localFrame(frame);
-   const qint64 startTime = 1000 * 1000 * frameCount / recorder->videoFrameRate();
+   const qint64 frameTime = 1000 * 1000 / recorder->videoFrameRate();
+   const qint64 startTime = frameCount * frameTime;
+   const qint64 endTime = (frameCount + 1) * frameTime;
    //qDebug() << startTime << frame.startTime();
+
+   QVideoFrame localFrame(frame);
    localFrame.setStartTime(startTime);
+   localFrame.setEndTime(endTime);
    videoInput->sendVideoFrame(localFrame);
 
    if (maxVideoSizeInBytes <= videoSizeInBytes)
