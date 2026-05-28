@@ -36,6 +36,9 @@ namespace XX
       static void fixSize(QWindow* window, const DeviceIdentifier& deviceId);
 
       static void forceDisplayMode(bool light = true);
+
+      static void restorePostions(QWindow* window);
+      static void savePostions(QWindow* window);
    };
 } // namespace XX
 

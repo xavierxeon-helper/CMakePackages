@@ -3,6 +3,8 @@
 #include <QGuiApplication>
 #include <QStyleHints>
 
+#include <XXSettings.h>
+
 QSize XX::DeviceTools::getSize(const DeviceIdentifier& deviceId)
 {
    switch (deviceId)
@@ -47,4 +49,19 @@ void XX::DeviceTools::forceDisplayMode(bool light)
 {
    const Qt::ColorScheme scheme = light ? Qt::ColorScheme::Light : Qt::ColorScheme::Dark;
    QGuiApplication::styleHints()->setColorScheme(scheme);
+}
+
+void XX::DeviceTools::restorePostions(QWindow* window)
+{
+   XX::Settings settings;
+   const int x = settings.value("Window/x", window->x()).toInt();
+   const int y = settings.value("Window/y", window->y()).toInt();
+   window->setPosition(x, y);
+}
+
+void XX::DeviceTools::savePostions(QWindow* window)
+{
+   XX::Settings settings;
+   settings.setValue("Window/x", window->x());
+   settings.setValue("Window/y", window->y());
 }
