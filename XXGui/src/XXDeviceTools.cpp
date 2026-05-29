@@ -51,17 +51,17 @@ void XX::DeviceTools::forceDisplayMode(bool light)
    QGuiApplication::styleHints()->setColorScheme(scheme);
 }
 
-void XX::DeviceTools::restorePostions(QWindow* window)
+void XX::DeviceTools::restorePostions(QWindow* window, const QString& settingsGroup)
 {
    XX::Settings settings;
-   const int x = settings.value("Window/x", window->x()).toInt();
-   const int y = settings.value("Window/y", window->y()).toInt();
+   const int x = settings.value(settingsGroup + "/x", window->x()).toInt();
+   const int y = settings.value(settingsGroup + "/y", window->y()).toInt();
    window->setPosition(x, y);
 }
 
-void XX::DeviceTools::savePostions(QWindow* window)
+void XX::DeviceTools::savePostions(QWindow* window, const QString& settingsGroup)
 {
    XX::Settings settings;
-   settings.setValue("Window/x", window->x());
-   settings.setValue("Window/y", window->y());
+   settings.setValue(settingsGroup + "/x", window->x());
+   settings.setValue(settingsGroup + "/y", window->y());
 }

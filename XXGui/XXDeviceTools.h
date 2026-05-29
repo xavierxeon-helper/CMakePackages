@@ -37,8 +37,8 @@ namespace XX
 
       static void forceDisplayMode(bool light = true);
 
-      static void restorePostions(QWindow* window);
-      static void savePostions(QWindow* window);
+      static void restorePostions(QWindow* window, const QString& settingsGroup = "Window");
+      static void savePostions(QWindow* window, const QString& settingsGroup = "Window");
    };
 } // namespace XX
 
