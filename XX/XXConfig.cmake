@@ -3,6 +3,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/functions_deploy.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/functions_files.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/functions_git.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/functions_qt.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/functions_imgui.cmake)
 
 set(XX_SYSTEM_ID "${CMAKE_CXX_COMPILER_ID}_${CMAKE_SYSTEM_NAME}_${CMAKE_SYSTEM_PROCESSOR}")
 get_filename_component(XX_LIB_DIR "${CMAKE_CURRENT_LIST_DIR}/../lib/${XX_SYSTEM_ID}" ABSOLUTE)

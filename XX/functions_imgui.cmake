@@ -1,0 +1,7 @@
+function(use_hello_imgui)        
+    message(STATUS "Fetching hello_imgui")
+    include(FetchContent)
+    set(HELLOIMGUI_DOWNLOAD_FREETYPE_IF_NEEDED ON)
+    FetchContent_Declare(hello_imgui GIT_REPOSITORY https://github.com/pthom/hello_imgui.git GIT_TAG master EXCLUDE_FROM_ALL)
+    FetchContent_MakeAvailable(hello_imgui)
+endfunction()
