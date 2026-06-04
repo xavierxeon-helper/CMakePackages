@@ -5,6 +5,12 @@ set(CMAKE_SUPPRESS_DEVELOPER_WARNINGS TRUE)
 
 set(XX_SYSTEM_ID "${CMAKE_CXX_COMPILER_ID}_${CMAKE_SYSTEM_NAME}_${CMAKE_SYSTEM_PROCESSOR}")
 
+message(STATUS "#############################################################")
+message(STATUS "BUILD XX cmake package")
+message(STATUS " * built type: ${CMAKE_BUILD_TYPE}")
+message(STATUS " * system ID: ${XX_SYSTEM_ID}")
+message(STATUS "#############################################################")
+
 set(VERSION_FILE ${CMAKE_CURRENT_LIST_DIR}/lib/${XX_SYSTEM_ID}/versions.txt)
 file(WRITE ${VERSION_FILE} "CMake: ${CMAKE_VERSION}\n")
 file(APPEND ${VERSION_FILE} "C++ Compiler: ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}\n")
