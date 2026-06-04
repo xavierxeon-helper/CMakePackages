@@ -4,8 +4,8 @@ include(${CMAKE_CURRENT_LIST_DIR}/functions_files.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/functions_git.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/functions_qt.cmake)
 
-set_qt_arch()
-get_filename_component(XX_LIB_DIR "${CMAKE_CURRENT_LIST_DIR}/../lib/${QT_ARCH}" ABSOLUTE)
+set(XX_SYSTEM_ID "${CMAKE_CXX_COMPILER_ID}_${CMAKE_SYSTEM_NAME}_${CMAKE_SYSTEM_PROCESSOR}")
+get_filename_component(XX_LIB_DIR "${CMAKE_CURRENT_LIST_DIR}/../lib/${XX_SYSTEM_ID}" ABSOLUTE)
 
 option(XX_USE_AS_SUBDIRECTORY "Use XX as subdirectory" OFF)
 

@@ -1,8 +1,6 @@
-set_qt_arch()
-
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
-   link_directories(${CMAKE_CURRENT_LIST_DIR}/lib/${QT_ARCH}/release)
+   link_directories(${CMAKE_CURRENT_LIST_DIR}/lib/${XX_SYSTEM_ID}/release)
 else()
-   link_directories(${CMAKE_CURRENT_LIST_DIR}/lib/${QT_ARCH}/debug)
+   link_directories(${CMAKE_CURRENT_LIST_DIR}/lib/${XX_SYSTEM_ID}/debug)
 endif()
 
