@@ -28,7 +28,7 @@ then
    exit 1
 fi
 
-export DOCU_ROOT=$(dirname "$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )")/..
+export DOCU_ROOT=$(cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd)
 
 TMP_DIR=~/tmp/
 if [ ! -d $TMP_DIR ]
@@ -45,7 +45,7 @@ fi
 
 cd $DOCU_ROOT
 export XX_DOC_PATH=$TMP_DIR/xavierxeon.github.io/XX 
-doxygen docu/Doxyfile
+doxygen Doxyfile
 
 cd $TMP_DIR/xavierxeon.github.io
 git add *
