@@ -36,6 +36,12 @@ namespace XX
          Vector3 operator+(const Vector3& other) const;
          Vector3& operator+=(const Vector3& other);
 
+         Vector3 operator-(const Vector3& other) const;
+         Vector3& operator-=(const Vector3& other);
+
+         Vector3 operator*(const double& value) const;
+         Vector3& operator*=(const double& value);
+
          const double& operator[](const int index) const;
          double& operator[](const int index);
 

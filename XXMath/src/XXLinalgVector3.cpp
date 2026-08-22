@@ -53,6 +53,42 @@ XX::Linalg::Vector3& XX::Linalg::Vector3::operator+=(const Vector3& other)
    return *this;
 }
 
+XX::Linalg::Vector3 XX::Linalg::Vector3::operator-(const Vector3& other) const
+{
+   const double nx = x - other.x;
+   const double ny = y - other.y;
+   const double nz = z - other.z;
+
+   return Vector3(nx, ny, nz);
+}
+
+XX::Linalg::Vector3& XX::Linalg::Vector3::operator-=(const Vector3& other)
+{
+   x -= other.x;
+   y -= other.y;
+   z -= other.z;
+
+   return *this;
+}
+
+XX::Linalg::Vector3 XX::Linalg::Vector3::operator*(const double& value) const
+{
+   const double nx = x * value;
+   const double ny = y * value;
+   const double nz = z * value;
+
+   return Vector3(nx, ny, nz);
+}
+
+XX::Linalg::Vector3& XX::Linalg::Vector3::operator*=(const double& value)
+{
+   x *= value;
+   y *= value;
+   z *= value;
+
+   return *this;
+}
+
 const double& XX::Linalg::Vector3::operator[](const int index) const
 {
    return data[index];
