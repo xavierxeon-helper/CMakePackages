@@ -1,13 +1,15 @@
 #ifndef XXCubicCurveCalculatorAbstractH
 #define XXCubicCurveCalculatorAbstractH
 
+#include "XXMathExportDef.h"
+
 #include <XXLinalgVector3.h>
 
 namespace XX
 {
    namespace CubicCurve
    {
-      class CalculatorAbstract
+      class XXMATH_DECLSPEC CalculatorAbstract
       {
       };
 

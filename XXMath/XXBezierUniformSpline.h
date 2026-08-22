@@ -9,7 +9,7 @@ namespace XX
 {
    namespace Bezier
    {
-      class UniformSpline : public UniformParametricSpline<CubicCurveCalculatror>
+      class XXMATH_DECLSPEC UniformSpline : public UniformParametricSpline<CubicCurveCalculatror>
       {
       public:
          enum class Tangent

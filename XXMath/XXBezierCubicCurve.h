@@ -1,6 +1,7 @@
 #ifndef XXBezierCubicCurveH
 #define XXBezierCubicCurveH
 
+#include "XXMathExportDef.h"
 #include <XXBezier.h>
 #include <XXCubicCurveParametric.h>
 
@@ -10,7 +11,7 @@ namespace XX
 {
    namespace Bezier
    {
-      class CubicCurve : public ::XX::CubicCurve::Parametric<CubicCurveCalculatror>
+      class XXMATH_DECLSPEC CubicCurve : public ::XX::CubicCurve::Parametric<CubicCurveCalculatror>
       {
       public:
          CubicCurve();

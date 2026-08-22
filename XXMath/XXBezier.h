@@ -1,6 +1,8 @@
 #ifndef XXBezierH
 #define XXBezierH
 
+#include "XXMathExportDef.h"
+
 #include <XXCubicCurveCalculatorParametric.h>
 
 namespace XX
