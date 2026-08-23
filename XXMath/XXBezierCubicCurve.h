@@ -2,7 +2,7 @@
 #define XXBezierCubicCurveH
 
 #include "XXMathExportDef.h"
-#include <XXBezier.h>
+#include <XXBezierUniformSpline.h>
 #include <XXCubicCurveParametric.h>
 
 // see https://en.wikipedia.org/wiki/Bézier_curve
