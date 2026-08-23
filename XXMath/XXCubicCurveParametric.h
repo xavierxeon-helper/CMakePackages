@@ -7,7 +7,7 @@ namespace XX
 {
    namespace CubicCurve
    {
-      template <CubicCurve::CalculatorClass CubicCurveClass>
+      template <CubicCurve::CalculatorClass CalculatorClass>
       class Parametric
       {
       public:

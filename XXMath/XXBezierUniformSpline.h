@@ -3,13 +3,13 @@
 
 #include <XXBezier.h>
 #include <XXCubicCurveCalculatorParametric.h>
-#include <XXUniformParametricSpline.h>
+#include <XXCubicCurveUniformSpline.h>
 
 namespace XX
 {
    namespace Bezier
    {
-      class XXMATH_DECLSPEC UniformSpline : public UniformParametricSpline<CubicCurveCalculatror>
+      class XXMATH_DECLSPEC UniformSpline : public CubicCurve::UniformSpline<CubicCurveCalculatror>
       {
       public:
          enum class Tangent

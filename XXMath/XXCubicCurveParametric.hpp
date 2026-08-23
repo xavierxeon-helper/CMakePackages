@@ -3,8 +3,8 @@
 
 #include "XXCubicCurveParametric.h"
 
-template <XX::CubicCurve::CalculatorClass CubicCurveClass>
-XX::CubicCurve::Parametric<CubicCurveClass>::Parametric()
+template <XX::CubicCurve::CalculatorClass CalculatorClass>
+XX::CubicCurve::Parametric<CalculatorClass>::Parametric()
    : p0()
    , p1()
    , p2()
@@ -12,10 +12,10 @@ XX::CubicCurve::Parametric<CubicCurveClass>::Parametric()
 {
 }
 
-template <XX::CubicCurve::CalculatorClass CubicCurveClass>
-XX::Linalg::Vector3 XX::CubicCurve::Parametric<CubicCurveClass>::value(double parameter) const
+template <XX::CubicCurve::CalculatorClass CalculatorClass>
+XX::Linalg::Vector3 XX::CubicCurve::Parametric<CalculatorClass>::value(double parameter) const
 {
-   return CubicCurveClass::calculate(parameter, p0, p1, p2, p3);
+   return CalculatorClass::calculate(parameter, p0, p1, p2, p3);
 }
 
 #endif // NOT XXCubicCurveParametricHPP
