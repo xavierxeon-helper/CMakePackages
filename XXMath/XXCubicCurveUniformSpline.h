@@ -11,14 +11,16 @@ namespace XX
       class UniformSpline
       {
       public:
-         UniformSpline();
+         UniformSpline(const Linalg::Vector3& p0);
 
       public:
          virtual Linalg::Vector3 value(double parameter) const;
          int numberOfCures() const;
 
+         virtual void addCurve(const Linalg::Vector3& p1, const Linalg::Vector3& p2, const Linalg::Vector3& p3);
+
       protected:
-         //QList<CubicCurveType> curves;
+         QList<Linalg::Vector3> points;
       };
    } // namespace CubicCurve
 } // namespace XX

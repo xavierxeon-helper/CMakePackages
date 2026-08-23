@@ -1,5 +1,5 @@
-#ifndef XXBezierCubicCurveH
-#define XXBezierCubicCurveH
+#ifndef XXBezierCurveH
+#define XXBezierCurveH
 
 #include "XXMathExportDef.h"
 #include <XXBezierUniformSpline.h>
@@ -11,12 +11,11 @@ namespace XX
 {
    namespace Bezier
    {
-      class XXMATH_DECLSPEC CubicCurve : public ::XX::CubicCurve::Parametric<CubicCurveCalculatror>
+      class XXMATH_DECLSPEC Curve : public ::XX::CubicCurve::Parametric<CurveCalculatror>
       {
       public:
-         CubicCurve();
-         CubicCurve(const Linalg::Vector3& startKnot, const Linalg::Vector3& endKnot);
-         CubicCurve(const Linalg::Vector3& startKnot, const Linalg::Vector3& startControl, const Linalg::Vector3& endControl, const Linalg::Vector3& endKnot);
+         Curve(const Linalg::Vector3& startKnot, const Linalg::Vector3& endKnot);
+         Curve(const Linalg::Vector3& startKnot, const Linalg::Vector3& startControl, const Linalg::Vector3& endControl, const Linalg::Vector3& endKnot);
 
       public:
          const Linalg::Vector3& startKnot() const;
@@ -32,4 +31,4 @@ namespace XX
    } // namespace Bezier
 } // namespace XX
 
-#endif // NOT XXBezierCubicCurveH
+#endif // NOT XXBezierCurveH
