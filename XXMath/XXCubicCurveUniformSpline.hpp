@@ -17,13 +17,12 @@ XX::Linalg::Vector3 XX::CubicCurve::UniformSpline<CalculatorClass>::value(double
       return points[0];
 
    int curveIndex = (int)parameter;
-   double localParameter = parameter - curveIndex;
-
    if (curveIndex < 0)
       curveIndex = 0;
    if (curveIndex >= numberOfCures())
       curveIndex = numberOfCures() - 1;
 
+   const double localParameter = parameter - curveIndex;
    const int startIndex = curveIndex * 3;
 
    const Linalg::Vector3& p0 = points[startIndex + 0];
@@ -41,11 +40,11 @@ int XX::CubicCurve::UniformSpline<CalculatorClass>::numberOfCures() const
 }
 
 template <XX::CubicCurve::CalculatorClass CalculatorClass>
-void XX::CubicCurve::UniformSpline<CalculatorClass>::addCurve(const Linalg::Vector3& p1, const Linalg::Vector3& p2, const Linalg::Vector3& p3)
+void XX::CubicCurve::UniformSpline<CalculatorClass>::addCurvePoints(const Linalg::Vector3 p[])
 {
-   points.append(p1);
-   points.append(p2);
-   points.append(p3);
+   points.append(p[0]);
+   points.append(p[1]);
+   points.append(p[2]);
 }
 
 #endif // NOT XXCubicCurveUniformSplineHPP

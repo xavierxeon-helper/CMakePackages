@@ -24,6 +24,9 @@ namespace XX
 
       public:
          UniformSpline(const Linalg::Vector3& startKnot);
+
+      public:
+         void addCurve(const Linalg::Vector3& startControl, const Linalg::Vector3& endControl, const Linalg::Vector3& endKnot);
       };
    } // namespace Bezier
 } // namespace XX

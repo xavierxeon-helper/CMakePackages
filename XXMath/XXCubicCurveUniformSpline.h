@@ -17,7 +17,8 @@ namespace XX
          virtual Linalg::Vector3 value(double parameter) const;
          int numberOfCures() const;
 
-         virtual void addCurve(const Linalg::Vector3& p1, const Linalg::Vector3& p2, const Linalg::Vector3& p3);
+      protected:
+         virtual void addCurvePoints(const Linalg::Vector3 p[3]);
 
       protected:
          QList<Linalg::Vector3> points;
