@@ -29,6 +29,17 @@ namespace XX
          virtual void setAuthorization(QNetworkRequest& request) const;
 
       protected:
+         struct RefreshData
+         {
+            QString refreshToken;
+            QString accessToken;
+            QDateTime expireTime;
+         };
+
+      protected:
+         RefreshData manualRefresh(const QString& oldRefreshToken, const QString& tokenRefreshUrl);
+
+      protected:
          QByteArray bearerToken;
       };
    } // namespace AuthProvider
