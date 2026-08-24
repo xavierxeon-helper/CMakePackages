@@ -1,5 +1,13 @@
 #include "XXAuthProviderToken.h"
 
+#include <QEventLoop>
+#include <QJsonObject>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QUrlQuery>
+
+#include <XXFileTools.h>
+
 XX::AuthProvider::Token::Token(QObject* parent)
    : QObject(parent)
    , bearerToken()
@@ -31,7 +39,7 @@ void XX::AuthProvider::Token::setAuthorization(QNetworkRequest& request) const
    request.setRawHeader("Authorization", "Bearer " + bearerToken);
 }
 
-XX::AuthProvider::Token::RefreshData XX::AuthProvider::Token::maualRefresh(const QString& oldRefreshToken, const QString& tokenRefreshUrl)
+XX::AuthProvider::Token::RefreshData XX::AuthProvider::Token::manualRefresh(const QString& oldRefreshToken, const QString& tokenRefreshUrl)
 {
    if (oldRefreshToken.isEmpty())
       return RefreshData{};

@@ -17,7 +17,6 @@
 
 XX::AuthProvider::OAuthFlow::OAuthFlow(QObject* parent)
    : XX::AuthProvider::Token(parent)
-   , Network::Settings()
    , authUrl()
    , tokenUrl()
    , clientId()
