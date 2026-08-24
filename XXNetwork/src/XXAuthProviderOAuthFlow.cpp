@@ -15,6 +15,25 @@
 
 // see https://datatracker.ietf.org/doc/html/rfc7636
 
+// block
+
+XX::AuthProvider::OAuthFlow::BlockState::BlockState(OAuthFlow* auth)
+   : auth(auth)
+   , previousState(auth->state)
+{
+   if (auth->state == State::Ready)
+   {
+      auth->state = State::Blocked;
+   }
+}
+
+XX::AuthProvider::OAuthFlow::BlockState::~BlockState()
+{
+   auth->state = previousState;
+}
+
+// oauth
+
 XX::AuthProvider::OAuthFlow::OAuthFlow(QObject* parent)
    : XX::AuthProvider::Token(parent)
    , authUrl()
@@ -25,6 +44,7 @@ XX::AuthProvider::OAuthFlow::OAuthFlow(QObject* parent)
    , refreshToken()
    , finalHTML()
    , verifierBytes()
+   , state(State::Initial)
 {
 }
 
@@ -36,6 +56,7 @@ void XX::AuthProvider::OAuthFlow::setStandardFlow(const QString& baseAuthUrl, co
    this->clientSecret = clientSecret;
 
    refreshToken = loadRefreshToken();
+   state = State::Ready;
 }
 
 void XX::AuthProvider::OAuthFlow::setFinalRedirect(const QString& url)
@@ -55,6 +76,11 @@ void XX::AuthProvider::OAuthFlow::setRequestedScopeTokens(QSet<QByteArray> scope
 
 bool XX::AuthProvider::OAuthFlow::update()
 {
+   if (State::Ready != state)
+      return false;
+
+   state = State::Update;
+
    if (refreshToken.isEmpty())
       refreshToken = "check database connection";
 
@@ -66,11 +92,13 @@ bool XX::AuthProvider::OAuthFlow::update()
    refreshToken = refreshData.refreshToken;
    saveRefreshToken(refreshToken);
 
+   state = State::Ready;
    return true;
 }
 
 bool XX::AuthProvider::OAuthFlow::authorizeUser()
 {
+   state = State::AuthUser;
    verifierBytes = generateBytes(43);
 
    QByteArray code = getAuthCode();
@@ -105,12 +133,16 @@ bool XX::AuthProvider::OAuthFlow::authorizeUser()
    if (200 != statusCode)
       return false;
 
-   refreshToken = content["refresh_token"].toString();
-   saveRefreshToken(refreshToken);
+   // order matters here
+   {
+      QString accessToken = content["access_token"].toString();
+      setBearerToken(accessToken.toUtf8());
 
-   QString accessToken = content["access_token"].toString();
-   setBearerToken(accessToken.toUtf8());
+      refreshToken = content["refresh_token"].toString();
+      saveRefreshToken(refreshToken);
+   }
 
+   state = State::Ready;
    return true;
 }
 
@@ -123,6 +155,16 @@ void XX::AuthProvider::OAuthFlow::saveRefreshToken(const QString& refreshToken)
 QString XX::AuthProvider::OAuthFlow::loadRefreshToken()
 {
    return QString();
+}
+
+void XX::AuthProvider::OAuthFlow::overrideAuthUrl(const QString& url)
+{
+   authUrl = url;
+}
+
+void XX::AuthProvider::OAuthFlow::overrideTokenUrl(const QString& url)
+{
+   tokenUrl = url;
 }
 
 QByteArray XX::AuthProvider::OAuthFlow::generateBytes(uint length)

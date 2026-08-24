@@ -39,7 +39,7 @@ namespace XX
       protected:
          RefreshData manualRefresh(const QString& oldRefreshToken, const QString& tokenRefreshUrl);
 
-      protected:
+      private:
          QByteArray bearerToken;
       };
    } // namespace AuthProvider

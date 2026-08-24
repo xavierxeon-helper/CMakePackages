@@ -25,10 +25,33 @@ namespace XX
          void setRequestedScopeTokens(QSet<QByteArray> scopeTokens);
 
       protected:
+         enum class State
+         {
+            Initial,
+            AuthUser,
+            Update,
+            Blocked,
+            Ready
+         };
+
+         class XXNETWORK_DECLSPEC BlockState
+         {
+         public:
+            BlockState(OAuthFlow* auth);
+            ~BlockState();
+
+         private:
+            OAuthFlow* auth;
+            State previousState;
+         };
+
+      protected:
          virtual bool update() override;
          virtual bool authorizeUser();
          virtual void saveRefreshToken(const QString& refreshToken);
          virtual QString loadRefreshToken();
+         void overrideAuthUrl(const QString& url);
+         void overrideTokenUrl(const QString& url);
 
       private:
          QByteArray generateBytes(uint length);
@@ -46,6 +69,7 @@ namespace XX
          QString finalHTML;
 
          QByteArray verifierBytes;
+         State state;
       };
    } // namespace AuthProvider
 } // namespace XX
