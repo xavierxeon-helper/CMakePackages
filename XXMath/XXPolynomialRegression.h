@@ -3,6 +3,7 @@
 
 #include "XXMathExportDef.h"
 #include "XXPolynomial.h"
+#include "XXRegressionContainer2D.h"
 
 #include "XXPolynomialSegmentBundle.h"
 
@@ -12,34 +13,13 @@ namespace XX
    //! @details see https://en.wikipedia.org/wiki/Polynomial_regression
    //! @ingroup XXMath
 
-   class XXMATH_DECLSPEC Polynomial::Regression
+   class XXMATH_DECLSPEC Polynomial::Regression : public XX::Regression::Container2D
    {
    public:
       Regression(size_t size);
 
    public:
-      struct Section
-      {
-         size_t start = 0;
-         size_t end = 0;
-         bool steady = false; // no jump to next section
-
-         size_t length() const;
-
-         using List = QList<Section>;
-      };
-
-   public:
-      size_t size() const;
-      void setValue(const size_t index, const double& value);
-      void clear();
-
       Segment::Bundle fit(size_t degree, double threshold, size_t overFit = 2, size_t maxSegmentLength = 50) const;
-      Section::List compileSections(double threshold, size_t maxSegmentLength = 50) const;
-      const QVector<double>& getValues() const;
-
-   private:
-      QVector<double> values;
    };
 } // namespace XX
 

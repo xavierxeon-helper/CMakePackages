@@ -11,6 +11,7 @@ namespace XX
       class UniformSpline
       {
       public:
+         UniformSpline();
          UniformSpline(const Linalg::Vector3& p0);
 
       public:
@@ -21,6 +22,7 @@ namespace XX
          Linalg::Vector3 findValue(const double& target, Linalg::Vector3::Index vectorIndex, double tolerance = 1e-9) const;
 
       protected:
+         virtual void setStartPoint(const Linalg::Vector3& p);
          virtual void addCurvePoints(const Linalg::Vector3 p[3]);
 
       protected:

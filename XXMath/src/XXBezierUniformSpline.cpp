@@ -1,5 +1,10 @@
 #include "XXBezierUniformSpline.h"
 
+XX::Bezier::UniformSpline::UniformSpline()
+   : CubicCurve::UniformSpline<CurveCalculator>()
+{
+}
+
 XX::Bezier::UniformSpline::UniformSpline(const Linalg::Vector3& startKnot)
    : CubicCurve::UniformSpline<CurveCalculator>(startKnot)
 {

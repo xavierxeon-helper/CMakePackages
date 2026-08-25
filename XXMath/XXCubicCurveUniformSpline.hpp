@@ -4,8 +4,14 @@
 #include "XXCubicCurveUniformSpline.h"
 
 template <XX::CubicCurve::CalculatorClass CalculatorClass>
-XX::CubicCurve::UniformSpline<CalculatorClass>::UniformSpline(const Linalg::Vector3& p0)
+XX::CubicCurve::UniformSpline<CalculatorClass>::UniformSpline()
    : points()
+{
+}
+
+template <XX::CubicCurve::CalculatorClass CalculatorClass>
+XX::CubicCurve::UniformSpline<CalculatorClass>::UniformSpline(const Linalg::Vector3& p0)
+   : UniformSpline()
 {
    points.append(p0);
 }
@@ -67,6 +73,12 @@ XX::Linalg::Vector3 XX::CubicCurve::UniformSpline<CalculatorClass>::findValue(co
 {
    double param = findParamter(target, vectorIndex, tolerance);
    return value(param);
+}
+
+template <XX::CubicCurve::CalculatorClass CalculatorClass>
+void XX::CubicCurve::UniformSpline<CalculatorClass>::setStartPoint(const Linalg::Vector3& p)
+{
+   points.append(p);
 }
 
 template <XX::CubicCurve::CalculatorClass CalculatorClass>

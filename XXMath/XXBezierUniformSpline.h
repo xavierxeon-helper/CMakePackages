@@ -26,6 +26,7 @@ namespace XX
          };
 
       public:
+         UniformSpline();
          UniformSpline(const Linalg::Vector3& startKnot);
 
       public:
