@@ -9,10 +9,10 @@ namespace XX
 {
    namespace Bezier
    {
-      static const double CubicBasisMatrixValues[16] = {1, 0, 0, 0, -3, 3, 0, 0, 3, -6, 3, 0, -1, 3, -3, 1};
-      using CurveCalculatror = CubicCurve::CalculatorParametric<CubicBasisMatrixValues, 1.0>;
+      inline constexpr double CubicBasisMatrixValues[16] = {1, 0, 0, 0, -3, 3, 0, 0, 3, -6, 3, 0, -1, 3, -3, 1};
+      using CurveCalculator = CubicCurve::CalculatorParametric<CubicBasisMatrixValues, 1.0>;
 
-      class XXMATH_DECLSPEC UniformSpline : public CubicCurve::UniformSpline<CurveCalculatror>
+      class XXMATH_DECLSPEC UniformSpline : public CubicCurve::UniformSpline<CurveCalculator>
       {
       public:
          enum class Tangent

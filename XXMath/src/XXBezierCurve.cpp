@@ -1,7 +1,7 @@
 #include "XXBezierCurve.h"
 
 XX::Bezier::Curve::Curve(const Linalg::Vector3& startKnot, const Linalg::Vector3& endKnot)
-   : ::XX::CubicCurve::Parametric<CurveCalculatror>()
+   : ::XX::CubicCurve::Parametric<CurveCalculator>()
 {
    p0 = startKnot;
 
@@ -13,7 +13,7 @@ XX::Bezier::Curve::Curve(const Linalg::Vector3& startKnot, const Linalg::Vector3
 }
 
 XX::Bezier::Curve::Curve(const Linalg::Vector3& startKnot, const Linalg::Vector3& startControl, const Linalg::Vector3& endControl, const Linalg::Vector3& endKnot)
-   : ::XX::CubicCurve::Parametric<CurveCalculatror>()
+   : ::XX::CubicCurve::Parametric<CurveCalculator>()
 {
    p0 = startKnot;
    p1 = startControl;

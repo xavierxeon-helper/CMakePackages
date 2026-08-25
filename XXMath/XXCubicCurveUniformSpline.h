@@ -15,7 +15,10 @@ namespace XX
 
       public:
          virtual Linalg::Vector3 value(double parameter) const;
-         int numberOfCures() const;
+         int numberOfCurves() const;
+
+         double findParamter(const double& target, Linalg::Vector3::Index vectorIndex, double tolerance = 1e-9) const;
+         Linalg::Vector3 findValue(const double& target, Linalg::Vector3::Index vectorIndex, double tolerance = 1e-9) const;
 
       protected:
          virtual void addCurvePoints(const Linalg::Vector3 p[3]);

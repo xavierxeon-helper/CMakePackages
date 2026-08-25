@@ -11,7 +11,7 @@ namespace XX
 {
    namespace Bezier
    {
-      class XXMATH_DECLSPEC Curve : public ::XX::CubicCurve::Parametric<CurveCalculatror>
+      class XXMATH_DECLSPEC Curve : public ::XX::CubicCurve::Parametric<CurveCalculator>
       {
       public:
          Curve(const Linalg::Vector3& startKnot, const Linalg::Vector3& endKnot);

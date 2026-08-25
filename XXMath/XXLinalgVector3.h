@@ -19,6 +19,7 @@ namespace XX
 
       class XXMATH_DECLSPEC Vector3
       {
+      public:
          enum Index
          {
             X = 0,

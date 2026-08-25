@@ -19,8 +19,8 @@ XX::Linalg::Vector3 XX::CubicCurve::UniformSpline<CalculatorClass>::value(double
    int curveIndex = (int)parameter;
    if (curveIndex < 0)
       curveIndex = 0;
-   if (curveIndex >= numberOfCures())
-      curveIndex = numberOfCures() - 1;
+   if (curveIndex >= numberOfCurves())
+      curveIndex = numberOfCurves() - 1;
 
    const double localParameter = parameter - curveIndex;
    const int startIndex = curveIndex * 3;
@@ -34,9 +34,39 @@ XX::Linalg::Vector3 XX::CubicCurve::UniformSpline<CalculatorClass>::value(double
 }
 
 template <XX::CubicCurve::CalculatorClass CalculatorClass>
-int XX::CubicCurve::UniformSpline<CalculatorClass>::numberOfCures() const
+int XX::CubicCurve::UniformSpline<CalculatorClass>::numberOfCurves() const
 {
    return (points.size() - 1) / 3;
+}
+
+template <XX::CubicCurve::CalculatorClass CalculatorClass>
+double XX::CubicCurve::UniformSpline<CalculatorClass>::findParamter(const double& target, Linalg::Vector3::Index vectorIndex, double tolerance) const
+{
+   auto curveAt = [&](double t)
+   {
+      return value(t)[vectorIndex];
+   };
+
+   double tLo = 0.0;
+   double tHi = (double)numberOfCurves();
+
+   // assumes curveAt(tLo) <= target <= curveAt(tHi) (monotonic increasing x)
+   for (int i = 0; i < 100 && (tHi - tLo) > tolerance; ++i)
+   {
+      const double tMid = 0.5 * (tLo + tHi);
+      if (curveAt(tMid) < target)
+         tLo = tMid;
+      else
+         tHi = tMid;
+   }
+   return 0.5 * (tLo + tHi);
+}
+
+template <XX::CubicCurve::CalculatorClass CalculatorClass>
+XX::Linalg::Vector3 XX::CubicCurve::UniformSpline<CalculatorClass>::findValue(const double& target, Linalg::Vector3::Index vectorIndex, double tolerance) const
+{
+   double param = findParamter(target, vectorIndex, tolerance);
+   return value(param);
 }
 
 template <XX::CubicCurve::CalculatorClass CalculatorClass>
