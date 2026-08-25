@@ -6,20 +6,30 @@ XX::Bezier::RegressionAdaptive::RegressionAdaptive(size_t size, const double err
 {
 }
 
-XX::Bezier::UniformSpline XX::Bezier::RegressionAdaptive::fit() const
+QList<XX::Bezier::UniformSpline> XX::Bezier::RegressionAdaptive::fit(const double threshold) const
 {
-   QVector<XX::Linalg::Vector3> points;
-   points.reserve(getValues().size());
-   for (int x = 0; x < getValues().size(); x++)
+   QList<XX::Bezier::UniformSpline> splineList;
+
+   const Section::List sections = compileSections(threshold, -1);
+   for (Section section : std::as_const(sections))
    {
-      const double value = getValues().at(x);
-      if (std::isnan(value))
+      QList<XX::Linalg::Vector3> points;
+      for (int x = section.start; x < section.end; x++)
+      {
+         const double value = getValues().at(x);
+         if (std::isnan(value))
+            continue;
+
+         points.append(XX::Linalg::Vector3(x, value, 0.0));
+      }
+      if (points.empty())
          continue;
 
-      points.append(XX::Linalg::Vector3(x, value, 0.0));
+      XX::Bezier::UniformSpline spline = fit(points);
+      splineList.append(spline);
    }
 
-   return fit(points);
+   return splineList;
 }
 
 XX::Bezier::UniformSpline XX::Bezier::RegressionAdaptive::fit(const QVector<XX::Linalg::Vector3>& points) const

@@ -7,7 +7,6 @@ size_t XX::Regression::Container2D::Section::length() const
 
 //
 
-
 XX::Regression::Container2D::Container2D(size_t size)
    : values(size, std::numeric_limits<double>::quiet_NaN())
 {
@@ -62,7 +61,7 @@ XX::Regression::Container2D::Section::List XX::Regression::Container2D::compileS
 
          start = index;
       }
-      else if (length > maxSegmentLength)
+      else if (maxSegmentLength > 0.0 && length > maxSegmentLength)
       {
          Section section = {start, index, true};
          sections.append(section);

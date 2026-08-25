@@ -31,6 +31,7 @@ namespace XX
          void setValue(const size_t index, const double& value);
          void clear();
 
+         // set negative maxSegmentLength to disable segment length limit
          Section::List compileSections(double threshold, size_t maxSegmentLength = 50) const;
          const QVector<double>& getValues() const;
 

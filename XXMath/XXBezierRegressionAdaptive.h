@@ -18,7 +18,7 @@ namespace XX
          RegressionAdaptive(size_t size, const double errorTolerance = 2.0);
 
       public:
-         XX::Bezier::UniformSpline fit() const;
+         QList<XX::Bezier::UniformSpline> fit(const double threshold) const;
          XX::Bezier::UniformSpline fit(const QVector<Linalg::Vector3>& points) const;
 
       private:
