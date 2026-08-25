@@ -1,23 +1,23 @@
-#include "XXRegressionContainer2D.h"
+#include "XXDataContainer2D.h"
 
-size_t XX::Regression::Container2D::Section::length() const
+size_t XX::Data::Container2D::Section::length() const
 {
    return end - start;
 }
 
 //
 
-XX::Regression::Container2D::Container2D(size_t size)
+XX::Data::Container2D::Container2D(size_t size)
    : values(size, std::numeric_limits<double>::quiet_NaN())
 {
 }
 
-size_t XX::Regression::Container2D::size() const
+size_t XX::Data::Container2D::size() const
 {
    return values.size();
 }
 
-void XX::Regression::Container2D::setValue(const size_t index, const double& value)
+void XX::Data::Container2D::setValue(const size_t index, const double& value)
 {
    if (index >= values.size())
       return;
@@ -25,12 +25,12 @@ void XX::Regression::Container2D::setValue(const size_t index, const double& val
    values[index] = value;
 }
 
-void XX::Regression::Container2D::clear()
+void XX::Data::Container2D::clear()
 {
    values.fill(std::numeric_limits<double>::quiet_NaN());
 }
 
-XX::Regression::Container2D::Section::List XX::Regression::Container2D::compileSections(double threshold, size_t maxSegmentLength) const
+XX::Data::Container2D::Section::List XX::Data::Container2D::compileSections(double threshold, size_t maxSegmentLength) const
 {
    Section::List sections;
    if (threshold <= 0)
@@ -76,7 +76,7 @@ XX::Regression::Container2D::Section::List XX::Regression::Container2D::compileS
    return sections;
 }
 
-const QVector<double>& XX::Regression::Container2D::getValues() const
+const QVector<double>& XX::Data::Container2D::getValues() const
 {
    return values;
 }

@@ -1,5 +1,5 @@
-#ifndef XXRegressionContainer2DH
-#define XXRegressionContainer2DH
+#ifndef XXDataContainer2DH
+#define XXDataContainer2DH
 
 #include "XXMathExportDef.h"
 
@@ -7,7 +7,7 @@
 
 namespace XX
 {
-   namespace Regression
+   namespace Data
    {
       class XXMATH_DECLSPEC Container2D
       {
@@ -38,7 +38,7 @@ namespace XX
       private:
          QVector<double> values;
       };
-   } // namespace Regression
+   } // namespace Data
 } // namespace XX
 
-#endif // NOT XXRegressionContainer2DH
+#endif // NOT XXDataContainer2DH

@@ -5,7 +5,7 @@
 #include <XXLinalgMatrix.h>
 
 XX::Polynomial::Regression::Regression(size_t size)
-   : XX::Regression::Container2D(size)
+   : XX::Data::Container2D(size)
 {
 }
 

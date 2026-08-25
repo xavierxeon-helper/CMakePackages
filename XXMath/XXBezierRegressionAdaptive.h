@@ -2,7 +2,6 @@
 #define XXBezierRegressionAdaptiveH
 
 #include "XXMathExportDef.h"
-#include "XXRegressionContainer2D.h"
 
 #include "XXBezierUniformSpline.h"
 
@@ -12,13 +11,12 @@ namespace XX
    {
       // use "An Algorithm for Automatically Fitting Digitized Curves" (Graphics Gems, 1990)
 
-      class XXMATH_DECLSPEC RegressionAdaptive : public XX::Regression::Container2D
+      class XXMATH_DECLSPEC RegressionAdaptive
       {
       public:
-         RegressionAdaptive(size_t size, const double errorTolerance = 2.0);
+         RegressionAdaptive(const double errorTolerance = 2.0);
 
       public:
-         QList<XX::Bezier::UniformSpline> fit(const double threshold) const;
          XX::Bezier::UniformSpline fit(const QVector<Linalg::Vector3>& points) const;
 
       private:

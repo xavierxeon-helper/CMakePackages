@@ -1,9 +1,9 @@
 #ifndef XXPolynomialRegressionH
 #define XXPolynomialRegressionH
 
+#include "XXDataContainer2D.h"
 #include "XXMathExportDef.h"
 #include "XXPolynomial.h"
-#include "XXRegressionContainer2D.h"
 
 #include "XXPolynomialSegmentBundle.h"
 
@@ -13,7 +13,7 @@ namespace XX
    //! @details see https://en.wikipedia.org/wiki/Polynomial_regression
    //! @ingroup XXMath
 
-   class XXMATH_DECLSPEC Polynomial::Regression : public XX::Regression::Container2D
+   class XXMATH_DECLSPEC Polynomial::Regression : public XX::Data::Container2D
    {
    public:
       Regression(size_t size);
