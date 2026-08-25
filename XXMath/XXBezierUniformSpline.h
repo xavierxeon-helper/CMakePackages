@@ -9,7 +9,10 @@ namespace XX
 {
    namespace Bezier
    {
-      inline constexpr double CubicBasisMatrixValues[16] = {1, 0, 0, 0, -3, 3, 0, 0, 3, -6, 3, 0, -1, 3, -3, 1};
+      inline constexpr double CubicBasisMatrixValues[16] = {1, 0, 0, 0,
+                                                            -3, 3, 0, 0,
+                                                            3, -6, 3, 0,
+                                                            -1, 3, -3, 1};
       using CurveCalculator = CubicCurve::CalculatorParametric<CubicBasisMatrixValues, 1.0>;
 
       class XXMATH_DECLSPEC UniformSpline : public CubicCurve::UniformSpline<CurveCalculator>

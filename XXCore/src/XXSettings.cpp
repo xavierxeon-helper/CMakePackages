@@ -61,7 +61,7 @@ QString XX::Settings::compileFileName()
 
    QSettings dummy;
    QFileInfo info(dummy.fileName());
-   fileName = dummy.fileName().replace(info.suffix(), "json");
+   fileName = info.dir().absolutePath() + "/" + info.completeBaseName() + ".json";
 
    return fileName;
 }

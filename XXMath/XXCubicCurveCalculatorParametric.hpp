@@ -42,10 +42,10 @@ XX::Linalg::Vector3 XX::CubicCurve::CalculatorParametric<basisMatrixValues, scal
       controlMatrix(3, index) = p3[index];
    }
 
-   Linalg::Matrix resultMatrix = parameterMatrix * scale * basisMatrix * controlMatrix;
+   Linalg::Matrix resultMatrix = parameterMatrix * basisMatrix * controlMatrix;
    Linalg::Vector3 result(resultMatrix(0, 0), resultMatrix(0, 1), resultMatrix(0, 2));
 
-   return result;
+   return result * scale;
 }
 
 #endif // NOT XXCubicCurveCalculatorParametricHPP
