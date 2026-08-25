@@ -15,7 +15,7 @@ namespace XX
       class XXMATH_DECLSPEC RegressionAdaptive : public XX::Regression::Container2D
       {
       public:
-         RegressionAdaptive(size_t size);
+         RegressionAdaptive(size_t size, const double errorTolerance = 2.0);
 
       public:
          XX::Bezier::UniformSpline fit() const;
@@ -55,8 +55,10 @@ namespace XX
                        int first, int last,
                        Linalg::Vector3 tHat1,
                        Linalg::Vector3 tHat2,
-                       double errorTolerance,
                        QVector<Linalg::Vector3>& segments) const;
+
+      private:
+         const double errorTolerance;
       };
    } // namespace Bezier
 } // namespace XX
