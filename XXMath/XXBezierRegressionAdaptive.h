@@ -9,54 +9,45 @@ namespace XX
 {
    namespace Bezier
    {
-      // use "An Algorithm for Automatically Fitting Digitized Curves" (Graphics Gems, 1990)
+      // uses "An Algorithm for Automatically Fitting Digitized Curves" (Graphics Gems, 1990)
 
       class XXMATH_DECLSPEC RegressionAdaptive
       {
       public:
-         RegressionAdaptive(const double errorTolerance = 2.0);
-
-      public:
-         XX::Bezier::UniformSpline fit(const QVector<Linalg::Vector3>& points) const;
+         static XX::Bezier::UniformSpline fit(const QVector<Linalg::Vector3>& points, const double errorTolerance);
 
       private:
-         double bernstein0(double u) const;
-         double bernstein1(double u) const;
-         double bernstein2(double u) const;
-         double bernstein3(double u) const;
+         static Linalg::Vector3 evaluateBezier(const Linalg::Vector3 curve[4], double u);
+         static Linalg::Vector3 computeLeftTangent(const QVector<Linalg::Vector3>& d, int end);
+         static Linalg::Vector3 computeRightTangent(const QVector<Linalg::Vector3>& d, int end);
+         static Linalg::Vector3 computeCenterTangent(const QVector<Linalg::Vector3>& d, int center);
+         static QVector<double> chordLengthParameterize(const QVector<Linalg::Vector3>& d, int first, int last);
 
-         Linalg::Vector3 evaluateBezier(const Linalg::Vector3 curve[4], double u) const;
-         Linalg::Vector3 computeLeftTangent(const QVector<Linalg::Vector3>& d, int end) const;
-         Linalg::Vector3 computeRightTangent(const QVector<Linalg::Vector3>& d, int end) const;
-         Linalg::Vector3 computeCenterTangent(const QVector<Linalg::Vector3>& d, int center) const;
-         QVector<double> chordLengthParameterize(const QVector<Linalg::Vector3>& d, int first, int last) const;
+         static void generateBezier(const QVector<Linalg::Vector3>& d,
+                                    int first, int last,
+                                    const QVector<double>& u,
+                                    const Linalg::Vector3& tHat1,
+                                    const Linalg::Vector3& tHat2,
+                                    Linalg::Vector3 curve[4]);
 
-         void generateBezier(const QVector<Linalg::Vector3>& d,
-                             int first, int last,
-                             const QVector<double>& u,
-                             const Linalg::Vector3& tHat1,
-                             const Linalg::Vector3& tHat2,
-                             Linalg::Vector3 curve[4]) const;
-         double computeMaxError(const QVector<Linalg::Vector3>& d,
-                                int first, int last,
-                                const Linalg::Vector3 curve[4],
-                                const QVector<double>& u,
-                                int* splitPoint) const;
+         static std::tuple<double, int> computeMaxError(const QVector<Linalg::Vector3>& d,
+                                                        int first, int last,
+                                                        const Linalg::Vector3 curve[4],
+                                                        const QVector<double>& u);
 
-         double newtonRaphsonRootFind(const Linalg::Vector3 curve[4], const Linalg::Vector3& point, double u) const;
+         static double newtonRaphsonRootFind(const Linalg::Vector3 curve[4], const Linalg::Vector3& point, double u);
 
-         QVector<double> reparameterize(const QVector<Linalg::Vector3>& d,
-                                        int first, int last,
-                                        const QVector<double>& u,
-                                        const Linalg::Vector3 curve[4]) const;
-         void fitCubic(const QVector<Linalg::Vector3>& d,
-                       int first, int last,
-                       Linalg::Vector3 tHat1,
-                       Linalg::Vector3 tHat2,
-                       QVector<Linalg::Vector3>& segments) const;
+         static QVector<double> reparameterize(const QVector<Linalg::Vector3>& d,
+                                               int first, int last,
+                                               const QVector<double>& u,
+                                               const Linalg::Vector3 curve[4]);
 
-      private:
-         const double errorTolerance;
+         static void fitCubic(const QVector<Linalg::Vector3>& d,
+                              int first, int last,
+                              Linalg::Vector3 tHat1,
+                              Linalg::Vector3 tHat2,
+                              QVector<Linalg::Vector3>& segments,
+                              const double errorTolerance);
       };
    } // namespace Bezier
 } // namespace XX
