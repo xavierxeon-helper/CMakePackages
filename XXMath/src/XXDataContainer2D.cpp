@@ -7,8 +7,10 @@ size_t XX::Data::Container2D::Section::length() const
 
 //
 
+const double XX::Data::Container2D::nullValue = std::numeric_limits<double>::quiet_NaN();
+
 XX::Data::Container2D::Container2D(size_t size)
-   : values(size, std::numeric_limits<double>::quiet_NaN())
+   : values(size, nullValue)
 {
 }
 
@@ -25,9 +27,14 @@ void XX::Data::Container2D::setValue(const size_t index, const double& value)
    values[index] = value;
 }
 
+void XX::Data::Container2D::setNull(const size_t index)
+{
+   setValue(index, nullValue);
+}
+
 void XX::Data::Container2D::clear()
 {
-   values.fill(std::numeric_limits<double>::quiet_NaN());
+   values.fill(nullValue);
 }
 
 XX::Data::Container2D::Section::List XX::Data::Container2D::compileSections(double threshold, size_t maxSegmentLength) const
@@ -49,14 +56,31 @@ XX::Data::Container2D::Section::List XX::Data::Container2D::compileSections(doub
       const double y2 = values.at(index);
 
       const size_t length = index - start;
-      const double yDiff = std::abs(y2 - y1);
+
+      auto getDiff = [&]() -> double
+      {
+         if (!std::isnan(y1) && std::isnan(y2))
+            return y1;
+         else if (std::isnan(y1) && !std::isnan(y2))
+            return y2;
+         else if (std::isnan(y1) && std::isnan(y2))
+            return 0.0;
+
+         return std::abs(y2 - y1);
+      };
+
+      const double yDiff = getDiff();
 
       if (yDiff > threshold)
       {
          if (length > 1)
          {
-            Section section = {start, index, false};
-            sections.append(section);
+            const double startValue = values.at(start);
+            if (!std::isnan(startValue))
+            {
+               Section section = {start, index, false};
+               sections.append(section);
+            }
          }
 
          start = index;
@@ -70,8 +94,12 @@ XX::Data::Container2D::Section::List XX::Data::Container2D::compileSections(doub
       }
    }
 
-   Section section = {start, (size_t)values.size() - 1};
-   sections.append(section);
+   const double startValue = values.at(start);
+   if (!std::isnan(startValue))
+   {
+      Section section = {start, (size_t)values.size() - 1};
+      sections.append(section);
+   }
 
    return sections;
 }

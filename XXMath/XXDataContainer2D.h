@@ -29,6 +29,7 @@ namespace XX
       public:
          size_t size() const;
          void setValue(const size_t index, const double& value);
+         void setNull(const size_t index);
          void clear();
 
          // set negative maxSegmentLength to disable segment length limit
@@ -37,6 +38,7 @@ namespace XX
 
       private:
          QVector<double> values;
+         static const double nullValue;
       };
    } // namespace Data
 } // namespace XX
