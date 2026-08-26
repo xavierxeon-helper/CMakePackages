@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include <QDebug>
+#include <QJsonArray>
 #include <QTextStream>
 
 #include "XXLinalgSpherical.h"
@@ -47,6 +48,9 @@ namespace XX
          double& operator[](const int index);
 
       public:
+         QJsonArray save() const;
+         void load(const QJsonArray& data) const;
+
          const double& getX() const;
          const double& getY() const;
          const double& getZ() const;

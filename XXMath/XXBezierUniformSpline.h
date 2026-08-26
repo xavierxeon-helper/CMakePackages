@@ -25,6 +25,8 @@ namespace XX
             Mirrored
          };
 
+         using List = QList<UniformSpline>;
+
       public:
          UniformSpline();
          UniformSpline(const Linalg::Vector3& startKnot);

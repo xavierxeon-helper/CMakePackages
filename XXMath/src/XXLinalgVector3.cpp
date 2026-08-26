@@ -99,6 +99,27 @@ double& XX::Linalg::Vector3::operator[](const int index)
    return data[index];
 }
 
+QJsonArray XX::Linalg::Vector3::save() const
+{
+   QJsonArray array;
+   array.append(x);
+   array.append(y);
+   array.append(z);
+
+   return array;
+}
+
+void XX::Linalg::Vector3::load(const QJsonArray& data) const
+{
+   for (int index = 0; index < 3; index++)
+   {
+      if (index < data.size())
+         data[index] = data.at(index).toDouble();
+      else
+         data[index] = 0.0;
+   }
+}
+
 const double& XX::Linalg::Vector3::getX() const
 {
    return x;

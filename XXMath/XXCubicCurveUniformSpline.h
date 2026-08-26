@@ -3,6 +3,8 @@
 
 #include <XXCubicCurveCalculatorParametric.h>
 
+#include <QJsonObject>
+
 namespace XX
 {
    namespace CubicCurve
@@ -15,8 +17,12 @@ namespace XX
          UniformSpline(const Linalg::Vector3& p0);
 
       public:
+         QJsonObject save() const;
+         void load(const QJsonObject& data);
+
          virtual Linalg::Vector3 value(double parameter) const;
          int numberOfCurves() const;
+         int numberOfPoints() const;
 
          double findParamter(const double& target, Linalg::Vector3::Index vectorIndex, double tolerance = 1e-9) const;
          Linalg::Vector3 findValue(const double& target, Linalg::Vector3::Index vectorIndex, double tolerance = 1e-9) const;

@@ -17,6 +17,37 @@ XX::CubicCurve::UniformSpline<CalculatorClass>::UniformSpline(const Linalg::Vect
 }
 
 template <XX::CubicCurve::CalculatorClass CalculatorClass>
+QJsonObject XX::CubicCurve::UniformSpline<CalculatorClass>::save() const
+{
+   QJsonArray pointArray;
+   for (size_t index = 0; index < points.size(); index++)
+   {
+      const Linalg::Vector3& point = points[index];
+      pointArray.append(point.save());
+   }
+
+   QJsonObject data;
+   data["count"] = points.size();
+   data["points"] = pointArray;
+
+   return data;
+}
+
+template <XX::CubicCurve::CalculatorClass CalculatorClass>
+void XX::CubicCurve::UniformSpline<CalculatorClass>::load(const QJsonObject& data)
+{
+   const int count = data["count"].toInt();
+   points.resize(count, Linalg::Vector3());
+
+   QJsonArray pointArray = data["points"].toArray();
+   for (int index = 0; index < count; index++)
+   {
+      const QJsonArray pointData = pointArray[index].toArray();
+      points[index].load(pointData);
+   }
+}
+
+template <XX::CubicCurve::CalculatorClass CalculatorClass>
 XX::Linalg::Vector3 XX::CubicCurve::UniformSpline<CalculatorClass>::value(double parameter) const
 {
    if (1 == points.size())
@@ -43,6 +74,12 @@ template <XX::CubicCurve::CalculatorClass CalculatorClass>
 int XX::CubicCurve::UniformSpline<CalculatorClass>::numberOfCurves() const
 {
    return (points.size() - 1) / 3;
+}
+
+template <XX::CubicCurve::CalculatorClass CalculatorClass>
+int XX::CubicCurve::UniformSpline<CalculatorClass>::numberOfPoints() const
+{
+   return points.size();
 }
 
 template <XX::CubicCurve::CalculatorClass CalculatorClass>

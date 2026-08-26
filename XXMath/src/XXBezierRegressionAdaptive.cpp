@@ -7,7 +7,7 @@ XX::Bezier::UniformSpline XX::Bezier::RegressionAdaptive::fit(const QVector<XX::
       return XX::Bezier::UniformSpline();
    }
 
-   RegressionAdaptive fitter(points, errorTolerance);
+   RegressionAdaptive fitter(points, errorTolerance > 0.0 ? errorTolerance : 1e-6);
 
    const XX::Linalg::Vector3 tangent1 = fitter.computeLeftTangent(0);
    const XX::Linalg::Vector3 tangent2 = fitter.computeRightTangent(points.size() - 1);
