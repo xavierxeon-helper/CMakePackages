@@ -125,12 +125,10 @@ XX::Bezier::RegressionAdaptive::Curve XX::Bezier::RegressionAdaptive::generateBe
       alphaRight = fallback;
    }
 
-   Curve curve;
-
-   curve[0] = P0;
-   curve[1] = P0 + tangent1 * alphaLeft;
-   curve[2] = P3 + tangent2 * alphaRight;
-   curve[3] = P3;
+   Curve curve = {P0,
+                  P0 + tangent1 * alphaLeft,
+                  P3 + tangent2 * alphaRight,
+                  P3};
 
    return curve;
 }
@@ -183,9 +181,8 @@ QVector<double> XX::Bezier::RegressionAdaptive::reparameterize(const Chord& chor
    return result;
 }
 
-// Appends one or more accepted 4-control-point Bezier segments to `segments`
-// (flattened: P0,P1,P2,P3,P0,P1,P2,P3,...), recursively subdividing until
-// every segment fits within errorTolerance pixels.
+// Appends one or more accepted 4-control-point Bezier segments to `segments` (flattened: P0,P1,P2,P3,P0,P1,P2,P3,...),
+// recursively subdividing until every segment fits within errorTolerance pixels.
 QVector<XX::Linalg::Vector3> XX::Bezier::RegressionAdaptive::fitCubic(const Chord& chord, Linalg::Vector3 tangent1, Linalg::Vector3 tangent2) const
 {
    QVector<Linalg::Vector3> segments;
