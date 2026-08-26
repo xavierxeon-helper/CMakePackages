@@ -20,7 +20,7 @@ namespace XX
          QJsonObject save() const;
          void load(const QJsonObject& data);
 
-         virtual Linalg::Vector3 value(double parameter) const;
+         virtual Linalg::Vector3 value(double parameter, uchar derivativeOrder = 0) const;
          int numberOfCurves() const;
          int numberOfPoints() const;
 

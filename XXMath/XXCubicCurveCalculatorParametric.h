@@ -16,6 +16,7 @@ namespace XX
       {
       public:
          static Linalg::Vector3 calculate(double parameter,
+                                          uchar derivativeOrder,
                                           const Linalg::Vector3& p0,
                                           const Linalg::Vector3& p1,
                                           const Linalg::Vector3& p2,

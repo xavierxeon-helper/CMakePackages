@@ -48,7 +48,7 @@ void XX::CubicCurve::UniformSpline<CalculatorClass>::load(const QJsonObject& dat
 }
 
 template <XX::CubicCurve::CalculatorClass CalculatorClass>
-XX::Linalg::Vector3 XX::CubicCurve::UniformSpline<CalculatorClass>::value(double parameter) const
+XX::Linalg::Vector3 XX::CubicCurve::UniformSpline<CalculatorClass>::value(double parameter, uchar derivativeOrder) const
 {
    if (1 == points.size())
       return points[0];
@@ -67,7 +67,7 @@ XX::Linalg::Vector3 XX::CubicCurve::UniformSpline<CalculatorClass>::value(double
    const Linalg::Vector3& p2 = points[startIndex + 2];
    const Linalg::Vector3& p3 = points[startIndex + 3];
 
-   return CalculatorClass::calculate(localParameter, p0, p1, p2, p3);
+   return CalculatorClass::calculate(localParameter, derivativeOrder, p0, p1, p2, p3);
 }
 
 template <XX::CubicCurve::CalculatorClass CalculatorClass>
