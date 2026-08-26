@@ -15,7 +15,7 @@ namespace XX
          Container2D(size_t size);
 
       public:
-         struct Section
+         struct XXMATH_DECLSPEC Section
          {
             size_t start = 0;
             size_t end = 0;
