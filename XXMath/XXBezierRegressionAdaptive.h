@@ -22,24 +22,29 @@ namespace XX
       private:
          struct Chord
          {
-            const QVector<Linalg::Vector3>& points;
             int first;
             int last;
          };
 
+         using Curve = Linalg::Vector3[4];
+
       private:
-         static Linalg::Vector3 computeLeftTangent(const QVector<Linalg::Vector3>& d, int end);
-         static Linalg::Vector3 computeRightTangent(const QVector<Linalg::Vector3>& d, int end);
-         static Linalg::Vector3 computeCenterTangent(const QVector<Linalg::Vector3>& d, int center);
+         Linalg::Vector3 computeLeftTangent(int end) const;
+         Linalg::Vector3 computeRightTangent(int end) const;
+         Linalg::Vector3 computeCenterTangent(int center) const;
 
-         static Linalg::Vector3 evaluateBezier(const Linalg::Vector3 curve[4], double u);
-         static void generateBezier(Chord chord, const QVector<double>& u, const Linalg::Vector3& tHat1, const Linalg::Vector3& tHat2, Linalg::Vector3 curve[4]);
+         Linalg::Vector3 evaluateBezier(const Linalg::Vector3 curve[4], double u) const;
+         void generateBezier(Chord chord, const QVector<double>& u, const Linalg::Vector3& tHat1, const Linalg::Vector3& tHat2, Linalg::Vector3 curve[4]) const;
 
-         static QVector<double> chordLengthParameterize(Chord chord);
-         static std::tuple<double, int> computeMaxError(Chord chord, const Linalg::Vector3 curve[4], const QVector<double>& u);
-         static double newtonRaphsonRootFind(const Linalg::Vector3 curve[4], const Linalg::Vector3& point, double u);
-         static QVector<double> reparameterize(Chord chord, const QVector<double>& u, const Linalg::Vector3 curve[4]);
-         static QVector<Linalg::Vector3> fitCubic(Chord chord, Linalg::Vector3 tHat1, Linalg::Vector3 tHat2, const double errorTolerance);
+         QVector<double> chordLengthParameterize(Chord chord) const;
+         std::tuple<double, int> computeMaxError(Chord chord, const Linalg::Vector3 curve[4], const QVector<double>& u) const;
+         double newtonRaphsonRootFind(const Linalg::Vector3 curve[4], const Linalg::Vector3& point, double u) const;
+         QVector<double> reparameterize(Chord chord, const QVector<double>& u, const Linalg::Vector3 curve[4]) const;
+         QVector<Linalg::Vector3> fitCubic(Chord chord, Linalg::Vector3 tHat1, Linalg::Vector3 tHat2) const;
+
+      private:
+         const QVector<Linalg::Vector3> points;
+         const double errorTolerance;
       };
    } // namespace Bezier
 } // namespace XX
