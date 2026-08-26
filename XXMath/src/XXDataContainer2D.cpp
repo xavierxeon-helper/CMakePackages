@@ -19,6 +19,14 @@ size_t XX::Data::Container2D::size() const
    return values.size();
 }
 
+double XX::Data::Container2D::getValue(const size_t index) const
+{
+   if (index >= values.size())
+      return nullValue;
+
+   return values.at(index);
+}
+
 void XX::Data::Container2D::setValue(const size_t index, const double& value)
 {
    if (index >= values.size())
@@ -102,9 +110,4 @@ XX::Data::Container2D::Section::List XX::Data::Container2D::compileSections(doub
    }
 
    return sections;
-}
-
-const QVector<double>& XX::Data::Container2D::getValues() const
-{
-   return values;
 }

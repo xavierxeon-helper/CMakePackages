@@ -201,7 +201,10 @@ void XX::Populated::Abstract::createToolBar(QDomElement thingElement)
          const QString objectName = contentElement.attribute("ObjectName");
          QWidget* widget = parentWidget->findChild<QWidget*>(objectName, Qt::FindChildrenRecursively);
          if (widget)
+         {
+            widget->setVisible(true);
             toolBar->addWidget(widget);
+         }
          else
             qWarning() << __FUNCTION__ << "widget not found" << objectName;
       }

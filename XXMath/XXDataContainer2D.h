@@ -28,13 +28,13 @@ namespace XX
 
       public:
          size_t size() const;
+         double getValue(const size_t index) const;
          void setValue(const size_t index, const double& value);
          void setNull(const size_t index);
          void clear();
 
          // set negative maxSegmentLength to disable segment length limit
          Section::List compileSections(double threshold, size_t maxSegmentLength = 50) const;
-         const QVector<double>& getValues() const;
 
       private:
          QVector<double> values;
