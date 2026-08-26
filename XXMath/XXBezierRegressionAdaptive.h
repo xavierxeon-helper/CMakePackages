@@ -42,12 +42,11 @@ namespace XX
                                                const QVector<double>& u,
                                                const Linalg::Vector3 curve[4]);
 
-         static void fitCubic(const QVector<Linalg::Vector3>& d,
-                              int first, int last,
-                              Linalg::Vector3 tHat1,
-                              Linalg::Vector3 tHat2,
-                              QVector<Linalg::Vector3>& segments,
-                              const double errorTolerance);
+         static QVector<Linalg::Vector3> fitCubic(const QVector<Linalg::Vector3>& d,
+                                                  int first, int last,
+                                                  Linalg::Vector3 tHat1,
+                                                  Linalg::Vector3 tHat2,
+                                                  const double errorTolerance);
       };
    } // namespace Bezier
 } // namespace XX

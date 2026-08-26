@@ -7,11 +7,10 @@ XX::Bezier::UniformSpline XX::Bezier::RegressionAdaptive::fit(const QVector<XX::
       return XX::Bezier::UniformSpline();
    }
 
-   QVector<XX::Linalg::Vector3> segments;
    const XX::Linalg::Vector3 tHat1 = computeLeftTangent(points, 0);
    const XX::Linalg::Vector3 tHat2 = computeRightTangent(points, points.size() - 1);
 
-   fitCubic(points, 0, points.size() - 1, tHat1, tHat2, segments, errorTolerance);
+   const QVector<XX::Linalg::Vector3> segments = fitCubic(points, 0, points.size() - 1, tHat1, tHat2, errorTolerance);
 
    XX::Bezier::UniformSpline spline(segments[0]);
    for (int i = 0; i < segments.size(); i += 4)
@@ -203,13 +202,13 @@ QVector<double> XX::Bezier::RegressionAdaptive::reparameterize(const QVector<Lin
 // Appends one or more accepted 4-control-point Bezier segments to `segments`
 // (flattened: P0,P1,P2,P3,P0,P1,P2,P3,...), recursively subdividing until
 // every segment fits within errorTolerance pixels.
-void XX::Bezier::RegressionAdaptive::fitCubic(const QVector<Linalg::Vector3>& d,
-                                              int first, int last,
-                                              Linalg::Vector3 tHat1,
-                                              Linalg::Vector3 tHat2,
-                                              QVector<Linalg::Vector3>& segments,
-                                              const double errorTolerance)
+QVector<XX::Linalg::Vector3> XX::Bezier::RegressionAdaptive::fitCubic(const QVector<Linalg::Vector3>& d,
+                                                                      int first, int last,
+                                                                      Linalg::Vector3 tHat1,
+                                                                      Linalg::Vector3 tHat2,
+                                                                      const double errorTolerance)
 {
+   QVector<Linalg::Vector3> segments;
    const int nPts = last - first + 1;
 
    if (nPts == 2)
@@ -219,7 +218,7 @@ void XX::Bezier::RegressionAdaptive::fitCubic(const QVector<Linalg::Vector3>& d,
       segments.append(d[first] + tHat1 * dist);
       segments.append(d[last] + tHat2 * dist);
       segments.append(d[last]);
-      return;
+      return segments;
    }
 
    QVector<double> u = chordLengthParameterize(d, first, last);
@@ -236,7 +235,7 @@ void XX::Bezier::RegressionAdaptive::fitCubic(const QVector<Linalg::Vector3>& d,
       segments.append(curve[1]);
       segments.append(curve[2]);
       segments.append(curve[3]);
-      return;
+      return segments;
    }
 
    if (maxError < errorTolerance * 4.0)
@@ -253,7 +252,7 @@ void XX::Bezier::RegressionAdaptive::fitCubic(const QVector<Linalg::Vector3>& d,
             segments.append(curve[1]);
             segments.append(curve[2]);
             segments.append(curve[3]);
-            return;
+            return segments;
          }
 
          u = uPrime;
@@ -261,6 +260,8 @@ void XX::Bezier::RegressionAdaptive::fitCubic(const QVector<Linalg::Vector3>& d,
    }
 
    const Linalg::Vector3 tHatCenter = computeCenterTangent(d, splitPoint);
-   fitCubic(d, first, splitPoint, tHat1, tHatCenter, segments, errorTolerance);
-   fitCubic(d, splitPoint, last, tHatCenter * -1.0, tHat2, segments, errorTolerance);
+   segments += fitCubic(d, first, splitPoint, tHat1, tHatCenter, errorTolerance);
+   segments += fitCubic(d, splitPoint, last, tHatCenter * -1.0, tHat2, errorTolerance);
+
+   return segments;
 }
