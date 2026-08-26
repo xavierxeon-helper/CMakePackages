@@ -26,24 +26,23 @@ namespace XX
             int last;
          };
 
-         using Curve = Linalg::Vector3[4];
+         using Curve = std::array<Linalg::Vector3, 4>;
 
       private:
          Linalg::Vector3 computeLeftTangent(int end) const;
          Linalg::Vector3 computeRightTangent(int end) const;
          Linalg::Vector3 computeCenterTangent(int center) const;
 
-         Linalg::Vector3 evaluateBezier(const Linalg::Vector3 curve[4], double u) const;
-         void generateBezier(Chord chord, const QVector<double>& u, const Linalg::Vector3& tHat1, const Linalg::Vector3& tHat2, Linalg::Vector3 curve[4]) const;
+         Linalg::Vector3 evaluateBezier(const Curve& curve, double u) const;
+         Curve generateBezier(const Chord& chord, const QVector<double>& u, const Linalg::Vector3& tHat1, const Linalg::Vector3& tHat2) const;
 
-         QVector<double> chordLengthParameterize(Chord chord) const;
-         std::tuple<double, int> computeMaxError(Chord chord, const Linalg::Vector3 curve[4], const QVector<double>& u) const;
-         double newtonRaphsonRootFind(const Linalg::Vector3 curve[4], const Linalg::Vector3& point, double u) const;
-         QVector<double> reparameterize(Chord chord, const QVector<double>& u, const Linalg::Vector3 curve[4]) const;
-         QVector<Linalg::Vector3> fitCubic(Chord chord, Linalg::Vector3 tHat1, Linalg::Vector3 tHat2) const;
+         QVector<double> chordLengthParameterize(const Chord& chord) const;
+         double newtonRaphsonRootFind(const Curve& curve, const Linalg::Vector3& point, double u) const;
+         QVector<double> reparameterize(const Chord& chord, const QVector<double>& u, const Curve& curve) const;
+         QVector<Linalg::Vector3> fitCubic(const Chord& chord, Linalg::Vector3 tHat1, Linalg::Vector3 tHat2) const;
 
       private:
-         const QVector<Linalg::Vector3> points;
+         const QVector<Linalg::Vector3>& points;
          const double errorTolerance;
       };
    } // namespace Bezier
