@@ -3,6 +3,7 @@
 
 #include "XXMathExportDef.h"
 
+#include <XXLinalgMatrix.h>
 #include <XXLinalgVector3.h>
 
 namespace XX
@@ -11,6 +12,9 @@ namespace XX
    {
       class XXMATH_DECLSPEC CalculatorAbstract
       {
+      protected:
+         static Linalg::Matrix calculateParameterMatrix(double parameter, uchar derivativeOrder);
+         static Linalg::Matrix calculatePointMatrix(const Linalg::Vector3& p0, const Linalg::Vector3& p1, const Linalg::Vector3& p2, const Linalg::Vector3& p3);
       };
 
       // clang-format off
