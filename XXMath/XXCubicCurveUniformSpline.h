@@ -25,7 +25,7 @@ namespace XX
          int numberOfPoints() const;
 
          double findParamter(const double& target, Linalg::Vector3::Index vectorIndex, double tolerance = 1e-9) const;
-         Linalg::Vector3 findValue(const double& target, Linalg::Vector3::Index vectorIndex, double tolerance = 1e-9) const;
+         Linalg::Vector3 findValue(const double& target, Linalg::Vector3::Index vectorIndex, uchar derivativeOrder = 0, double tolerance = 1e-9) const;
 
       protected:
          virtual void setStartPoint(const Linalg::Vector3& p);

@@ -106,10 +106,10 @@ double XX::CubicCurve::UniformSpline<CalculatorClass>::findParamter(const double
 }
 
 template <XX::CubicCurve::CalculatorClass CalculatorClass>
-XX::Linalg::Vector3 XX::CubicCurve::UniformSpline<CalculatorClass>::findValue(const double& target, Linalg::Vector3::Index vectorIndex, double tolerance) const
+XX::Linalg::Vector3 XX::CubicCurve::UniformSpline<CalculatorClass>::findValue(const double& target, Linalg::Vector3::Index vectorIndex, uchar derivativeOrder, double tolerance) const
 {
    double param = findParamter(target, vectorIndex, tolerance);
-   return value(param);
+   return value(param, derivativeOrder);
 }
 
 template <XX::CubicCurve::CalculatorClass CalculatorClass>
