@@ -16,6 +16,10 @@ const XX::Linalg::Matrix XX::CubicCurve::CalculatorParametric<basisMatrixValues,
       }
    }
 
+   //Linalg::Matrix test(4, 4, QVector<double>(16, basisMatrixValues));
+   qDebug() << m;
+   //qDebug() << test;
+
    return m;
 }();
 
@@ -62,16 +66,16 @@ XX::Linalg::Vector3 XX::CubicCurve::CalculatorParametric<basisMatrixValues, scal
       parameterMatrix(0, 3) = parameter * parameter * parameter;
    }
 
-   Linalg::Matrix controlMatrix(4, 3);
+   Linalg::Matrix pointMatrix(4, 3);
    for (int index = 0; index < 3; ++index)
    {
-      controlMatrix(0, index) = p0[index];
-      controlMatrix(1, index) = p1[index];
-      controlMatrix(2, index) = p2[index];
-      controlMatrix(3, index) = p3[index];
+      pointMatrix(0, index) = p0[index];
+      pointMatrix(1, index) = p1[index];
+      pointMatrix(2, index) = p2[index];
+      pointMatrix(3, index) = p3[index];
    }
 
-   Linalg::Matrix resultMatrix = parameterMatrix * basisMatrix * controlMatrix;
+   Linalg::Matrix resultMatrix = parameterMatrix * basisMatrix * pointMatrix;
    Linalg::Vector3 result(resultMatrix(0, 0), resultMatrix(0, 1), resultMatrix(0, 2));
 
    return result * scale;

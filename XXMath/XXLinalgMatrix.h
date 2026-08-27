@@ -19,6 +19,7 @@ namespace XX
       {
       public:
          Matrix(const size_t& rowCount = 0, const size_t& columnCount = 0);
+         Matrix(const size_t& rowCount, const size_t& columnCount, const std::initializer_list<double>& content); // content in row major order
 
       public:
          struct Cell
@@ -77,7 +78,7 @@ namespace XX
       private:
          const size_t rowCount;
          const size_t columnCount;
-         QVector<double> data;
+         QList<double> data; // data in column major order
       };
 
       /*!
