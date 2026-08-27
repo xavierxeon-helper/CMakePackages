@@ -3,27 +3,14 @@
 
 #include "XXCubicCurveCalculatorParametric.h"
 
-template <const double basisMatrixValues[16], const double scale>
+template <const std::array<double, 16> basisMatrixValues, const double scale>
 const XX::Linalg::Matrix XX::CubicCurve::CalculatorParametric<basisMatrixValues, scale>::basisMatrix = []()
 {
-   Linalg::Matrix m(4, 4);
-
-   for (int row = 0; row < 4; ++row)
-   {
-      for (int col = 0; col < 4; ++col)
-      {
-         m(row, col) = basisMatrixValues[row * 4 + col];
-      }
-   }
-
-   //Linalg::Matrix test(4, 4, QVector<double>(16, basisMatrixValues));
-   qDebug() << m;
-   //qDebug() << test;
-
+   Linalg::Matrix m(4, 4, std::span<const double>{basisMatrixValues});
    return m;
 }();
 
-template <const double basisMatrixValues[16], const double scale>
+template <const std::array<double, 16> basisMatrixValues, const double scale>
 XX::Linalg::Vector3 XX::CubicCurve::CalculatorParametric<basisMatrixValues, scale>::calculate(double parameter,
                                                                                               uchar derivativeOrder,
                                                                                               const Linalg::Vector3& p0,

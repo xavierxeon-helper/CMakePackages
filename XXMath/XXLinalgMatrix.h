@@ -3,6 +3,8 @@
 
 #include "XXMathExportDef.h"
 
+#include <span>
+
 #include <QVector>
 
 #include <QDebug>
@@ -19,7 +21,7 @@ namespace XX
       {
       public:
          Matrix(const size_t& rowCount = 0, const size_t& columnCount = 0);
-         Matrix(const size_t& rowCount, const size_t& columnCount, const std::initializer_list<double>& content); // content in row major order
+         Matrix(const size_t& rowCount, const size_t& columnCount, const std::span<const double>& content); // content in row major order
 
       public:
          struct Cell

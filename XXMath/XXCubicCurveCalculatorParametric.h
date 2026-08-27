@@ -11,7 +11,7 @@ namespace XX
 {
    namespace CubicCurve
    {
-      template <const double basisMatrixValues[16], const double scale>
+      template <const std::array<double, 16> basisMatrixValues, const double scale>
       class CalculatorParametric : public CalculatorAbstract
       {
       public:

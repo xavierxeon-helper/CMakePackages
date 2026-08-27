@@ -7,20 +7,19 @@ XX::Linalg::Matrix::Matrix(const size_t& rowCount, const size_t& columnCount)
 {
 }
 
-XX::Linalg::Matrix::Matrix(const size_t& rowCount, const size_t& columnCount, const std::initializer_list<double>& content)
+XX::Linalg::Matrix::Matrix(const size_t& rowCount, const size_t& columnCount, const std::span<const double>& content)
    : Matrix(rowCount, columnCount)
 {
-   double* contentData = const_cast<double*>(content.begin());
    for (size_t columnIndex = 0; columnIndex < columnCount; columnIndex++)
    {
-      const size_t contentBaseIndex = columnIndex * rowCount;
       for (size_t rowIndex = 0; rowIndex < rowCount; rowIndex++)
       {
          const size_t index = dataIndex(rowIndex, columnIndex);
          if (index >= content.size())
             continue;
 
-         data[index] = contentData[contentBaseIndex + rowIndex];
+         const size_t contentIndex = rowIndex * columnCount + columnIndex;
+         data[index] = content[contentIndex];
       }
    }
 }
