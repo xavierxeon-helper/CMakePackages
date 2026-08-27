@@ -19,6 +19,7 @@ namespace XX
       BusyCursor();
       ~BusyCursor();
    };
+
 } // namespace XX
 
 #endif // XXBusyCursorH
