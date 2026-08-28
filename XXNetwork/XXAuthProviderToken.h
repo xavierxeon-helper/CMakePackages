@@ -28,17 +28,6 @@ namespace XX
          virtual bool update();
          virtual void setAuthorization(QNetworkRequest& request) const;
 
-      protected:
-         struct RefreshData
-         {
-            QString refreshToken;
-            QString accessToken;
-            QDateTime expireTime;
-         };
-
-      protected:
-         RefreshData manualRefresh(const QString& oldRefreshToken, const QString& tokenRefreshUrl);
-
       private:
          QByteArray bearerToken;
       };
