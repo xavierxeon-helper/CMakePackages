@@ -131,8 +131,10 @@ bool XX::AuthProvider::OAuthFlow::authorizeUser()
 
    const QJsonObject content = XX::FileTools::parseBytes(replyContent);
    if (200 != statusCode)
+   {
+      qWarning() << "Failed to authorize user. Status code:" << statusCode << "Content:" << content;
       return false;
-
+   }
    // order matters here
    {
       QString accessToken = content["access_token"].toString();
