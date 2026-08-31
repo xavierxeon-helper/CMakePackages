@@ -84,13 +84,9 @@ bool XX::AuthProvider::OAuthFlow::update()
    if (refreshToken.isEmpty())
       refreshToken = "check database connection";
 
-   RefreshData refreshData = manualRefresh(refreshToken, tokenUrl);
-   if (refreshData.accessToken.isNull())
+   refreshAccessToken();
+   if (getBearerToken().isEmpty())
       return authorizeUser();
-
-   setBearerToken(refreshData.accessToken.toUtf8());
-   refreshToken = refreshData.refreshToken;
-   saveRefreshToken(refreshToken);
 
    state = State::Ready;
    return true;
@@ -111,7 +107,7 @@ bool XX::AuthProvider::OAuthFlow::authorizeUser()
    postData.addQueryItem("code", code);
    postData.addQueryItem("code_verifier", QString::fromUtf8(verifierBytes));
    postData.addQueryItem("grant_type", "authorization_code");
-   postData.addQueryItem("redirect_uri", "oob");
+   postData.addQueryItem("redirect_uri", "http://127.0.0.1:1234/");
 
    QNetworkRequest request;
    request.setUrl(tokenUrl);
@@ -131,8 +127,10 @@ bool XX::AuthProvider::OAuthFlow::authorizeUser()
 
    const QJsonObject content = XX::FileTools::parseBytes(replyContent);
    if (200 != statusCode)
+   {
+      qWarning() << "Failed to authorize user. Status code:" << statusCode << "Content:" << content;
       return false;
-
+   }
    // order matters here
    {
       QString accessToken = content["access_token"].toString();
@@ -144,6 +142,49 @@ bool XX::AuthProvider::OAuthFlow::authorizeUser()
 
    state = State::Ready;
    return true;
+}
+
+void XX::AuthProvider::OAuthFlow::refreshAccessToken()
+{
+   if (refreshToken.isEmpty())
+      return;
+
+   QUrlQuery postData;
+   postData.addQueryItem("grant_type", "refresh_token");
+   postData.addQueryItem("refresh_token", refreshToken);
+   postData.addQueryItem("client_id", clientId);
+   postData.addQueryItem("client_secret", clientSecret);
+
+   QNetworkRequest request;
+   request.setUrl(tokenUrl);
+   request.setRawHeader("Accept", "application/json");
+   request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
+   QNetworkAccessManager manager;
+   QEventLoop loop;
+   QNetworkReply* reply = manager.post(request, postData.toString(QUrl::FullyEncoded).toUtf8());
+
+   QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+   loop.exec();
+
+   int statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+   const QByteArray replyContent = reply->readAll();
+   reply->deleteLater();
+
+   const QJsonObject content = XX::FileTools::parseBytes(replyContent);
+   if (200 != statusCode)
+   {
+      qWarning() << "Failed to refresh token" << statusCode << content;
+      return;
+   }
+
+   refreshToken = content["refresh_token"].toString();
+   const QString accessToken = content["access_token"].toString();
+
+   //const float expires = content["expires"].toDouble();
+
+   setBearerToken(accessToken.toUtf8());
+   saveRefreshToken(refreshToken);
 }
 
 void XX::AuthProvider::OAuthFlow::saveRefreshToken(const QString& refreshToken)

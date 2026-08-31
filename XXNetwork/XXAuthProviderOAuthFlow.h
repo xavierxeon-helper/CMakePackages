@@ -48,6 +48,7 @@ namespace XX
       protected:
          virtual bool update() override;
          virtual bool authorizeUser();
+         virtual void refreshAccessToken();
          virtual void saveRefreshToken(const QString& refreshToken);
          virtual QString loadRefreshToken();
          void overrideAuthUrl(const QString& url);
