@@ -109,12 +109,12 @@ QJsonArray XX::Linalg::Vector3::save() const
    return array;
 }
 
-void XX::Linalg::Vector3::load(const QJsonArray& data) const
+void XX::Linalg::Vector3::load(const QJsonArray& array)
 {
    for (int index = 0; index < 3; index++)
    {
-      if (index < data.size())
-         data[index] = data.at(index).toDouble();
+      if (index < array.size())
+         data[index] = array.at(index).toDouble();
       else
          data[index] = 0.0;
    }

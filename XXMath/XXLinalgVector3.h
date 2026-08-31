@@ -49,7 +49,7 @@ namespace XX
 
       public:
          QJsonArray save() const;
-         void load(const QJsonArray& data) const;
+         void load(const QJsonArray& data);
 
          const double& getX() const;
          const double& getY() const;
