@@ -159,7 +159,7 @@ XX::Linalg::Matrix& XX::Linalg::Matrix::operator/=(const double& value)
    return *this;
 }
 
-const double& XX::Linalg::Matrix::operator()(const size_t& rowIndex, const size_t& columnIndex) const
+const double& XX::Linalg::Matrix::operator[](const size_t& rowIndex, const size_t& columnIndex) const
 {
    static const double dummy = 0.0;
 
@@ -170,7 +170,7 @@ const double& XX::Linalg::Matrix::operator()(const size_t& rowIndex, const size_
    return data.at(index);
 }
 
-double& XX::Linalg::Matrix::operator()(const size_t& rowIndex, const size_t& columnIndex)
+double& XX::Linalg::Matrix::operator[](const size_t& rowIndex, const size_t& columnIndex)
 {
    static double dummy = 0.0;
 

@@ -48,9 +48,6 @@ namespace XX
          Matrix& operator*=(const double& value);
          Matrix& operator/=(const double& value);
 
-         const double& operator()(const size_t& rowIndex, const size_t& columnIndex) const;
-         double& operator()(const size_t& rowIndex, const size_t& columnIndex);
-
          const double& operator[](const size_t& rowIndex, const size_t& columnIndex) const;
          double& operator[](const size_t& rowIndex, const size_t& columnIndex);
 

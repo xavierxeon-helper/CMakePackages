@@ -1,6 +1,8 @@
 #ifndef XXCubicCurveUniformSplineAbstractH
 #define XXCubicCurveUniformSplineAbstractH
 
+#include "XXMathExportDef.h"
+
 #include <XXLinalgVector3.h>
 #include <QJsonObject>
 
@@ -8,7 +10,7 @@ namespace XX
 {
    namespace CubicCurve
    {
-      class UniformSplineAbstract
+      class XXMATH_DECLSPEC UniformSplineAbstract
       {
       public:
          UniformSplineAbstract();

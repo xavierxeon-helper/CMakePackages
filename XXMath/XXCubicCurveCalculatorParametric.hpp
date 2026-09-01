@@ -23,7 +23,7 @@ XX::Linalg::Vector3 XX::CubicCurve::CalculatorParametric<basisMatrixValues, scal
    const Linalg::Matrix pointMatrix = calculatePointMatrix(p0, p1, p2, p3);
 
    Linalg::Matrix resultMatrix = parameterMatrix * basisMatrix * pointMatrix;
-   Linalg::Vector3 result(resultMatrix(0, 0), resultMatrix(0, 1), resultMatrix(0, 2));
+   Linalg::Vector3 result(resultMatrix[0, 0], resultMatrix[0, 1], resultMatrix[0, 2]);
 
    return result;
 }
