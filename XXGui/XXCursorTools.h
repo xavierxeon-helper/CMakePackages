@@ -10,7 +10,7 @@ namespace XX
    class XXGUI_DECLSPEC CursorTools
    {
    public:
-      static QCursor createSvgCursor(const QString& resourcePath, const QSize& size, const QPoint& hotspot, const QColor& tint = QColor());
+      static QCursor createSvgCursor(const QString& resourcePath, const QSize& size, const QPoint& hotspot, const QColor& tintColor = QColor());
    };
 } // namespace XX
 

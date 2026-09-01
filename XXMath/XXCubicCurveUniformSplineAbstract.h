@@ -20,7 +20,11 @@ namespace XX
 
          Linalg::Vector3 value(double parameter, uchar derivativeOrder = 0) const;
          int numberOfCurves() const;
+         const XX::Linalg::Vector3& getCurvePoint(int index) const; // not control points!
+
          int numberOfPoints() const;
+         const XX::Linalg::Vector3& operator[](int index) const; // control and curve points
+         XX::Linalg::Vector3& operator[](int index);             // control and curve points
 
          double findParamter(const double& target, Linalg::Vector3::Index vectorIndex, double tolerance = 1e-9) const;
          Linalg::Vector3 findValue(const double& target, Linalg::Vector3::Index vectorIndex, uchar derivativeOrder = 0, double tolerance = 1e-9) const;

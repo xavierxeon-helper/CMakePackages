@@ -4,7 +4,7 @@
 #include <QPainter>
 #include <QSvgRenderer>
 
-QCursor XX::CursorTools::createSvgCursor(const QString& resourcePath, const QSize& size, const QPoint& hotspot, const QColor& tint)
+QCursor XX::CursorTools::createSvgCursor(const QString& resourcePath, const QSize& size, const QPoint& hotspot, const QColor& tintColor)
 {
    QSvgRenderer renderer(resourcePath);
 
@@ -19,11 +19,11 @@ QCursor XX::CursorTools::createSvgCursor(const QString& resourcePath, const QSiz
    renderer.render(&painter, QRectF(QPointF(0, 0), size));
    painter.end();
 
-   if (tint.isValid())
+   if (tintColor.isValid())
    {
       QPainter tintPainter(&pixmap);
       tintPainter.setCompositionMode(QPainter::CompositionMode_SourceAtop);
-      tintPainter.fillRect(pixmap.rect(), tint);
+      tintPainter.fillRect(pixmap.rect(), tintColor);
       tintPainter.end();
    }
 

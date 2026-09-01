@@ -51,6 +51,9 @@ namespace XX
          const double& operator()(const size_t& rowIndex, const size_t& columnIndex) const;
          double& operator()(const size_t& rowIndex, const size_t& columnIndex);
 
+         const double& operator[](const size_t& rowIndex, const size_t& columnIndex) const;
+         double& operator[](const size_t& rowIndex, const size_t& columnIndex);
+
       public:
          double getValue(const size_t& rowIndex, const size_t& columnIndex) const;
          void setValue(const size_t& rowIndex, const size_t& columnIndex, const double& value);
