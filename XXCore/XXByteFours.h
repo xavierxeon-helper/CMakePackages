@@ -5,7 +5,7 @@
 
 #include <iostream>
 
-#include <cinttypes>
+#include <cstdint>
 #include <QDebug>
 
 namespace XX
