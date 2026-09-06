@@ -1,6 +1,7 @@
 #include "XXBitPackedArray.h"
 
 #include <bit>
+#include <stdexcept>
 
 XX::BitPacked::Array::Array(size_t bitSize, size_t initialCapacity)
    : bitSize(bitSize)
