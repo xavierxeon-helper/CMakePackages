@@ -2,10 +2,6 @@
 
 #include <bit>
 
-// iterator
-
-// array
-
 XX::BitPacked::Array::Array(size_t bitSize, size_t initialCapacity)
    : bitSize(bitSize)
    , mask()
@@ -31,7 +27,7 @@ void XX::BitPacked::Array::resize(size_t capacity)
 {
    const size_t totalBits = capacity * bitSize;
    const size_t totalBytes = (totalBits + 7) / 8; // Ceiling division
-   data.reserve(totalBytes);
+   data.resize(totalBytes, 0);
 }
 
 void XX::BitPacked::Array::add(uint64_t value)
@@ -63,6 +59,8 @@ void XX::BitPacked::Array::set(size_t index, uint64_t value)
 
    clearBits(bitOffset, bitSize);
 
+   uint8_t* const dst = bytes();
+
    while (bitsToWrite > 0)
    {
       const size_t bitsInCurrentByte = 8 - bitShift;
@@ -70,7 +68,7 @@ void XX::BitPacked::Array::set(size_t index, uint64_t value)
       const uint8_t chunkMask = static_cast<uint8_t>((1U << chunkSize) - 1);
       const uint8_t byteVal = static_cast<uint8_t>(remainingValue & chunkMask);
 
-      data[byteIndex] |= (byteVal << bitShift);
+      dst[byteIndex] |= (byteVal << bitShift);
 
       remainingValue >>= chunkSize;
       bitsToWrite -= chunkSize;
@@ -90,12 +88,14 @@ uint64_t XX::BitPacked::Array::get(size_t index) const
    uint64_t result = 0;
    size_t bitsRead = 0;
 
+   const uint8_t* const src = bytes();
+
    while (bitsRead < bitSize)
    {
       const size_t bitsInCurrentByte = 8 - bitShift;
       const size_t chunkSize = std::min(bitSize - bitsRead, bitsInCurrentByte);
       const uint8_t chunkMask = static_cast<uint8_t>((1U << chunkSize) - 1);
-      const uint8_t byteVal = (data[byteIndex] >> bitShift) & chunkMask;
+      const uint8_t byteVal = (src[byteIndex] >> bitShift) & chunkMask;
 
       result |= (static_cast<uint64_t>(byteVal) << bitsRead);
 
@@ -105,6 +105,16 @@ uint64_t XX::BitPacked::Array::get(size_t index) const
    }
 
    return result;
+}
+
+uint64_t XX::BitPacked::Array::operator[](size_t index) const
+{
+   return get(index);
+}
+
+XX::BitPacked::Array::Reference XX::BitPacked::Array::operator[](size_t index)
+{
+   return Reference(this, index);
 }
 
 size_t XX::BitPacked::Array::size() const
@@ -117,40 +127,13 @@ size_t XX::BitPacked::Array::getBitSize() const
    return bitSize;
 }
 
-QDataStream& XX::BitPacked::Array::operator<<(QDataStream& out) const
-{
-   out << static_cast<quint64>(bitSize);
-   out << static_cast<quint64>(elementCount);
-   out << data;
-
-   return out;
-}
-
-QDataStream& XX::BitPacked::Array::operator>>(QDataStream& in)
-{
-   quint64 inBitSize = 0;
-   in >> inBitSize;
-
-   quint64 inEleemntCount = 0;
-   in >> inEleemntCount;
-
-   QList<uint8_t> inData;
-   in >> inData;
-
-   if (inBitSize != bitSize)
-      throw std::runtime_error("Bit size mismatch during deserialization.");
-
-   elementCount = static_cast<size_t>(inEleemntCount);
-   data = std::move(inData);
-
-   return in;
-}
-
 void XX::BitPacked::Array::clearBits(size_t bitOffset, size_t numBits)
 {
    size_t byteIndex = bitOffset / 8;
    size_t bitShift = bitOffset % 8;
    size_t bitsCleared = 0;
+
+   uint8_t* const dst = bytes();
 
    while (bitsCleared < numBits)
    {
@@ -158,10 +141,49 @@ void XX::BitPacked::Array::clearBits(size_t bitOffset, size_t numBits)
       const size_t chunkSize = std::min(numBits - bitsCleared, bitsInCurrentByte);
 
       const uint8_t chunkMask = static_cast<uint8_t>(((1U << chunkSize) - 1) << bitShift);
-      data[byteIndex] &= ~chunkMask;
+      dst[byteIndex] &= ~chunkMask;
 
       bitsCleared += chunkSize;
       byteIndex++;
       bitShift = 0;
    }
+}
+
+const uint8_t* XX::BitPacked::Array::bytes() const noexcept
+{
+   return reinterpret_cast<const uint8_t*>(data.constData());
+}
+
+uint8_t* XX::BitPacked::Array::bytes() noexcept
+{
+   return reinterpret_cast<uint8_t*>(data.data());
+}
+
+QDataStream& XX::BitPacked::operator<<(QDataStream& out, const Array& array)
+{
+   out << static_cast<quint64>(array.bitSize);
+   out << static_cast<quint64>(array.elementCount);
+   out << array.data;
+
+   return out;
+}
+
+QDataStream& XX::BitPacked::operator>>(QDataStream& in, Array& array)
+{
+   quint64 inBitSize = 0;
+   in >> inBitSize;
+
+   quint64 inEleemntCount = 0;
+   in >> inEleemntCount;
+
+   QByteArray inData;
+   in >> inData;
+
+   if (inBitSize != array.bitSize)
+      throw std::runtime_error("Bit size mismatch during deserialization.");
+
+   array.elementCount = static_cast<size_t>(inEleemntCount);
+   array.data = std::move(inData);
+
+   return in;
 }

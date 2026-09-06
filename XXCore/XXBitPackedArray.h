@@ -4,10 +4,11 @@
 #include "XXCoreExportDef.h"
 
 #include <cstdint>
-#include <iterator>
 
 #include <QDataStream>
 #include <QList>
+
+#include "XXBitPackedArrayReference.h"
 
 namespace XX
 {
@@ -15,6 +16,9 @@ namespace XX
    {
       class XXCORE_DECLSPEC Array
       {
+      public:
+         using Reference = ArrayReference;
+
       public:
          Array(size_t bitSize, size_t initialCapacity = 0);
 
@@ -27,22 +31,31 @@ namespace XX
          void set(size_t index, uint64_t value);
          uint64_t get(size_t index) const;
 
+         uint64_t operator[](size_t index) const;
+         Reference operator[](size_t index);
+
          size_t size() const;
          size_t getBitSize() const;
 
-         QDataStream& operator<<(QDataStream& out) const;
-         QDataStream& operator>>(QDataStream& in);
-
       private:
          void clearBits(size_t offset, size_t numBits);
+         const uint8_t* bytes() const noexcept;
+         uint8_t* bytes() noexcept;
+
+         friend XXCORE_DECLSPEC QDataStream& operator<<(QDataStream& out, const Array& array);
+         friend XXCORE_DECLSPEC QDataStream& operator>>(QDataStream& in, Array& array);
 
       private:
-         const size_t bitSize;
+         size_t bitSize;
          uint64_t mask;
 
          size_t elementCount;
-         QList<uint8_t> data;
+         QByteArray data;
       };
+
+      XXCORE_DECLSPEC QDataStream& operator<<(QDataStream& out, const Array& array);
+      XXCORE_DECLSPEC QDataStream& operator>>(QDataStream& in, Array& array);
+
    } // namespace BitPacked
 } // namespace XX
 
