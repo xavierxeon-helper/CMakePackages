@@ -8,12 +8,12 @@ XX::BitPacked::ArrayReference::ArrayReference(Array* array, size_t index) noexce
 {
 }
 
-XX::BitPacked::ArrayReference::operator uint64_t() const
+XX::BitPacked::ArrayReference::operator quint32() const
 {
    return array->get(index);
 }
 
-XX::BitPacked::ArrayReference& XX::BitPacked::ArrayReference::operator=(uint64_t value)
+XX::BitPacked::ArrayReference& XX::BitPacked::ArrayReference::operator=(quint32 value)
 {
    array->set(index, value);
    return *this;
@@ -24,7 +24,7 @@ XX::BitPacked::ArrayReference& XX::BitPacked::ArrayReference::operator=(uint64_t
 // `a[i] = a[j]` would silently do nothing.
 XX::BitPacked::ArrayReference& XX::BitPacked::ArrayReference::operator=(const ArrayReference& other)
 {
-   return *this = static_cast<uint64_t>(other);
+   return *this = static_cast<quint32>(other);
 }
 
 // Taken by value: proxies from operator[] are prvalues, so

@@ -3,24 +3,32 @@
 #include <bit>
 #include <stdexcept>
 
-XX::BitPacked::Array::Array(size_t bitSize, size_t initialCapacity)
+XX::BitPacked::Array::Array(quint8 bitSize, size_t initialCapacity)
    : bitSize(bitSize)
    , mask()
    , elementCount(0)
    , data()
 {
-   if (bitSize == 0 || bitSize > 64)
+   if (bitSize == 0 || bitSize > 32)
       throw std::invalid_argument("Bit size must be between 1 and 64.");
 
-   mask = (bitSize == 64) ? ~0ULL : ((1ULL << bitSize) - 1ULL);
+   mask = (bitSize == 32) ? ~0U : ((1U << bitSize) - 1U);
 
    if (initialCapacity > 0)
       resize(initialCapacity);
 }
 
-size_t XX::BitPacked::Array::calculateBitSize(uint64_t value)
+XX::BitPacked::Array XX::BitPacked::Array::compact(const QList<quint32>& values)
 {
-   size_t safe_bit_size = value == 0 ? 1 : std::bit_width(value);
+   const quint8 bitSize = calculateBitSize(values.size());
+   Array data(bitSize, values.size());
+
+   return data;
+}
+
+quint8 XX::BitPacked::Array::calculateBitSize(uint64_t value)
+{
+   quint8 safe_bit_size = value == 0 ? 1 : std::bit_width(value);
    return safe_bit_size > 64 ? 64 : safe_bit_size;
 }
 
@@ -45,7 +53,7 @@ void XX::BitPacked::Array::add(uint64_t value)
    set(index, value);
 }
 
-void XX::BitPacked::Array::set(size_t index, uint64_t value)
+void XX::BitPacked::Array::set(size_t index, quint32 value)
 {
    assert(index < elementCount && "Index out of bounds");
 
@@ -60,14 +68,14 @@ void XX::BitPacked::Array::set(size_t index, uint64_t value)
 
    clearBits(bitOffset, bitSize);
 
-   uint8_t* const dst = bytes();
+   quint8* const dst = bytes();
 
    while (bitsToWrite > 0)
    {
       const size_t bitsInCurrentByte = 8 - bitShift;
       const size_t chunkSize = std::min(bitsToWrite, bitsInCurrentByte);
-      const uint8_t chunkMask = static_cast<uint8_t>((1U << chunkSize) - 1);
-      const uint8_t byteVal = static_cast<uint8_t>(remainingValue & chunkMask);
+      const quint8 chunkMask = static_cast<quint8>((1U << chunkSize) - 1);
+      const quint8 byteVal = static_cast<quint8>(remainingValue & chunkMask);
 
       dst[byteIndex] |= (byteVal << bitShift);
 
@@ -78,7 +86,7 @@ void XX::BitPacked::Array::set(size_t index, uint64_t value)
    }
 }
 
-uint64_t XX::BitPacked::Array::get(size_t index) const
+quint32 XX::BitPacked::Array::get(size_t index) const
 {
    assert(index < elementCount && "Index out of bounds");
 
@@ -89,14 +97,14 @@ uint64_t XX::BitPacked::Array::get(size_t index) const
    uint64_t result = 0;
    size_t bitsRead = 0;
 
-   const uint8_t* const src = bytes();
+   const quint8* const src = bytes();
 
    while (bitsRead < bitSize)
    {
       const size_t bitsInCurrentByte = 8 - bitShift;
       const size_t chunkSize = std::min(bitSize - bitsRead, bitsInCurrentByte);
-      const uint8_t chunkMask = static_cast<uint8_t>((1U << chunkSize) - 1);
-      const uint8_t byteVal = (src[byteIndex] >> bitShift) & chunkMask;
+      const quint8 chunkMask = static_cast<quint8>((1U << chunkSize) - 1);
+      const quint8 byteVal = (src[byteIndex] >> bitShift) & chunkMask;
 
       result |= (static_cast<uint64_t>(byteVal) << bitsRead);
 
@@ -108,7 +116,7 @@ uint64_t XX::BitPacked::Array::get(size_t index) const
    return result;
 }
 
-uint64_t XX::BitPacked::Array::operator[](size_t index) const
+quint32 XX::BitPacked::Array::operator[](size_t index) const
 {
    return get(index);
 }
@@ -123,7 +131,7 @@ size_t XX::BitPacked::Array::size() const
    return elementCount;
 }
 
-size_t XX::BitPacked::Array::getBitSize() const
+quint8 XX::BitPacked::Array::getBitSize() const
 {
    return bitSize;
 }
@@ -134,14 +142,14 @@ void XX::BitPacked::Array::clearBits(size_t bitOffset, size_t numBits)
    size_t bitShift = bitOffset % 8;
    size_t bitsCleared = 0;
 
-   uint8_t* const dst = bytes();
+   quint8* const dst = bytes();
 
    while (bitsCleared < numBits)
    {
       const size_t bitsInCurrentByte = 8 - bitShift;
       const size_t chunkSize = std::min(numBits - bitsCleared, bitsInCurrentByte);
 
-      const uint8_t chunkMask = static_cast<uint8_t>(((1U << chunkSize) - 1) << bitShift);
+      const quint8 chunkMask = static_cast<quint8>(((1U << chunkSize) - 1) << bitShift);
       dst[byteIndex] &= ~chunkMask;
 
       bitsCleared += chunkSize;
@@ -150,19 +158,19 @@ void XX::BitPacked::Array::clearBits(size_t bitOffset, size_t numBits)
    }
 }
 
-const uint8_t* XX::BitPacked::Array::bytes() const noexcept
+const quint8* XX::BitPacked::Array::bytes() const noexcept
 {
-   return reinterpret_cast<const uint8_t*>(data.constData());
+   return reinterpret_cast<const quint8*>(data.constData());
 }
 
-uint8_t* XX::BitPacked::Array::bytes() noexcept
+quint8* XX::BitPacked::Array::bytes() noexcept
 {
-   return reinterpret_cast<uint8_t*>(data.data());
+   return reinterpret_cast<quint8*>(data.data());
 }
 
 QDataStream& XX::BitPacked::operator<<(QDataStream& out, const Array& array)
 {
-   out << static_cast<quint64>(array.bitSize);
+   out << array.bitSize;
    out << static_cast<quint64>(array.elementCount);
    out << array.data;
 
@@ -171,7 +179,7 @@ QDataStream& XX::BitPacked::operator<<(QDataStream& out, const Array& array)
 
 QDataStream& XX::BitPacked::operator>>(QDataStream& in, Array& array)
 {
-   quint64 inBitSize = 0;
+   quint8 inBitSize = 0;
    in >> inBitSize;
 
    quint64 inEleemntCount = 0;

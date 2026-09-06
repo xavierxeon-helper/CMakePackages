@@ -3,8 +3,7 @@
 
 #include "XXCoreExportDef.h"
 
-#include <cstddef>
-#include <cstdint>
+#include <QtTypes>
 
 namespace XX
 {
@@ -15,9 +14,9 @@ namespace XX
       class XXCORE_DECLSPEC ArrayReference
       {
       public:
-         operator uint64_t() const;
+         operator quint32() const;
 
-         ArrayReference& operator=(uint64_t value);
+         ArrayReference& operator=(quint32 value);
          ArrayReference& operator=(const ArrayReference& other);
 
       private:
