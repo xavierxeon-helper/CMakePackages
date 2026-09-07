@@ -42,9 +42,11 @@ namespace XX
          quint8 getBitSize() const;
 
       private:
+         void updateMask(quint8 bitSize);
          void clearBits(size_t offset, size_t numBits);
          const quint8* bytes() const noexcept;
          quint8* bytes() noexcept;
+
 
          friend XXCORE_DECLSPEC QDataStream& operator<<(QDataStream& out, const Array& array);
          friend XXCORE_DECLSPEC QDataStream& operator>>(QDataStream& in, Array& array);

@@ -12,7 +12,7 @@ XX::BitPacked::Array::Array(quint8 bitSize, size_t initialCapacity)
    if (bitSize == 0 || bitSize > 32)
       throw std::invalid_argument("Bit size must be between 1 and 32.");
 
-   mask = (bitSize == 32) ? ~0U : ((1U << bitSize) - 1U);
+   updateMask(bitSize);
 
    if (initialCapacity > 0)
       resize(initialCapacity);
@@ -32,7 +32,7 @@ XX::BitPacked::Array::Array(const QList<quint32>& values)
          bitSize = valueBitSize;
    }
 
-   mask = (bitSize == 32) ? ~0U : ((1U << bitSize) - 1U);
+   updateMask(bitSize);
    resize(values.size());
 
    for (size_t i = 0; i < values.size(); ++i)
@@ -170,6 +170,11 @@ size_t XX::BitPacked::Array::capacity() const
 quint8 XX::BitPacked::Array::getBitSize() const
 {
    return bitSize;
+}
+
+void XX::BitPacked::Array::updateMask(quint8 bitSize)
+{
+   mask = (bitSize == 32) ? ~0U : ((1U << bitSize) - 1U);
 }
 
 void XX::BitPacked::Array::clearBits(size_t bitOffset, size_t numBits)
