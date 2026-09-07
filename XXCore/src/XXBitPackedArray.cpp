@@ -6,11 +6,11 @@
 XX::BitPacked::Array::Array(quint8 bitSize, size_t initialCapacity)
    : bitSize(bitSize)
    , mask()
-   , elementCount(0)
+   , dataCapcity(0)
    , data()
 {
    if (bitSize == 0 || bitSize > 32)
-      throw std::invalid_argument("Bit size must be between 1 and 64.");
+      throw std::invalid_argument("Bit size must be between 1 and 32.");
 
    mask = (bitSize == 32) ? ~0U : ((1U << bitSize) - 1U);
 
@@ -18,12 +18,33 @@ XX::BitPacked::Array::Array(quint8 bitSize, size_t initialCapacity)
       resize(initialCapacity);
 }
 
-XX::BitPacked::Array XX::BitPacked::Array::compact(const QList<quint32>& values)
+XX::BitPacked::Array::Array(const QList<quint32>& values)
+   : bitSize(0)
+   , mask(0)
+   , dataCapcity(0)
+   , data()
 {
-   const quint8 bitSize = calculateBitSize(values.size());
-   Array data(bitSize, values.size());
+   // get max bit size of entries
+   for (quint32 value : values)
+   {
+      quint8 valueBitSize = calculateBitSize(value);
+      if (valueBitSize > bitSize)
+         bitSize = valueBitSize;
+   }
 
-   return data;
+   mask = (bitSize == 32) ? ~0U : ((1U << bitSize) - 1U);
+   resize(values.size());
+
+   for (size_t i = 0; i < values.size(); ++i)
+      set(i, values[i]);
+}
+
+XX::BitPacked::Array::Array(const Array& other)
+   : bitSize(other.bitSize)
+   , mask(other.mask)
+   , dataCapcity(other.dataCapcity)
+   , data(other.data)
+{
 }
 
 quint8 XX::BitPacked::Array::calculateBitSize(uint64_t value)
@@ -32,8 +53,21 @@ quint8 XX::BitPacked::Array::calculateBitSize(uint64_t value)
    return safe_bit_size > 64 ? 64 : safe_bit_size;
 }
 
+QList<quint32> XX::BitPacked::Array::toList() const
+{
+   QList<quint32> list;
+   list.reserve(dataCapcity);
+
+   for (size_t i = 0; i < dataCapcity; ++i)
+      list.append(get(i));
+
+   return list;
+}
+
 void XX::BitPacked::Array::resize(size_t capacity)
 {
+   dataCapcity = capacity;
+
    const size_t totalBits = capacity * bitSize;
    const size_t totalBytes = (totalBits + 7) / 8; // Ceiling division
    data.resize(totalBytes, 0);
@@ -41,21 +75,23 @@ void XX::BitPacked::Array::resize(size_t capacity)
 
 void XX::BitPacked::Array::add(uint64_t value)
 {
-   size_t index = elementCount;
-   elementCount++;
+   size_t index = dataCapcity;
+   dataCapcity++;
 
-   size_t requiredBits = elementCount * bitSize;
+   size_t requiredBits = dataCapcity * bitSize;
    size_t requiredBytes = (requiredBits + 7) / 8;
 
    if (data.size() < requiredBytes)
+   {
       data.resize(requiredBytes, 0);
+   }
 
    set(index, value);
 }
 
 void XX::BitPacked::Array::set(size_t index, quint32 value)
 {
-   assert(index < elementCount && "Index out of bounds");
+   assert(index < dataCapcity && "Index out of bounds");
 
    value &= mask; // Enforce bit limit
 
@@ -88,7 +124,7 @@ void XX::BitPacked::Array::set(size_t index, quint32 value)
 
 quint32 XX::BitPacked::Array::get(size_t index) const
 {
-   assert(index < elementCount && "Index out of bounds");
+   assert(index < dataCapcity && "Index out of bounds");
 
    size_t bitOffset = index * bitSize;
    size_t byteIndex = bitOffset / 8;
@@ -126,9 +162,9 @@ XX::BitPacked::Array::Reference XX::BitPacked::Array::operator[](size_t index)
    return Reference(this, index);
 }
 
-size_t XX::BitPacked::Array::size() const
+size_t XX::BitPacked::Array::capacity() const
 {
-   return elementCount;
+   return dataCapcity;
 }
 
 quint8 XX::BitPacked::Array::getBitSize() const
@@ -171,7 +207,7 @@ quint8* XX::BitPacked::Array::bytes() noexcept
 QDataStream& XX::BitPacked::operator<<(QDataStream& out, const Array& array)
 {
    out << array.bitSize;
-   out << static_cast<quint64>(array.elementCount);
+   out << static_cast<quint64>(array.dataCapcity);
    out << array.data;
 
    return out;
@@ -182,8 +218,8 @@ QDataStream& XX::BitPacked::operator>>(QDataStream& in, Array& array)
    quint8 inBitSize = 0;
    in >> inBitSize;
 
-   quint64 inEleemntCount = 0;
-   in >> inEleemntCount;
+   quint64 inDataCapcity = 0;
+   in >> inDataCapcity;
 
    QByteArray inData;
    in >> inData;
@@ -191,7 +227,7 @@ QDataStream& XX::BitPacked::operator>>(QDataStream& in, Array& array)
    if (inBitSize != array.bitSize)
       throw std::runtime_error("Bit size mismatch during deserialization.");
 
-   array.elementCount = static_cast<size_t>(inEleemntCount);
+   array.dataCapcity = static_cast<size_t>(inDataCapcity);
    array.data = std::move(inData);
 
    return in;

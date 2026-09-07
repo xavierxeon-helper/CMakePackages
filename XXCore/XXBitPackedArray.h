@@ -21,10 +21,13 @@ namespace XX
 
       public:
          Array(quint8 bitSize, size_t initialCapacity = 0);
+         Array(const QList<quint32>& values);
+         Array(const Array& other);
 
       public:
-         static Array compact(const QList<quint32>& values);
          static quint8 calculateBitSize(uint64_t value);
+
+         QList<quint32> toList() const;
 
          void resize(size_t capacity);
          void add(uint64_t value);
@@ -35,7 +38,7 @@ namespace XX
          quint32 operator[](size_t index) const;
          Reference operator[](size_t index);
 
-         size_t size() const;
+         size_t capacity() const;
          quint8 getBitSize() const;
 
       private:
@@ -50,7 +53,7 @@ namespace XX
          quint8 bitSize;
          quint32 mask;
 
-         size_t elementCount;
+         size_t dataCapcity;
          QByteArray data;
       };
 
