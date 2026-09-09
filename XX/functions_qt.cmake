@@ -1,23 +1,20 @@
 # set QT_ARCH
 function(set_qt_arch)
-
    if(QT_ARCH)
       return()
    endif()
 
-   find_package(Qt6 REQUIRED COMPONENTS Core)   
+   find_package(Qt6 REQUIRED COMPONENTS Core)
    get_target_property(QT_CORE_LIB Qt6::Core IMPORTED_LOCATION)
    get_filename_component(QT_LIB_DIR "${QT_CORE_LIB}" DIRECTORY)
    get_filename_component(QT_ROOT_DIR "${QT_LIB_DIR}/.." ABSOLUTE)
    get_filename_component(QT_ARCH "${QT_ROOT_DIR}" NAME)
 
    set(QT_ARCH ${QT_ARCH} PARENT_SCOPE)
-
 endfunction()
 
 # all resource files
 function(add_resource_dir SUBPATH)
-
    cmake_parse_arguments(PARSE_ARGV 1 RESOURCE_ARG "RECURSIVE" "RCNAME;PREFIX;" "FILTERS")
 
    if(NOT RESOURCE_ARG_RECURSIVE)
@@ -39,12 +36,12 @@ function(add_resource_dir SUBPATH)
    list(TRANSFORM RESOURCE_ARG_FILTERS PREPEND "${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/")
 
    if(RESOURCE_ARG_RECURSIVE)
-      file(GLOB_RECURSE RESOURCE_FILES
+      file(GLOB_RECURSE RESOURCE_FILES CONFIGURE_DEPENDS
          RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/
          ${RESOURCE_ARG_FILTERS}
       )
    else()
-      file(GLOB RESOURCE_FILES
+      file(GLOB RESOURCE_FILES CONFIGURE_DEPENDS
          RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/
          ${RESOURCE_ARG_FILTERS}
       )
@@ -55,19 +52,16 @@ function(add_resource_dir SUBPATH)
       FILES ${RESOURCE_FILES}
    )
 
-   message(STATUS "RESOURCE_FILES for ${PROJECT_NAME} found @ ${SUBPATH} = ${RESOURCE_FILES}")   
+   message(STATUS "RESOURCE_FILES for ${PROJECT_NAME} found @ ${SUBPATH} = ${RESOURCE_FILES}")
 endfunction()
 
 # qml source
 function(add_qml_source_dir SUBPATH)
-
    add_resource_dir(${SUBPATH} FILTERS "*.qml" "*.svg")
-
 endfunction()
 
 # markdown
 function(add_markdown_dir SUBPATH)
-
    cmake_parse_arguments(PARSE_ARGV 1 MARKDOWN_ARG "" "RCNAME;PREFIX" "")
 
    if(NOT MARKDOWN_ARG_RCNAME)
@@ -83,7 +77,6 @@ endfunction()
 
 # icon
 function(add_icon_dir SUBPATH)
-
    cmake_parse_arguments(PARSE_ARGV 1 ICON_ARG "" "RCNAME;PREFIX" "")
 
    if(NOT ICON_ARG_RCNAME)
@@ -99,7 +92,6 @@ endfunction()
 
 # qml module
 function(add_qml_module_dir SUBPATH)
-
    cmake_parse_arguments(PARSE_ARGV 1 QML_MODULE_ARG "" "NAME" "LINK")
 
    if(QML_MODULE_ARG_NAME)
@@ -112,12 +104,12 @@ function(add_qml_module_dir SUBPATH)
 
    include_directories(${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH})
 
-   file(GLOB QML_SOURCE_FILES
+   file(GLOB QML_SOURCE_FILES CONFIGURE_DEPENDS
       ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/*.h
       ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/*.cpp
    )
 
-   file(GLOB QML_FILES
+   file(GLOB QML_FILES CONFIGURE_DEPENDS
       RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/
       ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/*.qml
       ${CMAKE_CURRENT_SOURCE_DIR}/${SUBPATH}/*.js
@@ -144,19 +136,20 @@ function(add_qml_module_dir SUBPATH)
    endif()
 
    message(STATUS "MODULE DIR QML_FILES for ${PROJECT_NAME} found @ ${SUBPATH} = ${QML_FILES}")
-
 endfunction()
 
-function (add_camera_permissions)
+function(add_camera_permissions)
    find_package(Python COMPONENTS Interpreter)
-   if (NOT PYTHON_FOUND)
+
+   if(NOT PYTHON_FOUND)
       message(FATAL_ERROR "Python not found, required for adding camera permissions")
    endif()
-   
+
    if(IOS)
       status(FATAL_ERROR "Camera permissions on iOS no yet implemented, see https://doc.qt.io/qt-6/permissions.html#camera-permissions")
    elseif(APPLE)
       set(CUSTOM_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/macos/Info.plist")
+
       if(NOT EXISTS "${CUSTOM_INFO_PLIST}")
          set(SOURCE_INFO_PLIST "${PROJECT_BINARY_DIR}/${PROJECT_NAME}.app/Contents/Info.plist")
          message(STATUS "SOURCE_INFO_PLIST ${SOURCE_INFO_PLIST}")
@@ -176,5 +169,3 @@ function (add_camera_permissions)
       endif()
    endif()
 endfunction()
-
-

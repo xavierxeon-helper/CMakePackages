@@ -1,7 +1,10 @@
 # crawl through subdirs and include dirs
 function(add_all_subdirs_include SUB_DIR_PATH) # args = list of skip directories
    include_directories("${SUB_DIR_PATH}")
-   file(GLOB SUB_DIRECTORIES LIST_DIRECTORIES true "${SUB_DIR_PATH}/*")
+   file(GLOB SUB_DIRECTORIES CONFIGURE_DEPENDS
+      LIST_DIRECTORIES true
+      "${SUB_DIR_PATH}/*"
+   )
    list(REMOVE_ITEM SUB_DIRECTORIES ${ARGN})
 
    foreach(SUB_DIR ${SUB_DIRECTORIES})
@@ -25,8 +28,7 @@ endfunction()
 
 # add a list of subdirs
 function(add_sub_dirs_files) # args = list of directories
-
-   cmake_parse_arguments(PARSE_ARGV 0 ADD_SUB_DIR "" "" "DIRS;SKIP" )
+   cmake_parse_arguments(PARSE_ARGV 0 ADD_SUB_DIR "" "" "DIRS;SKIP")
 
    foreach(DIR ${ADD_SUB_DIR_DIRS})
       if(NOT IS_DIRECTORY ${DIR})
@@ -38,49 +40,54 @@ function(add_sub_dirs_files) # args = list of directories
       endif()
 
       if(${DIR} IN_LIST ADD_SUB_DIR_SKIP)
-         #message(STATUS "Skipping directory files: ${DIR}")
+         # message(STATUS "Skipping directory files: ${DIR}")
          continue()
       endif()
 
       if(EXISTS ${DIR}/CMakeLists.txt)
-         #message(STATUS "Skipping directory files: ${DIR}")
+         # message(STATUS "Skipping directory files: ${DIR}")
          continue()
       endif()
 
       message(STATUS "Include directory files: ${DIR}")
       include_directories(${DIR})
 
-      file(GLOB DIR_FILES
+      file(GLOB DIR_FILES CONFIGURE_DEPENDS
          ${DIR}/*.h
          ${DIR}/*.hpp
          ${DIR}/*.cpp
-         ${DIR}/*.ui         
+         ${DIR}/*.ui
       )
       target_sources(${PROJECT_NAME} PRIVATE ${DIR_FILES})
 
       # recurse sub directories
       SET(SUB_DIRECTORIES "")
-      file(GLOB CHILDREN LIST_DIRECTORIES true
+      file(GLOB CHILDREN CONFIGURE_DEPENDS
+         LIST_DIRECTORIES true
          ${DIR}/*
       )
+
       foreach(ENTRY ${CHILDREN})
          if(NOT IS_DIRECTORY ${ENTRY})
             continue()
          endif()
+
          list(APPEND SUB_DIRECTORIES ${ENTRY})
       endforeach()
 
       if(SUB_DIRECTORIES)
          add_sub_dirs_files(DIRS ${SUB_DIRECTORIES} SKIP ${ADD_SUB_DIR_SKIP})
       endif()
-
    endforeach()
 endfunction()
 
 # crawl through subdirs and add files
 function(add_all_subdirs_files SUB_DIR_PATH) # args = list of skip directories
    include_directories("${SUB_DIR_PATH}")
-   file(GLOB SUB_DIRECTORIES LIST_DIRECTORIES true "${SUB_DIR_PATH}/*")
+   file(GLOB SUB_DIRECTORIES CONFIGURE_DEPENDS
+      LIST_DIRECTORIES true
+      "${SUB_DIR_PATH}/*"
+   )
 
    list(REMOVE_ITEM SUB_DIRECTORIES ${SUB_DIR_PATH}/build)
    list(REMOVE_ITEM SUB_DIRECTORIES ${SUB_DIR_PATH}/.git)
@@ -117,7 +124,7 @@ function(add_os_files SOURCE_SUB_DIR)
          file(MAKE_DIRECTORY ${MAC_SOURCE_DIR})
       endif()
 
-      file(GLOB OS_FILES
+      file(GLOB OS_FILES CONFIGURE_DEPENDS
          ${MAC_SOURCE_DIR}/*.h
          ${MAC_SOURCE_DIR}/*.hpp
          ${MAC_SOURCE_DIR}/*.cpp
@@ -131,7 +138,7 @@ function(add_os_files SOURCE_SUB_DIR)
          file(MAKE_DIRECTORY ${WIN_SOURCE_DIR})
       endif()
 
-      file(GLOB OS_FILES
+      file(GLOB OS_FILES CONFIGURE_DEPENDS
          ${WIN_SOURCE_DIR}/*.h
          ${WIN_SOURCE_DIR}/*.hpp
          ${WIN_SOURCE_DIR}/*.cpp
@@ -144,7 +151,7 @@ function(add_os_files SOURCE_SUB_DIR)
          file(MAKE_DIRECTORY ${LINUX_SOURCE_DIR})
       endif()
 
-      file(GLOB OS_FILES
+      file(GLOB OS_FILES CONFIGURE_DEPENDS
          ${LINUX_SOURCE_DIR}/*.h
          ${LINUX_SOURCE_DIR}/*.hpp
          ${LINUX_SOURCE_DIR}/*.cpp
@@ -153,4 +160,3 @@ function(add_os_files SOURCE_SUB_DIR)
 
    set(SOURCE_FILES ${SOURCE_FILES} ${OS_FILES} PARENT_SCOPE)
 endfunction()
-
