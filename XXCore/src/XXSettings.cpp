@@ -44,12 +44,14 @@ XX::Settings::~Settings()
 
 QString XX::Settings::compileFileName()
 {
-   if (QCoreApplication::applicationName().isEmpty() ||
-       QCoreApplication::organizationName().isEmpty() ||
-       QCoreApplication::organizationDomain().isEmpty())
-   {
-      qFatal() << "APPLICATION NAME, ORGANIZATION NAME OR DOMAIN NOT SET";
-   }
+   if (QCoreApplication::applicationName().isEmpty())
+      qFatal() << "APPLICATION NAME NOT SET";
+
+   if (QCoreApplication::organizationName().isEmpty())
+      QCoreApplication::setOrganizationName("SchweineSystem");
+
+   if (QCoreApplication::organizationDomain().isEmpty())
+      QCoreApplication::setOrganizationDomain("schweinesystem.ddns.net");
 
    QString fileName;
 #if defined(Q_OS_WASM)
