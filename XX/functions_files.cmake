@@ -149,3 +149,24 @@ function(auto_build_version)
 
 endfunction()
 
+# add objective c++ files
+function(add_objc_files)
+   if(NOT APPLE)
+      retrun()
+   endif()
+
+   file(GLOB_RECURSE MACOS_SOURCE_FILES CONFIGURE_DEPENDS
+      ${CMAKE_CURRENT_SOURCE_DIR}/*.mm
+   )
+
+   target_sources(${PROJECT_NAME} PRIVATE
+      ${MACOS_SOURCE_FILES}
+   )
+
+   set_source_files_properties(${MACOS_SOURCE_FILES} PROPERTIES SKIP_PRECOMPILE_HEADERS ON)
+
+   target_link_libraries(${PROJECT_NAME} PRIVATE
+      "-framework Foundation"
+      "-framework AppKit"
+   )
+endfunction()
