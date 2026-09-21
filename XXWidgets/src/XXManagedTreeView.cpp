@@ -45,6 +45,30 @@ QStandardItem* XX::Managed::TreeView::getCurrentItem() const
    return getItemFromIndex(index);
 }
 
+void XX::Managed::TreeView::autoResizeColumns(bool enabled)
+{
+   if (enabled)
+   {
+      connect(model(), &QAbstractItemModel::layoutChanged, this, &TreeView::resizeAllColumns);
+      connect(this, &QTreeView::expanded, this, &TreeView::resizeAllColumns);
+      connect(this, &QTreeView::collapsed, this, &TreeView::resizeAllColumns);
+
+      resizeAllColumns();
+   }
+   else
+   {
+      disconnect(model(), &QAbstractItemModel::layoutChanged, this, &TreeView::resizeAllColumns);
+      disconnect(this, &QTreeView::expanded, this, &TreeView::resizeAllColumns);
+      disconnect(this, &QTreeView::collapsed, this, &TreeView::resizeAllColumns);
+   }
+}
+
+void XX::Managed::TreeView::resizeAllColumns()
+{
+   for (int col = 0; col < model()->columnCount(); ++col)
+      resizeColumnToContents(col);
+}
+
 void XX::Managed::TreeView::selected(const QModelIndex& index)
 {
    if (!selectedFunction)

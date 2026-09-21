@@ -35,6 +35,9 @@ namespace XX
          QModelIndex currentSourceIndex() const;
          QStandardItem* getCurrentItem() const;
 
+         void autoResizeColumns(bool enabled);
+         void resizeAllColumns();
+
       private:
          using SelectFunction = std::function<void(QStandardItem*)>;
          using DoubleClickFunction = std::function<bool(QStandardItem*)>;
