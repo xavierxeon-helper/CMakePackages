@@ -11,10 +11,10 @@ namespace XX
 {
    namespace CatmullRom
    {
-      inline constexpr double CubicBasisMatrixValues[16] = {0, 2, 0, 0,
-                                                            -1, 0, 1, 0,
-                                                            2, -5, 4, -1,
-                                                            -1, 3, -3, 1};
+      inline constexpr std::array<double, 16> CubicBasisMatrixValues = {0, 2, 0, 0,
+                                                                        -1, 0, 1, 0,
+                                                                        2, -5, 4, -1,
+                                                                        -1, 3, -3, 1};
       using CurveCalculator = CubicCurve::CalculatorParametric<CubicBasisMatrixValues, 0.5>;
 
       class XXMATH_DECLSPEC UnifromSpline : public CubicCurve::UniformSpline<CurveCalculator>

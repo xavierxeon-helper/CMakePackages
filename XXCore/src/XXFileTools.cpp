@@ -174,7 +174,7 @@ void XX::FileTools::openVSCode(QStringList pathList)
    if (pathList.isEmpty())
       return;
 
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
    QString editorCommand = "code";
 #elif defined(Q_OS_WIN)
    QString editorCommand = "code.cmd";
