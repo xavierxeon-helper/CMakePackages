@@ -58,6 +58,9 @@ function(add_sub_dirs_files) # args = list of directories
          ${DIR}/*.cpp
          ${DIR}/*.ui
       )
+      if(ADD_SUB_DIR_SKIP)
+          list(REMOVE_ITEM DIR_FILES ${ADD_SUB_DIR_SKIP})
+       endif()
       target_sources(${PROJECT_NAME} PRIVATE ${DIR_FILES})
 
       # recurse sub directories
