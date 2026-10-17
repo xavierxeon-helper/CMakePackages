@@ -1,5 +1,6 @@
 # standard release output path
-function(set_standrard_release_output_path)
+
+function(set_standard_release_output_path)
    if(NOT CMAKE_BUILD_TYPE STREQUAL "Release")
       return()
    endif()
@@ -21,12 +22,39 @@ function(set_standrard_release_output_path)
    endif()
 
    if(APPLE)
-      set(CMAKE_RUNTIME_OUTPUT_DIRECTORY $ENV{HOME}/Applications PARENT_SCOPE)
+      set(CMAKE_RUNTIME_OUTPUT_DIRECTORY $ENV{HOME}/Applications PARENT_SCOPE)      
    elseif(WIN32)
       set(CMAKE_RUNTIME_OUTPUT_DIRECTORY $ENV{LOCALAPPDATA}/${PROJECT_NAME} PARENT_SCOPE)
    elseif(UNIX)
       set(CMAKE_RUNTIME_OUTPUT_DIRECTORY $ENV{HOME}/bin PARENT_SCOPE)
    endif()
+endfunction()
+
+# plugin path
+
+function(set_plugin_output_path_to_application APP_NAME)
+
+   if(IOS OR ANDROID OR EMSCRIPTEN)
+      return()
+   endif()
+
+   if(NOT TARGET ${PROJECT_NAME})
+      message(FATAL_ERROR "set_plugin_output_path_to_application: call it after the target '${PROJECT_NAME}' is created")
+   endif()
+
+   if(APPLE)
+      set(PLUGIN_DIR $<TARGET_BUNDLE_CONTENT_DIR:${APP_NAME}>/PlugIns)
+   else()
+      set(PLUGIN_DIR $<TARGET_FILE_DIR:${APP_NAME}>)
+   endif()
+
+   # Windows: .dll is a RUNTIME output (.lib import file stays in the build dir)
+   # Linux/macOS: .so / .dylib are LIBRARY outputs
+   set_target_properties(${PROJECT_NAME} PROPERTIES
+      RUNTIME_OUTPUT_DIRECTORY ${PLUGIN_DIR}
+      LIBRARY_OUTPUT_DIRECTORY ${PLUGIN_DIR}
+   )
+
 endfunction()
 
 # application icon
