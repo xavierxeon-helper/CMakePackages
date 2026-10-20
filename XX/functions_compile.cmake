@@ -58,9 +58,11 @@ function(add_sub_dirs_files) # args = list of directories
          ${DIR}/*.cpp
          ${DIR}/*.ui
       )
+
       if(ADD_SUB_DIR_SKIP)
-          list(REMOVE_ITEM DIR_FILES ${ADD_SUB_DIR_SKIP})
-       endif()
+         list(REMOVE_ITEM DIR_FILES ${ADD_SUB_DIR_SKIP})
+      endif()
+
       target_sources(${PROJECT_NAME} PRIVATE ${DIR_FILES})
 
       # recurse sub directories
@@ -110,7 +112,7 @@ function(use_precompiled_headers)
 
    if(NOT EXISTS ${HEADER_FILE})
       message(STATUS "Creating precompiled header file: ${HEADER_FILE}")
-      file(WRITE ${HEADER_FILE} "#pragma one\n")
+      file(WRITE ${HEADER_FILE} "#pragma once\n")
    endif()
 
    target_precompile_headers(${PROJECT_NAME} PUBLIC ${HEADER_FILE})
