@@ -26,6 +26,7 @@ namespace XX
       {
          iPadMini,
          iPadPro13,
+         iPhonePro,
          NoteAir5C
       };
       Q_ENUM(DeviceIdentifier)
