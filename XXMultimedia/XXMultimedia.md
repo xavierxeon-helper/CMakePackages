@@ -1,2 +1,2 @@
-@brief XXMultimedia 
+@brief multimedia related classes 
 

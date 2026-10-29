@@ -2,7 +2,7 @@
 #define XXMultimediaExportDefH
 
 /*!
-@defgroup XXMultimedia XXMultimedia
+@defgroup XXMultimedia Multimedia
 @includedoc{doc} XXMultimedia/XXMultimedia.md
 */
 
