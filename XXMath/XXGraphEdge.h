@@ -20,6 +20,7 @@ namespace XX
 
    public:
       Edge(Vertex* vertexA = nullptr, Vertex* vertexB = nullptr, const double& weightForward = 1.0, const double& weightBackward = Edge::invalidWeight);
+      virtual ~Edge() = default;
 
    public:
       virtual double getForwardWeight() const;

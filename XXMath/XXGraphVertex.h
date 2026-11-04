@@ -16,6 +16,7 @@ namespace XX
    {
    public:
       Vertex(const QString& name = QString());
+      virtual ~Vertex() = default;
 
    public:
       const QString& getName() const;
