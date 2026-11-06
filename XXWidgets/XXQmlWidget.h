@@ -1,5 +1,5 @@
-#ifndef XXWorkFlowQmlWidgetH
-#define XXWorkFlowQmlWidgetH
+#ifndef XXQmlWidgetH
+#define XXQmlWidgetH
 
 #include "XXWidgetsExportDef.h"
 #include <QQmlPropertyMap>
@@ -31,7 +31,15 @@ namespace XX
 
    public:
       PropertyMap(QmlWidget* widget, const QString& qmlName);
+
+   protected:
+      template <typename DerivedClass>
+      PropertyMap(DerivedClass* derivedInstance, QmlWidget* widget, const QString& qmlName);
    };
 } // namespace XX
 
-#endif // NOT XXWorkFlowQmlWidgetH
+#ifndef XXQmlWidgetHPP
+#include "XXQmlWidget.hpp"
+#endif // NOT XXQmlWidgetHPP
+
+#endif // NOT XXQmlWidgetH
