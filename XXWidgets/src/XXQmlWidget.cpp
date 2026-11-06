@@ -19,9 +19,10 @@ void XX::QmlWidget::setQuickProperty(const QString& name, const QVariant& value)
    engine()->rootContext()->setContextProperty(name, value);
 }
 
-// PropertyMap
+// Property Map
 
-XX::QmlWidget::PropertyMap::PropertyMap(XX::QmlWidget* parent)
-   : QQmlPropertyMap(this, parent) // protected ctor required for subclasses
+XX::QmlWidget::PropertyMap::PropertyMap(XX::QmlWidget* widget, const QString& qmlName)
+   : QQmlPropertyMap(this, widget) // protected ctor required for subclasses
 {
+   widget->setQuickProperty(qmlName, this);
 }

@@ -30,7 +30,7 @@ namespace XX
       Q_OBJECT
 
    public:
-      PropertyMap(QmlWidget* parent);
+      PropertyMap(QmlWidget* widget, const QString& qmlName);
    };
 } // namespace XX
 
