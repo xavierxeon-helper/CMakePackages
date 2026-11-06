@@ -21,6 +21,11 @@ void XX::QmlWidget::setQuickProperty(const QString& name, const QVariant& value)
 
 // Property Map
 
+XX::QmlWidget::PropertyMap* XX::QmlWidget::PropertyMap::create(QmlWidget* widget, const QString& qmlName)
+{
+   return new PropertyMap(widget, qmlName);
+}
+
 XX::QmlWidget::PropertyMap::PropertyMap(XX::QmlWidget* widget, const QString& qmlName)
    : PropertyMap(this, widget, qmlName) // protected ctor required for subclasses
 {

@@ -30,11 +30,14 @@ namespace XX
       Q_OBJECT
 
    public:
-      PropertyMap(QmlWidget* widget, const QString& qmlName);
+      static PropertyMap* create(QmlWidget* widget, const QString& qmlName);
 
    protected:
       template <typename DerivedClass>
       PropertyMap(DerivedClass* derivedInstance, QmlWidget* widget, const QString& qmlName);
+
+   private:
+      PropertyMap(QmlWidget* widget, const QString& qmlName);
    };
 } // namespace XX
 
