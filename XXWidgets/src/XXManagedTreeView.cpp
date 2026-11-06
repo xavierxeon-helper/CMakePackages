@@ -63,6 +63,12 @@ void XX::Managed::TreeView::autoResizeColumns(bool enabled)
    }
 }
 
+void XX::Managed::TreeView::setFlat()
+{
+   setFrameShape(QFrame::Shape::NoFrame);
+   setFrameShadow(QFrame::Shadow::Plain);
+}
+
 void XX::Managed::TreeView::resizeAllColumns()
 {
    for (int col = 0; col < model()->columnCount(); ++col)
@@ -109,12 +115,27 @@ QStandardItem* XX::Managed::TreeView::getItemFromIndex(const QModelIndex& index)
    if (!index.isValid())
       return nullptr;
 
-   QStandardItemModel* itemModel = qobject_cast<QStandardItemModel*>(model());
-   if (!itemModel)
+   auto findItem = [](QStandardItemModel* model, const QModelIndex& index) -> QStandardItem*
+   {
+      if (!model)
+         return nullptr;
+
+      QStandardItem* item = static_cast<QStandardItem*>(model->itemFromIndex(index));
+      return item;
+   };
+
+   QStandardItem* item = findItem(qobject_cast<QStandardItemModel*>(model()), index);
+   if (item)
+      return item;
+
+   QSortFilterProxyModel* filterModel = qobject_cast<QSortFilterProxyModel*>(model());
+   if (!filterModel)
       return nullptr;
 
-   QStandardItem* item = static_cast<QStandardItem*>(itemModel->itemFromIndex(index));
-   return item;
+   const QModelIndex sourceIndex = filterModel->mapToSource(index);
+   QStandardItemModel* sourceModel = qobject_cast<QStandardItemModel*>(filterModel->sourceModel());
+
+   return findItem(sourceModel, sourceIndex);
 }
 
 QStandardItem* XX::Managed::TreeView::getItemAtPoint(const QPoint& point) const

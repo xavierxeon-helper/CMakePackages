@@ -38,6 +38,8 @@ namespace XX
          void autoResizeColumns(bool enabled);
          void resizeAllColumns();
 
+         void setFlat();
+
       private:
          using SelectFunction = std::function<void(QStandardItem*)>;
          using DoubleClickFunction = std::function<bool(QStandardItem*)>;
